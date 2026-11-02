@@ -19,7 +19,7 @@ import { renderSettings } from './tabs/settings.js';
 import { loggedRunMany, logLine, logSeparator, logWrite } from './logger.js';
 import { clearDescriptionCache } from './components/checkbox.js';
 
-const WEBSITE_URL = 'https://anton18-png.github.io/Anton-Vampire/web/index.html';
+const WEBSITE_URL = 'https://ZikaSVG.github.io/Anton-Vampire/web/index.html';
 
 /* Вкладки, которые НЕ кэшируются между заходами. */
 const ALWAYS_RERENDER = new Set([

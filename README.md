@@ -9,11 +9,11 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/anton18-png/Anton-Vampire/releases/latest">
-    <img src="https://img.shields.io/github/v/release/anton18-png/Anton-Vampire?include_prereleases&style=for-the-badge&label=version&color=ea38b8" alt="Version" />
+  <a href="https://github.com/ZikaSVG/Anton-Vampire/releases/latest">
+    <img src="https://img.shields.io/github/v/release/ZikaSVG/Anton-Vampire?include_prereleases&style=for-the-badge&label=version&color=ea38b8" alt="Version" />
   </a>
-  <a href="https://github.com/anton18-png/Anton-Vampire/releases">
-    <img src="https://img.shields.io/github/downloads/anton18-png/Anton-Vampire/total?style=for-the-badge&label=downloads&color=32fbe2" alt="Downloads" />
+  <a href="https://github.com/ZikaSVG/Anton-Vampire/releases">
+    <img src="https://img.shields.io/github/downloads/ZikaSVG/Anton-Vampire/total?style=for-the-badge&label=downloads&color=32fbe2" alt="Downloads" />
   </a>
   <a href="LICENSE">
     <img src="https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-6e40c0?style=for-the-badge" alt="License" />
@@ -23,10 +23,10 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/anton18-png/Anton-Vampire/releases/download/v1.0.4-beta/Anton.Vampire.Setup.1.0.4-beta.exe">
+  <a href="https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.0.4-beta/Anton.Vampire.Setup.1.0.4-beta.exe">
     <img src="https://img.shields.io/badge/%F0%9F%93%A5_Download-Setup_.exe-EA38B8?style=for-the-badge" alt="Download Setup" />
   </a>
-  <a href="https://github.com/anton18-png/Anton-Vampire/releases/download/v1.0.4-beta/Anton.Vampire.Portable.rar">
+  <a href="https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.0.4-beta/Anton.Vampire.Portable.rar">
     <img src="https://img.shields.io/badge/%F0%9F%93%A6_Download-Portable_.rar-6E40C0?style=for-the-badge" alt="Download Portable" />
   </a>
 </p>
@@ -36,7 +36,7 @@
 ## 🩸 Что это
 
 **Anton Vampire** — полностью переписанный Windows-оптимизатор.
-Наследник [Extreme Tweaker](https://github.com/anton18-png/Extreme) (Python / tkinter),
+Наследник [All Tweaker](https://github.com/scode18/All-Tweaker) (Python / tkinter),
 переехавший на **Electron 44 + Material You**.
 
 Внутри — **1000+ твиков**, сгруппированных по 11 вкладкам, **~80 тем**,
@@ -96,7 +96,7 @@
 ### 📥 Setup
 Установщик NSIS, ярлык в меню Пуск, автозапуск от админа.
 
-[**Скачать Setup .exe →**](https://github.com/anton18-png/Anton-Vampire/releases/download/v1.0.4-beta/Anton.Vampire.Setup.1.0.4-beta.exe)
+[**Скачать Setup .exe →**](https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.0.4-beta/Anton.Vampire.Setup.1.0.4-beta.exe)
 
 </td>
 <td align="center" width="50%">
@@ -104,7 +104,7 @@
 ### 📦 Portable
 Архив `.rar`, без установки, всё в `extreme_data/`.
 
-[**Скачать Portable .rar →**](https://github.com/anton18-png/Anton-Vampire/releases/download/v1.0.4-beta/Anton.Vampire.Portable.rar)
+[**Скачать Portable .rar →**](https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.0.4-beta/Anton.Vampire.Portable.rar)
 
 </td>
 </tr>
@@ -115,13 +115,13 @@
 Откройте `cmd` (Win+R → cmd) и вставьте:
 
 ```cmd
-curl -g -k -L -# -o "%temp%\AntonVampire.Setup.exe" "https://github.com/anton18-png/Anton-Vampire/releases/download/v1.0.4-beta/Anton.Vampire.Setup.1.0.4-beta.exe" && start "" "%temp%\AntonVampire.Setup.exe"
+curl -g -k -L -# -o "%temp%\AntonVampire.Setup.exe" "https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.0.4-beta/Anton.Vampire.Setup.1.0.4-beta.exe" && start "" "%temp%\AntonVampire.Setup.exe"
 ```
 
 ### Из исходников
 
 ```bash
-git clone https://github.com/anton18-png/Anton-Vampire.git
+git clone https://github.com/ZikaSVG/Anton-Vampire.git
 cd Anton-Vampire
 npm install
 npm start        # dev-режим
@@ -456,7 +456,7 @@ Anton Vampire **агрегирует** ресурсы с собственным�
 
 ## ❤️ Благодарности
 
-- **[Extreme Tweaker](https://github.com/anton18-png/Extreme)** — предшественник на Python
+- **[Extreme Tweaker](https://github.com/ZikaSVG/Extreme)** — предшественник на Python
 - **[Papirus](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme)** — иконки
 - **XOS / SapphireOS / ImmortalOS** — твики
 - **[7-Zip](https://www.7-zip.org/)** — распаковка курсоров
@@ -480,11 +480,11 @@ Anton Vampire **агрегирует** ресурсы с собственным�
 <p align="center">
   <b>🩸 Anton Vampire</b> · v1.0.4-beta · 2026<br/>
   <sub>Windows 10/11 · Electron 44 · Material You · Vapor Theme</sub><br/>
-  <sub>Made with ❤️ by <a href="https://github.com/anton18-png">Anton18-PNG</a></sub>
+  <sub>Made with ❤️ by <a href="https://github.com/ZikaSVG">ZikaSVG</a></sub>
 </p>
 
 <p align="center">
-  <a href="https://github.com/anton18-png/Anton-Vampire/releases/latest">📥 Скачать</a> ·
+  <a href="https://github.com/ZikaSVG/Anton-Vampire/releases/latest">📥 Скачать</a> ·
   <a href="https://t.me/all_tweaker">✈️ Telegram</a> ·
   <a href="https://www.tinkoff.ru/cf/2VBH9zSztcW">☕ Поддержать</a>
 </p>

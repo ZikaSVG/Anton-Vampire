@@ -75,7 +75,6 @@ const COMPONENT_META = {
   defender: { icon: '🛡️', title: 'Windows Defender',  desc: 'Встроенный антивирус' }
 };
 
-/* Категории программ-батников */
 const REMOVAL_CATEGORIES = [
   { id: 'defender', label: '🛡️ Defender и антивирусы' },
   { id: 'edge',     label: '🌊 Microsoft Edge' },
@@ -162,10 +161,21 @@ function escapeHtml(s) {
     .replace(/'/g, '&#39;');
 }
 
+/* ============================================================
+   Формирование аргументов: имена параметров (-Action) не кавычатся,
+   чтобы PowerShell корректно их распознавал.
+   ============================================================ */
 async function runPs1(fileName, args = []) {
   const root = await getProjectRoot();
   const absPath = `${root}/${PS_DIR_REL}/${fileName}`.replace(/\\/g, '/');
-  const argStr = args.map(a => `"${String(a ?? '').replace(/"/g, '\\"')}"`).join(' ');
+  
+  const argStr = args.map(a => {
+    const s = String(a ?? '');
+    if (s.startsWith('-')) {
+      return s; // Не кавычим имена параметров
+    }
+    return `"${s.replace(/"/g, '\\"')}"`; // Кавычим только значения
+  }).join(' ');
 
   const psCommand =
     `$ProgressPreference = 'SilentlyContinue'; ` +
@@ -181,7 +191,7 @@ async function runPs1(fileName, args = []) {
 }
 
 /* ============================================================
-   Emoji-fallback (та же функция, что была — не трогаю)
+   Emoji-fallback
    ============================================================ */
 function iconFor(name) {
   if (!name) return '📦';
@@ -325,9 +335,6 @@ function vendorPapirusIcon(name) {
   return null;
 }
 
-/* ============================================================
-   ПАРЫ «ТВИК ↔ ОТМЕНА» (инлайн, чтобы не плодить circular deps)
-   ============================================================ */
 const ACTION_VERBS = [
   'включить', 'включать', 'включи',
   'отключить', 'отключать', 'отключи', 'выключить', 'выключать', 'выключи',
@@ -455,7 +462,6 @@ export async function renderAppUninstaller() {
   empty.style.display = 'none';
   page.appendChild(empty);
 
-  /* ─── NEW: секция «Программы-батники для удаления» ─── */
   const batSection = document.createElement('div');
   batSection.id = 'bat-removals-section';
   batSection.className = 'apps-detected-section';
@@ -463,7 +469,6 @@ export async function renderAppUninstaller() {
   batSection.style.borderColor = 'color-mix(in srgb, var(--border) 30%, transparent)';
   page.appendChild(batSection);
 
-  /* ─── NEW: секция «Оптимизация приложений» ─── */
   const optimSection = document.createElement('div');
   optimSection.id = 'app-optimization-section';
   optimSection.className = 'apps-detected-section';
@@ -531,14 +536,10 @@ export async function renderAppUninstaller() {
       busy = false;
     }
 
-    /* NEW: параллельно подгружаем обе дополнительные секции */
     try { await renderBatRemovals(force); }   catch (e) { console.warn('[removal]', e); }
     try { await renderAppOptimization(force); } catch (e) { console.warn('[app-optim]', e); }
   }
 
-  /* ============================================================
-     NEW: секция «Программы-батники для удаления»
-     ============================================================ */
   async function renderBatRemovals(force = false) {
     const host = batSection;
     if (!host) return;
@@ -579,7 +580,6 @@ export async function renderAppUninstaller() {
       'Обратимые скрипты обычно идут в паре (удаление/возврат) — смотрите название.';
     host.appendChild(desc);
 
-    /* Группировка по категориям */
     const grouped = {};
     for (const f of data.files) {
       const cat = f.category || 'other';
@@ -657,9 +657,6 @@ export async function renderAppUninstaller() {
     return card;
   }
 
-  /* ============================================================
-     NEW: секция «Оптимизация приложений»
-     ============================================================ */
   async function renderAppOptimization(force = false) {
     const host = optimSection;
     if (!host) return;
@@ -792,9 +789,6 @@ export async function renderAppUninstaller() {
     }
   }
 
-  /* ============================================================
-     Остальные функции (без изменений)
-     ============================================================ */
   function renderDetectedComponents(report) {
     const found = [];
     for (const key of ['defender', 'edge', 'webview2', 'onedrive']) {
@@ -1045,7 +1039,7 @@ export async function renderAppUninstaller() {
     try {
       let out = '', err = '';
 
-      if (app.kind === 'appx') {
+      if (app.kind === 'appx' || app.kind === 'uwp') {
         if (!app.packageFullName) throw new Error('Нет PackageFullName');
         const r = await runPs1('appx-remove.ps1', ['-PackageFullName', app.packageFullName]);
         out = r.out; err = r.err;
@@ -1058,6 +1052,13 @@ export async function renderAppUninstaller() {
       } else if (app.kind === 'edge') {
         const r = await runPs1('appx-actions.ps1', ['-Action', 'edge']);
         out = r.out; err = r.err;
+      } else {
+        if (app.packageFullName) {
+          const r = await runPs1('appx-remove.ps1', ['-PackageFullName', app.packageFullName]);
+          out = r.out; err = r.err;
+        } else {
+          throw new Error(`Неизвестный тип приложения: ${app.kind || 'undefined'}`);
+        }
       }
 
       const ok = /^OK\s*$/i.test(String(out).trim());

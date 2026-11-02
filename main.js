@@ -469,7 +469,7 @@ function parseJsonLoose(out) {
 function isTempPatchName(name) { return String(name).startsWith(TEMP_PREFIX); }
 function isTweakFile(name) { return TWEAK_RE.test(name) && !isTempPatchName(name); }
 
-const GITHUB_REPO   = 'anton18-png/Pretty-Cursors';
+const GITHUB_REPO   = 'ZikaSVG/Pretty-Cursors';
 const GITHUB_BRANCH = 'main';
 const GITHUB_RAW    = `https://raw.githubusercontent.com/${GITHUB_REPO}/${GITHUB_BRANCH}/`;
 const GITHUB_API    = `https://api.github.com/repos/${GITHUB_REPO}/contents`;

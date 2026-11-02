@@ -544,9 +544,9 @@ export async function renderSettings() {
         <div><b>Движок:</b> Electron + Node.js</div>
         <div><b>Стиль:</b> Material 3 (Material You)</div>
         <div><b>Режим:</b> Портативный (данные рядом с приложением)</div>
-        <div><b>Автор:</b> Anton18-PNG</div>
+        <div><b>Автор:</b> ZikaSVG</div>
         <div><b>Сайт:</b>
-          <a href="#" id="about-site" style="color:var(--accent)">anton18-png.github.io/Extreme</a>
+          <a href="#" id="about-site" style="color:var(--accent)">ZikaSVG.github.io/Extreme</a>
         </div>
         <div><b>Telegram:</b>
           <a href="#" id="about-tg" style="color:var(--accent)">@all_tweaker</a>
@@ -568,7 +568,7 @@ export async function renderSettings() {
 
     s.querySelector('#about-site')?.addEventListener('click', (e) => {
       e.preventDefault();
-      window.api.shell.openExternal('https://anton18-png.github.io/Anton-Vampire/web/index.html');
+      window.api.shell.openExternal('https://ZikaSVG.github.io/Anton-Vampire/web/index.html');
     });
     s.querySelector('#about-tg')?.addEventListener('click', (e) => {
       e.preventDefault();
