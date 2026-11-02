@@ -1,0 +1,26 @@
+{
+  "tabs": {
+    "Root": [
+      "Настроить таймауты.bat",
+      "Настроить энергосбережение.bat",
+      "Отключить CPU Throttle (десктоп).bat",
+      "Отключить HDD Sleep (Sub_Processor).bat",
+      "Отключить Power Throttling.bat",
+      "Отключить Storage D3 в Modern Standby.bat",
+      "Отключить гибернацию.bat",
+      "Отключить энергосбережение устройств.bat",
+      "Применить VainOS Power Plan.bat"
+    ],
+    "отмена": [
+      "Вернуть стандартные схемы.bat",
+      "Вернуть таймауты.bat",
+      "Вернуть энергосбережение.bat",
+      "Включить CPU Throttle.bat",
+      "Включить HDD Sleep.bat",
+      "Включить Power Throttling.bat",
+      "Включить Storage D3.bat",
+      "Включить гибернацию.bat",
+      "Включить энергосбережение устройств.bat"
+    ]
+  }
+}

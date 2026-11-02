@@ -1,0 +1,7 @@
+@echo off
+title Отключение Exploit Protection
+net session >nul 2>&1 || (echo Запустите от администратора. & pause & exit /b 1)
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\kernel" /v DisableExceptionChainValidation /t REG_DWORD /d 1 /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Lsa" /v RunAsPPL /t REG_DWORD /d 0 /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v EnableSmartScreen /t REG_DWORD /d 0 /f
+echo [+] Защита от эксплойтов отключена.

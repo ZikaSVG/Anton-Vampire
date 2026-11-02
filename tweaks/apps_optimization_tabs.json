@@ -1,0 +1,370 @@
+{
+  "browsers": {
+    "label": "🌐 Браузеры",
+    "baseDir": "tweaks/Оптимизация/Apps/Браузеры",
+    "files": [],
+    "cancels": [],
+    "cancelDir": null,
+    "subfolders": {
+      "Brave": {
+        "baseDir": "tweaks/Оптимизация/Apps/Браузеры/Brave",
+        "files": [
+          "Удалить вредоносное ПО Brave.bat",
+          "Удалить планировщик заданий Brave.bat"
+        ],
+        "cancels": [],
+        "cancelDir": null,
+        "subfolders": {}
+      },
+      "Google Chrome": {
+        "baseDir": "tweaks/Оптимизация/Apps/Браузеры/Google Chrome",
+        "files": [
+          "Твики Chrome.bat",
+          "Удалить вредоносное ПО Chrome.bat",
+          "Удалить телеметрию.bat"
+        ],
+        "cancels": [],
+        "cancelDir": null,
+        "subfolders": {}
+      },
+      "Microsoft Edge": {
+        "baseDir": "tweaks/Оптимизация/Apps/Браузеры/Microsoft Edge",
+        "files": [
+          "Удалить телеметрию.bat"
+        ],
+        "cancels": [],
+        "cancelDir": null,
+        "subfolders": {}
+      },
+      "Mozilla Firefox": {
+        "baseDir": "tweaks/Оптимизация/Apps/Браузеры/Mozilla Firefox",
+        "files": [
+          "Деблокирование Firefox.bat",
+          "Удалить телеметрию.bat"
+        ],
+        "cancels": [],
+        "cancelDir": null,
+        "subfolders": {}
+      },
+      "Yandex Browser": {
+        "baseDir": "tweaks/Оптимизация/Apps/Браузеры/Yandex Browser",
+        "files": [
+          "Удалить телеметрию.bat"
+        ],
+        "cancels": [],
+        "cancelDir": null,
+        "subfolders": {}
+      }
+    }
+  },
+  "games": {
+    "label": "🎮 Игры",
+    "baseDir": "tweaks/Оптимизация/Apps/Игры",
+    "files": [],
+    "cancels": [],
+    "cancelDir": null,
+    "subfolders": {
+      "CS": {
+        "baseDir": "tweaks/Оптимизация/Apps/Игры/CS",
+        "files": [
+          "сеть.bat"
+        ],
+        "cancels": [],
+        "cancelDir": null,
+        "subfolders": {}
+      },
+      "Fortnite": {
+        "baseDir": "tweaks/Оптимизация/Apps/Игры/Fortnite",
+        "files": [
+          "FORTNITE AUDIO FIX.bat",
+          "Fortnite Обычный приоритет.bat",
+          "Fortnite Средний приоритет.bat",
+          "TWEAK FOR FORTNITE!.bat",
+          "Изменен приоритет Fortnite..bat",
+          "Фортнит высокий приоритет.bat"
+        ],
+        "cancels": [],
+        "cancelDir": null,
+        "subfolders": {
+          "fortnite potato graphics": {
+            "baseDir": "tweaks/Оптимизация/Apps/Игры/Fortnite/fortnite potato graphics",
+            "files": [
+              "мыльные скины.bat"
+            ],
+            "cancels": [],
+            "cancelDir": null,
+            "subfolders": {}
+          },
+          "HIT REGISTRY": {
+            "baseDir": "tweaks/Оптимизация/Apps/Игры/Fortnite/HIT REGISTRY",
+            "files": [
+              "HIT REG TWEAK.bat",
+              "HIT REG.bat",
+              "NDIS (PortAuth и отправка 0).bat",
+              "NDIS (PortAuth и отправка).bat",
+              "THE_IMPACT_REG.bat",
+              "настройка пинга.bat",
+              "Нижняя задержка.bat",
+              "Отключить интернет-дополнения.bat",
+              "Отключить надстройки Internet Explorer.bat",
+              "Отключить отслеживание NDIS (рекомендуется).bat",
+              "сеть.bat",
+              "Уменьшите пинг и задержку.bat"
+            ],
+            "cancels": [],
+            "cancelDir": null,
+            "subfolders": {}
+          },
+          "Настройка": {
+            "baseDir": "tweaks/Оптимизация/Apps/Игры/Fortnite/Настройка",
+            "files": [
+              "автозапуск.bat",
+              "отмена автозапуска.bat"
+            ],
+            "cancels": [],
+            "cancelDir": null,
+            "subfolders": {
+              "Clean": {
+                "baseDir": "tweaks/Оптимизация/Apps/Игры/Fortnite/Настройка/Clean",
+                "files": [
+                  "небежать.bat",
+                  "чистый мусоравто.bat"
+                ],
+                "cancels": [],
+                "cancelDir": null,
+                "subfolders": {}
+              },
+              "Effects": {
+                "baseDir": "tweaks/Оптимизация/Apps/Игры/Fortnite/Настройка/Effects",
+                "files": [
+                  "небежать.bat"
+                ],
+                "cancels": [],
+                "cancelDir": null,
+                "subfolders": {}
+              },
+              "Maps": {
+                "baseDir": "tweaks/Оптимизация/Apps/Игры/Fortnite/Настройка/Maps",
+                "files": [
+                  "небежать.bat"
+                ],
+                "cancels": [],
+                "cancelDir": null,
+                "subfolders": {}
+              }
+            }
+          }
+        }
+      },
+      "GTA": {
+        "baseDir": "tweaks/Оптимизация/Apps/Игры/GTA",
+        "files": [],
+        "cancels": [],
+        "cancelDir": null,
+        "subfolders": {
+          "Настройка Приоритета": {
+            "baseDir": "tweaks/Оптимизация/Apps/Игры/GTA/Настройка Приоритета",
+            "files": [
+              "GTA - Высокий.bat",
+              "GTA - Выше Среднего.bat",
+              "GTA - Обычный.bat"
+            ],
+            "cancels": [],
+            "cancelDir": null,
+            "subfolders": {}
+          },
+          "Оптимизация Реестра": {
+            "baseDir": "tweaks/Оптимизация/Apps/Игры/GTA/Оптимизация Реестра",
+            "files": [
+              "Включить Игровую Оптимизацию.bat",
+              "Включить Полноэкранную оптимизацию.bat",
+              "Выключить AllowGameDVR.bat",
+              "Выключить GameDVR.bat",
+              "Выключить SystemResponsiveness.bat"
+            ],
+            "cancels": [],
+            "cancelDir": null,
+            "subfolders": {
+              "Стандартные значения": {
+                "baseDir": "tweaks/Оптимизация/Apps/Игры/GTA/Оптимизация Реестра/Стандартные значения",
+                "files": [
+                  "Включить AllowGameDVR.bat",
+                  "Включить GameDVR.bat",
+                  "Включить SystemResponsiveness.bat",
+                  "Выключить Игровую Оптимизацию.bat",
+                  "Выключить Полноэкранную оптимизацию.bat"
+                ],
+                "cancels": [],
+                "cancelDir": null,
+                "subfolders": {}
+              }
+            }
+          },
+          "Твики": {
+            "baseDir": "tweaks/Оптимизация/Apps/Игры/GTA/Твики",
+            "files": [
+              ".reg.bat",
+              "3.bat",
+              "4.bat",
+              "5.bat",
+              "6.bat"
+            ],
+            "cancels": [],
+            "cancelDir": null,
+            "subfolders": {}
+          }
+        }
+      },
+      "Rust": {
+        "baseDir": "tweaks/Оптимизация/Apps/Игры/Rust",
+        "files": [
+          "Высокий приоритет РАСТ.bat",
+          "Высокий приоритет.bat",
+          "Низкая задержка.bat",
+          "Низкая оптимизация ПК.bat",
+          "Производительность Steam.bat",
+          "Увеличение оперативной памяти.bat"
+        ],
+        "cancels": [],
+        "cancelDir": null,
+        "subfolders": {}
+      },
+      "Valorant": {
+        "baseDir": "tweaks/Оптимизация/Apps/Игры/Valorant",
+        "files": [
+          "Изменен приоритет доблести.bat",
+          "Используйте, если играете в Valorant после твиков..bat"
+        ],
+        "cancels": [],
+        "cancelDir": null,
+        "subfolders": {}
+      }
+    }
+  },
+  "programs": {
+    "label": "📱 Приложения",
+    "baseDir": "tweaks/Оптимизация/Apps/Приложения",
+    "files": [],
+    "cancels": [],
+    "cancelDir": null,
+    "subfolders": {
+      ".NET Framework": {
+        "baseDir": "tweaks/Оптимизация/Apps/Приложения/.NET Framework",
+        "files": [
+          "Включение задач .NET NGEN.bat",
+          "Оптимизация .NET Framework от SynergyOS.bat",
+          "Оптимизация .NET Framework от xOS.bat",
+          "Отключить телеметрию .NET.bat"
+        ],
+        "cancels": [
+          "Восстановление стандартных настроек .NET.bat",
+          "Отключение задач .NET NGEN.bat"
+        ],
+        "cancelDir": "Возврат",
+        "subfolders": {}
+      },
+      "Discord": {
+        "baseDir": "tweaks/Оптимизация/Apps/Приложения/Discord",
+        "files": [
+          "Антон Вампир.bat",
+          "основной.bat",
+          "Разблокировка Discord.bat"
+        ],
+        "cancels": [],
+        "cancelDir": null,
+        "subfolders": {}
+      },
+      "Microsoft Office": {
+        "baseDir": "tweaks/Оптимизация/Apps/Приложения/Microsoft Office",
+        "files": [
+          "Отключить телеметрию Microsoft Office.bat"
+        ],
+        "cancels": [],
+        "cancelDir": null,
+        "subfolders": {}
+      },
+      "PowerShell": {
+        "baseDir": "tweaks/Оптимизация/Apps/Приложения/PowerShell",
+        "files": [
+          "Оптимиазция PowerShell от xOS.bat",
+          "Отключить телеметрию PowerShell.bat"
+        ],
+        "cancels": [],
+        "cancelDir": null,
+        "subfolders": {}
+      },
+      "Razer": {
+        "baseDir": "tweaks/Оптимизация/Apps/Приложения/Razer",
+        "files": [
+          "бритва.bat"
+        ],
+        "cancels": [],
+        "cancelDir": null,
+        "subfolders": {}
+      },
+      "Rufus": {
+        "baseDir": "tweaks/Оптимизация/Apps/Приложения/Rufus",
+        "files": [
+          "Отключить телеметрию Rufus.bat"
+        ],
+        "cancels": [],
+        "cancelDir": null,
+        "subfolders": {}
+      },
+      "Spotify": {
+        "baseDir": "tweaks/Оптимизация/Apps/Приложения/Spotify",
+        "files": [
+          "Вырезать Spotify.bat",
+          "ГИПЕРТВИКС SpotifyRemoveLanguages.bat"
+        ],
+        "cancels": [],
+        "cancelDir": null,
+        "subfolders": {}
+      },
+      "Steam": {
+        "baseDir": "tweaks/Оптимизация/Apps/Приложения/Steam",
+        "files": [
+          "Настройка производительности Steam.bat"
+        ],
+        "cancels": [],
+        "cancelDir": null,
+        "subfolders": {}
+      },
+      "Visual Studio": {
+        "baseDir": "tweaks/Оптимизация/Apps/Приложения/Visual Studio",
+        "files": [
+          "Отключить телеметрию Visual Studio Code.bat",
+          "Отключить телеметрию Visual Studio.bat"
+        ],
+        "cancels": [],
+        "cancelDir": null,
+        "subfolders": {}
+      },
+      "Windows app": {
+        "baseDir": "tweaks/Оптимизация/Apps/Приложения/Windows app",
+        "files": [
+          "Деблокировать все приложения Windows.bat"
+        ],
+        "cancels": [],
+        "cancelDir": null,
+        "subfolders": {}
+      },
+      "Ускорение запуска приложений": {
+        "baseDir": "tweaks/Оптимизация/Apps/Приложения/Ускорение запуска приложений",
+        "files": [
+          "Отключение задач .NET NGEN.bat",
+          "Отключение задачи резервного копирования реестра.bat",
+          "Отключение проверки целостности данных.bat",
+          "Ускорение запуска приложений.bat"
+        ],
+        "cancels": [
+          "Включение задач .NET NGEN.bat",
+          "Включение задачи резервного копирования реестра.bat",
+          "Включение проверки целостности данных.bat"
+        ],
+        "cancelDir": "Возврат",
+        "subfolders": {}
+      }
+    }
+  }
+}

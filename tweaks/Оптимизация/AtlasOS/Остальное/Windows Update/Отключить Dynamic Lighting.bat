@@ -1,0 +1,2 @@
+@echo off
+reg add "HKCU\Software\Microsoft\Lighting" /v "AmbientLightingEnabled" /t REG_DWORD /d 0 /f >nul 2>&1

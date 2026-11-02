@@ -1,0 +1,116 @@
+{
+  "tabs": {
+    "Очистка": {
+      "Root": [
+        "Очистить систему.bat",
+        "Создать бэкап служб (vainServices.reg).bat",
+        "Создать бэкап служб (winServices.reg).bat",
+        "Удалить Compatibility Telemetry.bat",
+        "Удалить DiagTrack ETL-логи.bat",
+        "Удалить Microsoft Compatibility Appraiser.bat",
+        "Удалить Microsoft Update Health Tools.bat",
+        "Удалить PendingFileRenameOperations.bat",
+        "Удалить кэш Prefetch.bat"
+      ],
+      "отмена": []
+    },
+    "Производительность": {
+      "Root": [
+        "Включить write cache для дисков.bat",
+        "Настроить Audio CPL.bat",
+        "Настроить Configuration Manager.bat",
+        "Настроить GPU.bat",
+        "Настроить I-O System.bat",
+        "Настроить Memory Management.bat",
+        "Настроить NTFS.bat",
+        "Настроить Power Session Manager.bat",
+        "Настроить SvcHostSplit.bat",
+        "Настроить WindowsMitigation.bat",
+        "Настроить приоритеты.bat",
+        "Настроить сетевой throttle.bat",
+        "Настроить ядро.bat",
+        "Отключить DMA Remapping.bat",
+        "Отключить HIPM-DIPM-HDD Parking.bat",
+        "Отключить PnP-устройства ACPI.bat",
+        "Отключить Sleep Study.bat",
+        "Отключить StorPort Idle Power Management.bat",
+        "Отключить службы Xbox-Storage-MixedReality-Sensor-WinRM.bat",
+        "Отключить ускорение мыши.bat",
+        "Пересобрать NGEN.bat",
+        "Пересобрать Performance Counters.bat"
+      ],
+      "отмена": [
+        "Вернуть Audio CPL.bat",
+        "Вернуть Configuration Manager.bat",
+        "Вернуть GPU.bat",
+        "Вернуть HIPM-DIPM-HDD Parking.bat",
+        "Вернуть I-O System.bat",
+        "Вернуть Memory Management.bat",
+        "Вернуть NTFS.bat",
+        "Вернуть Power Session Manager.bat",
+        "Вернуть StorPort Idle Power Management.bat",
+        "Вернуть SvcHostSplit.bat",
+        "Вернуть WindowsMitigation.bat",
+        "Вернуть приоритеты.bat",
+        "Вернуть сетевой throttle.bat",
+        "Вернуть ядро.bat",
+        "Включить DMA Remapping.bat",
+        "Включить PnP-устройства ACPI.bat",
+        "Включить Sleep Study.bat",
+        "Включить службы Xbox-Storage-MixedReality-Sensor-WinRM.bat",
+        "Включить ускорение мыши.bat",
+        "Отключить write cache для дисков.bat",
+        "Пересобрать NGEN.bat",
+        "Пересобрать Performance Counters.bat"
+      ]
+    },
+    "Прочее": {
+      "Root": [
+        "Настроить 7-Zip.bat",
+        "Настроить BCD.bat",
+        "Настроить Communications.bat",
+        "Настроить Config Time.bat",
+        "Настроить firewall.bat",
+        "Настроить OEM информацию.bat",
+        "Настроить PowerShell.bat",
+        "Настроить ассоциации 7-Zip и Photo Viewer.bat",
+        "Настроить печать.bat",
+        "Настроить сеть.bat",
+        "Настроить службы.bat",
+        "Отключить FTH.bat",
+        "Отключить Game Bar и Game DVR.bat",
+        "Отключить mobsync.bat",
+        "Отключить Phone Link.bat",
+        "Отключить диагностические треки.bat"
+      ],
+      "отмена": [
+        "Вернуть 7-Zip.bat",
+        "Вернуть BCD.bat",
+        "Вернуть Communications.bat",
+        "Вернуть Config Time.bat",
+        "Вернуть firewall.bat",
+        "Вернуть OEM информацию.bat",
+        "Вернуть PowerShell.bat",
+        "Включить FTH.bat",
+        "Включить Game Bar и Game DVR.bat",
+        "Включить mobsync.bat",
+        "Отменить ассоциации 7-Zip и Photo Viewer.bat"
+      ]
+    },
+    "Удаление программ": {
+      "Root": [
+        "Включить DirectPlay.bat",
+        "Удалить AppX мусор.bat",
+        "Удалить defaultuser0.bat",
+        "Удалить Internet Explorer.bat",
+        "Удалить Microsoft Edge.bat",
+        "Удалить OneDrive.bat",
+        "Удалить StepsRecorder.bat",
+        "Удалить Windows Media Player.bat",
+        "Удалить Xbox, Teams, DevHome, CrossDevice.bat",
+        "Удалить задачи OneDrive.bat"
+      ],
+      "отмена": []
+    }
+  }
+}

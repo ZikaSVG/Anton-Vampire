@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Документация — Anton Vampire v1.0.5-beta</title>
+<meta name="description" content="Полная документация Anton Vampire: установка, интерфейс, 11 вкладок, темы, шрифты, настройки, безопасность, курсоры, обои, сборщики." />
+<link rel="icon" type="image/png" href="../assets/icon.png" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="bat">🩸</span>
+      <span class="brand">ANTON VAMPIRE</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Главная</a></li>
+      <li><a href="transition.html">Переход</a></li>
+      <li><a href="docs.html" class="active">Документация</a></li>
+      <li><a href="https://github.com/ZikaSVG/Anton-Vampire" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+  </div>
+</nav>
+
+<button class="mobile-toc-btn" id="mobileTocBtn" aria-label="Содержание">☰</button>
+
+<div class="layout">
+
+  <aside class="sidebar" id="sidebar">
+    <div class="toc-title">Содержание</div>
+    <ul class="toc">
+      <li><a href="#intro">Введение</a></li>
+      <li><a href="#requirements">Требования</a></li>
+      <li><a href="#install">Установка</a></li>
+      <li><a href="#interface">Интерфейс</a></li>
+
+      <li class="toc-group">
+        <div class="toc-group-title">Вкладки</div>
+        <a href="#tab-home">🏠 Главная</a>
+        <a href="#tab-security">🛡️ Безопасность</a>
+        <a href="#tab-startup">🚀 Автозагрузка</a>
+        <a href="#tab-optimization">⚡ Оптимизация</a>
+        <a href="#tab-cleaner">🧹 Очистка</a>
+        <a href="#tab-fixes">⚜️ Исправления</a>
+        <a href="#tab-game">🎮 Игровой режим</a>
+        <a href="#tab-power">🔋 Электропитание</a>
+        <a href="#tab-customization">🎨 Кастомизация</a>
+        <a href="#tab-uninstaller">📦 Приложения</a>
+        <a href="#tab-settings">⚙️ Настройки</a>
+      </li>
+
+      <li class="toc-group">
+        <div class="toc-group-title">Механики</div>
+        <a href="#themes">Темы и шрифты</a>
+        <a href="#checkboxes">Режимы чекбоксов</a>
+        <a href="#runner">Запуск твиков</a>
+        <a href="#sources">Источники и пары</a>
+        <a href="#preload">Preload и lazy</a>
+      </li>
+
+      <li class="toc-group">
+        <div class="toc-group-title">Справочник</div>
+        <a href="#config">Конфиг</a>
+        <a href="#portable">Portable mode</a>
+        <a href="#shortcuts">Горячие клавиши</a>
+        <a href="#faq">FAQ</a>
+        <a href="#troubleshooting">Troubleshooting</a>
+        <a href="#license">Лицензия</a>
+      </li>
+    </ul>
+  </aside>
+
+  <main class="content">
+    <header class="doc-header">
+      <div class="doc-eyebrow">🩸 Документация · v1.0.5-beta</div>
+      <h1 class="doc-title">Anton Vampire</h1>
+      <p class="doc-sub">
+        Полный справочник по приложению: установка, интерфейс, все 11 вкладок,
+        темы, шрифты, настройки, безопасность, курсоры, обои и сборщики.
+      </p>
+    </header>
+
+    <section class="section" id="intro">
+      <div class="section-tag">Начало</div>
+      <h2>Введение</h2>
+      <p>
+        <strong>Anton Vampire</strong> — полностью переписанный на Electron
+        Windows оптимизатор. Наследник <strong>Extreme Tweaker</strong>
+        (Python/tkinter) с сохранением концепции: запуск
+        <code>.bat</code>/<code>.cmd</code>/<code>.ps1</code>/<code>.exe</code>/
+        <code>.reg</code>/<code>.pow</code> твиков через удобный UI.
+      </p>
+      <p>
+        Внутри — <strong>1000+ твиков</strong>, сгруппированных по 11 вкладкам,
+        <strong>~80 тем</strong>, Cyberpunk 2077 интерфейс, <strong>аудит
+        безопасности</strong>, управление автозагрузкой, курсоры, обои,
+        HTML-отчёты и сборщики JSON-данных.
+      </p>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">Open Source</div>
+          <p class="card-desc">MIT-подобная лицензия, весь код на GitHub.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Portable</div>
+          <p class="card-desc">Всё в <code>extreme_data/</code> рядом с exe.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Без зависимостей</div>
+          <p class="card-desc">Electron + Node.js уже в бандле.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Windows 10/11</div>
+          <p class="card-desc">Только Windows, x64.</p>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <div class="callout-icon">⚠</div>
+        <div class="callout-body">
+          <strong>Требуются права администратора.</strong> Приложение
+          проверяет <code>fltmc</code> при старте и предлагает перезапуск
+          с UAC через <code>Start-Process -Verb RunAs</code>.
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="requirements">
+      <div class="section-tag">Требования</div>
+      <h2>Системные требования</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Параметр</th><th>Минимум</th><th>Рекомендуется</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>ОС</td><td>Windows 10 (1809+)</td><td>Windows 11 23H2+</td></tr>
+            <tr><td>Архитектура</td><td>x64</td><td>x64</td></tr>
+            <tr><td>ОЗУ</td><td>2 GB</td><td>4 GB</td></tr>
+            <tr><td>Диск</td><td>~150 MB</td><td>~500 MB (кэш курсоров, обоев)</td></tr>
+            <tr><td>Права</td><td>Администратор</td><td>Администратор</td></tr>
+            <tr><td>Node.js</td><td>—</td><td>— (всё в бандле)</td></tr>
+            <tr><td>Python</td><td>—</td><td>Только для сборщиков JSON</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout info">
+        <div class="callout-icon">ℹ</div>
+        <div class="callout-body">
+          Python 3.8+ нужен <strong>только</strong> если вы собираете
+          JSON-данные через вкладку <em>Настройки → Утилиты</em>. Для
+          обычной работы не требуется.
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="install">
+      <div class="section-tag">Установка</div>
+      <h2>Установка</h2>
+      <h3>Способ 1: одной командой</h3>
+      <p>Откройте <kbd>Win</kbd> + <kbd>R</kbd> → <code>cmd</code> и вставьте:</p>
+      <pre><code>curl -g -k -L -# -o "%temp%\AntonVampire.Setup.exe" "https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.0.5-beta/Anton.Vampire.Setup.1.0.5-beta.exe" && start "" "%temp%\AntonVampire.Setup.exe"</code></pre>
+      
+      <h3>Способ 2: Setup вручную</h3>
+      <ol>
+        <li>Скачайте <a href="https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.0.5-beta/Anton.Vampire.Setup.1.0.5-beta.exe" download>Anton.Vampire.Setup.1.0.5-beta.exe</a></li>
+        <li>Запустите — UAC запросит подтверждение</li>
+        <li>Следуйте инструкциям установщика NSIS</li>
+      </ol>
+      
+      <h3>Способ 3: Portable</h3>
+      <p>
+        Скачайте <a href="https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.0.5-beta/Anton.Vampire.Portable.rar" download>Anton.Vampire.Portable.rar</a>,
+        распакуйте в любую папку и запустите <code>AntonVampire.exe</code>.
+        Все данные лягут в <code>extreme_data/</code> рядом с exe.
+      </p>
+      
+      <h3>Способ 4: из исходников</h3>
+      <pre><code>git clone https://github.com/ZikaSVG/Anton-Vampire.git
+cd Anton-Vampire
+npm install
+npm start</code></pre>
+      
+      <div class="callout success">
+        <div class="callout-icon">✓</div>
+        <div class="callout-body">
+          <strong>Проверка:</strong> после запуска откройте <em>Настройки → О программе</em>
+          — там будет версия и кнопка «↺ Сбросить все настройки».
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="interface">
+      <div class="section-tag">UI</div>
+      <h2>Интерфейс</h2>
+      <p>Приложение состоит из 5 постоянных элементов:</p>
+      <ol>
+        <li><strong>Сайдбар</strong> — разворачивается по hover, 11 разделов</li>
+        <li><strong>Топбар</strong> — драг-зона окна, поиск, кнопки</li>
+        <li><strong>Табы</strong> — под-вкладки внутри раздела</li>
+        <li><strong>Content</strong> — содержимое активной вкладки</li>
+        <li><strong>Статус-бар</strong> — статус и счётчик выбранных</li>
+      </ol>
+      <h3>Сайдбар</h3>
+      <p>В свёрнутом виде — только иконки (<code>--sidebar-collapsed: 60px</code>). При hover разворачивается до <code>--sidebar-expanded: 216px</code> за <code>250ms</code>.</p>
+      <h3>Топбар</h3>
+      <ul>
+        <li>Лого + версия</li>
+        <li>Глобальный поиск <code>#global-search</code></li>
+        <li>Кнопки: <em>Выделить всё</em>, <em>▶ Выполнить</em>, <em>♻ Обновить</em>, <em>⛶ Fullscreen</em></li>
+      </ul>
+    </section>
+
+    <section class="section" id="themes">
+      <div class="section-tag">Механика</div>
+      <h2>Темы и шрифты</h2>
+      <h3>Темы</h3>
+      <p>В <code>renderer/themes.js</code> экспортируется объект <code>THEMES</code> (~80 ключей) и <code>THEMES_META.groups</code> (10 групп). Применение — <code>applyTheme(name, unified, sidebarOpacity)</code>.</p>
+      <pre><code>cyberpunk_2077: {
+  bg: '#090507', bgAlt: '#11070a', card: '#180a10', cardHover: '#24101a',
+  border: '#ff003c', fg: '#f0f0f0', fgMuted: '#8a7a7a',
+  accent: '#00e5ff', accent2: '#ff003c', accentText: '#000000',
+  success: '#00e5ff', warning: '#fcee0a', danger: '#ff003c', info: '#00b0c0'
+}</code></pre>
+      <h3>Шрифты</h3>
+      <p>6 слотов + 2 веса:</p>
+      <pre><code>font_heading_latin: 'Press Start 2P',
+font_heading_cyr:   'Share Tech Mono',
+font_body_latin:    'Rajdhani',
+font_body_cyr:      'Rajdhani',
+font_mono:          'Share Tech Mono',
+heading_font_size:  15,
+body_font_size:     13,
+heading_font_weight: 700,
+body_font_weight:    400</code></pre>
+    </section>
+
+    <section class="section" id="license">
+      <div class="section-tag">Правовая информация</div>
+      <h2>Лицензия</h2>
+      <p>Anton Vampire распространяется под <strong>Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)</strong>.</p>
+      <div class="callout info">
+        <div class="callout-icon">📜</div>
+        <div class="callout-body">
+          <strong>Кратко:</strong> можно форкать, изменять и распространять — но <strong>нельзя продавать</strong> и нельзя закрывать код производных версий. Обязательно указывать авторство.
+        </div>
+      </div>
+      <h3>Что разрешено</h3>
+      <ul>
+        <li>Форк репозитория и изменение кода</li>
+        <li>Распространение оригинальной и изменённой версии</li>
+        <li>Использование в личных и некоммерческих проектах</li>
+      </ul>
+      <h3>Что запрещено</h3>
+      <ul>
+        <li>Продажа приложения, форков или платного доступа к ним</li>
+        <li>Коммерческое использование без письменного разрешения автора</li>
+        <li>Закрытие кода производных версий</li>
+      </ul>
+    </section>
+  </main>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="bat">🩸</span>
+        <span>ANTON VAMPIRE</span>
+      </div>
+      <div class="footer-meta">
+        <div>© 2026 ZikaSVG · v1.0.5-beta</div>
+        <div>Документация · Cyberpunk 2077</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const sections = document.querySelectorAll('section[id]');
+const tocLinks = document.querySelectorAll('.toc a');
+const spy = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      tocLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s => spy.observe(s));
+
+tocLinks.forEach(a => {
+  a.addEventListener('click', (e) => {
+    const href = a.getAttribute('href');
+    if (!href || !href.startsWith('#')) return;
+    const target = document.querySelector(href);
+    if (!target) return;
+    e.preventDefault();
+    const top = target.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({ top, behavior: 'smooth' });
+    const sidebar = document.getElementById('sidebar');
+    if (sidebar) sidebar.classList.remove('open');
+    history.replaceState(null, '', href);
+  });
+});
+
+const mobileTocBtn = document.getElementById('mobileTocBtn');
+const sidebar = document.getElementById('sidebar');
+mobileTocBtn?.addEventListener('click', () => sidebar.classList.toggle('open'));
+</script>
+</body>
+</html>

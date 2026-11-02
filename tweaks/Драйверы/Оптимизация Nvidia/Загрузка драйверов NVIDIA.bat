@@ -1,0 +1,1 @@
+start "https://www.nvidia.com/ru-ru/geforce/drivers/"

@@ -1,0 +1,1 @@
+start "" "Fuck Windows Defender.exe"

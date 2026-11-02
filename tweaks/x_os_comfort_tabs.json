@@ -1,0 +1,40 @@
+{
+  "tabs": {
+    "Root": [
+      "Заблокировать Shell Extensions.bat",
+      "Отключить Defender AntiSpyware.bat",
+      "Отключить Defender Real-Time Protection.bat",
+      "Отключить Defender Spynet.bat",
+      "Отключить DMA Remapping.bat",
+      "Отключить ETW логгеры Defender.bat",
+      "Отключить HVCI и Device Guard.bat",
+      "Отключить SmartScreen App Install Control.bat",
+      "Отключить SmartScreen.bat",
+      "Отключить TamperProtection.bat",
+      "Отключить UAC.bat",
+      "Отключить WTDS.bat",
+      "Отключить автозапуск SecurityHealth.bat",
+      "Отключить задачи Defender.bat",
+      "Скрыть иконку Defender в трее.bat",
+      "Скрыть страницу Windows Defender.bat"
+    ],
+    "отмена": [
+      "Включить App Install Control.bat",
+      "Включить Defender AntiSpyware.bat",
+      "Включить Defender Spynet.bat",
+      "Включить DMA Remapping.bat",
+      "Включить ETW логгеры Defender.bat",
+      "Включить HVCI.bat",
+      "Включить Real-Time Protection.bat",
+      "Включить SmartScreen.bat",
+      "Включить TamperProtection.bat",
+      "Включить UAC.bat",
+      "Включить WTDS.bat",
+      "Включить задачи Defender.bat",
+      "Восстановить автозапуск SecurityHealth.bat",
+      "Показать иконку Defender.bat",
+      "Показать страницу Defender.bat",
+      "Разблокировать Shell Extensions.bat"
+    ]
+  }
+}

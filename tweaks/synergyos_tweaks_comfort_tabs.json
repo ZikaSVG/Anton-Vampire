@@ -1,0 +1,16 @@
+{
+  "tabs": {
+    "Root": [
+      "Отключить Defender.bat",
+      "Отключить Mitigations.bat",
+      "Отключить MMCSS.bat",
+      "Отключить SmartScreen.bat"
+    ],
+    "отмена": [
+      "Включить Defender.bat",
+      "Включить Mitigations.bat",
+      "Включить MMCSS.bat",
+      "Включить SmartScreen.bat"
+    ]
+  }
+}

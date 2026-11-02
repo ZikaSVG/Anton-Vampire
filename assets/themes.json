@@ -1,0 +1,628 @@
+{
+  "themes": {
+    "material3": {
+      "bg": "#141218", "bgAlt": "#1d1b20", "card": "#211f26", "cardHover": "#2b2930",
+      "border": "#49454f", "fg": "#e6e0e9", "fgMuted": "#cac4d0",
+      "accent": "#d0bcff", "accent2": "#b69df8", "accentText": "#381e72",
+      "success": "#b8f2c0", "warning": "#ffd8a8", "danger": "#ffb4ab", "info": "#a8c7fa"
+    },
+    "material3_light": {
+      "bg": "#fef7ff", "bgAlt": "#f7f2fa", "card": "#ffffff", "cardHover": "#f3edf7",
+      "border": "#cac4d0", "fg": "#1d1b20", "fgMuted": "#49454f",
+      "accent": "#6750a4", "accent2": "#7f67be", "accentText": "#ffffff",
+      "success": "#386a20", "warning": "#7a5900", "danger": "#ba1a1a", "info": "#0b57d0"
+    },
+
+    "cosmo": {
+      "bg": "#ffffff", "bgAlt": "#f4f6f8", "card": "#ffffff", "cardHover": "#eef1f4",
+      "border": "#2780e3", "fg": "#373a3c", "fgMuted": "#7e8081",
+      "accent": "#2780e3", "accent2": "#1a5fae", "accentText": "#ffffff",
+      "success": "#3fb618", "warning": "#ff7518", "danger": "#ff0039", "info": "#9954bb"
+    },
+    "flatly": {
+      "bg": "#ffffff", "bgAlt": "#f4f6f7", "card": "#ffffff", "cardHover": "#eceff1",
+      "border": "#2c3e50", "fg": "#212529", "fgMuted": "#95a5a6",
+      "accent": "#2c3e50", "accent2": "#1e2b38", "accentText": "#ffffff",
+      "success": "#18bc9c", "warning": "#f39c12", "danger": "#e74c3c", "info": "#3498db"
+    },
+    "litera": {
+      "bg": "#ffffff", "bgAlt": "#f8f9fa", "card": "#ffffff", "cardHover": "#eef0f2",
+      "border": "#4582ec", "fg": "#343a40", "fgMuted": "#adb5bd",
+      "accent": "#4582ec", "accent2": "#2a5fc2", "accentText": "#ffffff",
+      "success": "#02b875", "warning": "#f0ad4e", "danger": "#d9534f", "info": "#17a2b8"
+    },
+    "minty": {
+      "bg": "#ffffff", "bgAlt": "#f7fbfa", "card": "#ffffff", "cardHover": "#eef7f4",
+      "border": "#78c2ad", "fg": "#5a5a5a", "fgMuted": "#f3969a",
+      "accent": "#78c2ad", "accent2": "#4c9c87", "accentText": "#ffffff",
+      "success": "#56cc9d", "warning": "#ffce67", "danger": "#ff7851", "info": "#6cc3d5"
+    },
+    "lumen": {
+      "bg": "#ffffff", "bgAlt": "#f7f7f7", "card": "#ffffff", "cardHover": "#ececec",
+      "border": "#158cba", "fg": "#555555", "fgMuted": "#919191",
+      "accent": "#158cba", "accent2": "#0e6a8e", "accentText": "#ffffff",
+      "success": "#28b62c", "warning": "#ff851b", "danger": "#ff4136", "info": "#75caeb"
+    },
+    "sandstone": {
+      "bg": "#ffffff", "bgAlt": "#f8f5f0", "card": "#ffffff", "cardHover": "#ede8e0",
+      "border": "#325d88", "fg": "#3e3f3a", "fgMuted": "#8e8c84",
+      "accent": "#325d88", "accent2": "#213e5a", "accentText": "#ffffff",
+      "success": "#93c54b", "warning": "#f47c3c", "danger": "#d9534f", "info": "#29abe0"
+    },
+    "yeti": {
+      "bg": "#ffffff", "bgAlt": "#f4f4f4", "card": "#ffffff", "cardHover": "#e9e9e9",
+      "border": "#008cba", "fg": "#222222", "fgMuted": "#707070",
+      "accent": "#008cba", "accent2": "#006b8f", "accentText": "#ffffff",
+      "success": "#43ac6a", "warning": "#e99002", "danger": "#f04124", "info": "#5bc0de"
+    },
+    "pulse": {
+      "bg": "#ffffff", "bgAlt": "#f9f8fc", "card": "#ffffff", "cardHover": "#efeaf7",
+      "border": "#593196", "fg": "#444444", "fgMuted": "#69676e",
+      "accent": "#593196", "accent2": "#3f216a", "accentText": "#ffffff",
+      "success": "#13b955", "warning": "#efa31d", "danger": "#fc3939", "info": "#009cdc"
+    },
+    "united": {
+      "bg": "#ffffff", "bgAlt": "#e9ecef", "card": "#ffffff", "cardHover": "#e0e3e6",
+      "border": "#e95420", "fg": "#333333", "fgMuted": "#aea79f",
+      "accent": "#e95420", "accent2": "#bd3e12", "accentText": "#ffffff",
+      "success": "#38b44a", "warning": "#efb73e", "danger": "#df382c", "info": "#17a2b8"
+    },
+    "morph": {
+      "bg": "#d9e3f1", "bgAlt": "#cfd9e7", "card": "#e9eff7", "cardHover": "#dee6f1",
+      "border": "#378dfc", "fg": "#7b8ab8", "fgMuted": "#9aa6c7",
+      "accent": "#378dfc", "accent2": "#0e6bef", "accentText": "#ffffff",
+      "success": "#43cc29", "warning": "#ffc107", "danger": "#e52527", "info": "#5b62f4"
+    },
+    "journal": {
+      "bg": "#ffffff", "bgAlt": "#f8f9fa", "card": "#ffffff", "cardHover": "#eef0f2",
+      "border": "#eb6864", "fg": "#222222", "fgMuted": "#aaaaaa",
+      "accent": "#eb6864", "accent2": "#d24a46", "accentText": "#ffffff",
+      "success": "#22b24c", "warning": "#f5e625", "danger": "#f57a00", "info": "#336699"
+    },
+    "simplex": {
+      "bg": "#fcfcfc", "bgAlt": "#f2f2f2", "card": "#ffffff", "cardHover": "#ebebeb",
+      "border": "#d8220e", "fg": "#3b3d3f", "fgMuted": "#858e96",
+      "accent": "#d8220e", "accent2": "#a91709", "accentText": "#ffffff",
+      "success": "#469307", "warning": "#d88220", "danger": "#9a479e", "info": "#0099ce"
+    },
+    "cerculean": {
+      "bg": "#ffffff", "bgAlt": "#eceef1", "card": "#ffffff", "cardHover": "#e3e6ea",
+      "border": "#4bb1ea", "fg": "#2ea4e7", "fgMuted": "#a9b4be",
+      "accent": "#4bb1ea", "accent2": "#2395d4", "accentText": "#ffffff",
+      "success": "#84b251", "warning": "#e16e25", "danger": "#cf3c40", "info": "#225384"
+    },
+
+    "darkly": {
+      "bg": "#222222", "bgAlt": "#2a2a2a", "card": "#303030", "cardHover": "#3a3a3a",
+      "border": "#375a7f", "fg": "#ffffff", "fgMuted": "#adb5bd",
+      "accent": "#375a7f", "accent2": "#24415d", "accentText": "#ffffff",
+      "success": "#00bc8c", "warning": "#f39c12", "danger": "#e74c3c", "info": "#3498db"
+    },
+    "superhero": {
+      "bg": "#2b3e50", "bgAlt": "#22323f", "card": "#33475b", "cardHover": "#3d5266",
+      "border": "#4e5d6c", "fg": "#ffffff", "fgMuted": "#abb6c2",
+      "accent": "#4c9be8", "accent2": "#2e78c5", "accentText": "#ffffff",
+      "success": "#5cb85c", "warning": "#f0ad4e", "danger": "#d9534f", "info": "#5bc0de"
+    },
+    "solar": {
+      "bg": "#002b36", "bgAlt": "#00252e", "card": "#073642", "cardHover": "#0a404f",
+      "border": "#0b5162", "fg": "#ffffff", "fgMuted": "#a9bdbd",
+      "accent": "#bc951a", "accent2": "#947512", "accentText": "#ffffff",
+      "success": "#44aca4", "warning": "#d05e2f", "danger": "#d95092", "info": "#3f98d7"
+    },
+    "cyborg": {
+      "bg": "#060606", "bgAlt": "#101010", "card": "#1a1a1a", "cardHover": "#242424",
+      "border": "#2a9fd6", "fg": "#ffffff", "fgMuted": "#adafae",
+      "accent": "#2a9fd6", "accent2": "#1a7ea8", "accentText": "#ffffff",
+      "success": "#77b300", "warning": "#ff8800", "danger": "#cc0000", "info": "#9933cc"
+    },
+    "vapor": {
+      "bg": "#190831", "bgAlt": "#22103d", "card": "#2a1752", "cardHover": "#33205f",
+      "border": "#6e40c0", "fg": "#32fbe2", "fgMuted": "#bfb6cd",
+      "accent": "#ea38b8", "accent2": "#6e40c0", "accentText": "#ffffff",
+      "success": "#3af180", "warning": "#ffbd05", "danger": "#e34b54", "info": "#1da2f2"
+    },
+
+    "cyberpunk": {
+      "bg": "#190831", "bgAlt": "#22103d", "card": "#2a1752", "cardHover": "#33205f",
+      "border": "#ea38b8", "fg": "#32fbe2", "fgMuted": "#a39ec4",
+      "accent": "#ea38b8", "accent2": "#b01a8b", "accentText": "#32fbe2",
+      "success": "#3af180", "warning": "#ffbd05", "danger": "#ea38b8", "info": "#1da2f2"
+    },
+    "hacker": {
+      "bg": "#222222", "bgAlt": "#2a2a2a", "card": "#2f2f2f", "cardHover": "#3a3a3a",
+      "border": "#222222", "fg": "#3af180", "fgMuted": "#5b9e75",
+      "accent": "#3af180", "accent2": "#2bbf66", "accentText": "#0a0a0a",
+      "success": "#3af180", "warning": "#3af180", "danger": "#3af180", "info": "#3af180"
+    },
+    "palenight": {
+      "bg": "#292d3e", "bgAlt": "#25293a", "card": "#2f3449", "cardHover": "#3a4058",
+      "border": "#222222", "fg": "#cccccc", "fgMuted": "#8a8f9d",
+      "accent": "#89ddff", "accent2": "#5fb6d9", "accentText": "#1a1d2b",
+      "success": "#50c878", "warning": "#f39c12", "danger": "#ff5874", "info": "#89ddff"
+    },
+    "boosterx": {
+      "bg": "#1b2352", "bgAlt": "#151b42", "card": "#0a0f21", "cardHover": "#1f2950",
+      "border": "#7930ff", "fg": "#ffffff", "fgMuted": "#bfb6cd",
+      "accent": "#7930ff", "accent2": "#5a1fb0", "accentText": "#ffffff",
+      "success": "#31ff83", "warning": "#ffbd05", "danger": "#d93b3b", "info": "#2e5cff"
+    },
+    "boosterxvapor": {
+      "bg": "#190831", "bgAlt": "#22103d", "card": "#0a0f21", "cardHover": "#2f1a5c",
+      "border": "#7930ff", "fg": "#ffffff", "fgMuted": "#bfb6cd",
+      "accent": "#7930ff", "accent2": "#5a1fb0", "accentText": "#ffffff",
+      "success": "#31ff83", "warning": "#ffbd05", "danger": "#d93b3b", "info": "#2e5cff"
+    },
+
+    "extreme": {
+      "bg": "#0a0a0a", "bgAlt": "#141414", "card": "#1a1a1a", "cardHover": "#222222",
+      "border": "#ffffff", "fg": "#ffffff", "fgMuted": "#b8b8b8",
+      "accent": "#ff1744", "accent2": "#c40030", "accentText": "#ffffff",
+      "success": "#31ff83", "warning": "#ffbd05", "danger": "#ff1744", "info": "#2e5cff"
+    },
+    "newhone": {
+      "bg": "#080f1b", "bgAlt": "#0d1520", "card": "#121b2a", "cardHover": "#1a2436",
+      "border": "#ffffff", "fg": "#ffffff", "fgMuted": "#8091a8",
+      "accent": "#ff1744", "accent2": "#c40030", "accentText": "#ffffff",
+      "success": "#3ef766", "warning": "#f99926", "danger": "#ff1744", "info": "#3c77e3"
+    },
+    "nord": {
+      "bg": "#1a1a1a", "bgAlt": "#222222", "card": "#2a2a2a", "cardHover": "#333333",
+      "border": "#d1dbe5", "fg": "#d1dbe5", "fgMuted": "#8b9aac",
+      "accent": "#435f82", "accent2": "#2d4460", "accentText": "#ffffff",
+      "success": "#546639", "warning": "#7c3d29", "danger": "#c36c74", "info": "#5e81ac"
+    },
+
+    "wincry": {
+      "bg": "#0a0a0a", "bgAlt": "#141414", "card": "#1a1a1a", "cardHover": "#222222",
+      "border": "#ffffff", "fg": "#ffffff", "fgMuted": "#b8b8b8",
+      "accent": "#ff1744", "accent2": "#c40030", "accentText": "#ffffff",
+      "success": "#31ff83", "warning": "#ffbd05", "danger": "#ff1744", "info": "#2e5cff"
+    },
+    "ruslanchik": {
+      "bg": "#0a0a0a", "bgAlt": "#141414", "card": "#1a1a1a", "cardHover": "#222222",
+      "border": "#ffffff", "fg": "#ffffff", "fgMuted": "#b8b8b8",
+      "accent": "#ff1744", "accent2": "#c40030", "accentText": "#ffffff",
+      "success": "#31ff83", "warning": "#ffbd05", "danger": "#ff1744", "info": "#ffbd05"
+    },
+    "wincry_warning": {
+      "bg": "#0a0a0a", "bgAlt": "#141414", "card": "#1a1a1a", "cardHover": "#222222",
+      "border": "#ffbd05", "fg": "#ffbd05", "fgMuted": "#a38000",
+      "accent": "#ff1744", "accent2": "#c40030", "accentText": "#ffbd05",
+      "success": "#31ff83", "warning": "#ffbd05", "danger": "#ff1744", "info": "#ffbd05"
+    },
+    "wincry_full_warning": {
+      "bg": "#0a0a0a", "bgAlt": "#141414", "card": "#1a1a1a", "cardHover": "#222222",
+      "border": "#ffbd05", "fg": "#ffbd05", "fgMuted": "#a38000",
+      "accent": "#ff1744", "accent2": "#c40030", "accentText": "#ffbd05",
+      "success": "#ffbd05", "warning": "#ffbd05", "danger": "#ff1744", "info": "#ffbd05"
+    },
+
+    "bloodmoon": {
+      "bg": "#14060a", "bgAlt": "#1d080f", "card": "#260b14", "cardHover": "#350f1c",
+      "border": "#7a1226", "fg": "#f5d9dd", "fgMuted": "#a2757d",
+      "accent": "#e11d48", "accent2": "#8f0f2e", "accentText": "#ffffff",
+      "success": "#65d69f", "warning": "#f0a83b", "danger": "#e11d48", "info": "#7aa2ff"
+    },
+    "abyss": {
+      "bg": "#050b14", "bgAlt": "#081120", "card": "#0c1930", "cardHover": "#12224a",
+      "border": "#1e3a8a", "fg": "#dbeafe", "fgMuted": "#7c93b8",
+      "accent": "#3b82f6", "accent2": "#1e40af", "accentText": "#ffffff",
+      "success": "#22c55e", "warning": "#f59e0b", "danger": "#ef4444", "info": "#60a5fa"
+    },
+    "newnord": {
+      "bg": "#242933", "bgAlt": "#2e3440", "card": "#3b4252", "cardHover": "#434c5e",
+      "border": "#4c566a", "fg": "#eceff4", "fgMuted": "#a7b1c3",
+      "accent": "#88c0d0", "accent2": "#5e81ac", "accentText": "#2e3440",
+      "success": "#a3be8c", "warning": "#ebcb8b", "danger": "#bf616a", "info": "#81a1c1"
+    },
+    "catppuccin": {
+      "bg": "#1e1e2e", "bgAlt": "#181825", "card": "#313244", "cardHover": "#45475a",
+      "border": "#585b70", "fg": "#cdd6f4", "fgMuted": "#a6adc8",
+      "accent": "#cba6f7", "accent2": "#89b4fa", "accentText": "#1e1e2e",
+      "success": "#a6e3a1", "warning": "#f9e2af", "danger": "#f38ba8", "info": "#89dceb"
+    },
+    "dracula": {
+      "bg": "#282a36", "bgAlt": "#21222c", "card": "#343746", "cardHover": "#44475a",
+      "border": "#6272a4", "fg": "#f8f8f2", "fgMuted": "#bdbdd0",
+      "accent": "#bd93f9", "accent2": "#ff79c6", "accentText": "#282a36",
+      "success": "#50fa7b", "warning": "#f1fa8c", "danger": "#ff5555", "info": "#8be9fd"
+    },
+    "newpalenight": {
+      "bg": "#1c1f2b", "bgAlt": "#232735", "card": "#2e3449", "cardHover": "#3a4058",
+      "border": "#3f4763", "fg": "#d4d8ee", "fgMuted": "#8b90a8",
+      "accent": "#82aaff", "accent2": "#c792ea", "accentText": "#1c1f2b",
+      "success": "#c3e88d", "warning": "#ffcb6b", "danger": "#f07178", "info": "#89ddff"
+    },
+    "hellokitty": {
+      "bg": "#2a1020", "bgAlt": "#341528", "card": "#3d1a30", "cardHover": "#4a2039",
+      "border": "#ff8fc0", "fg": "#ffe4f1", "fgMuted": "#d38cad",
+      "accent": "#ff4f97", "accent2": "#d62d75", "accentText": "#ffffff",
+      "success": "#8be7a1", "warning": "#ffd76b", "danger": "#ff5c7a", "info": "#7fc8ff"
+    },
+    "kuromi": {
+      "bg": "#0e0b16", "bgAlt": "#15111f", "card": "#1c162a", "cardHover": "#251c36",
+      "border": "#cfa5ff", "fg": "#f0e6ff", "fgMuted": "#a395bd",
+      "accent": "#a06bff", "accent2": "#7a44d6", "accentText": "#ffffff",
+      "success": "#7ee0a3", "warning": "#ffc857", "danger": "#ff5c7a", "info": "#7fc8ff"
+    },
+    "onedark": {
+      "bg": "#282c34", "bgAlt": "#21252b", "card": "#2c313a", "cardHover": "#353b45",
+      "border": "#3e4451", "fg": "#abb2bf", "fgMuted": "#5c6370",
+      "accent": "#61afef", "accent2": "#528bcc", "accentText": "#282c34",
+      "success": "#98c379", "warning": "#e5c07b", "danger": "#e06c75", "info": "#56b6c2"
+    },
+    "hacker_new": {
+      "bg": "#000000", "bgAlt": "#0a0a0a", "card": "#111111", "cardHover": "#1a1a1a",
+      "border": "#00ff00", "fg": "#00ff00", "fgMuted": "#008800",
+      "accent": "#00ff00", "accent2": "#00cc00", "accentText": "#000000",
+      "success": "#00ff00", "warning": "#ffff00", "danger": "#ff0000", "info": "#00ffff"
+    },
+
+    "bootstrap": {
+      "bg": "#212529", "bgAlt": "#1a1d20", "card": "#2c3034", "cardHover": "#343a40",
+      "border": "#0d6efd", "fg": "#f8f9fa", "fgMuted": "#adb5bd",
+      "accent": "#0d6efd", "accent2": "#0a58ca", "accentText": "#ffffff",
+      "success": "#198754", "warning": "#ffc107", "danger": "#dc3545", "info": "#0dcaf0"
+    },
+    "bootstrap_light": {
+      "bg": "#ffffff", "bgAlt": "#f4f6f8", "card": "#ffffff", "cardHover": "#eef1f4",
+      "border": "#0d6efd", "fg": "#212529", "fgMuted": "#6c757d",
+      "accent": "#0d6efd", "accent2": "#0a58ca", "accentText": "#ffffff",
+      "success": "#198754", "warning": "#ffc107", "danger": "#dc3545", "info": "#0dcaf0"
+    },
+    "pydata": {
+      "bg": "#14181e", "bgAlt": "#0f1318", "card": "#1a2026", "cardHover": "#232a32",
+      "border": "#0a7d91", "fg": "#ced6dd", "fgMuted": "#8b95a3",
+      "accent": "#0a7d91", "accent2": "#075a6b", "accentText": "#ffffff",
+      "success": "#198754", "warning": "#ffc107", "danger": "#dc3545", "info": "#0dcaf0"
+    },
+    "pydata_light": {
+      "bg": "#ffffff", "bgAlt": "#f4f6f8", "card": "#ffffff", "cardHover": "#eef1f4",
+      "border": "#0a7d91", "fg": "#222832", "fgMuted": "#677384",
+      "accent": "#0a7d91", "accent2": "#075a6b", "accentText": "#ffffff",
+      "success": "#198754", "warning": "#ffc107", "danger": "#dc3545", "info": "#0dcaf0"
+    },
+    "nord_curated": {
+      "bg": "#2e3440", "bgAlt": "#272c36", "card": "#3b4252", "cardHover": "#434c5e",
+      "border": "#5e81ac", "fg": "#eceff4", "fgMuted": "#a7b1c3",
+      "accent": "#5e81ac", "accent2": "#4c6c93", "accentText": "#eceff4",
+      "success": "#a3be8c", "warning": "#ebcb8b", "danger": "#bf616a", "info": "#88c0d0"
+    },
+    "solarized": {
+      "bg": "#002b36", "bgAlt": "#00252e", "card": "#073642", "cardHover": "#0a404f",
+      "border": "#268bd2", "fg": "#93a1a1", "fgMuted": "#839496",
+      "accent": "#268bd2", "accent2": "#1c6fa8", "accentText": "#fdf6e3",
+      "success": "#859900", "warning": "#b58900", "danger": "#dc322f", "info": "#2aa198"
+    },
+    "solarized_light": {
+      "bg": "#f6f1e9", "bgAlt": "#fdf6e3", "card": "#fffaf0", "cardHover": "#f0e9dc",
+      "border": "#268bd2", "fg": "#586e75", "fgMuted": "#839496",
+      "accent": "#268bd2", "accent2": "#1c6fa8", "accentText": "#fdf6e3",
+      "success": "#859900", "warning": "#b58900", "danger": "#dc322f", "info": "#2aa198"
+    },
+    "catppuccin_curated": {
+      "bg": "#1e1e2e", "bgAlt": "#181825", "card": "#313244", "cardHover": "#45475a",
+      "border": "#8839ef", "fg": "#cdd6f4", "fgMuted": "#a6adc8",
+      "accent": "#8839ef", "accent2": "#6c2bd9", "accentText": "#ffffff",
+      "success": "#40a02b", "warning": "#df8e1d", "danger": "#d20f39", "info": "#179299"
+    },
+    "gruvbox": {
+      "bg": "#282828", "bgAlt": "#1d2021", "card": "#3c3836", "cardHover": "#504945",
+      "border": "#458588", "fg": "#ebdbb2", "fgMuted": "#928374",
+      "accent": "#458588", "accent2": "#36696b", "accentText": "#fbf1c7",
+      "success": "#98971a", "warning": "#d79921", "danger": "#cc241d", "info": "#689d6a"
+    },
+    "gruvbox_light": {
+      "bg": "#f2ede9", "bgAlt": "#fbf1c7", "card": "#fffaf0", "cardHover": "#ebdbb2",
+      "border": "#458588", "fg": "#3c3836", "fgMuted": "#7c6f64",
+      "accent": "#458588", "accent2": "#36696b", "accentText": "#fbf1c7",
+      "success": "#98971a", "warning": "#d79921", "danger": "#cc241d", "info": "#689d6a"
+    },
+    "dracula_curated": {
+      "bg": "#282a36", "bgAlt": "#21222c", "card": "#343746", "cardHover": "#44475a",
+      "border": "#bd93f9", "fg": "#f8f8f2", "fgMuted": "#bdbdd0",
+      "accent": "#bd93f9", "accent2": "#9b6fd9", "accentText": "#282a36",
+      "success": "#50fa7b", "warning": "#ffb86c", "danger": "#ff5555", "info": "#8be9fd"
+    },
+    "tokyo_night": {
+      "bg": "#1a1b26", "bgAlt": "#16161e", "card": "#24283b", "cardHover": "#2f334d",
+      "border": "#7aa2f7", "fg": "#c0caf5", "fgMuted": "#565f89",
+      "accent": "#7aa2f7", "accent2": "#5a82d7", "accentText": "#1a1b26",
+      "success": "#9ece6a", "warning": "#e0af68", "danger": "#f7768e", "info": "#7dcfff"
+    },
+    "tokyo_night_light": {
+      "bg": "#e1e2e7", "bgAlt": "#d5d6db", "card": "#f0f1f5", "cardHover": "#e4e5ea",
+      "border": "#7aa2f7", "fg": "#343b58", "fgMuted": "#6172a0",
+      "accent": "#7aa2f7", "accent2": "#5a82d7", "accentText": "#ffffff",
+      "success": "#9ece6a", "warning": "#e0af68", "danger": "#f7768e", "info": "#7dcfff"
+    },
+    "one": {
+      "bg": "#282c34", "bgAlt": "#21252b", "card": "#2c313a", "cardHover": "#353b45",
+      "border": "#4078f2", "fg": "#abb2bf", "fgMuted": "#5c6370",
+      "accent": "#4078f2", "accent2": "#2d5bbf", "accentText": "#ffffff",
+      "success": "#50a14f", "warning": "#c18401", "danger": "#e45649", "info": "#0184bc"
+    },
+    "one_light": {
+      "bg": "#fafafa", "bgAlt": "#f0f0f1", "card": "#ffffff", "cardHover": "#eaeaeb",
+      "border": "#4078f2", "fg": "#383a42", "fgMuted": "#a0a1a7",
+      "accent": "#4078f2", "accent2": "#2d5bbf", "accentText": "#ffffff",
+      "success": "#50a14f", "warning": "#c18401", "danger": "#e45649", "info": "#0184bc"
+    },
+    "everforest": {
+      "bg": "#2d353b", "bgAlt": "#232a2e", "card": "#343f44", "cardHover": "#3d484d",
+      "border": "#3a94c5", "fg": "#d3c6aa", "fgMuted": "#939f91",
+      "accent": "#3a94c5", "accent2": "#2c7299", "accentText": "#2d353b",
+      "success": "#8da101", "warning": "#dfa000", "danger": "#f85552", "info": "#35a77c"
+    },
+    "everforest_light": {
+      "bg": "#edf3ed", "bgAlt": "#e0e8e0", "card": "#f7fbf7", "cardHover": "#dde5dd",
+      "border": "#3a94c5", "fg": "#5c6a72", "fgMuted": "#7a857c",
+      "accent": "#3a94c5", "accent2": "#2c7299", "accentText": "#ffffff",
+      "success": "#8da101", "warning": "#dfa000", "danger": "#f85552", "info": "#35a77c"
+    },
+
+    "vampire_the_masquerade": {
+      "bg": "#0a0508", "bgAlt": "#120a0f", "card": "#1a0f16", "cardHover": "#24141d",
+      "border": "#8b0000", "fg": "#e8d5d5", "fgMuted": "#9a7a7a",
+      "accent": "#b30000", "accent2": "#7a0000", "accentText": "#ffffff",
+      "success": "#4a7a4a", "warning": "#b8860b", "danger": "#cc0000", "info": "#5c5c8a"
+    },
+    "counter_strike_16": {
+      "bg": "#1a1a1a", "bgAlt": "#222222", "card": "#2a2a2a", "cardHover": "#333333",
+      "border": "#c0a060", "fg": "#d4d4d4", "fgMuted": "#888888",
+      "accent": "#c0a060", "accent2": "#a08040", "accentText": "#1a1a1a",
+      "success": "#4a8a4a", "warning": "#c0a060", "danger": "#8a3a3a", "info": "#4a6a8a"
+    },
+    "counter_strike_2": {
+      "bg": "#121212", "bgAlt": "#1a1a1a", "card": "#222222", "cardHover": "#2e2e2e",
+      "border": "#e8770a", "fg": "#f2f2f2", "fgMuted": "#8a8a8a",
+      "accent": "#e8770a", "accent2": "#b85c00", "accentText": "#121212",
+      "success": "#3a9a4a", "warning": "#e8770a", "danger": "#c03040", "info": "#4a6a8a"
+    },
+    "diablo": {
+      "bg": "#0a0604", "bgAlt": "#120c08", "card": "#1a100a", "cardHover": "#24160e",
+      "border": "#8b1a1a", "fg": "#d4b8a0", "fgMuted": "#8a6a5a",
+      "accent": "#b22222", "accent2": "#7a1010", "accentText": "#ffffff",
+      "success": "#4a6a2a", "warning": "#b8860b", "danger": "#b22222", "info": "#4a5a7a"
+    },
+    "cyberpunk_2077": {
+      "bg": "#090507", "bgAlt": "#11070a", "card": "#180a10", "cardHover": "#24101a",
+      "border": "#ff003c", "fg": "#f0f0f0", "fgMuted": "#8a7a7a",
+      "accent": "#00e5ff", "accent2": "#ff003c", "accentText": "#000000",
+      "success": "#00e5ff", "warning": "#fcee0a", "danger": "#ff003c", "info": "#00b0c0"
+    },    
+    "cyberpunk_yellow": {
+      "bg": "#0b0b0b", "bgAlt": "#141414", "card": "#1a1a1a", "cardHover": "#242424",
+      "border": "#fcee0a", "fg": "#fcee0a", "fgMuted": "#a39e1a",
+      "accent": "#fcee0a", "accent2": "#00e5ff", "accentText": "#000000",
+      "success": "#00e5ff", "warning": "#fcee0a", "danger": "#ff003c", "info": "#00e5ff"
+    },
+    
+    "cyberpunk_blue": {
+      "bg": "#0a1128", "bgAlt": "#001034", "card": "#001f54", "cardHover": "#002a73",
+      "border": "#00f0ff", "fg": "#00f0ff", "fgMuted": "#007a99",
+      "accent": "#00f0ff", "accent2": "#0055ff", "accentText": "#0a1128",
+      "success": "#00f0ff", "warning": "#fcee0a", "danger": "#ff003c", "info": "#00f0ff"
+    },
+
+    "catppuccin_latte": {
+      "bg": "#eff1f5", "bgAlt": "#e6e9ef", "card": "#e6e9ef", "cardHover": "#dce0e8",
+      "border": "#bcc0cc", "fg": "#4c4f69", "fgMuted": "#6c6f85",
+      "accent": "#8839ef", "accent2": "#7287fd", "accentText": "#ffffff",
+      "success": "#40a02b", "warning": "#df8e1d", "danger": "#d20f39", "info": "#209fb5"
+    },
+    "catppuccin_frappe": {
+      "bg": "#303446", "bgAlt": "#292c3c", "card": "#292c3c", "cardHover": "#414559",
+      "border": "#51576d", "fg": "#c6d0f5", "fgMuted": "#a5adce",
+      "accent": "#ca9ee6", "accent2": "#babbf1", "accentText": "#232634",
+      "success": "#a6d189", "warning": "#e5c890", "danger": "#e78284", "info": "#85c1dc"
+    },
+    "catppuccin_macchiato": {
+      "bg": "#24273a", "bgAlt": "#1e2030", "card": "#1e2030", "cardHover": "#363a4f",
+      "border": "#494d64", "fg": "#cad3f5", "fgMuted": "#a5adcb",
+      "accent": "#c6a0f6", "accent2": "#b7bdf8", "accentText": "#181926",
+      "success": "#a6da95", "warning": "#eed49f", "danger": "#ed8796", "info": "#7dc4e4"
+    },
+    "catppuccin_mocha": {
+      "bg": "#1e1e2e", "bgAlt": "#181825", "card": "#181825", "cardHover": "#313244",
+      "border": "#45475a", "fg": "#cdd6f4", "fgMuted": "#a6adc8",
+      "accent": "#cba6f7", "accent2": "#b4befe", "accentText": "#11111b",
+      "success": "#a6e3a1", "warning": "#f9e2af", "danger": "#f38ba8", "info": "#89dceb"
+    },
+
+    "dr_default": {
+      "bg": "#181a1b", "bgAlt": "#1c1e1f", "card": "#232628", "cardHover": "#2b2e31",
+      "border": "#2a2e32", "fg": "#e8e6e3", "fgMuted": "#a0a4a8",
+      "accent": "#2a78d6", "accent2": "#1f5aa5", "accentText": "#ffffff",
+      "success": "#3fb950", "warning": "#d29922", "danger": "#f85149", "info": "#58a6ff"
+    },
+    "dr_darkberry_blackwater": {
+      "bg": "#0f111a", "bgAlt": "#141724", "card": "#1a1e2d", "cardHover": "#22273a",
+      "border": "#2a3045", "fg": "#8f93a2", "fgMuted": "#5c6175",
+      "accent": "#84ffff", "accent2": "#4dc7c7", "accentText": "#0f111a",
+      "success": "#c3e88d", "warning": "#ffcb6b", "danger": "#f07178", "info": "#89ddff"
+    },
+    "dr_darkberry_fen": {
+      "bg": "#101718", "bgAlt": "#151f20", "card": "#1a282a", "cardHover": "#223436",
+      "border": "#2d4548", "fg": "#8ab9b5", "fgMuted": "#587b78",
+      "accent": "#5cb88a", "accent2": "#3f8a64", "accentText": "#101718",
+      "success": "#5cb88a", "warning": "#e5c07b", "danger": "#e06c75", "info": "#61afef"
+    },
+    "dr_darkberry_mire": {
+      "bg": "#121412", "bgAlt": "#181b18", "card": "#1f231f", "cardHover": "#282e28",
+      "border": "#343c34", "fg": "#a8b59e", "fgMuted": "#6e7a65",
+      "accent": "#b5c59e", "accent2": "#8c9c75", "accentText": "#121412",
+      "success": "#a8b59e", "warning": "#d4b872", "danger": "#c76b6b", "info": "#7a9e9e"
+    },
+    "dr_deep_ocean": {
+      "bg": "#001122", "bgAlt": "#001730", "card": "#002040", "cardHover": "#002b55",
+      "border": "#003366", "fg": "#e0e6ed", "fgMuted": "#6b8fb5",
+      "accent": "#00bfff", "accent2": "#0099cc", "accentText": "#001122",
+      "success": "#33ff99", "warning": "#ffcc00", "danger": "#ff3366", "info": "#00bfff"
+    },
+    "dr_dracula": {
+      "bg": "#282a36", "bgAlt": "#21222c", "card": "#2f3142", "cardHover": "#3d3f54",
+      "border": "#44475a", "fg": "#f8f8f2", "fgMuted": "#bdbdcd",
+      "accent": "#bd93f9", "accent2": "#8c62d9", "accentText": "#282a36",
+      "success": "#50fa7b", "warning": "#ffb86c", "danger": "#ff5555", "info": "#8be9fd"
+    },
+    "dr_everforest": {
+      "bg": "#2d353b", "bgAlt": "#272e33", "card": "#343f44", "cardHover": "#3d484d",
+      "border": "#475258", "fg": "#d3c6aa", "fgMuted": "#859289",
+      "accent": "#a7c080", "accent2": "#83a55e", "accentText": "#2d353b",
+      "success": "#a7c080", "warning": "#dbbc7f", "danger": "#e67e80", "info": "#7fbbb3"
+    },
+    "dr_github": {
+      "bg": "#0d1117", "bgAlt": "#010409", "card": "#161b22", "cardHover": "#21262d",
+      "border": "#30363d", "fg": "#c9d1d9", "fgMuted": "#8b949e",
+      "accent": "#58a6ff", "accent2": "#388bfd", "accentText": "#ffffff",
+      "success": "#3fb950", "warning": "#d29922", "danger": "#f85149", "info": "#58a6ff"
+    },
+    "dr_gruvbox": {
+      "bg": "#282828", "bgAlt": "#1d2021", "card": "#3c3836", "cardHover": "#504945",
+      "border": "#665c54", "fg": "#ebdbb2", "fgMuted": "#a89984",
+      "accent": "#d79921", "accent2": "#b57614", "accentText": "#282828",
+      "success": "#b8bb26", "warning": "#fabd2f", "danger": "#fb4934", "info": "#83a598"
+    },
+    "dr_kanagawa": {
+      "bg": "#1f1f28", "bgAlt": "#16161d", "card": "#2a2a37", "cardHover": "#363646",
+      "border": "#54546d", "fg": "#dcd7ba", "fgMuted": "#727169",
+      "accent": "#7e9cd8", "accent2": "#5d7bb5", "accentText": "#1f1f28",
+      "success": "#98bb6c", "warning": "#e6c384", "danger": "#e46876", "info": "#7fb4ca"
+    },
+    "dr_material_you": {
+      "bg": "#141218", "bgAlt": "#1d1b20", "card": "#211f26", "cardHover": "#2b2930",
+      "border": "#49454f", "fg": "#e6e0e9", "fgMuted": "#cac4d0",
+      "accent": "#d0bcff", "accent2": "#b69df8", "accentText": "#381e72",
+      "success": "#b8f2c0", "warning": "#ffd8a8", "danger": "#ffb4ab", "info": "#a8c7fa"
+    },
+    "dr_matte_black": {
+      "bg": "#000000", "bgAlt": "#0a0a0a", "card": "#121212", "cardHover": "#1c1c1c",
+      "border": "#2a2a2a", "fg": "#ffffff", "fgMuted": "#888888",
+      "accent": "#bb86fc", "accent2": "#9c27b0", "accentText": "#000000",
+      "success": "#03dac6", "warning": "#ffb74d", "danger": "#cf6679", "info": "#90caf9"
+    },
+    "dr_night_owl": {
+      "bg": "#011627", "bgAlt": "#01111a", "card": "#0b2942", "cardHover": "#133a5c",
+      "border": "#1d3b53", "fg": "#d6deeb", "fgMuted": "#637777",
+      "accent": "#82aaff", "accent2": "#5c8fff", "accentText": "#011627",
+      "success": "#addb67", "warning": "#ecc48d", "danger": "#ef5350", "info": "#7fdbca"
+    },
+    "dr_nord": {
+      "bg": "#2e3440", "bgAlt": "#272c36", "card": "#3b4252", "cardHover": "#434c5e",
+      "border": "#4c566a", "fg": "#eceff4", "fgMuted": "#a7b1c3",
+      "accent": "#88c0d0", "accent2": "#5e81ac", "accentText": "#2e3440",
+      "success": "#a3be8c", "warning": "#ebcb8b", "danger": "#bf616a", "info": "#81a1c1"
+    },
+    "dr_one_dark": {
+      "bg": "#282c34", "bgAlt": "#21252b", "card": "#2c313a", "cardHover": "#353b45",
+      "border": "#3e4451", "fg": "#abb2bf", "fgMuted": "#5c6370",
+      "accent": "#61afef", "accent2": "#528bcc", "accentText": "#282c34",
+      "success": "#98c379", "warning": "#e5c07b", "danger": "#e06c75", "info": "#56b6c2"
+    },
+    "dr_osaka_jade": {
+      "bg": "#111c18", "bgAlt": "#0d1512", "card": "#1a2a24", "cardHover": "#22382f",
+      "border": "#2d4a3e", "fg": "#c1c497", "fgMuted": "#788c7c",
+      "accent": "#509475", "accent2": "#3b7058", "accentText": "#111c18",
+      "success": "#509475", "warning": "#dca561", "danger": "#e56b6f", "info": "#6d9eeb"
+    },
+    "dr_oxocarbon": {
+      "bg": "#161616", "bgAlt": "#0d0d0d", "card": "#262626", "cardHover": "#333333",
+      "border": "#393939", "fg": "#f2f4f8", "fgMuted": "#8d8d8d",
+      "accent": "#33b1ff", "accent2": "#1192e8", "accentText": "#161616",
+      "success": "#42be65", "warning": "#f1c21b", "danger": "#fa4d56", "info": "#33b1ff"
+    },
+    "dr_ristretto": {
+      "bg": "#2c2525", "bgAlt": "#241e1e", "card": "#3b3232", "cardHover": "#4a4040",
+      "border": "#5a4f4f", "fg": "#fff1f3", "fgMuted": "#b09a9b",
+      "accent": "#fd6883", "accent2": "#c44a61", "accentText": "#2c2525",
+      "success": "#adda78", "warning": "#f9cc6c", "danger": "#fd6883", "info": "#85dacc"
+    },
+    "dr_rose_pine": {
+      "bg": "#191724", "bgAlt": "#1f1d2e", "card": "#26233a", "cardHover": "#2a273f",
+      "border": "#403d52", "fg": "#e0def4", "fgMuted": "#908caa",
+      "accent": "#c4a7e7", "accent2": "#ebbcba", "accentText": "#191724",
+      "success": "#9ccfd8", "warning": "#f6c177", "danger": "#eb6f92", "info": "#31748f"
+    },
+    "dr_selenized": {
+      "bg": "#103c48", "bgAlt": "#0c3039", "card": "#184956", "cardHover": "#215566",
+      "border": "#2d606f", "fg": "#adbcbc", "fgMuted": "#72898f",
+      "accent": "#4695f7", "accent2": "#367bc7", "accentText": "#103c48",
+      "success": "#75b938", "warning": "#dbb32d", "danger": "#fa5750", "info": "#41c7b9"
+    },
+    "dr_solarized": {
+      "bg": "#002b36", "bgAlt": "#00252e", "card": "#073642", "cardHover": "#0a404f",
+      "border": "#0b5162", "fg": "#93a1a1", "fgMuted": "#839496",
+      "accent": "#268bd2", "accent2": "#1c6fa8", "accentText": "#fdf6e3",
+      "success": "#859900", "warning": "#b58900", "danger": "#dc322f", "info": "#2aa198"
+    },
+    "dr_tokyo_night": {
+      "bg": "#1a1b26", "bgAlt": "#16161e", "card": "#24283b", "cardHover": "#2f334d",
+      "border": "#414868", "fg": "#c0caf5", "fgMuted": "#565f89",
+      "accent": "#7aa2f7", "accent2": "#5a82d7", "accentText": "#1a1b26",
+      "success": "#9ece6a", "warning": "#e0af68", "danger": "#f7768e", "info": "#7dcfff"
+    }
+  },
+
+  "meta": {
+    "lightThemeKeys": [
+      "cosmo", "flatly", "litera", "minty", "lumen", "sandstone",
+      "yeti", "pulse", "united", "morph", "journal", "simplex", "cerculean"
+    ],
+    "groups": [
+      { "id": "material3", "title": "🎨 Material 3", "themes": ["material3", "material3_light"] },
+      { "id": "light", "title": "☀️ Светлые темы", "themes": ["cosmo", "flatly", "litera", "minty", "lumen", "sandstone", "yeti", "pulse", "united", "morph", "journal", "simplex", "cerculean"] },
+      { "id": "dark-from-light", "title": "🌗 Тёмные версии светлых", "themes": ["cosmo-dark", "flatly-dark", "litera-dark", "minty-dark", "lumen-dark", "sandstone-dark", "yeti-dark", "pulse-dark", "united-dark", "morph-dark", "journal-dark", "simplex-dark", "cerculean-dark"] },
+      { "id": "dark-ttk", "title": "🌑 Тёмные темы ttkbootstrap", "themes": ["darkly", "superhero", "solar", "cyborg", "vapor"] },
+      { "id": "dark-dev", "title": "⚡ Тёмные темы от разработчика", "themes": ["cyberpunk", "hacker", "palenight", "boosterx", "boosterxvapor"] },
+      { "id": "dark-anton", "title": "🩸 Тёмные темы Антона", "themes": ["extreme", "newhone", "nord"] },
+      { "id": "dark-ruslan", "title": "💀 Тёмные темы Русланчика", "themes": ["wincry", "ruslanchik", "wincry_warning", "wincry_full_warning"] },
+      { "id": "dark-new", "title": "✨ Новые тёмные темы", "themes": ["bloodmoon", "abyss", "newnord", "catppuccin", "dracula", "newpalenight", "hellokitty", "kuromi", "onedark", "hacker_new"] },
+      { "id": "curated-2-dark", "title": "🎯 Curated 2.0 — Тёмные", "themes": ["bootstrap", "pydata", "nord_curated", "solarized", "catppuccin_curated", "gruvbox", "dracula_curated", "tokyo_night", "one", "everforest"] },
+      { "id": "curated-2-light", "title": "🎯 Curated 2.0 — Светлые", "themes": ["bootstrap_light", "pydata_light", "solarized_light", "gruvbox_light", "tokyo_night_light", "one_light", "everforest_light"] },
+      { 
+        "id": "games", 
+        "title": "🎮 Игровые темы", 
+        "themes": [
+          "vampire_the_masquerade", 
+          "counter_strike_16", 
+          "counter_strike_2", 
+          "diablo", 
+          "cyberpunk_2077",
+          "cyberpunk_yellow",
+          "cyberpunk_blue"
+        ] 
+      },
+      { "id": "catppuccin-variants", "title": "🐱 Catppuccin", "themes": ["catppuccin_latte", "catppuccin_frappe", "catppuccin_macchiato", "catppuccin_mocha"] },
+      { 
+        "id": "dark-reader", 
+        "title": "🌙 Dark Reader", 
+        "themes": [
+          "dr_darkberry_blackwater",
+          "dr_darkberry_fen",
+          "dr_darkberry_mire",
+          "dr_deep_ocean",
+          "dr_default",
+          "dr_dracula",
+          "dr_everforest",
+          "dr_github",
+          "dr_gruvbox",
+          "dr_kanagawa",
+          "dr_material_you",
+          "dr_matte_black",
+          "dr_night_owl",
+          "dr_nord",
+          "dr_one_dark",
+          "dr_osaka_jade",
+          "dr_oxocarbon",
+          "dr_ristretto",
+          "dr_rose_pine",
+          "dr_selenized",
+          "dr_solarized",
+          "dr_tokyo_night"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "tabs": {
+    "Очистка": {
+      "Root": [
+        "Очистить систему.bat",
+        "Удалить Microsoft Update Health Tools.bat"
+      ],
+      "отмена": []
+    },
+    "Производительность": {
+      "Root": [
+        "Включить write cache.bat",
+        "Настроить BCD.bat",
+        "Настроить MMCSS SystemResponsiveness.bat",
+        "Настроить NTFS.bat",
+        "Настроить SvcHostSplit.bat",
+        "Настроить Win32PrioritySeparation.bat",
+        "Настроить службы.bat",
+        "Настроить таймауты процессов.bat",
+        "Отключить DMA Remapping.bat",
+        "Отключить GameBarPresenceWriter.bat",
+        "Отключить GPU задержки.bat",
+        "Отключить Memory Compression.bat",
+        "Отключить mobsync.bat",
+        "Отключить PnP-устройства WAN.bat",
+        "Пересобрать NGEN.bat"
+      ],
+      "отмена": [
+        "Вернуть BCD.bat",
+        "Вернуть MMCSS SystemResponsiveness.bat",
+        "Вернуть NTFS.bat",
+        "Вернуть SvcHostSplit.bat",
+        "Вернуть Win32PrioritySeparation.bat",
+        "Вернуть службы.bat",
+        "Вернуть таймауты процессов.bat",
+        "Включить DMA Remapping.bat",
+        "Включить GameBarPresenceWriter.bat",
+        "Включить GPU задержки.bat",
+        "Включить Memory Compression.bat",
+        "Включить mobsync.bat",
+        "Включить PnP-устройства WAN.bat",
+        "Отключить write cache.bat"
+      ]
+    },
+    "Прочее": {
+      "Root": [
+        "Настроить OEM SOS.bat",
+        "Настроить сеть.bat",
+        "Отключить проверку драйверов.bat",
+        "Отключить телеметрию PowerShell.bat",
+        "Приостановить Windows Update.bat"
+      ],
+      "отмена": [
+        "Вернуть OEM SOS.bat",
+        "Вернуть сеть.bat",
+        "Вернуть телеметрию PowerShell.bat",
+        "Включить проверку драйверов.bat",
+        "Возобновить Windows Update.bat"
+      ]
+    },
+    "Удаление программ": {
+      "Root": [
+        "Отключить EdgeAutoLaunch.bat",
+        "Отключить OneDrive в автозапуске.bat",
+        "Удалить AppX мусор.bat",
+        "Удалить Microsoft Edge.bat",
+        "Удалить OneDrive.bat"
+      ],
+      "отмена": [
+        "Вернуть EdgeAutoLaunch.bat",
+        "Вернуть OneDrive в автозапуск.bat"
+      ]
+    }
+  }
+}

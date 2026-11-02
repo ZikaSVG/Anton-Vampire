@@ -1,0 +1,1 @@
+start "" "C:\Windows\System32\msinfo32.exe"

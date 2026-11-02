@@ -1,0 +1,2 @@
+@echo off
+powershell -Command "& { $folderTypesKey = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes'; $downloadsFolderID = '{885a186e-a440-4ada-812b-db871b942259}'; $path = Join-Path -Path $folderTypesKey -ChildPath $downloadsFolderID; Get-ChildItem -Path $path -Recurse | ForEach-Object { if ((Get-ItemProperty -Path $_.PSPath -Name GroupBy -ErrorAction SilentlyContinue).GroupBy) { Set-ItemProperty -Path $_.PSPath -Name GroupBy -Value '' } } }"
