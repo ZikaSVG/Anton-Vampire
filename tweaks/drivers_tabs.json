@@ -488,11 +488,17 @@
     "icon": "settings-applications",
     "baseDir": "tweaks/Драйверы/Службы",
     "files": [
-      "Atlas OS Services.bat",
-      "Immortal OS Services.bat",
-      "Sapphire OS Services.bat",
+      "AtlasOS Services.bat",
+      "ImmortalOS Services.bat",
+      "MartyFiles Services.bat",
+      "RapidOS Services.bat",
+      "SapphireOS Services.bat",
+      "SynergyOS Services.bat",
+      "SystemX Services.bat",
+      "VainOS Services.bat",
       "Windows 10 Services.bat",
-      "Windows 11 Services.bat"
+      "Windows 11 Services.bat",
+      "XOS Services.bat"
     ],
     "cancels": [],
     "cancelDir": null,
