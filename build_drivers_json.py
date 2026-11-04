@@ -17,7 +17,7 @@ build_drivers_json.py
   }
 
 Секции с label/color/icon — рендерятся в UI как чекбоксы.
-Дропдауны (svchost/win32/services) — тоже узлы, но в UI рисуются
+Дропдауны (svchost/win32/services/mouse_rate) — тоже узлы, но в UI рисуются
 выпадающим списком.
 
 Запуск:
@@ -77,9 +77,10 @@ DIRECTX_SUBFOLDERS = {
 # (section_id, имя_папки)
 # ────────────────────────────────────────────────────────────
 DROPDOWN_FOLDERS = [
-    ("svchost",  "Порог разделения svchost"),
-    ("win32",    "Разделение приоритетов Win32"),
-    ("services", "Службы"),
+    ("svchost",    "Порог разделения svchost"),
+    ("win32",      "Разделение приоритетов Win32"),
+    ("services",   "Службы"),
+    ("mouse_rate", "Ограничение частоты сообщений в фоновом режиме"),
 ]
 
 
@@ -199,7 +200,7 @@ def main() -> int:
             "cancelDir":  None,
             "subfolders": {},
         }
-        print(f"  {sec_id:10s} {folder_name:30s} файлов={len(files)}")
+        print(f"  {sec_id:10s} {folder_name:50s} файлов={len(files)}")
 
     text = json.dumps(result, ensure_ascii=False, indent=2) + "\n"
 
