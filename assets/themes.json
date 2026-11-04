@@ -406,6 +406,20 @@
       "success": "#00f0ff", "warning": "#fcee0a", "danger": "#ff003c", "info": "#00f0ff"
     },
 
+    "cyberpunk_purple": {
+      "bg": "#0a0612", "bgAlt": "#12091f", "card": "#1a0b2e", "cardHover": "#241040",
+      "border": "#b026ff", "fg": "#e8d8ff", "fgMuted": "#7a5c99",
+      "accent": "#b026ff", "accent2": "#00e5ff", "accentText": "#000000",
+      "success": "#00e5ff", "warning": "#fcee0a", "danger": "#ff003c", "info": "#8a2be2"
+    },
+
+    "cyberpunk_pink": {
+      "bg": "#0d0509", "bgAlt": "#160811", "card": "#1f0a18", "cardHover": "#2b0f22",
+      "border": "#ff2a9d", "fg": "#ffe0f0", "fgMuted": "#a06080",
+      "accent": "#ff2a9d", "accent2": "#00e5ff", "accentText": "#000000",
+      "success": "#00e5ff", "warning": "#fcee0a", "danger": "#ff003c", "info": "#ff6ec7"
+    },
+
     "catppuccin_latte": {
       "bg": "#eff1f5", "bgAlt": "#e6e9ef", "card": "#e6e9ef", "cardHover": "#dce0e8",
       "border": "#bcc0cc", "fg": "#4c4f69", "fgMuted": "#6c6f85",
@@ -591,7 +605,9 @@
           "diablo", 
           "cyberpunk_2077",
           "cyberpunk_yellow",
-          "cyberpunk_blue"
+          "cyberpunk_blue",
+          "cyberpunk_purple",
+          "cyberpunk_pink"
         ] 
       },
       { "id": "catppuccin-variants", "title": "🐱 Catppuccin", "themes": ["catppuccin_latte", "catppuccin_frappe", "catppuccin_macchiato", "catppuccin_mocha"] },

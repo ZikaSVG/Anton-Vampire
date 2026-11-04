@@ -617,7 +617,7 @@ export async function renderSettings() {
     el.innerHTML = html;
     return el;
   }
-
+  
   /* ---------- выбор CSS-стиля ---------- */
   function styleSelector() {
     const wrap = document.createElement('div');
@@ -626,13 +626,14 @@ export async function renderSettings() {
     const current = cfg.General?.ui_style || 'default';
   
     const INFO = {
-      default:   { icon: '🎨', title: 'Material 3',         desc: 'Стандарт: скруглённые углы, мягкие тени' },
-      pixel:     { icon: '🕹', title: 'Pixel Style',        desc: '8-bit ретро: острые углы, ступенчатые анимации' },
-      material3: { icon: '✨', title: 'Material You',       desc: 'Полный M3: круглые кнопки, elevation, state layers' },
-      kitty:     { icon: '🎀', title: 'Pretty Kitty Pixel', desc: 'Милый пиксельный стиль с пастельными акцентами ♥' },
-      cyberpunk: { icon: '🌆', title: 'Cyberpunk 2077',     desc: 'Неон, сканлайны, острые углы и жёлто-красные акценты' },
-      minipunk:  { icon: '📟', title: 'Mini Punk',          desc: 'Ультра-компактный киберпанк: максимальная плотность UI, мелкие шрифты, минимум отступов' },
-      altpunk:   { icon: '⚡', title: 'Alt Punk',           desc: 'Альтернативный компактный киберпанк: переработанная сетка, агрессивные срезы и высокая контрастность' },
+      default:      { icon: '🎨', title: 'Material 3',         desc: 'Стандарт: скруглённые углы, мягкие тени' },
+      pixel:        { icon: '🕹', title: 'Pixel Style',        desc: '8-bit ретро: острые углы, ступенчатые анимации' },
+      material3:    { icon: '✨', title: 'Material You',       desc: 'Полный M3: круглые кнопки, elevation, state layers' },
+      kitty:        { icon: '🎀', title: 'Pretty Kitty Pixel', desc: 'Милый пиксельный стиль с пастельными акцентами ♥' },
+      cyberpunk:    { icon: '🌆', title: 'Cyberpunk 2077',     desc: 'Неон, сканлайны, острые углы и жёлто-красные акценты' },
+      minipunk:     { icon: '📟', title: 'Mini Punk',          desc: 'Ультра-компактный киберпанк: максимальная плотность UI, мелкие шрифты, минимум отступов' },
+      altpunk:      { icon: '⚡', title: 'Alt Punk',           desc: 'Альтернативный компактный киберпанк: переработанная сетка, агрессивные срезы и высокая контрастность' },
+      materialmini: { icon: '📐', title: 'Material Mini',      desc: 'Ультра-компактный Material 3: уменьшенные шрифты, плотная сетка и минимальные отступы для максимальной эффективности' }, // <-- ДОБАВЛЕНО
     };
 
     const grid = document.createElement('div');

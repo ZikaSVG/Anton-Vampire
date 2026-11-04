@@ -11,6 +11,7 @@ import { renderPower } from './tabs/power.js';
 import { renderFixes } from './tabs/fixes.js';
 import { renderCleaner } from './tabs/cleaner.js';
 import { renderGameMode } from './tabs/game-mode.js';
+import { renderHardMode } from './tabs/hard-optimization.js';
 import { renderStartup } from './tabs/startup.js';
 import { renderSecurity } from './tabs/security/index.js';
 import { renderCustomization } from './tabs/customization.js';
@@ -251,6 +252,7 @@ const RENDERERS = {
   cleaner: renderCleaner,
   fixes: renderFixes,
   game: renderGameMode,
+  hard: renderHardMode,
   startup: renderStartup,
   security: renderSecurity,
   customization: renderCustomization,

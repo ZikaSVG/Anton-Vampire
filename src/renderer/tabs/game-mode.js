@@ -1,359 +1,523 @@
 import { toast } from '../app.js';
 import { papirusUrl } from '../utils/icons.js';
 
-const APPLY_BAT = 'GameMode/Игровой режим.bat';
+/* ------------------------------------------------------------
+   Конфигурация и списки
+   ------------------------------------------------------------ */
 
-const OPTIMIZATION_CATEGORIES = [
-  {
-    icon: '📊',
-    name: 'Телеметрия и диагностика',
-    desc: 'Отключение телеметрии, диагностических служб, WER, TIP, Speech/Ink, рекламных идентификаторов, ContentDelivery и CloudContent.',
-    items: [
-      'AllowTelemetry = 0 (HKLM, Policies, AppCompat, DataCollection)',
-      'DiagTrack, dmwappushservice, diagnosticshub.standardcollector.service, diagsvc, DPS, WdiServiceHost, WdiSystemHost, pla, wmiApSrv, Wecsvc, WerSvc, wercplsupport, TroubleshootingSvc, Telemetry, PcaSvc, DusmSvc, DsSvc, DSSvc, kdnic, ndu, PimIndexMaintenanceSvc → Start=4',
-      'Windows Error Reporting: Disabled=1, LoggingDisabled=1, DontSendAdditionalData=1, AutoApproveOSDumps=0',
-      'WER Consent: DefaultConsent=0, DefaultOverrideBehavior=1',
-      'TIP AggregateResults очистка, TestResults удаление',
-      'CapabilityAccessManager: activity, appDiagnostics, appointments, bluetoothSync, broadFileSystemAccess, chat, contacts, documentsLibrary, email, phoneCallHistory, picturesLibrary, radios, userAccountInformation, userDataTasks, videosLibrary = Deny',
-      'AppPrivacy: LetAppsAccess* = 2',
-      'Speech_OneCore HasAccepted=0, VoiceActivation =0',
-      'InputPersonalization RestrictImplicitInkCollection / TextCollection = 1',
-      'ContentDeliveryManager: SubscribedContent* = 0',
-      'CloudContent: DisableSoftLanding, DisableWindowsSpotlightFeatures, DisableThirdPartySuggestions = 1',
-      'Siuf Rules PeriodInNanoSeconds удалён',
-    ],
-  },
-  {
-    icon: '🔄',
-    name: 'Обновления, Store и Edge',
-    desc: 'Отключение Центра обновления, доставки, установки Store, фоновых режимов Edge, SmartScreen Edge.',
-    items: [
-      'wuauserv, UsoSvc, WaaSMedicSvc, BITS, DoSvc, InstallService, ClipSVC, LicenseManager, PushToInstall, AppXSvc, AppReadiness, AppVClient, Appinfo, AppIDSvc, AppMgmt → Start=4',
-      'edgeupdate, edgeupdatem, MicrosoftEdgeElevationService → Start=4',
-      'Edge BackgroundModeEnabled = 0, StartupBoostEnabled = 0',
-      'DeliveryOptimization DODownloadMode = 0',
-      'WindowsStore AutoDownload = 2',
-      'HKCU Edge SmartScreenEnabled = Off',
-      'WindowsUpdate ExcludeWUDriversInQualityUpdate = 1',
-    ],
-  },
-  {
-    icon: '⚡',
-    name: 'Питание и производительность',
-    desc: 'Отключение гибернации и Power Throttling, схема CrystalCry Max Performance, отключение файла подкачки, твики памяти и митигаций.',
-    items: [
-      'HibernateEnabled = 0',
-      'PowerThrottlingOff = 1',
-      'ActivePowerScheme = 90a358c8-3bbc-4fb3-8b4e-d7ab065d2614 (CrystalCry Max Performance) + параметры AC/DC',
-      'PagingFiles = "" (файл подкачки отключён)',
-      'AlwaysUnloadDLL = 1',
-      'LargeSystemCache = 0',
-      'HeapDeCommitFreeBlockThreshold = 2498884',
-      'HeapDeCommitTotalFreeThreshold = 5390984',
-      'DisablePagingExecutive = 0',
-      'DisableMitigations = 1',
-      'Win32PrioritySeparation = 2',
-      'NtfsDisableLastAccessUpdate = 2147483649',
-      'SCMApiConnectionParam = 1000',
-      'Memory Management PagingFiles = ""',
-    ],
-  },
-  {
-    icon: '🌐',
-    name: 'Сеть и TCP',
-    desc: 'Твики TCP/IP, отключение Wi-Fi Sense, авто-подключения к хотспотам, NonBestEffortLimit.',
-    items: [
-      'Tcpip / Tcpip6 DefaultTTL = 65',
-      'TcpAckFrequency = 1',
-      'TcpDelAckTicks = 0',
-      'TCPNoDelay = 1',
-      'Psched NonBestEffortLimit = 0',
-      'Wifi AllowAutoConnectToWiFiSenseHotspots = 0',
-      'Wifi AllowWiFiHotSpotReporting = 0',
-      'WcmSvc AutoConnectAllowedOEM = 0',
-      'WcmSvc AutoConnect ProvidersList = ""',
-    ],
-  },
-  {
-    icon: '🖥️',
-    name: 'Проводник, UI и уведомления',
-    desc: 'Ускорение оболочки, отключение анимаций, теней, AeroPeek, прозрачности, уведомлений, поиска Bing и Copilot.',
-    items: [
-      'MenuShowDelay = 0',
-      'MinAnimate = 0',
-      'DragFullWindows = 0',
-      'ListviewAlphaSelect = 0, ListviewShadow = 0, TaskbarAnimations = 0',
-      'EnableTransparency = 0, EnableAeroPeek = 0',
-      'ToastEnabled = 0, NOC_GLOBAL_SETTING_TOASTS_ENABLED = 0',
-      'BingSearchEnabled = 0, DisableSearchBoxSuggestions = 1',
-      'TurnOffWindowsCopilot = 1, DisableAIDataAnalysis = 1',
-      'BackgroundAccessApplications GlobalUserDisabled = 1',
-      'TaskbarMn = 0, TaskbarEndTask = 1',
-      'NoInternetOpenWith = 1',
-      'PushNotifications NoTileApplicationNotification / NoToastApplicationNotification = 1',
-    ],
-  },
-  {
-    icon: '🖱️',
-    name: 'Мышь и клавиатура',
-    desc: 'Отключение ускорения мыши, нулевые задержки hover и MenuShowDelay, сброс Accessibility Flags.',
-    items: [
-      'MouseSpeed = 0, MouseThreshold1 = 0, MouseThreshold2 = 0',
-      'MouseHoverTime = 0',
-      'Keyboard Response Flags = 0',
-      'StickyKeys Flags = 0',
-      'ToggleKeys Flags = 0',
-      'MouseKeys Flags = 0',
-      'HungAppTimeout = 1000',
-      'WaitToKillAppTimeout = 5000',
-      'MenuShowDelay = 0',
-    ],
-  },
-  {
-    icon: '🖨️',
-    name: 'Службы и драйверы',
-    desc: 'Отключение/удаление большого списка служб и драйверов: печать, Bluetooth, Wi-Fi, RDP, Hyper-V, хранилища, USB, Xbox, Search.',
-    items: [
-      'Spooler → Start=4 и удалён',
-      'Bth*, BluetoothUserService → удалены',
-      'WlanSvc, WwanSvc, WEPHOSTSVC → удалены',
-      'TermService, SessionEnv, UmRdpService → удалены',
-      'Xbl*, XboxGipSvc, xboxgip, xinputhid → удалены',
-      'WSearch, wuauserv, UsoSvc, WaaSMedicSvc → удалены',
-      'STORAGE, RAID, iSCSI, Hyper-V, VMBus, vmic* → удалены',
-      'embeddedmode, WdiServiceHost, WdiSystemHost → удалены',
-      'DoSvc, DPS, Spooler, WerSvc, wercplsupport, embeddedmode → Start=4',
-      'Большой список драйверов и служб (1394ohci, 3ware, acpiex, ADP80XX, …) удалён',
-    ],
-  },
-  {
-    icon: '📜',
-    name: 'Журналы и события',
-    desc: 'Отключение журналирования, EventLog AutoBackupLogFiles, очистка TIP и FveDetect.',
-    items: [
-      'EventLog\\Application AutoBackupLogFiles = 0',
-      'Wbem CIMOM LastServiceReady удалён, LastServiceStart / PreviousServiceShutdown / SetupDate перезаписаны',
-      'TIP TestResults удалены',
-      'FveDetect Cache = 0',
-    ],
-  },
-  {
-    icon: '🧹',
-    name: 'Прочее',
-    desc: 'Отключение ReserveManager, StorageSense, Mobility Center, рукописного ввода, GameDVR, FSO, планировщика, кэша доставки.',
-    items: [
-      'ReserveManager ShippedWithReserves = 0',
-      'StorageSense StoragePolicy01 / StoragePolicy04 = 0',
-      'MobilityCenter = 0',
-      'GameBar AllowAutoGameMode / AutoGameModeEnabled = 0',
-      'GameDVR AllowGameDVR = 0',
-      'DisableFullscreenOptimizations = 1',
-      'GameConfigStore FSEBehavior = 2, HonorUserFSEBehaviorMode = 1',
-      'HandwritingErrorReports PreventHandwritingErrorReports = 1',
-      'TabletPC PreventHandwritingDataSharing = 1',
-      'CloudStore StoreInitState = 5',
-      'DeliveryOptimization Usage сброс',
-    ],
-  },
+const SAFE_SERVICES = [
+  "DiagTrack", "dmwappushservice", "diagnosticshub.standardcollector.service",
+  "WSearch", "SysMain", "WpnService", "WpnUserService", "OneSyncSvc",
+  "XblAuthManager", "XblGameSave", "XboxNetApiSvc", "XboxGipSvc",
+  "MapsBroker", "RetailDemo", "PhoneSvc", "Fax", "Spooler",
+  "WMPNetworkSvc", "SharedAccess", "RemoteRegistry", "RemoteAccess",
+  "TrkWks", "SDRSVC", "WerSvc", "Wecsvc", "PcaSvc", "AppMgmt",
+  "AppReadiness", "AssignedAccessManagerSvc", "BcastDVRUserService",
+  "CaptureService", "cbdhsvc", "MessagingService", "SEMgrSvc",
+  "WalletService", "wisvc", "WarpJITSvc", "UsoSvc", "WaaSMedicSvc",
+  "DoSvc", "PeerDistSvc", "TroubleshootingSvc", "TabletInputService",
+  "TapiSrv", "TermService", "TieringEngineService", "TimeBrokerSvc",
+  "TokenBroker", "VacSvc", "WFDSConMgrSvc", "WManSvc", "WPDBusEnum",
+  "SmsRouter", "SNMPTRAP", "SCardSvr", "ScDeviceEnum", "SCPolicySvc",
+  "PerfHost", "QWAVE", "RasAuto", "RasMan", "PNRPsvc", "PNRPAutoReg",
+  "UevAgentService", "icssvc", "lmhosts", "lltdsvc", "netprofm",
+  "p2pimsvc", "p2psvc", "perceptionsimulation", "pla", "seclogon",
+  "shpamsvc", "smphost", "spectrum", "stisvc", "svsvc", "swprv",
+  "tzautoupdate", "upnphost", "vds", "wbengine", "wcncsvc",
+  "wercplsupport", "wlpasvc", "wmiApSrv", "wscsvc", "LanmanServer",
+  "MSDTC", "FontCache", "FontCache3.0.0.0", "GpuEnergyDrv",
+  "edgeupdate", "edgeupdatem", "MicrosoftEdgeElevationService",
+  "WbioSrvc", "Sense", "SecurityHealthService", "WdNisSvc",
+  "WinDefend", "BFE", "mpssvc", "lfsvc", "SensorDataService",
+  "SensorService", "SensrSvc", "SharedRealitySvc", "MixedRealityOpenXRSvc",
+  "CldFlt", "UCPD", "CloudIdSvc", "WPCMonSvc", "CloudBackupRestoreSvc",
+  "fhsvc", "acpipagr", "PRM", "acpitime", "bam", "dam", "WmiAcpi",
+  "Telemetry", "intelpmt", "kdnic", "Ndu", "DSSvc"
 ];
 
-const TOTAL_ITEMS = OPTIMIZATION_CATEGORIES.reduce((s, c) => s + c.items.length, 0);
+const PK_FEATURES = [
+  {
+    id: 'timeouts',
+    label: '🕒 Отключение таймаутов (AC/DC)',
+    desc: 'Запрещает монитору, диску и системе уходить в сон или гибернацию во время игры. Убирает микро-лаги при простое.',
+    file: 'PK_Timeouts.bat'
+  },
+  {
+    id: 'cpu_throttle',
+    label: '🧠 Отключение CPU Throttle',
+    desc: 'Запрещает Windows ограничивать максимальную частоту процессора (Core Parking / Min State). CPU всегда на максимуме.',
+    file: 'PK_CPU_Throttle.bat'
+  },
+  {
+    id: 'power_throttling',
+    label: '⚙️ Power Throttling & Dynamic Tick',
+    desc: 'Отключает фоновое энергосбережение ядра и динамическое изменение частоты таймера. Снижает DPC latency.',
+    file: 'PK_Power_Throttling_DynamicTick.bat'
+  },
+  {
+    id: 'usb_power',
+    label: '🔌 Управление питанием USB (LPM / D3Cold)',
+    desc: 'Предотвращает "засыпание" USB-портов. Критично для игровых мышек с опросом 1000Hz+ и контроллеров.',
+    file: 'PK_USB_Power.bat'
+  },
+  {
+    id: 'pci_d3cold',
+    label: '🎛️ PCI D3Cold (Энергосбережение PCIe)',
+    desc: 'Запрещает глубокий сон для видеокарты и NVMe-накопителей. Устраняет микро-фризы при загрузке текстур.',
+    file: 'PK_PCI_D3Cold.bat'
+  },
+  {
+    id: 'logs',
+    label: '📓 Диагностические журналы питания',
+    desc: 'Отключает SleepStudy, Kernel-Processor-Power и другие логи. Снижает фоновую нагрузку на диск и CPU.',
+    file: 'PK_Disable_Logs.bat'
+  }
+];
 
+// Планы электропитания с описаниями
+const POWER_PLANS = [
+  { name: 'Amit_v1_lowlatency', desc: 'Низкая задержка ввода, баланс производительности' },
+  { name: 'Amit_v2_extreme performance', desc: 'Максимальная производительность без компромиссов' },
+  { name: 'Amit_v3_low latency', desc: 'Оптимизирован для минимальной задержки в играх' },
+  { name: 'Atlas Power Plan', desc: 'План от AtlasOS — агрессивная оптимизация' },
+  { name: 'Bitsum Highest Performance', desc: 'Максимальная частота CPU, отключено энергосбережение' },
+  { name: 'Calypto', desc: 'Сбалансированный план для игр и работы' },
+  { name: 'GGOSv0_8_5_Idle_Enabled', desc: 'GGOS план с включённым режимом простоя' },
+  { name: 'Light pow v', desc: 'Лёгкий план с минимальными настройками' },
+  { name: 'Muren_Idle_Enabled', desc: 'План Muren с поддержкой idle-состояний' },
+  { name: 'Quaked Ultimate Performance Idle Off', desc: 'Максимальная производительность, idle отключён' },
+  { name: 'Quaked Ultimate Performance', desc: 'Абсолютный максимум производительности' },
+  { name: 'Unixcorn_Idle_Enabled', desc: 'План Unixcorn с включённым idle' },
+  { name: 'XOS imribiy', desc: 'План от XOS — оптимизация для игр' },
+  { name: 'Zoyata_Low Latency', desc: 'Низкая задержка, оптимизация для шутеров' }
+];
+
+const SCRIPTS = {
+  backup: 'GameMode/Backup_Services.bat',
+  restore: 'GameMode/Restore_Services.bat',
+  disableServices: 'GameMode/Disable_Services.bat',
+  revertServicesFallback: 'GameMode/Revert_Services_Fallback.bat',
+  pkRevert: 'GameMode/PK_Revert_All.bat'
+};
+
+/* ------------------------------------------------------------
+   Основной рендер
+   ------------------------------------------------------------ */
 export async function renderGameMode() {
   const tabsNav = document.getElementById('tabs-nav');
   const content = document.getElementById('tab-content');
   tabsNav.innerHTML = '';
   content.innerHTML = '';
 
+  // Контейнер для всех фреймов — один столбец по центру
   const wrap = document.createElement('div');
-  wrap.className = 'split';
+  wrap.style.cssText = 'display:flex; flex-direction:column; gap:20px; max-width:1200px; margin:0 auto;';
 
-  const skullIcon    = papirusUrl('status', 'dialog-warning');
-  const powerIcon    = papirusUrl('devices', 'battery');
-  const shieldIcon   = papirusUrl('apps', 'preferences-system');
-  const servicesIcon = papirusUrl('apps', 'preferences-system');
+  // ================= ФРЕЙМ 1: ОБЩАЯ ИНФА =================
+  const frame1 = document.createElement('div');
+  frame1.className = 'panel';
 
-  const ICON_STYLE = 'width:1.2em !important;height:1.2em !important;vertical-align:-0.2em;margin-right:6px;display:inline-block;object-fit:contain;';
+  const gameIcon = papirusUrl('devices', 'gamepad');
 
-  const left = document.createElement('div');
-  left.className = 'panel';
-
-  left.innerHTML = `
-    <div style="background:rgba(217,59,59,0.18); border:2px solid var(--danger); border-radius:8px; padding:16px; margin-bottom:20px; text-align:center;">
-      <h2 style="color:var(--danger); margin:0 0 8px 0; font-size:18px; display:flex; align-items:center; justify-content:center; gap:6px;">
-        <img src="${skullIcon}" alt="" style="width:20px;height:20px;object-fit:contain;" onerror="this.style.display='none'">
-        <span>СМЕРТЕЛЬНАЯ ОПТИМИЗАЦИЯ</span>
-        <img src="${skullIcon}" alt="" style="width:20px;height:20px;object-fit:contain;" onerror="this.style.display='none'">
-      </h2>
-      <p style="color:var(--danger); font-weight:bold; font-size:13px; margin:0 0 8px 0;">
-        НА НОУТБУКАХ И ПЛАНШЕТАХ НЕ ЗАПУСКАТЬ!<br>
-        ТОЛЬКО ДЛЯ СТАЦИОНАРНЫХ ПК.
-      </p>
-      <p style="color:var(--danger); font-weight:bold; font-size:13px; margin:0; border-top:1px dashed var(--danger); padding-top:8px;">
-        ⚠️ ОТМЕНЫ НЕТ. ИЗМЕНЕНИЯ НЕОБРАТИМЫ.<br>
-        ДЕЛАЙТЕ РЕЗЕРВНУЮ КОПИЮ СИСТЕМЫ ПЕРЕД ЗАПУСКОМ.
-      </p>
-    </div>
-
+  frame1.innerHTML = `
     <h3 class="game-title">
-      <span>Смертельная оптимизация</span>
+      <span>🎮 Игровой режим</span>
     </h3>
-    <p>Максимальное выжимание FPS и отклика системы за счёт отключения безопасности, телеметрии, обновлений, служб, питания и сетевых твиков. <b style="color:var(--danger)">Откат не предусмотрен.</b></p>
-
-    <div style="margin-top: 16px">
-      <button class="btn danger" id="btn-deadly-apply" style="width:100%; padding:14px; font-size:14px; font-weight:bold; white-space:normal; word-break:break-word;">ЗАПУСТИТЬ СМЕРТЕЛЬНУЮ ОПТИМИЗАЦИЮ</button>
-    </div>
-
-    <div id="deadly-status" style="margin-top:16px;color:var(--fg-muted);font-size:12px;white-space:pre-line; font-weight:bold;"></div>
-
-    <div style="margin-top:20px; padding:12px; background:var(--bg-alt); border-radius:8px; font-size:12px; color:var(--fg-muted);">
-      <b>Что будет сделано:</b> ${TOTAL_ITEMS} групп изменений в реестре и службах.
-      Подробный список — справа. Перед запуском закройте все приложения.
-    </div>
-  `;
-  wrap.appendChild(left);
-
-  const right = document.createElement('div');
-  right.className = 'panel';
-
-  const intro = document.createElement('section');
-  intro.className = 'apps-detected-section';
-  intro.style.background = 'color-mix(in srgb, var(--card) 60%, transparent)';
-  intro.style.borderColor = 'color-mix(in srgb, var(--danger) 40%, transparent)';
-  intro.style.marginBottom = '16px';
-  intro.innerHTML = `
-    <div class="section-title"><img src="${shieldIcon}" style="${ICON_STYLE}"> Что делает оптимизация (${TOTAL_ITEMS} пунктов)</div>
-    <p style="font-size:12px; color:var(--fg-muted); margin: -4px 0 12px 0;">
-      Все изменения применяются одним BAT-файлом. Отката нет.
+    <p style="color:var(--fg-muted); font-size:13px; margin-top:8px; line-height:1.6;">
+      Комплексная оптимизация Windows для максимальной производительности в играх.
+      Отключает фоновые процессы, телеметрию и настраивает электропитание для снижения задержек (latency) и микро-фризов.
+      <br><br>
+      ⚡ <b>Что делает:</b> массовое отключение фоновых служб + тонкая настройка электропитания (Power Killer).
+      <br>
+      🛡️ <b>Безопасность:</b> критические драйверы (питание, ввод, сеть, темы) защищены и не будут затронуты.
     </p>
-    <div style="display:flex;gap:8px;margin-bottom:12px">
-      <button class="btn" id="btn-deadly-expand-all">Развернуть все</button>
-      <button class="btn" id="btn-deadly-collapse-all">Свернуть все</button>
-    </div>
-    <div id="deadly-catalog" style="display:flex;flex-direction:column;gap:6px"></div>
-  `;
-  right.appendChild(intro);
 
-  const powerSection = document.createElement('section');
-  powerSection.className = 'apps-detected-section';
-  powerSection.style.background = 'color-mix(in srgb, var(--card) 60%, transparent)';
-  powerSection.style.borderColor = 'color-mix(in srgb, var(--border) 30%, transparent)';
-  powerSection.style.marginBottom = '16px';
-  powerSection.innerHTML = `
-    <div class="section-title"><img src="${powerIcon}" style="${ICON_STYLE}"> Питание и производительность</div>
-    <p style="font-size:12px; color:var(--fg-muted); margin: -4px 0 12px 0;">
-      Отключение гибернации и Power Throttling, схема CrystalCry Max Performance, отключение файла подкачки, твики памяти и митигаций, Win32PrioritySeparation.
-    </p>
-    <div class="apps-grid fixes-grid">
-      ${[
-        ['🛌','Гибернация','HibernateEnabled = 0.'],
-        ['🚫','Power Throttling','PowerThrottlingOff = 1 — отключает фоновое троттлинг-ограничение процессов.'],
-        ['✅','Схема питания','ActivePowerScheme = 90a358c8-… (CrystalCry Max Performance) + параметры AC/DC.'],
-        ['🧠','Память','PagingFiles="", AlwaysUnloadDLL=1, LargeSystemCache=0, HeapDeCommit*.'],
-        ['⚙️','Приоритеты','Win32PrioritySeparation = 2.'],
-        ['🛡️','Митигации','DisableMitigations = 1.'],
-        ['💾','NTFS','NtfsDisableLastAccessUpdate = 2147483649.'],
-      ].map(([i,n,d]) => `
-        <div class="apps-card">
-          <div class="apps-icon">${i}</div>
-          <div class="apps-name">${n}</div>
-          <div class="apps-sub fix-desc">${d}</div>
-          <div style="display:flex;gap:4px;justify-content:center;min-height:14px;margin-top:2px;">
-            <span style="font-size:9.5px;font-weight:700;color:var(--danger);background:color-mix(in srgb, var(--danger) 15%, transparent);border:1px solid color-mix(in srgb, var(--danger) 40%, transparent);padding:1px 6px;border-radius:6px;">☠️ необратимо</span>
-          </div>
-          <button class="apps-run" disabled style="opacity:0.6;cursor:default;pointer-events:none;">☠️ Применяется</button>
+    <div style="margin-top:16px; padding:14px; background:var(--bg-alt); border-radius:8px; display:flex; align-items:center; gap:14px;">
+      <span class="switch" id="gm-backup-switch" role="switch" aria-checked="true" tabindex="0"
+            style="position:relative;display:inline-block;width:42px;height:22px;flex:0 0 auto;
+                   background:#2e7d32;border-radius:22px;transition:background .15s;outline:none;cursor:pointer;"
+            data-on="true">
+        <span class="switch-knob" style="position:absolute;top:3px;left:23px;width:16px;height:16px;
+                                          border-radius:50%;background:#fff;transition:left .15s;"></span>
+      </span>
+      <div style="flex:1;">
+        <div style="font-weight:600; font-size:14px;">💾 Автоматический бэкап реестра служб</div>
+        <div style="font-size:12px; color:var(--fg-muted); margin-top:4px; line-height:1.5;">
+          Перед отключением служб будет создан файл <code>.reg</code> с текущим состоянием реестра.
+          Это позволит безопасно откатить любые изменения одним кликом через кнопку "Восстановить из бэкапа".
         </div>
+      </div>
+    </div>
+
+    <div id="gm-status" style="margin-top:16px; padding:12px; background:var(--bg-alt); border-radius:8px; font-size:13px; color:var(--fg-muted); border-left:3px solid var(--accent);">
+      ℹ️ Готов к работе. Выберите опции ниже и нажмите "Применить".
+    </div>
+  `;
+  wrap.appendChild(frame1);
+
+  // ================= ФРЕЙМ 2: ГОТОВЫЕ ПЛАНЫ ЭЛЕКТРОПИТАНИЯ =================
+  const frame2 = document.createElement('div');
+  frame2.className = 'panel';
+
+  frame2.innerHTML = `
+    <h3 class="game-title">
+      <span>📦 Готовые планы электропитания</span>
+    </h3>
+    <p style="color:var(--fg-muted); font-size:13px; margin-top:8px; line-height:1.6;">
+      Импортируйте готовый план электропитания от популярных оптимизаторов.
+      <br>
+      🛡️ <b>Защита от дубликатов:</b> если план уже импортирован в систему, повторный импорт будет пропущен — создаётся только одна копия.
+      <br>
+      💡 <b>Совет:</b> для ноутбуков рекомендуется выбирать планы с <code>Idle_Enabled</code> в названии.
+      <br>
+      ⚠️ <b style="color:#f59e0b;">Внимание:</b> планы с "Ultimate Performance" могут привести к быстрому разряду батареи.
+    </p>
+
+    <div style="margin-top:16px; display:flex; gap:12px; align-items:flex-end;">
+      <div style="flex:1;">
+        <label style="font-size:12px; font-weight:600; display:block; margin-bottom:6px;">Выберите план:</label>
+        <select id="power-plan-select" style="width:100%; padding:10px; background:var(--bg-alt); color:var(--fg); border:1px solid var(--border); border-radius:6px; cursor:pointer; font-size:13px;">
+          <option value="">— выберите план —</option>
+          ${POWER_PLANS.map(p => `<option value="${p.name}">${p.name}</option>`).join('')}
+        </select>
+      </div>
+    </div>
+
+    <div id="plan-desc" style="margin-top:12px; padding:12px; background:var(--bg-alt); border-radius:6px; font-size:12px; color:var(--fg-muted); min-height:40px; display:none;">
+      <b>Описание плана:</b> <span id="plan-desc-text"></span>
+    </div>
+  `;
+
+  // Кнопки — РАЗДЕЛЕНЫ: импорт (с проверкой) и активация
+  const planFooter = document.createElement('div');
+  planFooter.style.cssText = 'display:flex; gap:10px; margin-top:20px; padding-top:16px; border-top:1px solid var(--border);';
+  planFooter.innerHTML = `
+    <button class="btn" id="btn-import-plan" style="flex:1; background:#2563eb; color:white;">📥 Импортировать план</button>
+    <button class="btn success" id="btn-activate-plan" style="flex:1;">⚡ Активировать план</button>
+  `;
+  frame2.appendChild(planFooter);
+
+  wrap.appendChild(frame2);
+
+  // ================= ФРЕЙМ 3: АКТИВАЦИЯ УСТАНОВЛЕННЫХ ПЛАНОВ =================
+  const frame3 = document.createElement('div');
+  frame3.className = 'panel';
+
+  frame3.innerHTML = `
+    <h3 class="game-title">
+      <span>⚡ Быстрая активация установленных планов</span>
+    </h3>
+    <p style="color:var(--fg-muted); font-size:13px; margin-top:8px; line-height:1.6;">
+      Мгновенное переключение на уже импортированный план электропитания.
+      <br>
+      💡 Если план не активируется — сначала импортируйте его через блок выше.
+    </p>
+
+    <div style="margin-top:16px; display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+      ${POWER_PLANS.map(p => `
+        <button class="btn" data-plan="${p.name}" style="text-align:left; padding:10px 12px; font-size:12px; line-height:1.4;">
+          <div style="font-weight:600; margin-bottom:2px;">⚡ ${p.name}</div>
+        </button>
       `).join('')}
     </div>
   `;
-  right.appendChild(powerSection);
 
-  const servicesSection = document.createElement('section');
-  servicesSection.className = 'apps-detected-section';
-  servicesSection.style.background = 'color-mix(in srgb, var(--card) 60%, transparent)';
-  servicesSection.style.borderColor = 'color-mix(in srgb, var(--border) 30%, transparent)';
-  servicesSection.innerHTML = `
-    <div class="section-title"><img src="${servicesIcon}" style="${ICON_STYLE}"> Отключаемые и удаляемые службы</div>
-    <p style="font-size:12px; color:var(--fg-muted); margin: -4px 0 12px 0;">
-      Службы переводятся в <code>Start=4</code> или удаляются из реестра. Отката нет.
+  wrap.appendChild(frame3);
+
+  // ================= ФРЕЙМ 4: POWER KILLER =================
+  const frame4 = document.createElement('div');
+  frame4.className = 'panel';
+
+  frame4.innerHTML = `
+    <h3 class="game-title">
+      <span>🔧 Тонкая настройка Power Killer</span>
+    </h3>
+    <p style="color:var(--fg-muted); font-size:13px; margin-top:8px; line-height:1.6;">
+      Тонкая настройка энергосбережения Windows для предотвращения троттлинга CPU, отключения "засыпания" USB/PCIe и снижения DPC latency.
+      <br>
+      ⚠️ <b style="color:#f59e0b;">Не рекомендуется для ноутбуков при работе от батареи</b> — может привести к быстрому разряду.
+      <br>
+      💡 Отметьте галочками только те функции, которые хотите применить. Можно комбинировать.
     </p>
-    <div class="apps-grid fixes-grid">
-      ${[
-        ['📊','Телеметрия','DiagTrack, dmwappushservice, DPS, Wdi*, WerSvc, pla, wmiApSrv и др. → Start=4.'],
-        ['🔄','Обновления и Store','wuauserv, UsoSvc, WaaSMedicSvc, BITS, DoSvc, InstallService, ClipSVC, LicenseManager, PushToInstall, AppXSvc, AppReadiness, AppVClient, Appinfo, AppIDSvc, AppMgmt → Start=4.'],
-        ['🌐','Edge','edgeupdate, edgeupdatem, MicrosoftEdgeElevationService → Start=4.'],
-        ['🖨️','Печать','Spooler → Start=4 и удалён. PrintNotify, PrintWorkflowUserSvc удалены.'],
-        ['📶','Bluetooth и Wi-Fi','Bth*, BluetoothUserService, WlanSvc, WwanSvc, WEPHOSTSVC → удалены.'],
-        ['🖥️','RDP и Hyper-V','TermService, SessionEnv, UmRdpService, VMBus, vmic*, HyperVideo → удалены.'],
-        ['🎮','Xbox','Xbl*, XboxGipSvc, xboxgip, xinputhid → удалены.'],
-        ['💾','Хранилища и RAID','STORAGE, RAID, iSCSI, 3ware, ADP80XX, LSI_*, megasas*, nvraid, nvstor и др. → удалены.'],
-        ['🧩','Прочие','embeddedmode, WdiServiceHost, WdiSystemHost, WSearch, DoSvc, DPS, WerSvc, wercplsupport → удалены/Start=4.'],
-      ].map(([i,n,d]) => `
-        <div class="apps-card">
-          <div class="apps-icon">${i}</div>
-          <div class="apps-name">${n}</div>
-          <div class="apps-sub fix-desc">${d}</div>
-          <div style="display:flex;gap:4px;justify-content:center;min-height:14px;margin-top:2px;">
-            <span style="font-size:9.5px;font-weight:700;color:var(--danger);background:color-mix(in srgb, var(--danger) 15%, transparent);border:1px solid color-mix(in srgb, var(--danger) 40%, transparent);padding:1px 6px;border-radius:6px;">☠️ необратимо</span>
+
+    <div style="margin-top:16px; display:flex; flex-direction:column; gap:10px;">
+      ${PK_FEATURES.map(f => `
+        <label style="display:flex; gap:12px; padding:12px; background:var(--bg-alt); border-radius:8px; cursor:pointer; border:1px solid var(--border); transition:border-color .15s;">
+          <input type="checkbox" class="pk-cb" value="${f.file}" checked style="margin-top:3px; accent-color:var(--accent); cursor:pointer;">
+          <div style="flex:1;">
+            <div style="font-weight:600; font-size:14px;">${f.label}</div>
+            <div style="font-size:12px; color:var(--fg-muted); margin-top:4px; line-height:1.5;">${f.desc}</div>
           </div>
-          <button class="apps-run" disabled style="opacity:0.6;cursor:default;pointer-events:none;">☠️ Применяется</button>
-        </div>
+        </label>
       `).join('')}
     </div>
   `;
-  right.appendChild(servicesSection);
 
-  wrap.appendChild(right);
+  const pkFooter = document.createElement('div');
+  pkFooter.style.cssText = 'display:flex; gap:10px; margin-top:20px; padding-top:16px; border-top:1px solid var(--border);';
+  pkFooter.innerHTML = `
+    <button class="btn success" id="btn-pk-apply" style="flex:1;">▶ Применить выбранные</button>
+    <button class="btn danger" id="btn-pk-revert" style="flex:1;">↩ Откатить питание</button>
+  `;
+  frame4.appendChild(pkFooter);
+
+  wrap.appendChild(frame4);
+
+  // ================= ФРЕЙМ 5: СЛУЖБЫ =================
+  const frame5 = document.createElement('div');
+  frame5.className = 'panel';
+
+  frame5.innerHTML = `
+    <h3 class="game-title">
+      <span>🛡️ Оптимизация служб Windows</span>
+    </h3>
+    <p style="color:var(--fg-muted); font-size:13px; margin-top:8px; line-height:1.6;">
+      Массовое отключение <b>${SAFE_SERVICES.length}</b> телеметрических, рекламных и фоновых служб (перевод в Start=4).
+      <br>
+      🛡️ <b>Защищённые категории</b> (никогда не отключаются): питание 🔋, ввод ⌨️, сеть 🌐, темы 🎨, системные ядра ⚙️ (Start 0-2).
+      <br>
+      💡 Снимите галочки со служб, которые хотите <b>оставить включёнными</b>. По умолчанию выбраны все.
+    </p>
+
+    <div style="margin-top:12px; display:flex; gap:8px;">
+      <button class="btn" id="gm-svc-all" style="flex:1; font-size:12px;">✅ Выбрать все</button>
+      <button class="btn" id="gm-svc-none" style="flex:1; font-size:12px;">❌ Снять все</button>
+    </div>
+
+    <div style="margin-top:12px; max-height:350px; overflow-y:auto; padding:12px; background:var(--bg-alt); border-radius:8px; border:1px solid var(--border); columns:3; column-gap:12px;">
+      ${SAFE_SERVICES.map(s => `
+        <label style="display:flex; align-items:center; gap:6px; padding:4px 0; font-size:12px; font-family:Consolas,Monaco,monospace; cursor:pointer; user-select:none; break-inside:avoid;">
+          <input type="checkbox" class="svc-cb" value="${s}" checked style="accent-color:var(--accent); cursor:pointer;"> <span>${s}</span>
+        </label>
+      `).join('')}
+    </div>
+  `;
+
+  const svcFooter = document.createElement('div');
+  svcFooter.style.cssText = 'display:flex; gap:10px; margin-top:20px; padding-top:16px; border-top:1px solid var(--border);';
+  svcFooter.innerHTML = `
+    <button class="btn success" id="btn-svc-apply" style="flex:1;">▶ Отключить службы</button>
+    <button class="btn danger" id="btn-svc-restore" style="flex:1;">↩ Восстановить из бэкапа</button>
+  `;
+  frame5.appendChild(svcFooter);
+
+  wrap.appendChild(frame5);
+
+  // ================= ФРЕЙМ 6: ЗАЩИЩЁННЫЕ КОМПОНЕНТЫ =================
+  const frame6 = document.createElement('div');
+  frame6.className = 'panel';
+
+  frame6.innerHTML = `
+    <h3 class="game-title">
+      <span>🔒 Защищённые компоненты</span>
+    </h3>
+    <p style="color:var(--fg-muted); font-size:13px; margin-top:8px; line-height:1.6;">
+      Следующие категории системных драйверов и служб <b>никогда</b> не отключаются этим скриптом, чтобы гарантировать стабильную работу ПК и ноутбука:
+    </p>
+
+    <div style="margin-top:12px; display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+      <div style="padding:10px; background:var(--bg-alt); border-radius:6px; font-size:13px; line-height:1.6;">
+        🔋 <b>Питание:</b> Power, CmBatt, AcpiPmi, acpiex
+      </div>
+      <div style="padding:10px; background:var(--bg-alt); border-radius:6px; font-size:13px; line-height:1.6;">
+        ⌨️ <b>Ввод:</b> mouclass, kbdclass, hidserv, mouhid
+      </div>
+      <div style="padding:10px; background:var(--bg-alt); border-radius:6px; font-size:13px; line-height:1.6;">
+        🌐 <b>Сеть:</b> WlanSvc, Dhcp, Dnscache, NlaSvc, Netman
+      </div>
+      <div style="padding:10px; background:var(--bg-alt); border-radius:6px; font-size:13px; line-height:1.6;">
+        🎨 <b>Интерфейс:</b> Themes, Audiosrv, AudioEndpointBuilder
+      </div>
+      <div style="padding:10px; background:var(--bg-alt); border-radius:6px; font-size:13px; line-height:1.6;">
+        ⚙️ <b>Ядро (Start 0-2):</b> RpcSs, SamSs, LSM, DcomLaunch, Schedule
+      </div>
+      <div style="padding:10px; background:var(--bg-alt); border-radius:6px; font-size:13px; line-height:1.6;">
+        🛡️ <b>Безопасность:</b> BFE, mpssvc, WinDefend
+      </div>
+    </div>
+  `;
+
+  wrap.appendChild(frame6);
+
   content.appendChild(wrap);
 
-  const catalogEl = right.querySelector('#deadly-catalog');
-  OPTIMIZATION_CATEGORIES.forEach((cat) => {
-    const item = document.createElement('details');
-    item.style.cssText = 'background:var(--bg-alt);border-radius:8px;padding:10px 12px;';
-    item.innerHTML = `
-      <summary style="cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;user-select:none;">
-        <span class="chevron" style="font-size:10px;color:var(--fg-muted);transition:transform .15s;display:inline-block;">▶</span>
-        <span style="font-size:16px">${cat.icon}</span>
-        <b style="flex:1">${cat.name}</b>
-        <span style="color:var(--fg-muted);font-size:12px">${cat.items.length}</span>
-      </summary>
-      <div style="color:var(--fg-muted);font-size:12px;margin:6px 0 8px;">${cat.desc}</div>
-      <div style="font-family:Consolas,monospace;font-size:11px;line-height:1.6;">
-        ${cat.items.map(s => `<div style="break-inside:avoid">• ${s}</div>`).join('')}
-      </div>
-    `;
-    item.addEventListener('toggle', () => {
-      item.querySelector('.chevron').style.transform = item.open ? 'rotate(90deg)' : 'rotate(0deg)';
-    });
-    catalogEl.appendChild(item);
-  });
+  // ================= ЛОГИКА =================
+  const statusEl = frame1.querySelector('#gm-status');
+  const switchEl = frame1.querySelector('#gm-backup-switch');
+  const knobEl = switchEl.querySelector('.switch-knob');
 
-  right.querySelector('#btn-deadly-expand-all').addEventListener('click', () => {
-    right.querySelectorAll('details').forEach(d => d.open = true);
-  });
-  right.querySelector('#btn-deadly-collapse-all').addEventListener('click', () => {
-    right.querySelectorAll('details').forEach(d => d.open = false);
-  });
+  function setSwitch(on) {
+    switchEl.dataset.on = on ? 'true' : 'false';
+    switchEl.setAttribute('aria-checked', on ? 'true' : 'false');
+    switchEl.style.background = on ? '#2e7d32' : '#3a3a3a';
+    knobEl.style.left = on ? '23px' : '3px';
+  }
+  function isSwitchOn() { return switchEl.dataset.on === 'true'; }
+  function toggleSwitch() { setSwitch(!isSwitchOn()); }
 
-  const statusEl = left.querySelector('#deadly-status');
+  switchEl.addEventListener('click', toggleSwitch);
+  switchEl.addEventListener('keydown', (e) => {
+    if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggleSwitch(); }
+  });
+  setSwitch(true);
 
-  async function runBat(rel, label) {
-    statusEl.textContent = `Запуск: ${label}...\nНе выключайте ПК.`;
-    statusEl.style.color = 'var(--fg)';
+  function updateStatus(msg, type = 'info') {
+    const icon = type === 'error' ? '❌' : (type === 'success' ? '✅' : 'ℹ️');
+    statusEl.innerHTML = `<span>${icon}</span> <span>${msg}</span>`;
+    statusEl.style.borderLeftColor = type === 'error' ? '#ef4444' : (type === 'success' ? '#22c55e' : 'var(--accent)');
+  }
+
+  async function runBat(relPath, description) {
+    updateStatus(`⏳ ${description}...`);
     try {
-      await window.api.tweaks.run('tweaks/' + rel, { wait: true });
-      statusEl.textContent = `✅ ${label} успешно выполнено!\nРекомендуется перезагрузка.`;
-      statusEl.style.color = 'var(--success)';
-      toast(`Успех: ${label}`, 'success');
+      await window.api.tweaks.run('tweaks/' + relPath, { wait: true });
+      return true;
     } catch (e) {
-      statusEl.textContent = `❌ Ошибка: ${e.message}`;
-      statusEl.style.color = 'var(--danger)';
-      toast('Ошибка: ' + e.message, 'error');
+      console.error(e);
+      updateStatus(`Ошибка: ${description}. ${e.message}`, 'error');
+      toast(`Ошибка: ${description}`, 'error');
+      return false;
     }
   }
 
-  left.querySelector('#btn-deadly-apply').addEventListener('click', () => {
-    if (!confirm('СМЕРТЕЛЬНАЯ ОПТИМИЗАЦИЯ\n\nОтмены НЕ БУДЕТ. Продолжить?')) return;
-    runBat(APPLY_BAT, 'Смертельная оптимизация');
+  // --- Логика выбора плана ---
+  const planSelect = frame2.querySelector('#power-plan-select');
+  const planDesc = frame2.querySelector('#plan-desc');
+  const planDescText = frame2.querySelector('#plan-desc-text');
+
+  planSelect.addEventListener('change', () => {
+    const selectedPlan = POWER_PLANS.find(p => p.name === planSelect.value);
+    if (selectedPlan) {
+      planDescText.textContent = selectedPlan.desc;
+      planDesc.style.display = 'block';
+    } else {
+      planDesc.style.display = 'none';
+    }
+  });
+
+  // --- ИМПОРТ ПЛАНА (с проверкой на дубликаты внутри .bat) ---
+  frame2.querySelector('#btn-import-plan').addEventListener('click', async () => {
+    const selectedPlan = planSelect.value;
+    if (!selectedPlan) {
+      toast('Выберите план электропитания', 'error');
+      return;
+    }
+
+    const safeName = selectedPlan.replace(/ /g, '_').replace(/\./g, '_');
+    const batPath = `Электропитание/Популярные режимы электропитания/Import_${safeName}.bat`;
+
+    const success = await runBat(batPath, `Импорт плана: ${selectedPlan}`);
+    if (success) {
+      updateStatus(`План "${selectedPlan}" обработан. Если он уже был в системе — дубликат не создан.`, 'success');
+      toast('План обработан', 'success');
+    }
+  });
+
+  // --- АКТИВАЦИЯ ПЛАНА (только активация, без импорта) ---
+  frame2.querySelector('#btn-activate-plan').addEventListener('click', async () => {
+    const selectedPlan = planSelect.value;
+    if (!selectedPlan) {
+      toast('Выберите план электропитания', 'error');
+      return;
+    }
+
+    const safeName = selectedPlan.replace(/ /g, '_').replace(/\./g, '_');
+    const batPath = `Электропитание/Популярные режимы электропитания/Activate_${safeName}.bat`;
+
+    const success = await runBat(batPath, `Активация плана: ${selectedPlan}`);
+    if (success) {
+      updateStatus(`План "${selectedPlan}" активирован.`, 'success');
+      toast('План активирован', 'success');
+    }
+  });
+
+  // --- Быстрая активация из блока "установленные планы" ---
+  frame3.querySelectorAll('button[data-plan]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const planName = btn.dataset.plan;
+      const safeName = planName.replace(/ /g, '_').replace(/\./g, '_');
+      const batPath = `Электропитание/Популярные режимы электропитания/Activate_${safeName}.bat`;
+
+      const success = await runBat(batPath, `Активация плана: ${planName}`);
+      if (success) {
+        updateStatus(`План "${planName}" активирован.`, 'success');
+        toast('План активирован', 'success');
+      }
+    });
+  });
+
+  // --- Управление чекбоксами служб ---
+  frame5.querySelector('#gm-svc-all').addEventListener('click', () => {
+    frame5.querySelectorAll('.svc-cb').forEach(cb => cb.checked = true);
+  });
+  frame5.querySelector('#gm-svc-none').addEventListener('click', () => {
+    frame5.querySelectorAll('.svc-cb').forEach(cb => cb.checked = false);
+  });
+
+  // --- ПРИМЕНИТЬ POWER KILLER ---
+  frame4.querySelector('#btn-pk-apply').addEventListener('click', async () => {
+    const checkedFiles = Array.from(frame4.querySelectorAll('.pk-cb:checked')).map(cb => cb.value);
+
+    if (checkedFiles.length === 0) {
+      toast('Выберите хотя бы одну функцию Power Killer', 'error');
+      return;
+    }
+
+    for (const file of checkedFiles) {
+      const featureName = PK_FEATURES.find(f => f.file === file)?.label || file;
+      const success = await runBat(`GameMode/${file}`, featureName);
+      if (!success) break;
+    }
+
+    updateStatus('Выбранные настройки питания применены.', 'success');
+    toast('Настройки питания применены', 'success');
+  });
+
+  // --- ОТКАТИТЬ POWER KILLER ---
+  frame4.querySelector('#btn-pk-revert').addEventListener('click', async () => {
+    if (!confirm('Это сбросит все настройки электропитания к стандартным значениям Windows. Продолжить?')) return;
+
+    const success = await runBat(SCRIPTS.pkRevert, 'Откат настроек электропитания');
+    if (success) {
+      updateStatus('Настройки питания сброшены к стандартным.', 'success');
+      toast('Настройки питания откатаны', 'success');
+    }
+  });
+
+  // --- ПРИМЕНИТЬ СЛУЖБЫ ---
+  frame5.querySelector('#btn-svc-apply').addEventListener('click', async () => {
+    const wantBackup = isSwitchOn();
+    const checkedServices = Array.from(frame5.querySelectorAll('.svc-cb:checked')).map(cb => cb.value);
+
+    if (checkedServices.length === 0) {
+      toast('Выберите хотя бы одну службу для отключения', 'error');
+      return;
+    }
+
+    if (wantBackup) {
+      const backupOk = await runBat(SCRIPTS.backup, 'Создание бэкапа реестра служб');
+      if (!backupOk) return;
+    }
+
+    const disableOk = await runBat(SCRIPTS.disableServices, 'Отключение выбранных служб');
+    if (disableOk) {
+      updateStatus(`Успешно отключено ${checkedServices.length} служб. ${wantBackup ? 'Бэкап сохранён.' : ''}`, 'success');
+      toast('Службы оптимизированы', 'success');
+    }
+  });
+
+  // --- ВОССТАНОВИТЬ СЛУЖБЫ ---
+  frame5.querySelector('#btn-svc-restore').addEventListener('click', async () => {
+    if (!confirm('Это восстановит исходное состояние всех служб из созданного ранее бэкапа. Продолжить?')) return;
+
+    const restoreOk = await runBat(SCRIPTS.restore, 'Восстановление служб из бэкапа (.reg)');
+
+    if (restoreOk) {
+      updateStatus('Службы успешно восстановлены из бэкапа.', 'success');
+      toast('Службы восстановлены', 'success');
+    } else {
+      updateStatus('Бэкап не найден. Применяется безопасный сброс (Start=3)...', 'info');
+      await runBat(SCRIPTS.revertServicesFallback, 'Безопасный сброс служб в ручной режим');
+    }
   });
 }
