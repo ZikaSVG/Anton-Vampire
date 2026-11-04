@@ -84,34 +84,6 @@
       ],
       "отмена": []
     },
-    "Компоненты": {
-      "Root": [
-        "Удалить компонент Extended Wallpapers.bat",
-        "Удалить компонент Hello Face.bat",
-        "Удалить компонент Internet Explorer.bat",
-        "Удалить компонент Math Recognizer.bat",
-        "Удалить компонент Notepad (System).bat",
-        "Удалить компонент OpenSSH Client.bat",
-        "Удалить компонент PowerShell ISE.bat",
-        "Удалить компонент Print Management Console.bat",
-        "Удалить компонент Steps Recorder.bat",
-        "Удалить компонент VBSCRIPT.bat",
-        "Удалить компонент Windows Media Player.bat"
-      ],
-      "отмена": [
-        "Установить компонент Extended Wallpapers.bat",
-        "Установить компонент Hello Face.bat",
-        "Установить компонент Internet Explorer.bat",
-        "Установить компонент Math Recognizer.bat",
-        "Установить компонент Notepad (System).bat",
-        "Установить компонент OpenSSH Client.bat",
-        "Установить компонент PowerShell ISE.bat",
-        "Установить компонент Print Management Console.bat",
-        "Установить компонент Steps Recorder.bat",
-        "Установить компонент VBSCRIPT.bat",
-        "Установить компонент Windows Media Player.bat"
-      ]
-    },
     "Оптимизация": {
       "Root": [
         "Включить схему питания Ultimate Performance.bat",
@@ -256,16 +228,10 @@
       "Root": [
         "Отключить новости и интересы (Dsh).bat",
         "Убрать ярлыки специальных возможностей и системных инструментов.bat",
-        "Удалить OneDrive.bat",
-        "Удалить все неприкреплённые Appx-пакеты.bat",
-        "Удалить клиент удалённого рабочего стола (mstsc).bat"
+        "Удалить все неприкреплённые Appx-пакеты.bat"
       ],
       "отмена": [
-        "Включить новости и интересы (Dsh).bat",
-        "Восстановить OneDrive.bat",
-        "Восстановить все Appx-пакеты.bat",
-        "Восстановить клиент удалённого рабочего стола (mstsc).bat",
-        "Добавить ярлыки специальных возможностей и системных инструментов.bat"
+        "Включить новости и интересы (Dsh).bat"
       ]
     },
     "Сжатие": {

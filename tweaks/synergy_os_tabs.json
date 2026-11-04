@@ -2,8 +2,7 @@
   "tabs": {
     "Очистка": {
       "Root": [
-        "Очистить систему.bat",
-        "Удалить Microsoft Update Health Tools.bat"
+        "Очистить систему.bat"
       ],
       "отмена": []
     },
@@ -63,8 +62,7 @@
         "Отключить EdgeAutoLaunch.bat",
         "Отключить OneDrive в автозапуске.bat",
         "Удалить AppX мусор.bat",
-        "Удалить Microsoft Edge.bat",
-        "Удалить OneDrive.bat"
+        "Удалить Microsoft Update Health Tools.bat"
       ],
       "отмена": [
         "Вернуть EdgeAutoLaunch.bat",

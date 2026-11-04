@@ -2,77 +2,147 @@ import { state, clearCheckboxes, toast, Sound } from '../app.js';
 import { renderCheckboxGrid } from '../components/checkbox.js';
 import { papirusUrl } from '../utils/icons.js';
 
-/* ============================================================
-   Вкладка «Приложения».
-   PS1-бэкенд: appx-list.ps1 / appx-remove.ps1 / appx-actions.ps1 / appx-detect.ps1
-   BAT-твики удаления: src/renderer/tabs/remove_apps/
-   Доп. секции: tweaks/removal_tabs.json + tweaks/apps_optimization_tabs.json
-   ============================================================ */
-
 const PS_DIR_REL = 'src/renderer/tabs';
 const TWEAKS_BASE = 'src/renderer/tabs/';
 
 const COMPONENT_TWEAKS = {
   onedrive: [
-    { id: 'soft', label: 'Мягкое', file: 'remove_apps/onedrive_optimizer.bat',
-      desc: 'Быстрое удаление через официальный деинсталлятор. Убирает папки и CLSID из Проводника.',
-      danger: false },
-    { id: 'full', label: 'Полное', file: 'remove_apps/onedrive_xos.bat',
-      desc: 'Полное удаление: автозагрузка, ярлыки, задачи планировщика, политики DisableFileSync.',
-      danger: false, recommended: true },
-    { id: 'hard', label: 'Хардкор', file: 'remove_apps/onedrive_hard.bat',
-      desc: 'Максимально агрессивно: убивает Explorer, забирает владение папками.',
-      warning: 'Explorer будет перезапущен.', danger: true },
-    { id: 'clean', label: 'Зачистка следов', file: 'remove_apps/onedrive_cleanup.bat',
-      desc: 'Удаляет остатки: пустые папки, ярлыки, кэш, временные файлы.',
-      danger: false }
+    { id: 'soft', label: 'Мягкое', file: 'remove_apps/onedrive_optimizer.bat', desc: 'Быстрое удаление через официальный деинсталлятор.', danger: false },
+    { id: 'full', label: 'Полное', file: 'remove_apps/onedrive_xos.bat', desc: 'Полное удаление: автозагрузка, ярлыки, задачи, политики.', danger: false, recommended: true },
+    { id: 'hard', label: 'Хардкор', file: 'remove_apps/onedrive_hard.bat', desc: 'Максимально агрессивно: убивает Explorer, забирает владение.', warning: 'Explorer будет перезапущен.', danger: true },
+    { id: 'clean', label: 'Зачистка следов', file: 'remove_apps/onedrive_cleanup.bat', desc: 'Удаляет остатки: пустые папки, ярлыки, кэш.', danger: false },
+    { id: 'marty', label: 'MartyFiles', file: 'remove_apps/onedrive_martyfiles.bat', desc: 'Альтернативный метод глубокой зачистки OneDrive.', danger: true },
+    { id: 'atlas', label: 'Atlas', file: 'remove_apps/onedrive_atlas.bat', desc: 'Метод удаления через Atlas OS.', danger: true },
+    { id: 'sos', label: 'SOS', file: 'remove_apps/onedrive_sos.bat', desc: 'Экстренное удаление при проблемах.', danger: true },
+    { id: 'vainos', label: 'Vainos', file: 'remove_apps/onedrive_vainos.bat', desc: 'Метод удаления через Vainos.', danger: true }
   ],
   edge: [
-    { id: 'appx', label: 'AppX Edge', file: 'remove_apps/edge_appx_only.bat',
-      desc: 'Удаляет только AppX-пакет Edge. WebView2 НЕ трогает.',
-      danger: false },
-    { id: 'full', label: 'Полное', file: 'remove_apps/edge_webview2_full.bat',
-      desc: 'Удаляет Edge и WebView2 через официальный установщик Microsoft.',
-      warning: 'WebView2 используется в Teams, Widgets, Office.',
-      danger: true, recommended: true },
-    { id: 'hard', label: 'Хардкор', file: 'remove_apps/edge_webview2_hard.bat',
-      desc: 'AppX + установщик + реестр + задачи + ярлыки + политики.',
-      warning: 'Полностью ломает WebView2-зависимые приложения.', danger: true },
-    { id: 'block', label: 'Только блокировка', file: 'remove_apps/edge_block_only.bat',
-      desc: 'НЕ удаляет Edge, но блокирует автозапуск, фоновые процессы, обновления.',
-      danger: false }
+    { id: 'appx', label: 'AppX Edge', file: 'remove_apps/edge_appx_only.bat', desc: 'Удаляет только AppX-пакет Edge. WebView2 НЕ трогает.', danger: false },
+    { id: 'full', label: 'Полное', file: 'remove_apps/edge_webview2_full.bat', desc: 'Удаляет Edge и WebView2 через официальный установщик.', warning: 'WebView2 используется в Teams, Widgets, Office.', danger: true, recommended: true },
+    { id: 'hard', label: 'Хардкор', file: 'remove_apps/edge_webview2_hard.bat', desc: 'AppX + установщик + реестр + задачи + ярлыки + политики.', warning: 'Полностью ломает WebView2-зависимые приложения.', danger: true },
+    { id: 'block', label: 'Только блокировка', file: 'remove_apps/edge_block_only.bat', desc: 'НЕ удаляет Edge, но блокирует автозапуск и обновления.', danger: false },
+    { id: 'xos', label: 'XOS', file: 'remove_apps/edge_xos.bat', desc: 'Полное удаление через XOS метод.', danger: true },
+    { id: 'sos', label: 'SOS', file: 'remove_apps/edge_sos.bat', desc: 'Экстренное удаление при проблемах.', danger: true },
+    { id: 'vainos', label: 'Vainos', file: 'remove_apps/edge_vainos.bat', desc: 'Метод удаления через Vainos.', danger: true }
   ],
   webview2: [
-    { id: 'only', label: 'Только WebView2', file: 'remove_apps/webview2_only.bat',
-      desc: 'Удаляет только WebView2 Runtime. Edge НЕ трогает.',
-      warning: 'Teams, Widgets, Office могут перестать работать.', danger: true },
-    { id: 'full', label: 'Edge + WebView2', file: 'remove_apps/edge_webview2_full.bat',
-      desc: 'Удаляет Edge и WebView2 вместе.',
-      warning: 'Полное удаление обоих.', danger: true },
-    { id: 'hard', label: 'Хардкор', file: 'remove_apps/edge_webview2_hard.bat',
-      desc: 'Максимально агрессивная зачистка Edge + WebView2 + реестра.', danger: true }
+    { id: 'only', label: 'Только WebView2', file: 'remove_apps/webview2_only.bat', desc: 'Удаляет только WebView2 Runtime. Edge НЕ трогает.', warning: 'Teams, Widgets, Office могут перестать работать.', danger: true },
+    { id: 'full', label: 'Edge + WebView2', file: 'remove_apps/edge_webview2_full.bat', desc: 'Удаляет Edge и WebView2 вместе.', warning: 'Полное удаление обоих.', danger: true },
+    { id: 'hard', label: 'Хардкор', file: 'remove_apps/edge_webview2_hard.bat', desc: 'Максимально агрессивная зачистка Edge + WebView2 + реестра.', danger: true }
   ],
   defender: [
-    { id: 'off', label: 'Отключить', file: 'remove_apps/defender_off.bat',
-      desc: 'Отключает Defender через политики, НЕ удаляя компоненты.',
-      danger: false, recommended: true },
-    { id: 'back', label: 'Вернуть', file: 'remove_apps/defender_back.bat',
-      desc: 'Возвращает Defender после отключения.',
-      danger: false },
-    { id: 'remove', label: 'Удалить', file: 'remove_apps/defender_xos.bat',
-      desc: 'Полное удаление Defender: процессы, AppX, службы, файлы.',
-      warning: 'НЕОБРАТИМО без переустановки Windows.', danger: true },
-    { id: 'hard', label: 'Хардкор', file: 'remove_apps/defender_hard.bat',
-      desc: 'Всё из «Удалить» + расширенные политики Spynet.',
-      warning: 'НЕОБРАТИМО без точки восстановления.', danger: true }
+    { id: 'off', label: 'Отключить', file: 'remove_apps/defender_off.bat', desc: 'Отключает Defender через политики, НЕ удаляя компоненты.', danger: false, recommended: true },
+    { id: 'back', label: 'Вернуть', file: 'remove_apps/defender_back.bat', desc: 'Возвращает Defender после отключения.', danger: false },
+    { id: 'remove', label: 'Удалить', file: 'remove_apps/defender_xos.bat', desc: 'Полное удаление Defender: процессы, AppX, службы, файлы.', warning: 'НЕОБРАТИМО без переустановки Windows.', danger: true },
+    { id: 'hard', label: 'Хардкор', file: 'remove_apps/defender_hard.bat', desc: 'Всё из «Удалить» + расширенные политики Spynet.', warning: 'НЕОБРАТИМО без точки восстановления.', danger: true }
+  ],
+  notepad: [
+    { id: 'remove', label: 'Удалить', file: 'remove_apps/notepad.bat', desc: 'Удаляет классический Блокнот Windows.', danger: true },
+    { id: 'restore', label: 'Восстановить', file: 'remove_apps/restore_notepad.bat', desc: 'Восстанавливает классический Блокнот.', danger: false }
+  ],
+  internet_explorer: [
+    { id: 'remove', label: 'Удалить', file: 'remove_apps/internet_explorer.bat', desc: 'Полное удаление Internet Explorer.', danger: true },
+    { id: 'restore', label: 'Восстановить', file: 'remove_apps/restore_internet_explorer.bat', desc: 'Возвращает Internet Explorer в систему.', danger: false }
+  ],
+  rdp: [
+    { id: 'remove', label: 'Удалить', file: 'remove_apps/rdp_mstsc.bat', desc: 'Удаляет клиент Remote Desktop (mstsc.exe).', danger: true, warning: 'Вы не сможете подключаться к удаленным рабочим столам через встроенный клиент.' },
+    { id: 'off', label: 'Отключить', file: 'remove_apps/rdp_mstsc_off.bat', desc: 'Отключает Remote Desktop без удаления файлов.', danger: false }
+  ],
+  copilot: [
+    { id: 'remove', label: 'Удалить', file: 'remove_apps/copilot.bat', desc: 'Удаляет Microsoft Copilot.', danger: true },
+    { id: 'restore', label: 'Восстановить', file: 'remove_apps/restore_сopilot.bat', desc: 'Восстанавливает Microsoft Copilot.', danger: false }
+  ],
+  microsoft_photos: [
+    { id: 'remove', label: 'Удалить', file: 'remove_apps/microsoft_photos.bat', desc: 'Удаляет приложение Microsoft Photos.', danger: true }
+  ],
+  microsoft_teams: [
+    { id: 'remove', label: 'Удалить', file: 'remove_apps/microsoft_teams.bat', desc: 'Удаляет Microsoft Teams.', danger: true }
+  ],
+  mixed_reality_portal: [
+    { id: 'remove', label: 'Удалить', file: 'remove_apps/mixed_reality_portal.bat', desc: 'Удаляет Mixed Reality Portal.', danger: true }
+  ],
+  wsl: [
+    { id: 'remove', label: 'Удалить', file: 'remove_apps/wsl.bat', desc: 'Удаляет Windows Subsystem for Linux.', danger: true, warning: 'Все WSL-дистрибутивы будут удалены.' },
+    { id: 'restore', label: 'Восстановить', file: 'remove_apps/restore_wsl.bat', desc: 'Восстанавливает WSL.', danger: false }
+  ],
+  xbox: [
+    { id: 'remove', label: 'Удалить', file: 'remove_apps/xbox.bat', desc: 'Удаляет Xbox и связанные компоненты.', danger: true }
   ]
 };
 
 const COMPONENT_META = {
-  onedrive: { icon: '☁️', title: 'OneDrive',          desc: 'Облачное хранилище Microsoft' },
-  edge:     { icon: '🌊', title: 'Microsoft Edge',    desc: 'Браузер Microsoft' },
-  webview2: { icon: '🧩', title: 'WebView2 Runtime',  desc: 'Компонент для встраивания Edge' },
-  defender: { icon: '🛡️', title: 'Windows Defender',  desc: 'Встроенный антивирус' }
+  onedrive: { icon: '☁️', title: 'OneDrive', desc: 'Облачное хранилище Microsoft' },
+  edge:     { icon: '🌊', title: 'Microsoft Edge', desc: 'Браузер Microsoft' },
+  webview2: { icon: '🧩', title: 'WebView2 Runtime', desc: 'Компонент для встраивания Edge' },
+  defender: { icon: '🛡️', title: 'Windows Defender', desc: 'Встроенный антивирус' },
+  notepad:  { icon: '📝', title: 'Блокнот', desc: 'Стандартный текстовый редактор' },
+  internet_explorer: { icon: '🌐', title: 'Internet Explorer', desc: 'Устаревший браузер Microsoft' },
+  rdp:      { icon: '🖥️', title: 'Remote Desktop', desc: 'Клиент подключения к удаленному рабочему столу' },
+  copilot:  { icon: '🤖', title: 'Microsoft Copilot', desc: 'ИИ-ассистент Microsoft' },
+  microsoft_photos: { icon: '📷', title: 'Microsoft Photos', desc: 'Приложение для просмотра фотографий' },
+  microsoft_teams: { icon: '👥', title: 'Microsoft Teams', desc: 'Платформа для совместной работы' },
+  mixed_reality_portal: { icon: '🥽', title: 'Mixed Reality Portal', desc: 'Портал смешанной реальности' },
+  wsl:      { icon: '🐧', title: 'Windows Subsystem for Linux', desc: 'Подсистема Windows для Linux' },
+  xbox:     { icon: '🎮', title: 'Xbox', desc: 'Игровые компоненты Xbox' }
+};
+
+const WINDOWS_COMPONENTS = {
+  extended_wallpapers: {
+    icon: '🖼️', title: 'Дополнительные фоны', desc: 'Расширенный набор обоев рабочего стола',
+    tweaks: [
+      { id: 'remove', label: 'Удалить', file: 'remove_components/extended_wallpapers.bat', desc: 'Удаляет дополнительные фоны рабочего стола.', danger: false },
+      { id: 'restore', label: 'Восстановить', file: 'remove_components/restore/extended_wallpapers.bat', desc: 'Восстанавливает дополнительные фоны.', danger: false }
+    ]
+  },
+  hello_face: {
+    icon: '👤', title: 'Windows Hello Face', desc: 'Компонент биометрической аутентификации',
+    tweaks: [
+      { id: 'remove', label: 'Удалить', file: 'remove_components/hello_face.bat', desc: 'Удаляет компонент распознавания лиц Windows Hello.', danger: true },
+      { id: 'restore', label: 'Восстановить', file: 'remove_components/restore/hello_face.bat', desc: 'Восстанавливает Windows Hello Face.', danger: false }
+    ]
+  },
+  math_recognizer: {
+    icon: '🧮', title: 'Math Recognizer', desc: 'Компонент распознавания математических формул',
+    tweaks: [
+      { id: 'remove', label: 'Удалить', file: 'remove_components/math_recognizer.bat', desc: 'Удаляет Math Recognizer.', danger: false },
+      { id: 'restore', label: 'Восстановить', file: 'remove_components/restore/math_recognizer.bat', desc: 'Восстанавливает Math Recognizer.', danger: false }
+    ]
+  },
+  openssh_client: {
+    icon: '🔐', title: 'OpenSSH Client', desc: 'Клиент безопасного удаленного доступа',
+    tweaks: [
+      { id: 'remove', label: 'Удалить', file: 'remove_components/openssh_client.bat', desc: 'Удаляет встроенный клиент OpenSSH.', danger: false },
+      { id: 'restore', label: 'Восстановить', file: 'remove_components/restore/openssh_client.bat', desc: 'Восстанавливает клиент OpenSSH.', danger: false }
+    ]
+  },
+  powershell_ise: {
+    icon: '⌨️', title: 'PowerShell ISE', desc: 'Среда сценариев Windows PowerShell',
+    tweaks: [
+      { id: 'remove', label: 'Удалить', file: 'remove_components/powershell_ise.bat', desc: 'Удаляет PowerShell ISE.', danger: false },
+      { id: 'restore', label: 'Восстановить', file: 'remove_components/restore/powershell_ise.bat', desc: 'Восстанавливает PowerShell ISE.', danger: false }
+    ]
+  },
+  print_management_console: {
+    icon: '🖨️', title: 'Консоль управления печатью', desc: 'Инструмент управления принтерами',
+    tweaks: [
+      { id: 'remove', label: 'Удалить', file: 'remove_components/print_management_console.bat', desc: 'Удаляет консоль управления печатью.', danger: false },
+      { id: 'restore', label: 'Восстановить', file: 'remove_components/restore/print_management_console.bat', desc: 'Восстанавливает консоль управления печатью.', danger: false }
+    ]
+  },
+  steps_recorder: {
+    icon: '📹', title: 'Steps Recorder', desc: 'Средство записи действий по воспроизведению проблем',
+    tweaks: [
+      { id: 'remove', label: 'Удалить', file: 'remove_components/steps_recorder.bat', desc: 'Удаляет Steps Recorder.', danger: false },
+      { id: 'restore', label: 'Восстановить', file: 'remove_components/restore/steps_recorder.bat', desc: 'Восстанавливает Steps Recorder.', danger: false }
+    ]
+  },
+  vbscript: {
+    icon: '📜', title: 'VBScript', desc: 'Поддержка сценариев Visual Basic',
+    tweaks: [
+      { id: 'remove', label: 'Удалить', file: 'remove_components/vbscript.bat', desc: 'Отключает/удаляет поддержку VBScript.', danger: true, warning: 'Может сломать старые скрипты и программы.' },
+      { id: 'restore', label: 'Восстановить', file: 'remove_components/restore/vbscipt.bat', desc: 'Включает поддержку VBScript.', danger: false }
+    ]
+  }
 };
 
 const REMOVAL_CATEGORIES = [
@@ -161,20 +231,14 @@ function escapeHtml(s) {
     .replace(/'/g, '&#39;');
 }
 
-/* ============================================================
-   Формирование аргументов: имена параметров (-Action) не кавычатся,
-   чтобы PowerShell корректно их распознавал.
-   ============================================================ */
 async function runPs1(fileName, args = []) {
   const root = await getProjectRoot();
   const absPath = `${root}/${PS_DIR_REL}/${fileName}`.replace(/\\/g, '/');
   
   const argStr = args.map(a => {
     const s = String(a ?? '');
-    if (s.startsWith('-')) {
-      return s; // Не кавычим имена параметров
-    }
-    return `"${s.replace(/"/g, '\\"')}"`; // Кавычим только значения
+    if (s.startsWith('-')) return s;
+    return `"${s.replace(/"/g, '\\"')}"`;
   }).join(' ');
 
   const psCommand =
@@ -190,9 +254,6 @@ async function runPs1(fileName, args = []) {
   return { code: r?.code ?? 0, out: r?.out ?? '', err: r?.err ?? '' };
 }
 
-/* ============================================================
-   Emoji-fallback
-   ============================================================ */
 function iconFor(name) {
   if (!name) return '📦';
   const s = String(name);
@@ -200,7 +261,6 @@ function iconFor(name) {
 
   if (s === 'OneDrive') return '☁️';
   if (s === 'RemoteDesktop') return '🖥️';
-
   if (/edge/i.test(s)) return '🌊';
   if (/chrome|chromium/i.test(t)) return '🌐';
   if (/firefox|mozilla/i.test(t)) return '🦊';
@@ -210,7 +270,6 @@ function iconFor(name) {
   if (/yandex|яндекс/i.test(t)) return '🇾';
   if (/safari/i.test(t)) return '🧭';
   if (/tor\s?browser/i.test(t)) return '🧅';
-
   if (/steam/i.test(t)) return '🎮';
   if (/epic\s?games/i.test(t)) return '⚡';
   if (/gog\s?galaxy/i.test(t)) return '🎲';
@@ -227,11 +286,9 @@ function iconFor(name) {
   if (/bethesda|skyrim|fallout/i.test(t)) return '🗡️';
   if (/unity\s?hub/i.test(t)) return '🎨';
   if (/unreal\s?engine/i.test(t)) return '🎬';
-
   if (/nvidia|geforce|physx/i.test(t)) return '🟢';
   if (/intel/i.test(t)) return '🔵';
   if (/amd|radeon|ryzen/i.test(t)) return '🔴';
-
   if (/realtek|audio|sound|звук/i.test(t)) return '🔊';
   if (/dolby|dts/i.test(t)) return '🎧';
   if (/spotify/i.test(t)) return '🟢';
@@ -239,7 +296,6 @@ function iconFor(name) {
   if (/video|vlc|film|media\s?player|k-lite|mpc-hc/i.test(t)) return '🎬';
   if (/obs|streamlabs|stream/i.test(t)) return '📹';
   if (/adobe|photoshop|illustrator|premiere|after\s?effects|lightroom/i.test(t)) return '🎨';
-
   if (/discord/i.test(t)) return '💬';
   if (/telegram/i.test(t)) return '✈️';
   if (/whatsapp/i.test(t)) return '📱';
@@ -247,26 +303,21 @@ function iconFor(name) {
   if (/teams/i.test(t)) return '👥';
   if (/slack/i.test(t)) return '💼';
   if (/zoom/i.test(t)) return '📹';
-
   if (/visual\s?studio/i.test(t)) return '🟣';
   if (/vscode|code/i.test(s)) return '🟦';
   if (/python/i.test(t)) return '🐍';
   if (/node|npm/i.test(t)) return '🟩';
   if (/java|jdk|jre/i.test(t)) return '☕';
   if (/docker/i.test(t)) return '🐳';
-
   if (/winrar|rar/i.test(t)) return '📚';
   if (/7-?zip|7zip/i.test(t)) return '🗜️';
   if (/ccleaner|cleaner/i.test(t)) return '🧹';
-
   if (/office|word|excel|powerpoint|outlook|onenote|access/i.test(t)) return '📄';
   if (/acrobat|pdf/i.test(t)) return '📕';
-
   if (/dropbox/i.test(t)) return '📦';
   if (/google\s?drive/i.test(t)) return '🟡';
   if (/yandex\s?disk/i.test(t)) return '🇾';
   if (/mega/i.test(t)) return '☁️';
-
   if (/defender|security/i.test(t)) return '🛡️';
   if (/kaspersky|касперский/i.test(t)) return '🟢';
   if (/avast/i.test(t)) return '🟠';
@@ -280,7 +331,6 @@ function iconFor(name) {
   if (/vpn|wireguard|openvpn/i.test(t)) return '🔐';
   if (/smart.?screen/i.test(t)) return '🛡️';
   if (/antimalware|антивирус/i.test(t)) return '🛡️';
-
   if (/store|магазин/i.test(t)) return '🛍️';
   if (/photo|фото/i.test(t)) return '🖼️';
   if (/camera|камера/i.test(t)) return '📷';
@@ -314,12 +364,13 @@ function iconFor(name) {
   if (/update\s?health/i.test(t)) return '💊';
   if (/uwp/i.test(t)) return '📦';
   if (/defender.?kill|защитник/i.test(t)) return '🛡️';
-
   if (/visual\s?c\+\+|vc\+\+|redistributable/i.test(t)) return '⚙️';
   if (/\.net|dotnet/i.test(t)) return '🟣';
   if (/directx/i.test(t)) return '🎮';
   if (/java|jre|jdk/i.test(t)) return '☕';
   if (/webview/i.test(t)) return '🧩';
+  if (/copilot/i.test(t)) return '🤖';
+  if (/wsl|linux/i.test(t)) return '🐧';
 
   return '📦';
 }
@@ -336,48 +387,25 @@ function vendorPapirusIcon(name) {
 }
 
 const ACTION_VERBS = [
-  'включить', 'включать', 'включи',
-  'отключить', 'отключать', 'отключи', 'выключить', 'выключать', 'выключи',
-  'вернуть', 'возвращать', 'верни',
-  'восстановить', 'восстанавливать', 'восстанови',
-  'включить обратно', 'вернуть обратно', 'восстановить обратно',
-  'отменить', 'отмена',
-  'показать', 'показывать', 'покажи',
-  'скрыть', 'скрывать', 'скрой',
-  'убрать', 'убирать', 'убери',
-  'добавить', 'добавлять', 'добавь',
-  'разблокировать', 'разблокируй',
-  'заблокировать', 'блокировать', 'блокируй',
-  'удалить', 'удалять', 'удали', 'отменить удаление',
-  'настроить', 'настраивать', 'настрой',
-  'применить', 'применять', 'примени',
-  'сбросить', 'сбрасывать', 'сбрось',
-  'откатить', 'откатывать', 'откати',
-  'изменить', 'изменять', 'измени',
-  'запустить', 'запускать', 'запусти',
-  'остановить', 'останавливать', 'останови',
-  'разрешить', 'разрешать', 'разреши',
-  'запретить', 'запрещать', 'запрети',
-  'ограничить', 'ограничивать', 'ограничь',
-  'установить', 'устанавливать', 'установи',
+  'включить', 'включать', 'включи', 'отключить', 'отключать', 'отключи', 'выключить', 'выключать', 'выключи',
+  'вернуть', 'возвращать', 'верни', 'восстановить', 'восстанавливать', 'восстанови', 'включить обратно', 'вернуть обратно', 'восстановить обратно',
+  'отменить', 'отмена', 'показать', 'показывать', 'покажи', 'скрыть', 'скрывать', 'скрой', 'убрать', 'убирать', 'убери',
+  'добавить', 'добавлять', 'добавь', 'разблокировать', 'разблокируй', 'заблокировать', 'блокировать', 'блокируй',
+  'удалить', 'удалять', 'удали', 'отменить удаление', 'настроить', 'настраивать', 'настрой', 'применить', 'применять', 'примени',
+  'сбросить', 'сбрасывать', 'сбрось', 'откатить', 'откатывать', 'откати', 'изменить', 'изменять', 'измени',
+  'запустить', 'запускать', 'запусти', 'остановить', 'останавливать', 'останови', 'разрешить', 'разрешать', 'разреши',
+  'запретить', 'запрещать', 'запрети', 'ограничить', 'ограничивать', 'ограничь', 'установить', 'устанавливать', 'установи',
 ];
 const ACTION_VERBS_SORTED = [...ACTION_VERBS].sort((a, b) => b.length - a.length);
 
 function normalizeWhitespace(s) {
-  return String(s)
-    .replace(/[\u00A0\u2007\u202F\u2009\u200A\uFEFF]/g, ' ')
-    .replace(/[\t\r\n]+/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
+  return String(s).replace(/[\u00A0\u2007\u202F\u2009\u200A\uFEFF]/g, ' ').replace(/[\t\r\n]+/g, ' ').replace(/\s+/g, ' ').trim();
 }
 
 function coreName(fileName) {
   let s = String(fileName);
-  s = s.replace(/^[\uFEFF\u00A0]+/, '');
-  s = s.replace(/\.(bat|cmd|ps1|reg|exe|pow)$/i, '');
-  s = s.replace(/^\s*отмена\s*[\\\/]\s*/i, '');
+  s = s.replace(/^[\uFEFF\u00A0]+/, '').replace(/\.(bat|cmd|ps1|reg|exe|pow)$/i, '').replace(/^\s*отмена\s*[\\\/]\s*/i, '');
   s = normalizeWhitespace(s);
-
   let changed = true;
   while (changed) {
     changed = false;
@@ -414,9 +442,6 @@ function buildPairMap(rootFiles, cancelFiles) {
   return filtered;
 }
 
-/* ============================================================
-   ГЛАВНЫЙ РЕНДЕР
-   ============================================================ */
 export async function renderAppUninstaller() {
   const tabsNav = document.getElementById('tabs-nav');
   const content = document.getElementById('tab-content');
@@ -424,57 +449,82 @@ export async function renderAppUninstaller() {
   content.innerHTML = '';
   clearCheckboxes();
 
-  const page = document.createElement('div');
-  page.className = 'apps-page';
-  content.appendChild(page);
+  const removalPane = document.createElement('div');
+  removalPane.id = 'tab-removal';
+  removalPane.className = 'tab-pane';
+  
+  const optimPane = document.createElement('div');
+  optimPane.id = 'tab-optimization';
+  optimPane.className = 'tab-pane';
+  optimPane.style.display = 'none';
+  
+  const scriptsPane = document.createElement('div');
+  scriptsPane.id = 'tab-scripts';
+  scriptsPane.className = 'tab-pane';
+  scriptsPane.style.display = 'none';
 
-  const header = document.createElement('div');
-  header.className = 'apps-header';
-  header.innerHTML = `
-    <div class="apps-title">
-      <span class="apps-title-icon">📦</span>
-      <span>Управление приложениями</span>
-      <span class="apps-count" id="apps-count">…</span>
-    </div>
-    <div class="apps-toolbar">
-      <button class="btn" id="apps-refresh">🔄 Обновить</button>
-    </div>
-  `;
-  page.appendChild(header);
+  content.appendChild(removalPane);
+  content.appendChild(optimPane);
+  content.appendChild(scriptsPane);
+
+  const tabs = [
+    { id: 'tab-removal', label: '🗑️ Удаление', pane: removalPane },
+    { id: 'tab-optimization', label: '⚡ Оптимизация', pane: optimPane },
+    { id: 'tab-scripts', label: '📜 Скрипты', pane: scriptsPane }
+  ];
+
+  tabs.forEach((tab, index) => {
+    const btn = document.createElement('button');
+    btn.className = `tab-btn ${index === 0 ? 'active' : ''}`;
+    btn.textContent = tab.label;
+    btn.addEventListener('click', () => {
+      Sound.click();
+      tabsNav.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      [removalPane, optimPane, scriptsPane].forEach(p => p.style.display = 'none');
+      tab.pane.style.display = 'block';
+    });
+    tabsNav.appendChild(btn);
+  });
 
   const detectedSection = document.createElement('div');
   detectedSection.className = 'apps-detected-section';
   detectedSection.style.display = 'none';
-  page.appendChild(detectedSection);
+  detectedSection.style.marginBottom = '24px';
+  removalPane.appendChild(detectedSection);
 
-  const status = document.createElement('div');
-  status.className = 'apps-status';
-  status.textContent = 'Сканирование…';
-  page.appendChild(status);
+  const componentsSection = document.createElement('div');
+  componentsSection.className = 'apps-detected-section';
+  componentsSection.style.display = 'none';
+  componentsSection.style.marginBottom = '24px';
+  removalPane.appendChild(componentsSection);
+
+  const uwpHeader = document.createElement('div');
+  uwpHeader.className = 'section-title';
+  uwpHeader.style.marginTop = '24px';
+  uwpHeader.style.marginBottom = '12px';
+  uwpHeader.textContent = '📦 Найденные UWP-приложения';
+  removalPane.appendChild(uwpHeader);
 
   const grid = document.createElement('div');
   grid.className = 'apps-grid';
-  page.appendChild(grid);
+  removalPane.appendChild(grid);
 
   const empty = document.createElement('div');
   empty.className = 'apps-empty';
-  empty.textContent = 'Все приложения удалены';
+  empty.textContent = 'Все UWP-приложения удалены';
   empty.style.display = 'none';
-  page.appendChild(empty);
-
-  const batSection = document.createElement('div');
-  batSection.id = 'bat-removals-section';
-  batSection.className = 'apps-detected-section';
-  batSection.style.background = 'color-mix(in srgb, var(--card) 60%, transparent)';
-  batSection.style.borderColor = 'color-mix(in srgb, var(--border) 30%, transparent)';
-  page.appendChild(batSection);
+  removalPane.appendChild(empty);
 
   const optimSection = document.createElement('div');
   optimSection.id = 'app-optimization-section';
   optimSection.className = 'apps-detected-section';
-  optimSection.style.background = 'color-mix(in srgb, var(--card) 60%, transparent)';
-  optimSection.style.borderColor = 'color-mix(in srgb, var(--border) 30%, transparent)';
-  page.appendChild(optimSection);
+  optimPane.appendChild(optimSection);
+
+  const batSection = document.createElement('div');
+  batSection.id = 'bat-removals-section';
+  batSection.className = 'apps-detected-section';
+  scriptsPane.appendChild(batSection);
 
   let busy = false;
 
@@ -484,8 +534,9 @@ export async function renderAppUninstaller() {
     grid.innerHTML = '';
     detectedSection.innerHTML = '';
     detectedSection.style.display = 'none';
+    componentsSection.innerHTML = '';
+    componentsSection.style.display = 'none';
     empty.style.display = 'none';
-    status.textContent = 'Сканирование системы…';
 
     try {
       const cached = state.dataCache?.apps;
@@ -496,7 +547,6 @@ export async function renderAppUninstaller() {
       if (useCache) {
         listResult   = { out: cached.raw || '' };
         detectResult = { out: cached.detectRaw || '' };
-        console.log('[apps] данные из кэша');
       } else {
         [listResult, detectResult] = await Promise.all([
           runPs1('appx-list.ps1'),
@@ -523,21 +573,417 @@ export async function renderAppUninstaller() {
       const report = parseJson(detectResult.out) || {};
       renderDetectedComponents(report);
       renderList(list);
-
-      const total = list.length;
-      const detectedCount = Object.values(report).filter(r => r && r.present).length;
-      status.textContent = detectedCount
-        ? `Найдено компонентов: ${detectedCount} · Приложений: ${total}`
-        : `Найдено приложений: ${total}`;
     } catch (e) {
-      status.textContent = 'Ошибка загрузки: ' + e.message;
       toast('Ошибка загрузки: ' + e.message, 'error', 5000);
     } finally {
       busy = false;
     }
 
-    try { await renderBatRemovals(force); }   catch (e) { console.warn('[removal]', e); }
+    try { await renderBatRemovals(force); } catch (e) { console.warn('[removal]', e); }
     try { await renderAppOptimization(force); } catch (e) { console.warn('[app-optim]', e); }
+    renderWindowsComponents();
+  }
+
+  function renderWindowsComponents() {
+    const host = componentsSection;
+    if (!host) return;
+    host.innerHTML = '';
+    host.style.display = 'block';
+
+    const title = document.createElement('div');
+    title.className = 'section-title';
+    title.style.marginTop = '0';
+    title.textContent = '🧩 Компоненты Windows';
+    host.appendChild(title);
+
+    const desc = document.createElement('p');
+    desc.className = 'muted';
+    desc.style.margin = '0 0 12px 0';
+    desc.style.fontSize = '12px';
+    desc.textContent = 'Управление встроенными компонентами Windows (удаление или восстановление).';
+    host.appendChild(desc);
+
+    const gridEl = document.createElement('div');
+    gridEl.className = 'detected-grid';
+    host.appendChild(gridEl);
+
+    for (const [key, config] of Object.entries(WINDOWS_COMPONENTS)) {
+      const card = makeComponentCardStatic(key, config);
+      if (card) gridEl.appendChild(card);
+    }
+  }
+
+  function makeComponentCardStatic(key, config) {
+    const tweaks = config.tweaks || [];
+    if (!tweaks.length) return null;
+
+    const card = document.createElement('div');
+    card.className = 'detected-card';
+
+    const head = document.createElement('div');
+    head.className = 'detected-head';
+    head.innerHTML = `
+      <div class="detected-icon">${config.icon}</div>
+      <div class="detected-info">
+        <div class="detected-title">${escapeHtml(config.title)}</div>
+        <div class="detected-desc">${escapeHtml(config.desc)}</div>
+      </div>
+    `;
+    card.appendChild(head);
+
+    const framesWrap = document.createElement('div');
+    framesWrap.className = 'detected-frames';
+    const nav = document.createElement('div');
+    nav.className = 'detected-frames-nav';
+    const panels = document.createElement('div');
+    panels.className = 'detected-frames-body';
+    const panelMap = {};
+
+    tweaks.forEach((t, idx) => {
+      const tab = document.createElement('button');
+      tab.type = 'button';
+      tab.className = 'detected-tab' + (idx === 0 ? ' active' : '');
+      tab.dataset.tweakId = t.id;
+      if (t.danger) tab.classList.add('danger-tab');
+      if (t.recommended) tab.classList.add('recommended-tab');
+
+      tab.innerHTML = `
+        <span class="detected-tab-label">${escapeHtml(t.label)}</span>
+        ${t.recommended ? '<span class="detected-tab-star" title="Рекомендуется">★</span>' : ''}
+        ${t.danger ? '<span class="detected-tab-warn" title="Опасный твик">⚠</span>' : ''}
+      `;
+      nav.appendChild(tab);
+
+      const panel = document.createElement('div');
+      panel.className = 'detected-panel';
+      panel.style.display = idx === 0 ? '' : 'none';
+
+      const descEl = document.createElement('div');
+      descEl.className = 'detected-panel-desc';
+      descEl.textContent = t.desc || '';
+      panel.appendChild(descEl);
+
+      if (t.warning) {
+        const warnEl = document.createElement('div');
+        warnEl.className = 'detected-panel-warning';
+        warnEl.innerHTML = `<span class="warn-icon">⚠</span><span>${escapeHtml(t.warning)}</span>`;
+        panel.appendChild(warnEl);
+      }
+
+      const actions = document.createElement('div');
+      actions.className = 'detected-panel-actions';
+      const runBtn = document.createElement('button');
+      runBtn.type = 'button';
+      runBtn.className = 'btn ' + (t.danger ? 'danger' : 'success');
+      runBtn.textContent = '▶ Запустить';
+      runBtn.title = t.file;
+
+      runBtn.addEventListener('click', async () => {
+        Sound.click();
+        if (t.danger) {
+          if (!confirm(`⚠️ ВНИМАНИЕ!\n\nВы запускаете «${t.label}» для ${config.title}.\n\n${t.warning || 'Это необратимая операция.'}\n\nПродолжить?`)) return;
+        } else {
+          if (!confirm(`Запустить «${t.label}» для ${config.title}?`)) return;
+        }
+
+        runBtn.disabled = true;
+        const oldText = runBtn.textContent;
+        runBtn.textContent = 'Запуск…';
+        try {
+          await window.api.tweaks.run(TWEAKS_BASE + t.file, { wait: false });
+          toast(`Запущено: ${t.label}`, 'success', 2500);
+          Sound.success();
+        } catch (e) {
+          toast('❌ ' + (e?.message || e), 'error', 5000);
+          Sound.error();
+        } finally {
+          runBtn.disabled = false;
+          runBtn.textContent = oldText;
+        }
+      });
+
+      actions.appendChild(runBtn);
+      panel.appendChild(actions);
+      panels.appendChild(panel);
+      panelMap[t.id] = { tab, panel };
+    });
+
+    nav.addEventListener('click', (e) => {
+      const tab = e.target.closest('.detected-tab');
+      if (!tab) return;
+      const id = tab.dataset.tweakId;
+      for (const { tab: tb, panel: pl } of Object.values(panelMap)) {
+        tb.classList.toggle('active', tb.dataset.tweakId === id);
+        pl.style.display = (tb.dataset.tweakId === id) ? '' : 'none';
+      }
+      Sound.hover();
+    });
+
+    framesWrap.appendChild(nav);
+    framesWrap.appendChild(panels);
+    card.appendChild(framesWrap);
+    return card;
+  }
+
+  function renderDetectedComponents(report) {
+    const found = [];
+    for (const key of ['defender', 'edge', 'webview2', 'onedrive', 'notepad', 'internet_explorer', 'rdp', 'copilot', 'microsoft_photos', 'microsoft_teams', 'mixed_reality_portal', 'wsl', 'xbox']) {
+      const r = report[key];
+      if (r && r.present) {
+        found.push({ key, reasons: r.reasons || [] });
+      } else if (['notepad', 'internet_explorer', 'rdp', 'copilot', 'microsoft_photos', 'microsoft_teams', 'mixed_reality_portal', 'wsl', 'xbox'].includes(key)) {
+        found.push({ key, reasons: [] });
+      }
+    }
+    if (!found.length) {
+      detectedSection.style.display = 'none';
+      return;
+    }
+
+    detectedSection.style.display = 'block';
+    const title = document.createElement('div');
+    title.className = 'section-title';
+    title.textContent = '⚠️ Обнаружены компоненты, требующие внимания';
+    detectedSection.appendChild(title);
+
+    const desc = document.createElement('p');
+    desc.className = 'muted';
+    desc.style.margin = '0 0 12px 0';
+    desc.style.fontSize = '12px';
+    desc.textContent = 'Выберите способ удаления/отключения для каждого компонента.';
+    detectedSection.appendChild(desc);
+
+    const gridEl = document.createElement('div');
+    gridEl.className = 'detected-grid';
+    detectedSection.appendChild(gridEl);
+
+    for (const { key, reasons } of found) {
+      const card = makeComponentCard(key, reasons);
+      if (card) gridEl.appendChild(card);
+    }
+  }
+
+  function makeComponentCard(key, reasons) {
+    const meta = COMPONENT_META[key];
+    const tweaks = COMPONENT_TWEAKS[key] || [];
+    if (!tweaks.length) return null;
+
+    const card = document.createElement('div');
+    card.className = 'detected-card';
+
+    const head = document.createElement('div');
+    head.className = 'detected-head';
+    head.innerHTML = `
+      <div class="detected-icon">${meta.icon}</div>
+      <div class="detected-info">
+        <div class="detected-title">${escapeHtml(meta.title)}</div>
+        <div class="detected-desc">${escapeHtml(meta.desc)}</div>
+      </div>
+      ${reasons.length > 0 ? `<div class="detected-badge" title="Признаков: ${reasons.length}">${reasons.length}</div>` : ''}
+    `;
+    card.appendChild(head);
+
+    if (reasons.length > 0) {
+      const reasonsEl = document.createElement('details');
+      reasonsEl.className = 'detected-reasons';
+      const summary = document.createElement('summary');
+      summary.textContent = `Что найдено (${reasons.length})`;
+      reasonsEl.appendChild(summary);
+
+      const ul = document.createElement('ul');
+      for (const r of reasons.slice(0, 15)) {
+        const li = document.createElement('li');
+        li.textContent = r;
+        ul.appendChild(li);
+      }
+      if (reasons.length > 15) {
+        const li = document.createElement('li');
+        li.textContent = `…и ещё ${reasons.length - 15}`;
+        ul.appendChild(li);
+      }
+      reasonsEl.appendChild(ul);
+      card.appendChild(reasonsEl);
+    }
+
+    const framesWrap = document.createElement('div');
+    framesWrap.className = 'detected-frames';
+    const nav = document.createElement('div');
+    nav.className = 'detected-frames-nav';
+    const panels = document.createElement('div');
+    panels.className = 'detected-frames-body';
+    const panelMap = {};
+
+    tweaks.forEach((t, idx) => {
+      const tab = document.createElement('button');
+      tab.type = 'button';
+      tab.className = 'detected-tab' + (idx === 0 ? ' active' : '');
+      tab.dataset.tweakId = t.id;
+      if (t.danger) tab.classList.add('danger-tab');
+      if (t.recommended) tab.classList.add('recommended-tab');
+
+      tab.innerHTML = `
+        <span class="detected-tab-label">${escapeHtml(t.label)}</span>
+        ${t.recommended ? '<span class="detected-tab-star" title="Рекомендуется">★</span>' : ''}
+        ${t.danger ? '<span class="detected-tab-warn" title="Опасный твик">⚠</span>' : ''}
+      `;
+      nav.appendChild(tab);
+
+      const panel = document.createElement('div');
+      panel.className = 'detected-panel';
+      panel.style.display = idx === 0 ? '' : 'none';
+
+      const descEl = document.createElement('div');
+      descEl.className = 'detected-panel-desc';
+      descEl.textContent = t.desc || '';
+      panel.appendChild(descEl);
+
+      if (t.warning) {
+        const warnEl = document.createElement('div');
+        warnEl.className = 'detected-panel-warning';
+        warnEl.innerHTML = `<span class="warn-icon">⚠</span><span>${escapeHtml(t.warning)}</span>`;
+        panel.appendChild(warnEl);
+      }
+
+      const actions = document.createElement('div');
+      actions.className = 'detected-panel-actions';
+      const runBtn = document.createElement('button');
+      runBtn.type = 'button';
+      runBtn.className = 'btn ' + (t.danger ? 'danger' : 'success');
+      runBtn.textContent = '▶ Запустить';
+      runBtn.title = t.file;
+
+      runBtn.addEventListener('click', async () => {
+        Sound.click();
+        if (t.danger) {
+          if (!confirm(`⚠️ ВНИМАНИЕ!\n\nВы запускаете «${t.label}» для ${meta.title}.\n\n${t.warning || 'Это необратимая операция.'}\n\nПродолжить?`)) return;
+        } else {
+          if (!confirm(`Запустить «${t.label}» для ${meta.title}?`)) return;
+        }
+
+        runBtn.disabled = true;
+        const oldText = runBtn.textContent;
+        runBtn.textContent = 'Запуск…';
+        try {
+          await window.api.tweaks.run(TWEAKS_BASE + t.file, { wait: false });
+          toast(`Запущено: ${t.label}`, 'success', 2500);
+          Sound.success();
+        } catch (e) {
+          toast('❌ ' + (e?.message || e), 'error', 5000);
+          Sound.error();
+        } finally {
+          runBtn.disabled = false;
+          runBtn.textContent = oldText;
+        }
+      });
+
+      actions.appendChild(runBtn);
+      panel.appendChild(actions);
+      panels.appendChild(panel);
+      panelMap[t.id] = { tab, panel };
+    });
+
+    nav.addEventListener('click', (e) => {
+      const tab = e.target.closest('.detected-tab');
+      if (!tab) return;
+      const id = tab.dataset.tweakId;
+      for (const { tab: tb, panel: pl } of Object.values(panelMap)) {
+        tb.classList.toggle('active', tb.dataset.tweakId === id);
+        pl.style.display = (tb.dataset.tweakId === id) ? '' : 'none';
+      }
+      Sound.hover();
+    });
+
+    framesWrap.appendChild(nav);
+    framesWrap.appendChild(panels);
+    card.appendChild(framesWrap);
+    return card;
+  }
+
+  function renderList(list) {
+    grid.innerHTML = '';
+    list.sort((a, b) => String(a.displayName).localeCompare(String(b.displayName), 'ru'));
+
+    for (const app of list) {
+      const card = document.createElement('div');
+      card.className = 'apps-card';
+
+      const icon = document.createElement('div');
+      icon.className = 'apps-icon';
+      const nameForIcon = app.name || app.displayName;
+      const vendor = vendorPapirusIcon(nameForIcon);
+
+      if (vendor) {
+        const url = papirusUrl('vendors', vendor);
+        icon.innerHTML = `
+          <img class="apps-vendor-icon" src="${url}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'">
+          <span class="apps-vendor-fallback" style="display:none">${iconFor(nameForIcon)}</span>
+        `;
+      } else {
+        icon.textContent = iconFor(nameForIcon);
+      }
+
+      const title = document.createElement('div');
+      title.className = 'apps-name';
+      title.textContent = app.displayName || app.name;
+      title.title = app.name || app.displayName;
+
+      const sub = document.createElement('div');
+      sub.className = 'apps-sub';
+      sub.textContent = String(app.packageFullName || '').split('_')[0] || '';
+
+      const runBtn = document.createElement('button');
+      runBtn.type = 'button';
+      runBtn.className = 'apps-run';
+      runBtn.textContent = '🗑 Удалить';
+      runBtn.title = 'Удалить это приложение';
+      runBtn.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        if (!confirm(`Удалить «${title.textContent}»?`)) return;
+        await removeOne(app, card, runBtn);
+      });
+
+      card.append(icon, title, sub, runBtn);
+      grid.appendChild(card);
+    }
+
+    empty.style.display = grid.children.length === 0 ? '' : 'none';
+  }
+
+  async function removeOne(app, cardEl, btnEl) {
+    if (busy) return;
+    busy = true;
+    if (btnEl) { btnEl.disabled = true; btnEl.textContent = '…'; }
+
+    try {
+      let out = '', err = '';
+      if (app.kind === 'appx' || app.kind === 'uwp') {
+        if (!app.packageFullName) throw new Error('Нет PackageFullName');
+        const r = await runPs1('appx-remove.ps1', ['-PackageFullName', app.packageFullName]);
+        out = r.out; err = r.err;
+      } else {
+        if (app.packageFullName) {
+          const r = await runPs1('appx-remove.ps1', ['-PackageFullName', app.packageFullName]);
+          out = r.out; err = r.err;
+        } else {
+          throw new Error(`Неизвестный тип приложения: ${app.kind || 'undefined'}`);
+        }
+      }
+
+      const ok = /^OK\s*$/i.test(String(out).trim());
+      if (ok) {
+        toast(`✅ Удалено: ${app.displayName || app.name}`, 'success', 2500);
+        cardEl.remove();
+        delete state.dataCache.apps;
+      } else {
+        console.warn('[remove] stderr:', err, 'stdout:', out);
+        toast(`⚠️ Не удалось удалить: ${app.displayName || app.name}`, 'warning', 4500);
+      }
+    } catch (e) {
+      toast('❌ ' + e.message, 'error', 5000);
+    } finally {
+      busy = false;
+      if (btnEl) { btnEl.disabled = false; btnEl.textContent = '🗑 Удалить'; }
+    }
   }
 
   async function renderBatRemovals(force = false) {
@@ -553,9 +999,7 @@ export async function renderAppUninstaller() {
           data = res.data;
           state.dataCache.removalData = data;
         }
-      } catch (e) {
-        console.warn('[removal] readJson:', e);
-      }
+      } catch (e) { console.warn('[removal] readJson:', e); }
     }
 
     if (!data || !Array.isArray(data.files) || !data.files.length) {
@@ -564,21 +1008,11 @@ export async function renderAppUninstaller() {
     }
 
     host.innerHTML = '';
-
     const title = document.createElement('div');
     title.className = 'section-title';
     title.style.marginTop = '0';
-    title.textContent = `🗑 Программы-батники для удаления · ${data.files.length}`;
+    title.textContent = `📜 Программы-батники для удаления · ${data.files.length}`;
     host.appendChild(title);
-
-    const desc = document.createElement('p');
-    desc.className = 'muted';
-    desc.style.margin = '0 0 12px 0';
-    desc.style.fontSize = '12px';
-    desc.textContent =
-      'Каждый батник запускается в отдельном окне консоли. ' +
-      'Обратимые скрипты обычно идут в паре (удаление/возврат) — смотрите название.';
-    host.appendChild(desc);
 
     const grouped = {};
     for (const f of data.files) {
@@ -611,7 +1045,6 @@ export async function renderAppUninstaller() {
   function makeBatCard(item, baseDir) {
     const card = document.createElement('div');
     card.className = 'apps-card';
-
     const icon = document.createElement('div');
     icon.className = 'apps-icon';
     icon.textContent = iconFor(item.title || item.name);
@@ -629,7 +1062,6 @@ export async function renderAppUninstaller() {
     runBtn.type = 'button';
     runBtn.className = 'apps-run';
     runBtn.textContent = '▶ Запустить';
-    runBtn.title = 'Запустить в отдельном окне';
     runBtn.addEventListener('click', async (e) => {
       e.stopPropagation();
       if (runBtn.disabled) return;
@@ -670,9 +1102,7 @@ export async function renderAppUninstaller() {
           data = res.data;
           state.dataCache.appsOptimizationData = data;
         }
-      } catch (e) {
-        console.warn('[app-optim] readJson:', e);
-      }
+      } catch (e) { console.warn('[app-optim] readJson:', e); }
     }
 
     if (!data) {
@@ -681,21 +1111,11 @@ export async function renderAppUninstaller() {
     }
 
     host.innerHTML = '';
-
     const title = document.createElement('div');
     title.className = 'section-title';
     title.style.marginTop = '0';
     title.textContent = '⚡ Оптимизация приложений';
     host.appendChild(title);
-
-    const desc = document.createElement('p');
-    desc.className = 'muted';
-    desc.style.margin = '0 0 12px 0';
-    desc.style.fontSize = '12px';
-    desc.textContent =
-      'Твики для браузеров, игр и программ из tweaks/Оптимизация/Apps/. ' +
-      'Отмечайте чекбоксы и жмите «▶ Выполнить» в верхней панели, либо запускайте отдельный файл кнопкой ▶.';
-    host.appendChild(desc);
 
     const subNav = document.createElement('div');
     subNav.className = 'sub-tabs-nav';
@@ -743,11 +1163,11 @@ export async function renderAppUninstaller() {
   }
 
   function renderAppsOptimNode(container, node, catId, pathSuffix) {
-    const files     = node.files || [];
-    const cancels   = node.cancels || [];
-    const baseDir   = node.baseDir;
+    const files = node.files || [];
+    const cancels = node.cancels || [];
+    const baseDir = node.baseDir;
     const cancelDir = node.cancelDir;
-    const pairMap   = buildPairMap(files, cancels);
+    const pairMap = buildPairMap(files, cancels);
 
     if (files.length > 0) {
       const items = files.map(f => {
@@ -757,9 +1177,7 @@ export async function renderAppUninstaller() {
           name: f.replace(/\.[^.]+$/, ''),
           path: `${baseDir}/${f}`,
           ext: f.includes('.') ? f.split('.').pop() : '',
-          cancelPath: cancelFile && cancelDir
-            ? `${baseDir}/${cancelDir}/${cancelFile}`
-            : null,
+          cancelPath: cancelFile && cancelDir ? `${baseDir}/${cancelDir}/${cancelFile}` : null,
           cancelName: cancelFile ? cancelFile.replace(/\.[^.]+$/, '') : null
         };
       });
@@ -784,312 +1202,9 @@ export async function renderAppUninstaller() {
       subHead.style.fontSize = '12px';
       subHead.textContent = subName;
       container.appendChild(subHead);
-
       renderAppsOptimNode(container, sub, catId, `${pathSuffix}:${subName}`);
     }
   }
-
-  function renderDetectedComponents(report) {
-    const found = [];
-    for (const key of ['defender', 'edge', 'webview2', 'onedrive']) {
-      const r = report[key];
-      if (r && r.present) found.push({ key, reasons: r.reasons || [] });
-    }
-    if (!found.length) {
-      detectedSection.style.display = 'none';
-      return;
-    }
-
-    detectedSection.style.display = '';
-
-    const title = document.createElement('div');
-    title.className = 'section-title';
-    title.textContent = '⚠️ Обнаружены компоненты, требующие внимания';
-    detectedSection.appendChild(title);
-
-    const desc = document.createElement('p');
-    desc.className = 'muted';
-    desc.style.margin = '0 0 12px 0';
-    desc.style.fontSize = '12px';
-    desc.textContent = 'Выберите способ удаления/отключения для каждого компонента.';
-    detectedSection.appendChild(desc);
-
-    const gridEl = document.createElement('div');
-    gridEl.className = 'detected-grid';
-    detectedSection.appendChild(gridEl);
-
-    for (const { key, reasons } of found) {
-      const card = makeComponentCard(key, reasons);
-      if (card) gridEl.appendChild(card);
-    }
-  }
-
-  function makeComponentCard(key, reasons) {
-    const meta = COMPONENT_META[key];
-    const tweaks = COMPONENT_TWEAKS[key] || [];
-    if (!tweaks.length) return null;
-
-    const card = document.createElement('div');
-    card.className = 'detected-card';
-
-    const head = document.createElement('div');
-    head.className = 'detected-head';
-    head.innerHTML = `
-      <div class="detected-icon">${meta.icon}</div>
-      <div class="detected-info">
-        <div class="detected-title">${escapeHtml(meta.title)}</div>
-        <div class="detected-desc">${escapeHtml(meta.desc)}</div>
-      </div>
-      <div class="detected-badge" title="Признаков: ${reasons.length}">${reasons.length}</div>
-    `;
-    card.appendChild(head);
-
-    const reasonsEl = document.createElement('details');
-    reasonsEl.className = 'detected-reasons';
-    const summary = document.createElement('summary');
-    summary.textContent = `Что найдено (${reasons.length})`;
-    reasonsEl.appendChild(summary);
-
-    const ul = document.createElement('ul');
-    for (const r of reasons.slice(0, 15)) {
-      const li = document.createElement('li');
-      li.textContent = r;
-      ul.appendChild(li);
-    }
-    if (reasons.length > 15) {
-      const li = document.createElement('li');
-      li.textContent = `…и ещё ${reasons.length - 15}`;
-      ul.appendChild(li);
-    }
-    reasonsEl.appendChild(ul);
-    card.appendChild(reasonsEl);
-
-    const framesWrap = document.createElement('div');
-    framesWrap.className = 'detected-frames';
-
-    const nav = document.createElement('div');
-    nav.className = 'detected-frames-nav';
-
-    const panels = document.createElement('div');
-    panels.className = 'detected-frames-body';
-
-    const panelMap = {};
-
-    tweaks.forEach((t, idx) => {
-      const tab = document.createElement('button');
-      tab.type = 'button';
-      tab.className = 'detected-tab' + (idx === 0 ? ' active' : '');
-      tab.dataset.tweakId = t.id;
-      if (t.danger) tab.classList.add('danger-tab');
-      if (t.recommended) tab.classList.add('recommended-tab');
-
-      tab.innerHTML = `
-        <span class="detected-tab-label">${escapeHtml(t.label)}</span>
-        ${t.recommended ? '<span class="detected-tab-star" title="Рекомендуется">★</span>' : ''}
-        ${t.danger ? '<span class="detected-tab-warn" title="Опасный твик">⚠</span>' : ''}
-      `;
-      nav.appendChild(tab);
-
-      const panel = document.createElement('div');
-      panel.className = 'detected-panel';
-      panel.style.display = idx === 0 ? '' : 'none';
-
-      const descEl = document.createElement('div');
-      descEl.className = 'detected-panel-desc';
-      descEl.textContent = t.desc || '';
-      panel.appendChild(descEl);
-
-      if (t.warning) {
-        const warnEl = document.createElement('div');
-        warnEl.className = 'detected-panel-warning';
-        warnEl.innerHTML = `<span class="warn-icon">⚠</span><span>${escapeHtml(t.warning)}</span>`;
-        panel.appendChild(warnEl);
-      }
-
-      const actions = document.createElement('div');
-      actions.className = 'detected-panel-actions';
-
-      const runBtn = document.createElement('button');
-      runBtn.type = 'button';
-      runBtn.className = 'btn ' + (t.danger ? 'danger' : 'success');
-      runBtn.textContent = '▶ Запустить';
-      runBtn.title = t.file;
-
-      runBtn.addEventListener('click', async () => {
-        Sound.click();
-        if (t.danger) {
-          if (!confirm(
-            `⚠️ ВНИМАНИЕ!\n\n` +
-            `Вы запускаете «${t.label}» для ${meta.title}.\n\n` +
-            `${t.warning || 'Это необратимая операция.'}\n\n` +
-            `Продолжить?`
-          )) return;
-        } else {
-          if (!confirm(`Запустить «${t.label}» для ${meta.title}?`)) return;
-        }
-
-        runBtn.disabled = true;
-        const oldText = runBtn.textContent;
-        runBtn.textContent = 'Запуск…';
-        try {
-          await window.api.tweaks.run(TWEAKS_BASE + t.file, { wait: false });
-          toast(`Запущено: ${t.label}`, 'success', 2500);
-          Sound.success();
-        } catch (e) {
-          toast('❌ ' + (e?.message || e), 'error', 5000);
-          Sound.error();
-        } finally {
-          runBtn.disabled = false;
-          runBtn.textContent = oldText;
-        }
-      });
-
-      actions.appendChild(runBtn);
-      panel.appendChild(actions);
-      panels.appendChild(panel);
-
-      panelMap[t.id] = { tab, panel };
-    });
-
-    nav.addEventListener('click', (e) => {
-      const tab = e.target.closest('.detected-tab');
-      if (!tab) return;
-      const id = tab.dataset.tweakId;
-      for (const { tab: tb, panel: pl } of Object.values(panelMap)) {
-        tb.classList.toggle('active', tb.dataset.tweakId === id);
-        pl.style.display = (tb.dataset.tweakId === id) ? '' : 'none';
-      }
-      Sound.hover();
-    });
-
-    framesWrap.appendChild(nav);
-    framesWrap.appendChild(panels);
-    card.appendChild(framesWrap);
-
-    return card;
-  }
-
-  function renderList(list) {
-    grid.innerHTML = '';
-
-    list.sort((a, b) => {
-      const isSp = (x) => x.kind === 'onedrive' || x.kind === 'rdp' || x.kind === 'edge';
-      const sa = isSp(a) ? 1 : 0, sb = isSp(b) ? 1 : 0;
-      if (sa !== sb) return sa - sb;
-      return String(a.displayName).localeCompare(String(b.displayName), 'ru');
-    });
-
-    for (const app of list) {
-      const card = document.createElement('div');
-      card.className = 'apps-card';
-
-      const icon = document.createElement('div');
-      icon.className = 'apps-icon';
-
-      const nameForIcon = app.name || app.displayName;
-      const vendor = vendorPapirusIcon(nameForIcon);
-
-      if (vendor) {
-        const url = papirusUrl('vendors', vendor);
-        icon.innerHTML = `
-          <img class="apps-vendor-icon" src="${url}" alt=""
-               onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'">
-          <span class="apps-vendor-fallback" style="display:none">${iconFor(nameForIcon)}</span>
-        `;
-      } else {
-        icon.textContent = iconFor(nameForIcon);
-      }
-
-      const title = document.createElement('div');
-      title.className = 'apps-name';
-      title.textContent = app.displayName || app.name;
-      title.title = app.name || app.displayName;
-
-      const sub = document.createElement('div');
-      sub.className = 'apps-sub';
-      if (app.kind === 'onedrive') sub.textContent = 'OneDrive';
-      else if (app.kind === 'rdp') sub.textContent = 'Remote Desktop';
-      else if (app.kind === 'edge') sub.textContent = 'Microsoft Edge';
-      else sub.textContent = String(app.packageFullName || '').split('_')[0] || '';
-
-      const runBtn = document.createElement('button');
-      runBtn.type = 'button';
-      runBtn.className = 'apps-run';
-      runBtn.textContent = '🗑 Удалить';
-      runBtn.title = 'Удалить это приложение';
-      runBtn.addEventListener('click', async (e) => {
-        e.stopPropagation();
-        if (!confirm(`Удалить «${title.textContent}»?`)) return;
-        await removeOne(app, card, runBtn);
-      });
-
-      card.append(icon, title, sub, runBtn);
-      grid.appendChild(card);
-    }
-
-    empty.style.display = grid.children.length === 0 ? '' : 'none';
-  }
-
-  async function removeOne(app, cardEl, btnEl) {
-    if (busy) return;
-    busy = true;
-    if (btnEl) { btnEl.disabled = true; btnEl.textContent = '…'; }
-    status.textContent = `Удаление «${app.displayName || app.name}»…`;
-
-    try {
-      let out = '', err = '';
-
-      if (app.kind === 'appx' || app.kind === 'uwp') {
-        if (!app.packageFullName) throw new Error('Нет PackageFullName');
-        const r = await runPs1('appx-remove.ps1', ['-PackageFullName', app.packageFullName]);
-        out = r.out; err = r.err;
-      } else if (app.kind === 'onedrive') {
-        const r = await runPs1('appx-actions.ps1', ['-Action', 'onedrive']);
-        out = r.out; err = r.err;
-      } else if (app.kind === 'rdp') {
-        const r = await runPs1('appx-actions.ps1', ['-Action', 'rdp']);
-        out = r.out; err = r.err;
-      } else if (app.kind === 'edge') {
-        const r = await runPs1('appx-actions.ps1', ['-Action', 'edge']);
-        out = r.out; err = r.err;
-      } else {
-        if (app.packageFullName) {
-          const r = await runPs1('appx-remove.ps1', ['-PackageFullName', app.packageFullName]);
-          out = r.out; err = r.err;
-        } else {
-          throw new Error(`Неизвестный тип приложения: ${app.kind || 'undefined'}`);
-        }
-      }
-
-      const ok = /^OK\s*$/i.test(String(out).trim());
-      if (ok) {
-        toast(`✅ Удалено: ${app.displayName || app.name}`, 'success', 2500);
-        cardEl.remove();
-        delete state.dataCache.apps;
-      } else {
-        console.warn('[remove] stderr:', err, 'stdout:', out);
-        toast(`⚠️ Не удалось удалить: ${app.displayName || app.name}`, 'warning', 4500);
-      }
-    } catch (e) {
-      toast('❌ ' + e.message, 'error', 5000);
-    } finally {
-      busy = false;
-      if (btnEl) { btnEl.disabled = false; btnEl.textContent = '🗑 Удалить'; }
-      const left = grid.children.length;
-      status.textContent = left ? `Осталось приложений: ${left}` : 'Все приложения удалены';
-      if (left === 0) empty.style.display = '';
-    }
-  }
-
-  document.getElementById('apps-refresh')?.addEventListener('click', async () => {
-    if (busy) return;
-    Sound.click();
-    delete state.dataCache.apps;
-    delete state.dataCache.removalData;
-    delete state.dataCache.appsOptimizationData;
-    await loadAll(true);
-    toast('Данные обновлены', 'success', 1500);
-  });
 
   await loadAll();
 }

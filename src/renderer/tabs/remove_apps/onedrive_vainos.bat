@@ -51,6 +51,11 @@ for /f "tokens=2 delims=\" %%a in ('schtasks /query /fo list /v 2^>nul ^| findst
   schtasks /delete /tn "%%a" /f > nul 2>&1
 )
 
+schtasks /Delete /TN "\OneDrive Reporting Task-S-1-5-21" /F >nul 2>&1
+schtasks /Delete /TN "\OneDrive Standalone Update Task-S-1-5-21" /F >nul 2>&1
+powershell -NoProfile -ExecutionPolicy Bypass -Command ^
+  "Get-ScheduledTask -EA 0 | Where-Object { $_.TaskName -like '*OneDrive*' } | ForEach-Object { Unregister-ScheduledTask -TaskName $_.TaskName -Confirm:$false -EA 0 }" > nul 2>&1
+
 :: --- USERREG для всех SID
 for /f "delims=" %%U in ('reg query HKU 2^>nul ^| findstr /r "S-1-5-21"') do (
   set "USID=%%U"

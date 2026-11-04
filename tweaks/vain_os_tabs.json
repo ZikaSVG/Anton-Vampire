@@ -102,13 +102,7 @@
         "Включить DirectPlay.bat",
         "Удалить AppX мусор.bat",
         "Удалить defaultuser0.bat",
-        "Удалить Internet Explorer.bat",
-        "Удалить Microsoft Edge.bat",
-        "Удалить OneDrive.bat",
-        "Удалить StepsRecorder.bat",
-        "Удалить Windows Media Player.bat",
-        "Удалить Xbox, Teams, DevHome, CrossDevice.bat",
-        "Удалить задачи OneDrive.bat"
+        "Удалить Xbox, Teams, DevHome, CrossDevice.bat"
       ],
       "отмена": []
     }

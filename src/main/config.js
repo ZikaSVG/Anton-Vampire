@@ -4,8 +4,8 @@ const path = require('path');
 const DEFAULTS = {
   General: {
     /* --- Основное --- */
-    theme: 'cyberpunk_2077',
-    ui_style: 'cyberpunk',   // 'default' | 'pixel' | 'material3' | 'kitty'
+    theme: 'catppuccin_mocha',
+    ui_style: 'minipunk',   // 'default' | 'pixel' | 'material3' | 'kitty'
     font_family: 'Segoe UI',
     font_size: 13,
     checkbox_font_size: 13,
