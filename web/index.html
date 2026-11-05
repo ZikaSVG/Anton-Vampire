@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Anton Vampire — Cyberpunk Optimizer · v1.0.7-beta</title>
-<meta name="description" content="Anton Vampire — полностью переписанный Windows оптимизатор на Electron. 1000+ твиков, 100+ тем, 8 CSS-стилей, смертельная оптимизация, игровой режим 2.0, менеджер служб, Cyberpunk 2077 UI." />
+<title>Anton Vampire — Pixel Optimizer · v1.0.7-beta</title>
+<meta name="description" content="Anton Vampire — полностью переписанный Windows оптимизатор на Electron. 1000+ твиков, 100+ тем, 8 CSS-стилей, смертельная оптимизация, игровой режим 2.0, менеджер служб." />
 <link rel="icon" type="image/png" href="../assets/icon.png" />
 <link rel="stylesheet" href="style.css" />
 </head>
@@ -18,6 +18,7 @@
     </a>
     <ul class="nav-links">
         <li><a href="index.html" class="active">Главная</a></li>
+        <li><a href="#screenshots">Скриншот</a></li>
         <li><a href="transition.html">Переход</a></li>
         <li><a href="docs.html">Документация</a></li>
         <li><a href="https://github.com/ZikaSVG/Anton-Vampire" target="_blank" rel="noopener">GitHub</a></li>
@@ -73,14 +74,14 @@
 
 <span class="ok">✓</span> fltmc — <span class="muted">admin privileges verified</span>
 <span class="ok">✓</span> <span class="muted">Portable data → extreme_data/</span>
-<span class="ok">✓</span> Loading theme: <span class="hl">Cyberpunk 2077</span>
-<span class="ok">✓</span> Loading style: <span class="hl">cyberpunk.css</span>
+<span class="ok">✓</span> Loading theme: <span class="hl">Catppuccin Mocha</span>
+<span class="ok">✓</span> Loading style: <span class="hl">pixel.css</span>
 <span class="ok">✓</span> Preload: <span class="muted">startup, apps, audits...</span>
 <span class="ok">✓</span> 1000+ tweaks indexed
 <span class="ok">✓</span> 100+ themes loaded
 <span class="ok">✓</span> 14 power plans ready
 <span class="ok">✓</span> 200+ services catalogued
-<span class="ok">✓</span> Material You UI ready
+<span class="ok">✓</span> Pixel UI ready
 
 <span class="prompt">🩸</span> <span class="warn">Ready to optimize…</span>
 <span class="prompt">❯</span> <span class="cursor"></span></div>
@@ -107,6 +108,34 @@
     </div>
   </div>
 </section>
+
+<!-- ================= СКРИНШОТ ================= -->
+<section class="section" id="screenshots" style="padding-top: 32px; padding-bottom: 48px;">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">Скриншот</span>
+      <h2>Как это выглядит</h2>
+      <p>Реальный интерфейс в теме Catppuccin Mocha и пиксельном стиле.</p>
+    </div>
+
+    <figure class="screenshot-featured" id="featuredScreenshot" data-src="../web/screenshot.jpg" data-title="Anton Vampire v1.0.7">
+      <div class="screenshot-frame">
+        <img src="../web/screenshot.jpg" alt="Anton Vampire v1.0.7" loading="lazy">
+      </div>
+      <figcaption>
+        <span class="sc-badge">🩸 v1.0.7-beta</span>
+        <span class="sc-hint">✦ Клик — увеличить ✦</span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Закрыть">✕</button>
+  <div class="lightbox-title" id="lightboxTitle"></div>
+  <img class="lightbox-img" id="lightboxImg" src="" alt="">
+</div>
 
 <section class="section">
   <div class="container">
@@ -395,7 +424,7 @@
 <section class="section" id="download">
   <div class="container">
     <div class="download-card">
-      <h2 class="gradient-text" style="font-size: 2.5rem; margin-bottom: 16px;">Скачать Anton Vampire</h2>
+      <h2 class="gradient-text" style="font-size: 2.2rem; margin-bottom: 16px;">Скачать Anton Vampire</h2>
       <p style="margin-bottom: 32px;">v1.0.7-beta · Windows 10/11 · Требуются права администратора</p>
 
       <div class="cmd-block">
@@ -464,7 +493,7 @@
       </div>
       <div class="footer-meta">
         <div>© 2026 ZikaSVG · v1.0.7-beta</div>
-        <div>Electron 44 · Cyberpunk 2077 UI</div>
+        <div>Electron 44 · Catppuccin Mocha · Pixel UI</div>
         <div>Licensed under <a href="docs.html#license">CC BY-NC-SA 4.0</a></div>
       </div>
     </div>
@@ -472,6 +501,7 @@
 </footer>
 
 <script>
+/* ── Copy command ── */
 const copyBtn = document.getElementById('copyCmd');
 const cmdText = document.getElementById('cmdText');
 copyBtn?.addEventListener('click', async () => {
@@ -479,10 +509,49 @@ copyBtn?.addEventListener('click', async () => {
     await navigator.clipboard.writeText(cmdText.textContent.trim());
     const old = copyBtn.textContent;
     copyBtn.textContent = '✓ Скопировано';
-    copyBtn.style.color = 'var(--accent-3)';
+    copyBtn.style.color = 'var(--ctp-green)';
     setTimeout(() => { copyBtn.textContent = old; copyBtn.style.color = ''; }, 2000);
   } catch { /* ignore */ }
 });
+
+/* ── Single screenshot lightbox ── */
+(function initLightbox() {
+  const lb      = document.getElementById('lightbox');
+  const lbImg   = document.getElementById('lightboxImg');
+  const lbTitle = document.getElementById('lightboxTitle');
+  const lbClose = document.getElementById('lightboxClose');
+  const fig     = document.getElementById('featuredScreenshot');
+  if (!lb || !fig) return;
+
+  function open(src, title) {
+    lbImg.src = src;
+    lbImg.alt = title || '';
+    lbTitle.textContent = title || '';
+    lb.classList.add('open');
+    lb.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function close() {
+    lb.classList.remove('open');
+    lb.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    setTimeout(() => { lbImg.src = ''; }, 200);
+  }
+
+  fig.addEventListener('click', () => {
+    open(fig.dataset.src || fig.querySelector('img')?.src, fig.dataset.title || '');
+  });
+
+  lbClose.addEventListener('click', close);
+  lb.addEventListener('click', (e) => {
+    if (e.target === lb) close();
+  });
+  lbImg.addEventListener('click', (e) => e.stopPropagation());
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lb.classList.contains('open')) close();
+  });
+})();
 </script>
 </body>
 </html>

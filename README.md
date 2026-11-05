@@ -39,6 +39,12 @@
 Наследник [All Tweaker](https://github.com/scode18/All-Tweaker) (Python / tkinter),
 переехавший на **Electron 44 + Material You + Cyberpunk Style**.
 
+<p align="center">
+  <a href="web/screenshot.jpg">
+    <img src="web/screenshot.jpg" alt="Anton Vampire v1.0.7 — главный экран" width="90%" style="border-radius: 8px;" />
+  </a>
+</p>
+
 Внутри — **1000+ твиков**, сгруппированных по 13 вкладкам, **100+ тем**
 (включая игровые, Catppuccin, Dark Reader, Cyberpunk),
 аудит безопасности, управление автозагрузкой, службами, курсорами, обои
