@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Документация — Anton Vampire v1.0.6-beta</title>
-<meta name="description" content="Полная документация Anton Vampire: установка, интерфейс, 11 вкладок, темы, шрифты, настройки, безопасность, курсоры, обои, сборщики." />
+<title>Документация — Anton Vampire v1.0.7-beta</title>
+<meta name="description" content="Полная документация Anton Vampire v1.0.7: установка, интерфейс, 13 вкладок, смертельная оптимизация, игровой режим 2.0, менеджер служб, 100+ тем, 8 стилей, настройки, безопасность, сборщики." />
 <link rel="icon" type="image/png" href="../assets/icon.png" />
 <link rel="stylesheet" href="style.css" />
 </head>
@@ -33,6 +33,7 @@
     <div class="toc-title">Содержание</div>
     <ul class="toc">
       <li><a href="#intro">Введение</a></li>
+      <li><a href="#whatsnew">Что нового в 1.0.7</a></li>
       <li><a href="#requirements">Требования</a></li>
       <li><a href="#install">Установка</a></li>
       <li><a href="#interface">Интерфейс</a></li>
@@ -46,7 +47,9 @@
         <a href="#tab-cleaner">🧹 Очистка</a>
         <a href="#tab-fixes">⚜️ Исправления</a>
         <a href="#tab-game">🎮 Игровой режим</a>
+        <a href="#tab-deadly">💀 Смертельная оптимизация</a>
         <a href="#tab-power">🔋 Электропитание</a>
+        <a href="#tab-services">⚙️ Службы</a>
         <a href="#tab-customization">🎨 Кастомизация</a>
         <a href="#tab-uninstaller">📦 Приложения</a>
         <a href="#tab-settings">⚙️ Настройки</a>
@@ -55,6 +58,7 @@
       <li class="toc-group">
         <div class="toc-group-title">Механики</div>
         <a href="#themes">Темы и шрифты</a>
+        <a href="#styles">CSS-стили</a>
         <a href="#checkboxes">Режимы чекбоксов</a>
         <a href="#runner">Запуск твиков</a>
         <a href="#sources">Источники и пары</a>
@@ -75,11 +79,12 @@
 
   <main class="content">
     <header class="doc-header">
-      <div class="doc-eyebrow">🩸 Документация · v1.0.6-beta</div>
+      <div class="doc-eyebrow">🩸 Документация · v1.0.7-beta</div>
       <h1 class="doc-title">Anton Vampire</h1>
       <p class="doc-sub">
-        Полный справочник по приложению: установка, интерфейс, все 11 вкладок,
-        темы, шрифты, настройки, безопасность, курсоры, обои и сборщики.
+        Полный справочник по приложению: установка, интерфейс, все 13 вкладок,
+        смертельная оптимизация, игровой режим 2.0, менеджер служб,
+        100+ тем, 8 CSS-стилей, настройки, безопасность, курсоры, обои и сборщики.
       </p>
     </header>
 
@@ -94,16 +99,18 @@
         <code>.reg</code>/<code>.pow</code> твиков через удобный UI.
       </p>
       <p>
-        Внутри — <strong>1000+ твиков</strong>, сгруппированных по 11 вкладкам,
-        <strong>~80 тем</strong>, Cyberpunk 2077 интерфейс, <strong>аудит
-        безопасности</strong>, управление автозагрузкой, курсоры, обои,
+        Внутри — <strong>1000+ твиков</strong>, сгруппированных по 13 вкладкам,
+        <strong>100+ тем</strong> в 12 группах, <strong>8 CSS-стилей</strong>
+        (включая Cyberpunk 2077), <strong>аудит безопасности</strong>,
+        управление автозагрузкой, <strong>менеджер служб</strong>,
+        <strong>смертельная оптимизация</strong>, курсоры, обои,
         HTML-отчёты и сборщики JSON-данных.
       </p>
 
       <div class="card-grid">
         <div class="card">
           <div class="card-title">Open Source</div>
-          <p class="card-desc">MIT-подобная лицензия, весь код на GitHub.</p>
+          <p class="card-desc">CC BY-NC-SA 4.0, весь код на GitHub.</p>
         </div>
         <div class="card">
           <div class="card-title">Portable</div>
@@ -127,6 +134,22 @@
           с UAC через <code>Start-Process -Verb RunAs</code>.
         </div>
       </div>
+    </section>
+
+    <section class="section" id="whatsnew">
+      <div class="section-tag">Changelog</div>
+      <h2>Что нового в 1.0.7</h2>
+      <ul>
+        <li>💀 <strong>Смертельная оптимизация</strong> — новая вкладка с необратимым BAT-твиком (9 категорий, ~100 групп изменений). Только для стационарных ПК.</li>
+        <li>🎮 <strong>Игровой режим 2.0</strong> — 14 готовых планов электропитания (Amit, Atlas, Bitsum, Quaked, XOS, Zoyata и др.), 6 гранулированных функций Power Killer, массовое отключение 200+ служб с бэкапом <code>.reg</code>.</li>
+        <li>🔋 <strong>Электропитание</strong> — Power Killer в виде карточек, таблица результатов тестирования планов, 100+ источников питания (XOS, ImmortalOS, SystemX, Igromanoff, VainOS, SynergyOS, Другое).</li>
+        <li>⚙️ <strong>Менеджер служб</strong> — таблица с поиском, статусами, массовым вкл/выкл, безопасным бэкапом и fallback на <code>Start=3</code>.</li>
+        <li>🎨 <strong>8 CSS-стилей</strong> — добавлены Cyberpunk 2077, Mini Punk, Alt Punk, Material Mini.</li>
+        <li>🌈 <strong>100+ тем в 12 группах</strong> — игровые (Vampire: The Masquerade, CS 1.6, CS 2, Diablo, Cyberpunk 2077 ×5), Catppuccin ×4, Dark Reader ×22, Curated 2.0 ×17.</li>
+        <li>🛡️ <strong>Защита от дубликатов</strong> при импорте планов электропитания.</li>
+        <li>🩹 <strong>Fallback <code>Start=3</code></strong> при отсутствии бэкапа служб.</li>
+        <li>🏷 <strong>Индикаторы сборок</strong> в таблице служб.</li>
+      </ul>
     </section>
 
     <section class="section" id="requirements">
@@ -164,28 +187,28 @@
       <h2>Установка</h2>
       <h3>Способ 1: одной командой</h3>
       <p>Откройте <kbd>Win</kbd> + <kbd>R</kbd> → <code>cmd</code> и вставьте:</p>
-      <pre><code>curl -g -k -L -# -o "%temp%\AntonVampire.Setup.exe" "https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.0.6-beta/Anton.Vampire.Setup.1.0.6-beta.exe" && start "" "%temp%\AntonVampire.Setup.exe"</code></pre>
-      
+      <pre><code>curl -g -k -L -# -o "%temp%\AntonVampire.Setup.exe" "https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.0.7-beta/Anton.Vampire.Setup.1.0.7-beta.exe" && start "" "%temp%\AntonVampire.Setup.exe"</code></pre>
+
       <h3>Способ 2: Setup вручную</h3>
       <ol>
-        <li>Скачайте <a href="https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.0.6-beta/Anton.Vampire.Setup.1.0.6-beta.exe" download>Anton.Vampire.Setup.1.0.6-beta.exe</a></li>
+        <li>Скачайте <a href="https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.0.7-beta/Anton.Vampire.Setup.1.0.7-beta.exe" download>Anton.Vampire.Setup.1.0.7-beta.exe</a></li>
         <li>Запустите — UAC запросит подтверждение</li>
         <li>Следуйте инструкциям установщика NSIS</li>
       </ol>
-      
+
       <h3>Способ 3: Portable</h3>
       <p>
-        Скачайте <a href="https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.0.6-beta/Anton.Vampire.Portable.rar" download>Anton.Vampire.Portable.rar</a>,
+        Скачайте <a href="https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.0.7-beta/Anton.Vampire.Portable.rar" download>Anton.Vampire.Portable.rar</a>,
         распакуйте в любую папку и запустите <code>AntonVampire.exe</code>.
         Все данные лягут в <code>extreme_data/</code> рядом с exe.
       </p>
-      
+
       <h3>Способ 4: из исходников</h3>
       <pre><code>git clone https://github.com/ZikaSVG/Anton-Vampire.git
 cd Anton-Vampire
 npm install
 npm start</code></pre>
-      
+
       <div class="callout success">
         <div class="callout-icon">✓</div>
         <div class="callout-body">
@@ -200,7 +223,7 @@ npm start</code></pre>
       <h2>Интерфейс</h2>
       <p>Приложение состоит из 5 постоянных элементов:</p>
       <ol>
-        <li><strong>Сайдбар</strong> — разворачивается по hover, 11 разделов</li>
+        <li><strong>Сайдбар</strong> — разворачивается по hover, 13 разделов</li>
         <li><strong>Топбар</strong> — драг-зона окна, поиск, кнопки</li>
         <li><strong>Табы</strong> — под-вкладки внутри раздела</li>
         <li><strong>Content</strong> — содержимое активной вкладки</li>
@@ -216,17 +239,323 @@ npm start</code></pre>
       </ul>
     </section>
 
+    <!-- ================= ВКЛАДКИ ================= -->
+
+    <section class="section" id="tab-home">
+      <div class="section-tag">Вкладка 1</div>
+      <h2>🏠 Главная</h2>
+      <p>Стартовая вкладка с приветствием и живой статистикой системы.</p>
+      <ul>
+        <li>Polling CPU / GPU / RAM / диск в реальном времени</li>
+        <li>Быстрый переход к популярным разделам</li>
+        <li>Карточки состояния системы</li>
+      </ul>
+    </section>
+
+    <section class="section" id="tab-security">
+      <div class="section-tag">Вкладка 2</div>
+      <h2>🛡️ Безопасность</h2>
+      <p>Аудит конфигурации Windows и проверка защищённости.</p>
+      <ul>
+        <li><strong>3 аудита:</strong> 21 + 14 + 13 проверок</li>
+        <li>Состояние Firewall и сетевых правил</li>
+        <li>NetMon — мониторинг сетевых подключений</li>
+        <li>HTML-отчёты с результатами аудита</li>
+        <li>Автоаудит при старте (опционально)</li>
+      </ul>
+    </section>
+
+    <section class="section" id="tab-startup">
+      <div class="section-tag">Вкладка 3</div>
+      <h2>🚀 Автозагрузка</h2>
+      <p>Управление программами и службами, стартующими с системой.</p>
+      <ul>
+        <li>Папки автозагрузки пользователя и системы</li>
+        <li>Реестр: <code>Run</code>, <code>RunOnce</code>, <code>Wow6432Node</code></li>
+        <li>Планировщик задач</li>
+        <li>Службы с автозапуском</li>
+        <li>Категоризация и защита критичных элементов</li>
+      </ul>
+    </section>
+
+    <section class="section" id="tab-optimization">
+      <div class="section-tag">Вкладка 4</div>
+      <h2>⚡ Оптимизация</h2>
+      <p>База твиков из 7 источников + вендор-панель.</p>
+      <ul>
+        <li><strong>7 источников твиков</strong> (XOS, ImmortalOS, SystemX, Igromanoff, VainOS, SynergyOS, Другое)</li>
+        <li><strong>Вендор-панель:</strong> NVIDIA, AMD, Intel, DirectX, OpenGL</li>
+        <li>Пары «твик ↔ отмена» с кнопкой ↩</li>
+      </ul>
+    </section>
+
+    <section class="section" id="tab-cleaner">
+      <div class="section-tag">Вкладка 5</div>
+      <h2>🧹 Очистка</h2>
+      <p>12 секций для очистки системы от мусора.</p>
+      <ul>
+        <li>Кэши шейдеров (DirectX, NVIDIA, AMD, Intel)</li>
+        <li>Логи Windows и приложений</li>
+        <li>Кэши Windows Update и доставки</li>
+        <li>Temp-папки, корзина, старые обновления</li>
+        <li>Очистка диска через <code>cleanmgr</code></li>
+      </ul>
+    </section>
+
+    <section class="section" id="tab-fixes">
+      <div class="section-tag">Вкладка 6</div>
+      <h2>⚜️ Исправления</h2>
+      <p>Восстановление системы и починка компонентов.</p>
+      <ul>
+        <li><strong>DISM</strong> — <code>/RestoreHealth</code></li>
+        <li><strong>SFC</strong> — <code>/scannow</code></li>
+        <li><strong>CHKDSK</strong> — проверка диска</li>
+        <li>Сброс сети (<code>netsh winsock reset</code>)</li>
+        <li>Диспетчер устройств</li>
+        <li>Игровые фиксы</li>
+        <li><strong>Hero-блок отката</strong> системы</li>
+      </ul>
+    </section>
+
+    <section class="section" id="tab-game">
+      <div class="section-tag">Вкладка 7</div>
+      <h2>🎮 Игровой режим 2.0</h2>
+      <p>Комплексная оптимизация для максимального FPS и минимальной задержки.</p>
+
+      <h3>📦 Готовые планы электропитания (14)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>План</th><th>Описание</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>Amit_v1_lowlatency</code></td><td>Низкая задержка ввода, баланс</td></tr>
+            <tr><td><code>Amit_v2_extreme performance</code></td><td>Максимум без компромиссов</td></tr>
+            <tr><td><code>Amit_v3_low latency</code></td><td>Минимальная задержка в играх</td></tr>
+            <tr><td><code>Atlas Power Plan</code></td><td>Агрессивная оптимизация от AtlasOS</td></tr>
+            <tr><td><code>Bitsum Highest Performance</code></td><td>Максимальная частота CPU</td></tr>
+            <tr><td><code>Calypto</code></td><td>Баланс для игр и работы</td></tr>
+            <tr><td><code>GGOSv0_8_5_Idle_Enabled</code></td><td>GGOS с idle-режимом</td></tr>
+            <tr><td><code>Light pow v</code></td><td>Лёгкий план</td></tr>
+            <tr><td><code>Muren_Idle_Enabled</code></td><td>Muren с idle</td></tr>
+            <tr><td><code>Quaked Ultimate Performance Idle Off</code></td><td>Максимум, idle off</td></tr>
+            <tr><td><code>Quaked Ultimate Performance</code></td><td>Абсолютный максимум</td></tr>
+            <tr><td><code>Unixcorn_Idle_Enabled</code></td><td>Unixcorn с idle</td></tr>
+            <tr><td><code>XOS imribiy</code></td><td>От XOS — для игр</td></tr>
+            <tr><td><code>Zoyata_Low Latency</code></td><td>Для шутеров</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>🛡️ <strong>Защита от дубликатов:</strong> если план уже импортирован — повторно не создаётся.<br/>
+         💡 <strong>Совет:</strong> для ноутбуков выбирайте планы с <code>Idle_Enabled</code>.</p>
+
+      <h3>🔧 Power Killer — 6 функций</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Функция</th><th>Что делает</th></tr></thead>
+          <tbody>
+            <tr><td>🕒 Таймауты AC/DC</td><td>Запрет сна монитора/диска/системы</td></tr>
+            <tr><td>🧠 CPU Throttle off</td><td>CPU всегда на максимуме</td></tr>
+            <tr><td>⚙️ Power Throttling & Dynamic Tick</td><td>Снижение DPC latency</td></tr>
+            <tr><td>🔌 USB Power (LPM/D3Cold)</td><td>USB-порты не «засыпают»</td></tr>
+            <tr><td>🎛️ PCI D3Cold</td><td>Запрет глубокого сна GPU/NVMe</td></tr>
+            <tr><td>📓 Диагностические журналы</td><td>SleepStudy, Kernel-Processor-Power off</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Каждая функция запускается отдельно. Есть кнопка <strong>↩ Откатить все настройки Power Killer</strong>.</p>
+
+      <h3>🛡️ Оптимизация служб</h3>
+      <ul>
+        <li><strong>200+ служб</strong> в списке <code>SAFE_SERVICES</code></li>
+        <li><strong>Защищённые категории:</strong> питание 🔋, ввод ⌨️, сеть 🌐, темы 🎨, ядра ⚙️ (Start 0-2)</li>
+        <li><strong>Автобэкап</strong> реестра служб в <code>.reg</code> перед отключением (переключатель)</li>
+        <li><strong>Восстановление</strong> из бэкапа + fallback на <code>Start=3</code> при отсутствии файла</li>
+        <li><strong>Выбор чекбоксами</strong> — можно оставить нужные службы включёнными</li>
+      </ul>
+    </section>
+
+    <section class="section" id="tab-deadly">
+      <div class="section-tag">Вкладка 8 · NEW</div>
+      <h2>💀 Смертельная оптимизация</h2>
+
+      <div class="callout warn">
+        <div class="callout-icon">☠️</div>
+        <div class="callout-body">
+          <strong>Только для стационарных ПК.</strong> На ноутбуках и планшетах — не запускать.
+          <strong>Отмены нет</strong> — изменения необратимы. Создайте точку восстановления
+          или бэкап системы перед запуском.
+        </div>
+      </div>
+
+      <p>Отдельная вкладка для максимального выжимания FPS на десктопах.
+         Один BAT-файл <code>GameMode/Hard_Optimization.bat</code>, <strong>без отката</strong>.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Категория</th><th>Что делает</th></tr></thead>
+          <tbody>
+            <tr><td>📊 Телеметрия</td><td>AllowTelemetry=0, DiagTrack/WER/TIP/Speech/Ink → Start=4</td></tr>
+            <tr><td>🔄 Обновления, Store, Edge</td><td>wuauserv/UsoSvc/BITS/DoSvc/edgeupdate → Start=4</td></tr>
+            <tr><td>⚡ Питание</td><td>Hibernate off, PowerThrottling off, CrystalCry Max Performance, PagingFiles=""</td></tr>
+            <tr><td>🌐 Сеть</td><td>TCP/IP твики, Wi-Fi Sense off, NonBestEffortLimit=0</td></tr>
+            <tr><td>🖥️ UI</td><td>MenuShowDelay=0, анимации off, Copilot off, BingSearch off</td></tr>
+            <tr><td>🖱️ Мышь/клавиатура</td><td>MouseSpeed=0, задержки hover=0, Accessibility Flags=0</td></tr>
+            <tr><td>🖨️ Службы</td><td>Spooler/Bth/WlanSvc/RDP/Xbox/STORAGE/RAID → удалены</td></tr>
+            <tr><td>📜 Журналы</td><td>EventLog AutoBackup=0, TIP TestResults очищены</td></tr>
+            <tr><td>🧹 Прочее</td><td>ReserveManager off, StorageSense off, GameDVR off, FSO off</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>В интерфейсе — раскрывающиеся категории с полным списком изменений,
+         кнопки «Развернуть все» / «Свернуть все» и предупреждение на красном фоне.</p>
+    </section>
+
+    <section class="section" id="tab-power">
+      <div class="section-tag">Вкладка 9</div>
+      <h2>🔋 Электропитание</h2>
+      <p>Управление схемами и твиками питания.</p>
+
+      <h3>Источники (100+ схем)</h3>
+      <ul>
+        <li>📦 <strong>Стандартные</strong> — Power Killer + таблица планов + встроенные твики</li>
+        <li>🟢 <strong>XOS-Tweaks</strong> и <strong>xOS (расширенный)</strong></li>
+        <li>💀 <strong>ImmortalOS-Tweaks</strong></li>
+        <li>🟣 <strong>SystemX-Tweaks</strong></li>
+        <li>🎩 <strong>Igromanoff-Tweaks</strong></li>
+        <li>👑 <strong>VainOS-Tweaks</strong></li>
+        <li>🔷 <strong>SynergyOS-Tweaks</strong></li>
+        <li>📁 <strong>Другое</strong></li>
+      </ul>
+
+      <h3>Power Killer — карточки</h3>
+      <p>Каждая из 6 функций (🕒 🧠 ⚙️ 🔌 🎛️ 📓) представлена отдельной карточкой
+         с кнопкой «▶ Запустить». Работают независимо. Внизу — кнопка
+         «↩ Откатить все настройки Power Killer».</p>
+
+      <h3>Таблица результатов</h3>
+      <p>Таблица тестирования планов: средняя / мин / макс задержка, средний FPS,
+         температура CPU, комментарий. Источник — Google Sheets.</p>
+
+      <h3>Планы из <code>tabs_2</code></h3>
+      <p>Популярные режимы, классика, адские режимы, схемы AMD & INTEL,
+         схемы 100% загрузки CPU, все планы, твики, твики от xOS.</p>
+    </section>
+
+    <section class="section" id="tab-services">
+      <div class="section-tag">Вкладка 10 · NEW</div>
+      <h2>⚙️ Менеджер служб</h2>
+      <p>Полноценный менеджер служб Windows с таблицей и безопасным бэкапом.</p>
+
+      <h3>Возможности</h3>
+      <ul>
+        <li><strong>Таблица</strong> с колонками: имя, описание, статус, действия, «отключена в» (теги сборок)</li>
+        <li><strong>Поиск</strong> по имени и описанию</li>
+        <li><strong>Массовое управление:</strong> выбрать все / снять все / отключить выбранные / включить выбранные</li>
+        <li><strong>Статусы</strong> через <code>Get_Services_Status.bat</code> → <code>services_status.json</code></li>
+        <li><strong>Кнопки в строке:</strong> ▶ Вкл / ⏹ Выкл для каждой службы</li>
+        <li><strong>Бэкап</strong> <code>Services_Backup.reg</code> и восстановление</li>
+        <li><strong>Цветные индикаторы</strong> статусов (boot / system / auto / manual / disabled)</li>
+        <li><strong>Теги сборок</strong> — в каких сборках служба уже отключена</li>
+      </ul>
+
+      <h3>Статусы служб</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Статус</th><th>Отображение</th><th>Цвет</th></tr></thead>
+          <tbody>
+            <tr><td><code>boot</code></td><td>Загрузка</td><td>danger</td></tr>
+            <tr><td><code>system</code></td><td>Система</td><td>danger</td></tr>
+            <tr><td><code>auto</code></td><td>Авто</td><td>fg-muted</td></tr>
+            <tr><td><code>manual</code></td><td>Вручную</td><td>accent</td></tr>
+            <tr><td><code>disabled</code></td><td>Откл</td><td>success</td></tr>
+            <tr><td><code>notfound</code></td><td>Нет</td><td>fg-muted</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout info">
+        <div class="callout-icon">💡</div>
+        <div class="callout-body">
+          Перед массовым отключением всегда создавайте бэкап через
+          «💾 Создать бэкап служб». Восстановление через
+          «↩ Восстановить из бэкапа» вернёт исходные значения.
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="tab-customization">
+      <div class="section-tag">Вкладка 11</div>
+      <h2>🎨 Кастомизация</h2>
+      <p>Курсоры, обои и визуальные твики.</p>
+      <ul>
+        <li><strong>Курсоры</strong> с превью — установка, применение, удаление</li>
+        <li>4 источника твиков: XOS, Marty, Synergy, Vain</li>
+        <li>Кэш курсоров в <code>extreme_data/cursors_cache/</code></li>
+        <li>Распаковка через <code>7z.exe</code></li>
+      </ul>
+    </section>
+
+    <section class="section" id="tab-uninstaller">
+      <div class="section-tag">Вкладка 12</div>
+      <h2>📦 Приложения</h2>
+      <p>Удаление встроенных приложений Windows.</p>
+      <ul>
+        <li><strong>Appx</strong> — UWP-приложения</li>
+        <li><strong>Defender / Edge / OneDrive / WebView2</strong> в 4 режимах</li>
+        <li>Removal-батники (XOS / IMOS / SOS)</li>
+        <li>Категоризация с фильтрами</li>
+      </ul>
+    </section>
+
+    <section class="section" id="tab-settings">
+      <div class="section-tag">Вкладка 13</div>
+      <h2>⚙️ Настройки</h2>
+      <p>6 под-вкладок конфигурации приложения.</p>
+      <ul>
+        <li><strong>Интерфейс</strong> — тема, CSS-стиль, шрифты, веса, скругления, плотность</li>
+        <li><strong>Темы</strong> — 100+ тем в 12 группах с превью</li>
+        <li><strong>Шрифты</strong> — 6 слотов (heading / body / mono × latin / cyr)</li>
+        <li><strong>Поведение</strong> — режим запуска твиков, таймаут, lazy, preload, splash</li>
+        <li><strong>Утилиты</strong> — сборщики JSON, аудит целостности</li>
+        <li><strong>О программе</strong> — версия, лицензия, кнопка «↺ Сбросить все настройки»</li>
+      </ul>
+    </section>
+
+    <!-- ================= МЕХАНИКИ ================= -->
+
     <section class="section" id="themes">
       <div class="section-tag">Механика</div>
       <h2>Темы и шрифты</h2>
       <h3>Темы</h3>
-      <p>В <code>renderer/themes.js</code> экспортируется объект <code>THEMES</code> (~80 ключей) и <code>THEMES_META.groups</code> (10 групп). Применение — <code>applyTheme(name, unified, sidebarOpacity)</code>.</p>
+      <p>В <code>renderer/themes.js</code> экспортируется объект <code>THEMES</code>
+         (~100+ ключей) и <code>THEMES_META.groups</code> (12 групп).
+         Применение — <code>applyTheme(name, unified, sidebarOpacity)</code>.</p>
       <pre><code>cyberpunk_2077: {
   bg: '#090507', bgAlt: '#11070a', card: '#180a10', cardHover: '#24101a',
   border: '#ff003c', fg: '#f0f0f0', fgMuted: '#8a7a7a',
   accent: '#00e5ff', accent2: '#ff003c', accentText: '#000000',
   success: '#00e5ff', warning: '#fcee0a', danger: '#ff003c', info: '#00b0c0'
 }</code></pre>
+
+      <h3>Группы тем (12)</h3>
+      <ul>
+        <li>🎨 Material 3 — <code>material3</code>, <code>material3_light</code></li>
+        <li>☀️ Светлые темы — Cosmo, Flatly, Litera, Minty, Lumen, Sandstone, Yeti, Pulse, United, Morph, Journal, Simplex, Cerculean</li>
+        <li>🌗 Тёмные версии светлых — <code>*-dark</code></li>
+        <li>🌑 Тёмные ttkbootstrap — Darkly, Superhero, Solar, Cyborg, Vapor</li>
+        <li>⚡ От разработчика — Cyberpunk, Hacker, Palenight, BoosterX, BoosterXVapor</li>
+        <li>🩸 От Антона — Extreme, NewHone, Nord</li>
+        <li>💀 От Русланчика — Wincry, Ruslanchik, Wincry_Warning, Wincry_Full_Warning</li>
+        <li>✨ Новые тёмные — BloodMoon, Abyss, NewNord, Catppuccin, Dracula, NewPalenight, HelloKitty, Kuromi, OneDark, Hacker_New</li>
+        <li>🎯 Curated 2.0 — Тёмные — Bootstrap, PyData, Nord_Curated, Solarized, Catppuccin_Curated, Gruvbox, Dracula_Curated, Tokyo_Night, One, Everforest</li>
+        <li>🎯 Curated 2.0 — Светлые — Bootstrap_Light, PyData_Light, Solarized_Light, Gruvbox_Light, Tokyo_Night_Light, One_Light, Everforest_Light</li>
+        <li>🎮 Игровые — Vampire: The Masquerade, CS 1.6, CS 2, Diablo, Cyberpunk 2077 ×5</li>
+        <li>🐱 Catppuccin — Latte, Frappe, Macchiato, Mocha</li>
+        <li>🌙 Dark Reader — 22 темы (dr_*)</li>
+      </ul>
+
       <h3>Шрифты</h3>
       <p>6 слотов + 2 веса:</p>
       <pre><code>font_heading_latin: 'Press Start 2P',
@@ -238,6 +567,282 @@ heading_font_size:  15,
 body_font_size:     13,
 heading_font_weight: 700,
 body_font_weight:    400</code></pre>
+    </section>
+
+    <section class="section" id="styles">
+      <div class="section-tag">Механика</div>
+      <h2>CSS-стили (8)</h2>
+      <p>В <code>renderer/styles/style-loader.js</code> экспортируется <code>STYLES</code>
+         и функция <code>applyStyle(id)</code>. Старый <code>&lt;link&gt;</code> полностью
+         удаляется — его правила не перебивают новый стиль.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>ID</th><th>Название</th><th>Файл</th></tr></thead>
+          <tbody>
+            <tr><td><code>default</code></td><td>🎨 Material 3</td><td><code>src/styles/default.css</code></td></tr>
+            <tr><td><code>pixel</code></td><td>🕹 Pixel Style</td><td><code>src/styles/pixel.css</code></td></tr>
+            <tr><td><code>material3</code></td><td>✨ Material You</td><td><code>src/styles/material3.css</code></td></tr>
+            <tr><td><code>kitty</code></td><td>🎀 Pretty Kitty Pixel</td><td><code>src/styles/kitty.css</code></td></tr>
+            <tr><td><code>cyberpunk</code></td><td>🌆 Cyberpunk 2077</td><td><code>src/styles/cyberpunk.css</code></td></tr>
+            <tr><td><code>minipunk</code></td><td>📟 Mini Punk</td><td><code>src/styles/minipunk.css</code></td></tr>
+            <tr><td><code>altpunk</code></td><td>⚡ Alt Punk</td><td><code>src/styles/altpunk.css</code></td></tr>
+            <tr><td><code>materialmini</code></td><td>📐 Material Mini</td><td><code>src/styles/materialmini.css</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <pre><code>export const STYLES = {
+  default:      { id: 'default',      label: '🎨 Material 3',         file: 'src/styles/default.css' },
+  pixel:        { id: 'pixel',        label: '🕹 Pixel Style',         file: 'src/styles/pixel.css' },
+  material3:    { id: 'material3',    label: '✨ Material You',       file: 'src/styles/material3.css' },
+  kitty:        { id: 'kitty',        label: '🎀 Pretty Kitty Pixel', file: 'src/styles/kitty.css' },
+  cyberpunk:    { id: 'cyberpunk',    label: '🌆 Cyberpunk 2077',     file: 'src/styles/cyberpunk.css' },
+  minipunk:     { id: 'minipunk',     label: '📟 Mini Punk',          file: 'src/styles/minipunk.css' },
+  altpunk:      { id: 'altpunk',      label: '⚡ Alt Punk',           file: 'src/styles/altpunk.css' },
+  materialmini: { id: 'materialmini', label: '📐 Material Mini',      file: 'src/styles/materialmini.css' },
+};</code></pre>
+    </section>
+
+    <section class="section" id="checkboxes">
+      <div class="section-tag">Механика</div>
+      <h2>Режимы чекбоксов</h2>
+      <p>Параметр <code>checkbox_display_mode</code>:</p>
+      <ul>
+        <li><code>rectangle</code> — прямоугольные (по умолчанию)</li>
+        <li><code>round</code> — круглые</li>
+        <li><code>square</code> — квадратные</li>
+      </ul>
+      <p>Рендер — через <code>renderCheckboxGrid()</code> из <code>components/checkbox.js</code>.
+         Поддерживает колонки (<code>Columns.default</code>) и кнопки отмены
+         (<code>show_cancel_buttons</code>).</p>
+    </section>
+
+    <section class="section" id="runner">
+      <div class="section-tag">Механика</div>
+      <h2>Запуск твиков</h2>
+      <p>6 режимов <code>tweak_execution_mode</code>:</p>
+      <ul>
+        <li><code>default</code> — прямой запуск</li>
+        <li><code>no_launcher</code> — без <code>launcher.exe</code></li>
+        <li><code>launcher</code> — через <code>launcher.exe</code></li>
+        <li><code>powerrun</code> — через <code>PowerRun.exe</code> (наивысшие привилегии)</li>
+        <li><code>nsudolg</code> — через <code>NSudoLG.exe</code> (TrustedInstaller, по умолчанию)</li>
+        <li><code>cmd</code> — через <code>cmd.exe /c</code></li>
+      </ul>
+
+      <h3>Патчинг <code>.bat</code></h3>
+      <ul>
+        <li>Вырезаются <code>pause</code> / <code>timeout</code> / <code>choice</code></li>
+        <li><code>start</code> → <code>start /b ""</code> — без окна консоли</li>
+      </ul>
+
+      <h3>Стрим вывода</h3>
+      <p>Авто-декодинг UTF-8 → fallback на cp866. Если кракозябры — пересохраните <code>.bat</code> в UTF-8.</p>
+
+      <h3>Таймаут</h3>
+      <p>По умолчанию <code>tweak_timeout_ms: 300000</code> (5 минут). Настраивается в <em>Настройки → Интерфейс</em>.</p>
+    </section>
+
+    <section class="section" id="sources">
+      <div class="section-tag">Механика</div>
+      <h2>Источники и пары</h2>
+      <p>Твики рендерятся через универсальный <code>sources.js</code>:</p>
+      <ul>
+        <li><code>renderSources(host, sources[])</code> — строит панель источников</li>
+        <li><code>loadSourceData(src)</code> — читает JSON + сканирует диск</li>
+        <li><code>buildPairMap(files, cancels)</code> — сопоставляет твик ↔ отмена</li>
+        <li><code>coreName(filename)</code> — выделяет ядро имени без расширения</li>
+      </ul>
+      <p>Пара определяется по совпадению <code>coreName()</code>. Кнопка ↩ появляется
+         рядом с твиком, если найдена отмена.</p>
+    </section>
+
+    <section class="section" id="preload">
+      <div class="section-tag">Механика</div>
+      <h2>Preload и lazy</h2>
+      <ul>
+        <li><code>lazy_tabs: true</code> — вкладка рендерится только при переходе</li>
+        <li><code>preload_heavy_tabs: false</code> — тяжёлые данные (startup, apps, audits) не грузятся при старте</li>
+        <li><code>preload_audits: false</code> — аудит безопасности не запускается автоматически</li>
+        <li><code>security_auto_audit: true</code> — автоаудит при открытии вкладки Безопасность</li>
+        <li><code>show_splash: true</code> — splash-screen с прогрессом</li>
+      </ul>
+    </section>
+
+    <!-- ================= СПРАВОЧНИК ================= -->
+
+    <section class="section" id="config">
+      <div class="section-tag">Справочник</div>
+      <h2>Конфиг</h2>
+      <p><code>extreme_data/settings.json</code> · UTF-8 · debounce 250 мс.</p>
+      <pre><code>{
+  "General": {
+    "theme": "vampire_the_masquerade",
+    "ui_style": "material3",
+    "visual_effect": "glass",
+    "font_heading_latin": "Silkscreen",
+    "font_heading_cyr": "JetBrains Mono",
+    "font_body_latin": "JetBrains Mono",
+    "font_body_cyr": "JetBrains Mono",
+    "font_mono": "JetBrains Mono",
+    "heading_font_size": 15,
+    "body_font_size": 13,
+    "heading_font_weight": 700,
+    "body_font_weight": 400,
+    "corner_radius": 12,
+    "ui_density": "comfortable",
+    "sidebar_opacity": 40,
+    "unified_button_color": true,
+    "checkbox_display_mode": "rectangle",
+    "show_cancel_buttons": true,
+    "tweak_execution_mode": "nsudolg",
+    "tweak_timeout_ms": 300000,
+    "lazy_tabs": true,
+    "show_splash": true,
+    "preload_heavy_tabs": false,
+    "preload_audits": false,
+    "security_auto_audit": true,
+    "logs_enabled": false,
+    "netmon_host_mode": "none",
+    "initial_tab": "main"
+  },
+  "Window": { "fullscreen": false },
+  "Columns": { "default": 3 }
+}</code></pre>
+      <p>При старте: <code>mergeDeep(DEFAULTS, raw)</code> + <code>coerceToDefaults</code> —
+         гарантирует, что все ключи и типы на месте.</p>
+    </section>
+
+    <section class="section" id="portable">
+      <div class="section-tag">Справочник</div>
+      <h2>Portable mode</h2>
+      <p>Все данные — в <code>extreme_data/</code> рядом с <code>AntonVampire.exe</code>:</p>
+      <pre><code>AntonVampire.exe
+extreme_data/
+├── settings.json
+├── logs/{user}_log_{ts}.log
+├── backgrounds/
+├── wallpapers/
+├── cursor_icons/
+├── cursors_cache/
+├── cursors_temp/
+├── config_backups/{app}/{ts}__{label}/
+└── electron_userdata/
+    ├── session/
+    ├── cache/
+    ├── chromium_logs/
+    └── crashDumps/</code></pre>
+      <p>В <code>%APPDATA%</code> и <code>%LOCALAPPDATA%</code> <strong>ничего не пишется</strong>.
+         Можно запускать с флешки.</p>
+    </section>
+
+    <section class="section" id="shortcuts">
+      <div class="section-tag">Справочник</div>
+      <h2>Горячие клавиши</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Клавиша</th><th>Действие</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>F1</kbd></td><td>Открыть сайт проекта</td></tr>
+            <tr><td><kbd>F5</kbd></td><td>Перезагрузить renderer (без перезапуска main)</td></tr>
+            <tr><td><kbd>F11</kbd></td><td>Fullscreen</td></tr>
+            <tr><td><kbd>Ctrl</kbd> + <kbd>F</kbd></td><td>Фокус в поиск</td></tr>
+            <tr><td><kbd>Esc</kbd></td><td>Закрыть dropdown / меню</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="section-tag">Справочник</div>
+      <h2>FAQ</h2>
+
+      <h3>Нужен ли Python?</h3>
+      <p>Только если вы собираете JSON-данные через <em>Настройки → Утилиты</em>.
+         Для обычной работы — нет, всё в бандле Electron.</p>
+
+      <h3>Где хранятся настройки?</h3>
+      <p>В <code>extreme_data/settings.json</code> рядом с exe (portable).</p>
+
+      <h3>Можно ли откатить смертельную оптимизацию?</h3>
+      <p>Нет. Это необратимо. Делайте бэкап системы / точку восстановления
+         <strong>до</strong> запуска.</p>
+
+      <h3>Как добавить свой твик?</h3>
+      <ol>
+        <li>Положите <code>.bat</code> / <code>.ps1</code> / <code>.exe</code> / <code>.reg</code> / <code>.pow</code> в нужную папку <code>tweaks/&lt;button&gt;/&lt;tab&gt;/</code></li>
+        <li>Добавьте описание в <code>tweaks/descriptions.txt</code> (формат <code>filename.bat=Описание</code>)</li>
+        <li>Откройте <em>Настройки → Утилиты → build_all_tabs.py → ▶ Запустить</em></li>
+        <li>Готово — твик появится во вкладке</li>
+      </ol>
+
+      <h3>Как сменить CSS-стиль?</h3>
+      <p><em>Настройки → Интерфейс → CSS-стиль</em>. Доступно 8 вариантов,
+         включая Cyberpunk 2077.</p>
+    </section>
+
+    <section class="section" id="troubleshooting">
+      <div class="section-tag">Справочник</div>
+      <h2>Troubleshooting</h2>
+
+      <h3>Приложение не запускается</h3>
+      <ul>
+        <li>Запустите от имени администратора</li>
+        <li>Если UAC отменён — приложение закроется. Нажмите «Перезапустить» в диалоге</li>
+        <li>Включите <code>logs_enabled</code> и посмотрите <code>extreme_data/logs/</code></li>
+      </ul>
+
+      <h3>Антивирус ругается</h3>
+      <p>Три причины:</p>
+      <ol>
+        <li><strong>Нет цифровой подписи</strong> (сертификат $300–500/год)</li>
+        <li><strong>Меняет реестр / службы / системные файлы</strong></li>
+        <li><strong>Использует <code>NSudoLG.exe</code>, <code>PowerRun.exe</code>, <code>cmd.exe</code></strong></li>
+      </ol>
+      <p>→ Добавьте папку в исключения. Код открыт — можно проверить каждую строчку.</p>
+
+      <h3>Твик зависает</h3>
+      <ul>
+        <li>По умолчанию таймаут <strong>5 минут</strong>. Увеличьте в <em>Настройки → Интерфейс</em></li>
+        <li>Смените режим: <code>nsudolg</code> → <code>powerrun</code> → <code>cmd</code></li>
+        <li>Добавьте папку в исключения антивируса</li>
+      </ul>
+
+      <h3>Кракозябры в логе</h3>
+      <p>Твик выводит в OEM-кодировке (cp866). Приложение пытается декодировать UTF-8,
+         при ошибке — fallback на cp866. Если кракозябры всё равно — пересохраните
+         <code>.bat</code> в UTF-8.</p>
+
+      <h3>Смертельная оптимизация не запускается</h3>
+      <ul>
+        <li>Убедитесь, что вы на <strong>стационарном ПК</strong> (ноутбуки/планшеты — не поддерживаются)</li>
+        <li>Создайте точку восстановления <strong>до</strong> запуска</li>
+        <li>Проверьте наличие <code>GameMode/Hard_Optimization.bat</code> в <code>tweaks/</code></li>
+        <li>Отключите антивирус на время запуска</li>
+      </ul>
+
+      <h3>План электропитания не активируется</h3>
+      <ul>
+        <li>Сначала нажмите <strong>📥 Импортировать план</strong></li>
+        <li>Затем — <strong>⚡ Активировать план</strong></li>
+        <li>Если план уже есть в системе — дубликат не создаётся, активация пройдёт сразу</li>
+      </ul>
+
+      <h3>Службы не восстанавливаются из бэкапа</h3>
+      <ul>
+        <li>Проверьте наличие <code>Services_Backup.reg</code> в папке <code>tweaks/Службы/</code></li>
+        <li>Если файла нет — приложение применит безопасный сброс <code>Start=3</code></li>
+        <li>Создайте бэкап заново через <strong>💾 Создать бэкап служб</strong></li>
+      </ul>
+
+      <h3>Курсоры не применяются</h3>
+      <ul>
+        <li>Убедитесь, что в архиве есть <code>.cur</code> / <code>.ani</code></li>
+        <li>Проверьте папку <code>C:\Windows\Cursors\&lt;name&gt;\</code></li>
+        <li>Попробуйте «▶️ Применить» ещё раз</li>
+        <li>Сбросьте всё через «🗑️ Удалить все»</li>
+      </ul>
     </section>
 
     <section class="section" id="license">
@@ -262,6 +867,18 @@ body_font_weight:    400</code></pre>
         <li>Коммерческое использование без письменного разрешения автора</li>
         <li>Закрытие кода производных версий</li>
       </ul>
+
+      <h3>Сторонние ресурсы</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Ресурс</th><th>Лицензия</th></tr></thead>
+          <tbody>
+            <tr><td>Papirus icons</td><td>GPL-3.0 / LGPL-3.0 / CC-BY-SA-4.0</td></tr>
+            <tr><td>XOS / SOS / IMOS tweaks</td><td>Лицензии авторов сборок</td></tr>
+            <tr><td>Utils (PowerRun, NSudoLG, 7z, launcher)</td><td>Собственные лицензии</td></tr>
+          </tbody>
+        </table>
+      </div>
     </section>
   </main>
 </div>
@@ -274,7 +891,7 @@ body_font_weight:    400</code></pre>
         <span>ANTON VAMPIRE</span>
       </div>
       <div class="footer-meta">
-        <div>© 2026 ZikaSVG · v1.0.6-beta</div>
+        <div>© 2026 ZikaSVG · v1.0.7-beta</div>
         <div>Документация · Cyberpunk 2077</div>
       </div>
     </div>

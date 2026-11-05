@@ -5,7 +5,7 @@
 
   <p align="center">
   <b>Windows-оптимизатор на Electron</b><br/>
-  <sub>1000+ твиков · 80+ тем · Material You · Portable</sub>
+  <sub>1000+ твиков · 80+ тем · Material You · Cyberpunk 2077 · Portable</sub>
 </p>
 
 <p align="center">
@@ -23,10 +23,10 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.0.6-beta/Anton.Vampire.Setup.1.0.6-beta.exe">
+  <a href="https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.0.7-beta/Anton.Vampire.Setup.1.0.7-beta.exe">
     <img src="https://img.shields.io/badge/%F0%9F%93%A5_Download-Setup_.exe-EA38B8?style=for-the-badge" alt="Download Setup" />
   </a>
-  <a href="https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.0.6-beta/Anton.Vampire.Portable.rar">
+  <a href="https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.0.7-beta/Anton.Vampire.Portable.rar">
     <img src="https://img.shields.io/badge/%F0%9F%93%A6_Download-Portable_.rar-6E40C0?style=for-the-badge" alt="Download Portable" />
   </a>
 </p>
@@ -37,13 +37,45 @@
 
 **Anton Vampire** — полностью переписанный Windows-оптимизатор.
 Наследник [All Tweaker](https://github.com/scode18/All-Tweaker) (Python / tkinter),
-переехавший на **Electron 44 + Material You**.
+переехавший на **Electron 44 + Material You + Cyberpunk Style**.
 
-Внутри — **1000+ твиков**, сгруппированных по 11 вкладкам, **~80 тем**,
-аудит безопасности, управление автозагрузкой, курсоры, обои и портативный режим.
+Внутри — **1000+ твиков**, сгруппированных по 13 вкладкам, **100+ тем**
+(включая игровые, Catppuccin, Dark Reader, Cyberpunk),
+аудит безопасности, управление автозагрузкой, службами, курсорами, обои
+и портативный режим.
 
 > ⚠️ Требуются **права администратора**. Приложение проверяет `fltmc` при старте
 > и предлагает перезапуск через UAC.
+
+---
+
+## ✨ Новое в 1.0.7
+
+- 💀 **Смертельная оптимизация** — отдельная вкладка с необратимым BAT-твиком
+  (9 категорий, ~100 групп изменений в реестре и службах). Только для
+  стационарных ПК, только с резервной копией.
+
+- 🎮 **Игровой режим 2** — 14 готовых планов электропитания
+  (Amit, Atlas, Bitsum, Quaked, XOS, Zoyata и др.) с импортом/активацией,
+  Power Killer, массовое отключение 200+ служб
+  с бэкапом `.reg` и безопасным fallback.
+
+- 🔋 **Электропитание** — Power Killer, таблица результатов тестирования планов, ~80 источников питания
+  (XOS, ImmortalOS, SystemX, Igromanoff, VainOS, SynergyOS, Другое).
+
+- ⚙️ **Службы** — полноценный менеджер служб с таблицей, поиском, статусами,
+  массовым включением/отключением и безопасным бэкапом.
+
+- 🎨 **8 CSS-стилей:** Material 3, Pixel, Material You, Pretty Kitty,
+  Cyberpunk 2077, Mini Punk, Alt Punk, Material Mini.
+
+- 🌈 **~100+ тем** в 12 группах: Material 3, светлые, тёмные ttkbootstrap,
+  тёмные от разработчика, от Антона, от Русланчика, игровые
+  (Vampire: The Masquerade, CS 1.6, CS 2, Diablo, Cyberpunk 2077 ×5),
+  Catppuccin ×4, Dark Reader ×22, Curated 2.0 ×17.
+
+- 🕹 **Cyberpunk 2077 UI** — неоновый интерфейс, жёлто-голубые акценты,
+  глитч-эффекты.
 
 ---
 
@@ -51,9 +83,9 @@
 
 ### 🎨 Интерфейс
 - **Material You (Material 3 Expressiv)** — скругления 16–32px, tonal-контейнеры, state layers
-- **Vapor-тема** по умолчанию (`vampire_the_masquerade`)
-- **~80 тем** в 10 группах с превью
-- **4 CSS-стиля**: Material 3 · Pixel · Material You · Pretty Kitty
+- **Cyberpunk 2077** — неон, глитчи, жёлто-голубая палитра, моноширинные шрифты
+- **80+ тем** в 12 группах с превью
+- **8 CSS-стилей**: Material 3 · Pixel · Material You · Pretty Kitty · Cyberpunk 2077 · Mini Punk · Alt Punk · Material Mini
 - **6 шрифтовых слотов** (heading / body / mono × latin / cyr) + веса 100–900
 - **Splash-screen** с прогрессом
 - **Панель лога** с автопрокруткой и стримом
@@ -61,7 +93,7 @@
 - **Звуки** на Web Audio API (клик, hover, успех, ошибка)
 - **Эффект стекла**: `none` / `glass` / `aero` (Mica/Acrylic)
 
-### 🛡️ 11 вкладок
+### 🛡️ 13 вкладок
 
 | # | Вкладка | Что делает |
 |---|---|---|
@@ -71,11 +103,13 @@
 | 4 | ⚡ **Оптимизация** | 7 источников + вендор-панель (NVIDIA/AMD/Intel/DX/OpenGL) |
 | 5 | 🧹 **Очистка** | 12 секций: шейдеры, логи, кэши, Windows Update, Temp, диск |
 | 6 | ⚜️ **Исправления** | DISM, SFC, CHKDSK, сеть, устройства, игры, hero-блок отката |
-| 7 | 🎮 **Игровой режим** | Применить/откатить, 200+ служб в `Start=4` |
-| 8 | 🔋 **Электропитание** | Таблица тестов планов + 8 источников схем + `.pow` |
-| 9 | 🎨 **Кастомизация** | Курсоры с превью + 4 источника твиков (XOS/Marty/Synergy/Vain) |
-| 10 | 📦 **Приложения** | Appx, Defender/Edge/OneDrive/WebView2 в 4 режимах, removal-батники |
-| 11 | ⚙️ **Настройки** | 6 под-вкладок, ~80 тем, шрифты, утилиты, обои |
+| 7 | 🎮 **Игровой режим** | Планы электропитания (14), Power Killer (6), службы (200+) |
+| 8 | 💀 **Смертельная оптимизация** | Необратимый BAT: 9 категорий, ~100 групп изменений. Только для ПК |
+| 9 | 🔋 **Электропитание** | Power Killer + таблица планов + 80+ источников схем + `.pow` |
+| 10 | ⚙️ **Службы** | Таблица служб: поиск, статусы, массовое вкл/выкл, бэкап `.reg` |
+| 11 | 🎨 **Кастомизация** | Курсоры с превью + 4 источника твиков (XOS/Marty/Synergy/Vain) |
+| 12 | 📦 **Приложения** | Appx, Defender/Edge/OneDrive/WebView2 в 4 режимах, removal-батники |
+| 13 | ⚙️ **Настройки** | 6 под-вкладок, 80+ тем, шрифты, утилиты, обои |
 
 ### ⚙️ Механики
 - **6 режимов запуска твиков**: `default` · `no_launcher` · `launcher` · `powerrun` · `nsudolg` (TrustedInstaller) · `cmd`
@@ -84,6 +118,93 @@
 - **Пары «твик ↔ отмена»** с кнопкой ↩
 - **Preload** тяжёлых данных (startup, apps, audits) + lazy-вкладки
 - **Portable mode**: всё в `extreme_data/` рядом с `.exe`
+- **Безопасный бэкап служб**: `.reg`-файл + fallback на `Start=3`
+- **Проверка дубликатов** при импорте планов электропитания
+
+---
+
+## 💀 Смертельная оптимизация (1.0.7)
+
+Отдельная вкладка для максимального выжимания FPS на **стационарных ПК**.
+Один BAT-файл `GameMode/Hard_Optimization.bat`, **без отката**.
+
+| Категория | Что делает |
+|---|---|
+| 📊 **Телеметрия** | AllowTelemetry=0, DiagTrack/WER/TIP/Speech/Ink → Start=4 |
+| 🔄 **Обновления, Store, Edge** | wuauserv/UsoSvc/BITS/DoSvc/edgeupdate → Start=4 |
+| ⚡ **Питание** | Hibernate off, PowerThrottling off, CrystalCry Max Performance, PagingFiles="" |
+| 🌐 **Сеть** | TCP/IP твики, Wi-Fi Sense off, NonBestEffortLimit=0 |
+| 🖥️ **UI** | MenuShowDelay=0, анимации off, Copilot off, BingSearch off |
+| 🖱️ **Мышь/клавиатура** | MouseSpeed=0, задержки hover=0, Accessibility Flags=0 |
+| 🖨️ **Службы** | Spooler/Bth/WlanSvc/RDP/Xbox/STORAGE/RAID → удалены |
+| 📜 **Журналы** | EventLog AutoBackup=0, TIP TestResults очищены |
+| 🧹 **Прочее** | ReserveManager off, StorageSense off, GameDVR off, FSO off |
+
+> ⚠️ **Только для десктопов.** На ноутбуках и планшетах — не запускать.
+> Перед запуском — точка восстановления / бэкап системы.
+
+---
+
+## 🎮 Игровой режим 2.0 (1.0.7)
+
+### 📦 Готовые планы электропитания
+
+Импорт и активация планов от популярных оптимизаторов:
+
+| План | Описание |
+|---|---|
+| `Amit_v1_lowlatency` | Низкая задержка ввода, баланс |
+| `Amit_v2_extreme performance` | Максимум без компромиссов |
+| `Amit_v3_low latency` | Минимальная задержка в играх |
+| `Atlas Power Plan` | Агрессивная оптимизация от AtlasOS |
+| `Bitsum Highest Performance` | Максимальная частота CPU |
+| `Calypto` | Баланс для игр и работы |
+| `GGOSv0_8_5_Idle_Enabled` | GGOS с idle-режимом |
+| `Light pow v` | Лёгкий план |
+| `Muren_Idle_Enabled` | Muren с idle |
+| `Quaked Ultimate Performance Idle Off` | Максимум, idle off |
+| `Quaked Ultimate Performance` | Абсолютный максимум |
+| `Unixcorn_Idle_Enabled` | Unixcorn с idle |
+| `XOS imribiy` | От XOS — для игр |
+| `Zoyata_Low Latency` | Для шутеров |
+
+🛡️ **Защита от дубликатов:** если план уже импортирован — повторно не создаётся.
+💡 **Совет:** для ноутбуков выбирайте планы с `Idle_Enabled`.
+
+### 🔧 Power Killer — 6 экстримальных функций
+
+| Функция | Что делает |
+|---|---|
+| 🕒 **Таймауты AC/DC** | Запрет сна монитора/диска/системы |
+| 🧠 **CPU Throttle off** | CPU всегда на максимуме |
+| ⚙️ **Power Throttling & Dynamic Tick** | Снижение DPC latency |
+| 🔌 **USB Power (LPM/D3Cold)** | USB-порты не «засыпают» |
+| 🎛️ **PCI D3Cold** | Запрет глубокого сна GPU/NVMe |
+| 📓 **Диагностические журналы** | SleepStudy, Kernel-Processor-Power off |
+
+Каждая функция запускается отдельно. Есть кнопка **↩ Откатить все настройки Power Killer**.
+
+### 🛡️ Оптимизация служб
+
+- **200+ служб** в списке `SAFE_SERVICES` (телеметрия, реклама, фоновые)
+- **Защищённые категории:** питание 🔋, ввод ⌨️, сеть 🌐, темы 🎨, ядра ⚙️ (Start 0-2)
+- **Автобэкап** реестра служб в `.reg` перед отключением (переключатель)
+- **Восстановление** из бэкапа + fallback на `Start=3` при отсутствии файла
+- **Выбор чекбоксами** — можно оставить нужные службы включёнными
+
+---
+
+## ⚙️ Службы (1.0.7)
+
+Полноценный менеджер служб Windows:
+
+- **Таблица** с колонками: имя, описание, статус (boot/system/auto/manual/disabled), действия, «отключена в» (сборки)
+- **Поиск** по имени и описанию
+- **Массовое управление**: выбрать все / снять все / отключить выбранные / включить выбранные
+- **Статусы** через `Get_Services_Status.bat` → `services_status.json`
+- **Кнопки в строке**: ▶ Вкл / ⏹ Выкл для каждой службы
+- **Бэкап** `Services_Backup.reg` и **восстановление**
+- **Индикаторы**: цветные бейджи статусов + теги сборок
 
 ---
 
@@ -96,7 +217,7 @@
 ### 📥 Setup
 Установщик NSIS, ярлык в меню Пуск, автозапуск от админа.
 
-[**Скачать Setup .exe →**](https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.0.6-beta/Anton.Vampire.Setup.1.0.6-beta.exe)
+[**Скачать Setup .exe →**](https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.0.7-beta/Anton.Vampire.Setup.1.0.7-beta.exe)
 
 </td>
 <td align="center" width="50%">
@@ -104,7 +225,7 @@
 ### 📦 Portable
 Архив `.rar`, без установки, всё в `extreme_data/`.
 
-[**Скачать Portable .rar →**](https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.0.6-beta/Anton.Vampire.Portable.rar)
+[**Скачать Portable .rar →**](https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.0.7-beta/Anton.Vampire.Portable.rar)
 
 </td>
 </tr>
@@ -115,7 +236,7 @@
 Откройте `cmd` (Win+R → cmd) и вставьте:
 
 ```cmd
-curl -g -k -L -# -o "%temp%\AntonVampire.Setup.exe" "https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.0.6-beta/Anton.Vampire.Setup.1.0.6-beta.exe" && start "" "%temp%\AntonVampire.Setup.exe"
+curl -g -k -L -# -o "%temp%\AntonVampire.Setup.exe" "https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.0.7-beta/Anton.Vampire.Setup.1.0.7-beta.exe" && start "" "%temp%\AntonVampire.Setup.exe"
 ```
 
 ### Из исходников
@@ -131,32 +252,14 @@ npm run build    # сборка NSIS installer
 
 ---
 
-## 🖼️ Скриншоты
-
-> Скриншоты в разработке. Добавьте свои в `assets/screenshots/` и обновите этот блок.
-
-```
-docs/screenshots/
-├── home.png
-├── security.png
-├── startup.png
-├── optimization.png
-├── cleaner.png
-├── fixes.png
-├── settings.png
-└── themes.png
-```
-
----
-
 ## 🧱 Стек
 
 | Слой | Технологии |
 |---|---|
 | Runtime | Electron 44 · Node.js |
 | Renderer | Vanilla JS (ES-модули) · HTML · CSS |
-| Стили | 4 CSS-файла + CSS-переменные |
-| Темы | `renderer/themes.js` (~80 тем) |
+| Стили | 8 CSS-файлов + CSS-переменные |
+| Темы | `renderer/themes.js` (80+ тем) |
 | Шрифты | локальные `.woff2` из `assets/fonts/` |
 | Сборка | `electron-builder` → NSIS |
 | Утилиты | PowerShell · `7z.exe` · `NSudoLG.exe` · `PowerRun.exe` |
@@ -184,32 +287,38 @@ Anton-Vampire/
 │   │   ├── app.js             # оркестратор
 │   │   ├── sections.js        # список разделов
 │   │   ├── sidebar.js         # сайдбар
-│   │   ├── themes.js          # ~80 тем + шрифты
+│   │   ├── themes.js          # 80+ тем + шрифты
 │   │   ├── logger.js          # панель лога
 │   │   ├── components/        # checkbox, dropdown
-│   │   ├── styles/            # style-loader
-│   │   ├── tabs/              # 11 вкладок
+│   │   ├── styles/            # style-loader.js (8 стилей)
+│   │   ├── tabs/              # 13 вкладок
 │   │   │   ├── home.js
 │   │   │   ├── optimization.js
-│   │   │   ├── power.js
+│   │   │   ├── power.js       # Power Killer + 80 источников
 │   │   │   ├── fixes.js
 │   │   │   ├── cleaner.js
-│   │   │   ├── game-mode.js
+│   │   │   ├── game-mode.js   # 14 планов + PK + службы
+│   │   │   ├── deadly-optimization.js  # 💀 Смертельная
+│   │   │   ├── services.js    # ⚙️ Менеджер служб
 │   │   │   ├── startup.js
 │   │   │   ├── security/
 │   │   │   ├── customization.js
 │   │   │   ├── app-uninstaller.js
 │   │   │   ├── settings.js
-│   │   │   └── sources.js     # универсальный рендер источников
+│   │   │   └── sources.js
 │   │   └── utils/             # icons.js и др.
 │   │
 │   └── styles/
 │       ├── default.css        # Material 3
 │       ├── pixel.css          # 8-bit ретро
 │       ├── material3.css      # Material You
-│       └── kitty.css          # Pretty Kitty
+│       ├── kitty.css          # Pretty Kitty
+│       ├── cyberpunk.css      # Cyberpunk 2077
+│       ├── minipunk.css       # Mini Punk
+│       ├── altpunk.css        # Alt Punk
+│       └── materialmini.css   # Material Mini
 │
-├── tweaks/                    # база твиков (не в git-истории, в релизном архиве)
+├── tweaks/                    # база твиков (в релизном архиве)
 │   ├── tabs.json
 │   ├── drivers_tabs.json
 │   ├── apps_optimization_tabs.json
@@ -237,7 +346,7 @@ Anton-Vampire/
 │   ├── NSudoLG.exe
 │   └── launcher.exe
 │
-├── extreme_data/              # портативные данные (создаётся при запуске)
+├── extreme_data/              # портативные данные
 │   ├── settings.json
 │   ├── logs/
 │   ├── backgrounds/
@@ -294,7 +403,7 @@ Anton-Vampire/
 }
 ```
 
-При старте: `mergeDeep(DEFAULTS, raw)` + `coerceToDefaults` — гарантирует, что все ключи и типы на месте.
+При старте: `mergeDeep(DEFAULTS, raw)` + `coerceToDefaults`.
 
 ---
 
@@ -331,7 +440,7 @@ extreme_data/
 3. Откройте **Настройки → Утилиты → build_all_tabs.py → ▶ Запустить**
 4. Готово — твик появится во вкладке
 
-Требуется **Python 3.8+** в `PATH` (только для сборщиков JSON, не для работы приложения).
+Требуется **Python 3.8+** в `PATH` (только для сборщиков JSON).
 
 ---
 
@@ -341,11 +450,11 @@ extreme_data/
 |---|---|
 | `build_all_tabs.py` | Оркестратор — запускает все скрипты ниже |
 | `build_tabs.py` | `tabs.json` — сборки ОС-секций |
-| `build_full_tabs.py` | `tabs.json` — расширенный (твики + планы + фиксы) |
+| `build_full_tabs.py` | `tabs.json` — расширенный |
 | `build_hardening_json.py` | HardeningKitty (Безопасность / Удобство) |
 | `build_apps_json.py` | `apps_optimization_tabs.json` |
 | `build_drivers_json.py` | `drivers_tabs.json` (NVIDIA/AMD/Intel/DX/OpenGL) |
-| `build_removal_json.py` | `removal_tabs.json` (батники удаления) |
+| `build_removal_json.py` | `removal_tabs.json` |
 | `audit_tweaks.py` | Проверка целостности JSON ↔ диск |
 
 ---
@@ -360,8 +469,8 @@ extreme_data/
 ### Антивирус ругается
 Три причины:
 1. **Нет цифровой подписи** (сертификат $300–500/год)
-2. **Меняет реестр / службы / системные файлы** — для антивируса это подозрительно
-3. **Использует `NSudoLG.exe`, `PowerRun.exe`, `cmd.exe`** — часто встречаются в malware
+2. **Меняет реестр / службы / системные файлы**
+3. **Использует `NSudoLG.exe`, `PowerRun.exe`, `cmd.exe`**
 
 → Добавьте папку в исключения. Код открыт — можно проверить каждую строчку.
 
@@ -373,13 +482,26 @@ extreme_data/
 ### Кракозябры в логе
 Твик выводит в OEM-кодировке (cp866). Приложение пытается декодировать UTF-8, при ошибке — fallback на cp866. Если кракозябры всё равно — пересохраните `.bat` в UTF-8.
 
-### Открывается окно консоли при запуске твика
-В `.bat` есть `start`. Приложение патчит его на `start /b ""`. Если окно всё равно открывается — вероятно, вызывается внешний `.exe`.
+### Смертельная оптимизация не запускается
+- Убедитесь, что вы на **стационарном ПК** (ноутбуки/планшеты — не поддерживаются)
+- Создайте точку восстановления **до** запуска
+- Проверьте наличие `GameMode/Hard_Optimization.bat` в `tweaks/`
+- Отключите антивирус на время запуска (файл меняет службы и реестр)
+
+### План электропитания не активируется
+- Сначала нажмите **📥 Импортировать план**
+- Затем — **⚡ Активировать план**
+- Если план уже есть в системе — дубликат не создаётся, активация пройдёт сразу
+
+### Службы не восстанавливаются из бэкапа
+- Проверьте наличие `Services_Backup.reg` в папке `tweaks/Службы/`
+- Если файла нет — приложение применит безопасный сброс `Start=3`
+- Создайте бэкап заново через **💾 Создать бэкап служб**
 
 ### Курсоры не применяются
 - Убедитесь, что в архиве есть `.cur` / `.ani`
 - Проверьте папку `C:\Windows\Cursors\<name>\`
-- Попробуйте «▶️ Применить» ещё раз — иногда Windows не применяет с первого раза
+- Попробуйте «▶️ Применить» ещё раз
 - Сбросьте всё через «🗑️ Удалить все»
 
 ---
@@ -389,7 +511,7 @@ extreme_data/
 | Клавиша | Действие |
 |---|---|
 | <kbd>F1</kbd> | Открыть сайт проекта |
-| <kbd>F5</kbd> | Перезагрузить renderer (без перезапуска main) |
+| <kbd>F5</kbd> | Перезагрузить renderer |
 | <kbd>F11</kbd> | Fullscreen |
 | <kbd>Ctrl</kbd> + <kbd>F</kbd> | Фокус в поиск |
 | <kbd>Esc</kbd> | Закрыть dropdown / меню |
@@ -398,67 +520,43 @@ extreme_data/
 
 ## 🔒 Безопасность
 
-- Приложение работает **только от администратора** — это требование, а не баг
-- **Никакой телеметрии** — в отличие от Extreme Tweaker, здесь нет `telebot` и авто-отправки логов
-- **Всё локально** — нет внешних API, кроме явных действий пользователя (курсоры с GitHub, обои по URL, NetMon ip-api)
+- Приложение работает **только от администратора** — это требование
+- **Никакой телеметрии** — нет `telebot` и авто-отправки логов
+- **Всё локально** — нет внешних API, кроме явных действий пользователя
 - **Portable** — ничего в `%APPDATA%`
-- **Прозрачный код** — весь `main.js`, `preload.js` и `renderer/` открыты
-
----
-
-## 🤝 Вклад
-
-Issues, pull requests и новые твики приветствуются!
-
-1. Форкните репозиторий
-2. Создайте ветку (`git checkout -b feature/amazing`)
-3. Закоммитьте (`git commit -m 'Add amazing feature'`)
-4. Пуш (`git push origin feature/amazing`)
-5. Откройте Pull Request
-
-**Правила:**
-- Не менять лицензию
-- Не добавлять телеметрию / рекламу / монетизацию
-- Не ломать существующие твики
-- Тестировать на чистой Windows 10/11
+- **Прозрачный код** — `main.js`, `preload.js`, `renderer/` открыты
+- **Бэкапы** — службы, реестр, конфиги сохраняются в `extreme_data/`
 
 ---
 
 ## 📜 Лицензия
 
-**Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International**
-(**CC BY-NC-SA 4.0**)
+**Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)**
 
 | | |
 |---|---|
 | ✅ **Можно** | Форкать, изменять, распространять, использовать в личных проектах |
-| ❌ **Нельзя** | Продавать, закрывать код производных версий, коммерческое использование без разрешения |
+| ❌ **Нельзя** | Продавать, закрывать код производных версий, коммерческое использование |
 | 📌 **Обязательно** | Указывать авторство, сохранять уведомления о лицензии |
 
 Юридически значимый текст — в файле [`LICENSE`](LICENSE).
-Краткое описание — [creativecommons.org/licenses/by-nc-sa/4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
 ### Сторонние ресурсы
 
-Anton Vampire **агрегирует** ресурсы с собственными лицензиями — они **не** перелицензируются под CC BY-NC-SA 4.0:
+Anton Vampire **агрегирует** ресурсы с собственными лицензиями:
 
 | Ресурс | Лицензия | Что это значит |
 |---|---|---|
-| **Papirus icons** (`assets/papirus/`) | GPL-3.0 / LGPL-3.0 / CC-BY-SA-4.0 | При распространении нужно раскрыть исходники иконок |
-| **XOS / SOS / IMOS tweaks** (`tweaks/`) | Лицензии авторов сборок | Остаются под условиями создателей |
-| **Utils/** (`PowerRun`, `NSudoLG`, `7z`, `launcher`) | Собственные лицензии | Распространяются «как есть» |
-
-### Коммерческое использование
-
-Допускается только с **письменного разрешения** автора. Для запроса — [Telegram @all_tweaker](https://t.me/all_tweaker).
+| **Papirus icons** | GPL-3.0 / LGPL-3.0 / CC-BY-SA-4.0 | При распространении нужно раскрыть исходники иконок |
+| **XOS / SOS / IMOS tweaks** | Лицензии авторов сборок | Остаются под условиями создателей |
+| **Utils/** | Собственные лицензии | Распространяются «как есть» |
 
 ---
 
 ## ❤️ Благодарности
 
-- **[Extreme Tweaker](https://github.com/ZikaSVG/Extreme)** — предшественник на Python
 - **[Papirus](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme)** — иконки
-- **XOS / SapphireOS / ImmortalOS** — твики
+- **XOS / SapphireOS / ImmortalOS / SystemX / Igromanoff / VainOS / SynergyOS / MartyFiles / scode18** — твики
 - **[7-Zip](https://www.7-zip.org/)** — распаковка курсоров
 - **[NSudo](https://github.com/M2Team/NSudo)** — TrustedInstaller запуск
 - **[PowerRun](https://www.sordum.org/9416/powerrun-v1-7-run-with-the-highest-privileges/)** — elevate
@@ -470,17 +568,16 @@ Anton Vampire **агрегирует** ресурсы с собственным�
 **Anton Vampire изменяет системные настройки Windows.** Используйте на свой страх и риск.
 
 - Автор **не несёт ответственности** за сломанную систему, потерянные данные или неработоспособное железо
-- **Всегда создавайте точку восстановления** перед применением твиков
+- **Всегда создавайте бэкап системы** перед применением твиков
 - **Начинайте с базовых пресетов**
+- **Смертельная оптимизация необратима** — запускайте только на стационарных ПК с бэкапом
 - На некоторых конфигурациях агрессивная оптимизация приводит к нестабильности
 - Программа предоставляется «**как есть**», без гарантий
 
 ---
 
 <p align="center">
-  <b>🩸 Anton Vampire</b> · v1.0.6-beta · 2026<br/>
-  <sub>Windows 10/11 · Electron 44 · Material You · Vapor Theme</sub><br/>
-  <sub>Made with ❤️ by <a href="https://github.com/ZikaSVG">ZikaSVG</a></sub>
+  <b>🩸 Anton Vampire</b> · v1.0.7-beta · 2026<br/>
 </p>
 
 <p align="center">
