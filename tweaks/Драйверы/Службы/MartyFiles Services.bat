@@ -63,12 +63,3 @@ sc stop NvTelemetryContainer >nul 2>&1
 :: раскомментируйте, если действительно нужно удаление, а не отключение.
 :: Reg.exe delete "HKLM\SYSTEM\CurrentControlSet\Services\DiagTrack" /f
 :: Reg.exe delete "HKLM\SYSTEM\CurrentControlSet\Services\dmwappushservice" /f
-
-
-:: ============================================================================
-::                                 КОНЕЦ
-:: ============================================================================
-echo.
-echo Готово. Действия выполнены только над службами.
-pause
-exit /b 0

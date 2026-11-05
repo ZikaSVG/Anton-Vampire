@@ -3,13 +3,6 @@ setlocal EnableExtensions
 chcp 65001 >nul
 title SynergyOS - только службы
 
-net session >nul 2>&1
-if %errorlevel% neq 0 (
-    echo [ERROR] Запустите от имени администратора.
-    pause
-    exit /b 1
-)
-
 :: ============================================================================
 ::                           КРУТАЯ ШАПКА
 :: ============================================================================
@@ -196,13 +189,3 @@ sc stop edgeupdatem >nul 2>&1
 :: MicrosoftEdgeElevationService — служба повышения прав Microsoft Edge.
 sc config MicrosoftEdgeElevationService start= disabled >nul 2>&1
 sc stop MicrosoftEdgeElevationService >nul 2>&1
-
-
-:: ============================================================================
-::                                 КОНЕЦ
-:: ============================================================================
-echo.
-echo Готово. Обработано служб по SynergyOS: 45.
-echo Удаляемые в источнике службы (3 из Edge) отключены, а не удалены.
-pause
-exit /b 0

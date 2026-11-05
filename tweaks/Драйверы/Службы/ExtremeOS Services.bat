@@ -759,10 +759,3 @@ Reg.exe add "HKLM\SYSTEM\CurrentControlSet\Services\XboxGipSvc" /v "Start" /t RE
 :: Отключить службу XboxNetApiSvc
 :: XboxNetApiSvc (Xbox Live Networking Service) — сеть Xbox Live.
 Reg.exe add "HKLM\SYSTEM\CurrentControlSet\Services\XboxNetApiSvc" /v "Start" /t REG_DWORD /d "4" /f
-
-Echo.
-Echo ============================================
-Echo  Готово. Перезагрузите ПК для применения.
-Echo ============================================
-Pause
-Exit /B 0

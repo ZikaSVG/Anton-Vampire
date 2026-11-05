@@ -3,13 +3,6 @@ setlocal EnableExtensions
 chcp 65001 >nul
 title VainOS - только службы
 
-net session >nul 2>&1
-if %errorlevel% neq 0 (
-    echo [ERROR] Запустите от имени администратора.
-    pause
-    exit /b 1
-)
-
 :: ============================================================================
 ::                           КРУТАЯ ШАПКА
 :: ============================================================================
@@ -317,13 +310,3 @@ sc stop edgeupdatem >nul 2>&1
 :: MicrosoftEdgeElevationService — служба повышения прав Microsoft Edge.
 sc config MicrosoftEdgeElevationService start= disabled >nul 2>&1
 sc stop MicrosoftEdgeElevationService >nul 2>&1
-
-
-:: ============================================================================
-::                                 КОНЕЦ
-:: ============================================================================
-echo.
-echo Готово. Обработано служб по VainOS: 65.
-echo Удаляемые в источнике службы Edge (3) отключены, а не удалены.
-pause
-exit /b 0
