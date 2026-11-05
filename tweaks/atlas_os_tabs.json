@@ -63,24 +63,6 @@
         "Отключить LLMNR.bat",
         "Отключить SMB-троттлинг.bat"
       ]
-    },
-    "Службы": {
-      "Root": [
-        "Отключить Bluetooth.bat",
-        "Отключить Lanman Workstation (SMB).bat",
-        "Отключить NVIDIA Display Container LS.bat",
-        "Отключить SuperFetch _ SysMain.bat",
-        "Отключить печать.bat",
-        "Отключить службы обнаружения сети.bat"
-      ],
-      "отмена": [
-        "Отключить Bluetooth.bat",
-        "Отключить Lanman Workstation (SMB).bat",
-        "Отключить NVIDIA Display Container LS.bat",
-        "Отключить SuperFetch _ SysMain.bat",
-        "Отключить печать.bat",
-        "Отключить службы обнаружения сети.bat"
-      ]
     }
   }
 }

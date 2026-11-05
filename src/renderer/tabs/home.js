@@ -14,17 +14,18 @@ const PAPIRUS = {
    id — совпадает с SECTION в sections.js (navigate(id)).
    icon — эмодзи-фолбэк, если Papirus не найдётся. */
 const SECTIONS_TILES = [
-  { id: 'security',      icon: '🛡️', title: 'Безопасность',     desc: 'Аудит и защита Windows' },
-  { id: 'startup',       icon: '🚀', title: 'Автозагрузка',     desc: 'Службы, задачи, программы' },
-  { id: 'optimization',  icon: '⚡', title: 'Оптимизация',      desc: 'Твики, драйверы, службы' },
-  { id: 'cleaner',       icon: '🧹', title: 'Очистка',          desc: 'Кэш, временные, мусор' },
-  { id: 'fixes',         icon: '⚜️', title: 'Исправления',      desc: 'Восстановление системы' },
-  { id: 'game',          icon: '🎮', title: 'Игровой режим',    desc: 'Максимум FPS' },
-  { id: 'hard',          icon: '☠️', title: 'Хард оптимизация', desc: 'Максимум FPS' },
-  { id: 'power',         icon: '🔋', title: 'Электропитание',   desc: 'Планы питания' },
-  { id: 'customization', icon: '🎨', title: 'Кастомизация',     desc: 'Темы, курсоры, конфиги' },
-  { id: 'uninstaller',   icon: '📦', title: 'Приложения',       desc: 'Удаление Appx и софта' },
-  { id: 'settings',      icon: '⚙️', title: 'Настройки',        desc: 'Внешний вид и поведение' }
+  { id: 'security',      icon: '🛡️', title: 'Безопасность',   desc: 'Аудит и защита Windows' },
+  { id: 'startup',       icon: '🚀', title: 'Автозагрузка',   desc: 'Службы, задачи, программы' },
+  { id: 'optimization',  icon: '⚡', title: 'Оптимизация',    desc: 'Твики, драйверы, службы' },
+  { id: 'cleaner',       icon: '🧹', title: 'Очистка',        desc: 'Кэш, временные, мусор' },
+  { id: 'fixes',         icon: '⚜️', title: 'Исправления',    desc: 'Восстановление системы' },
+  { id: 'game',          icon: '🎮', title: 'Игровой режим',  desc: 'Максимум FPS' },
+  { id: 'hard',          icon: '☠️', title: 'Хардкор',        desc: 'Максимум FPS' },
+  { id: 'services',      icon: '✨', title: 'Службы',         desc: 'Управление службами' },
+  { id: 'power',         icon: '🔋', title: 'Электропитание', desc: 'Планы питания' },
+  { id: 'customization', icon: '🎨', title: 'Кастомизация',   desc: 'Темы, курсоры, конфиги' },
+  { id: 'uninstaller',   icon: '📦', title: 'Приложения',     desc: 'Удаление Appx и софта' },
+  { id: 'settings',      icon: '⚙️', title: 'Настройки',      desc: 'Внешний вид и поведение' }
 ];
 
 /* Papirus-иконки для разделов (если есть у вас в assets/papirus/apps/) */
@@ -35,6 +36,7 @@ const SECTION_PAPIRUS = {
   cleaner:       { cat: 'apps', name: 'edit-clear-alt' },
   game:          { cat: 'apps', name: 'applications-games' },
   hard:          { cat: 'devices', name: 'preferences-system' },
+  services:      { cat: 'devices', name: 'cpu' },
   power:         { cat: 'apps', name: 'preferences-system-power' },
   customization: { cat: 'apps', name: 'preferences-desktop-theme' },
   uninstaller:   { cat: 'apps', name: 'edit-clear' },

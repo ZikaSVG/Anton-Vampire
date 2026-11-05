@@ -685,7 +685,7 @@
    .hh-stat.danger .hh-stat-pct { color: var(--danger); }
    
    .home-nav { margin-top: 6px; }
-   .home-nav-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+   .home-nav-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; }
    @media (max-width: 1200px) { .home-nav-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
    @media (max-width: 950px)  { .home-nav-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
    @media (max-width: 700px)  { .home-nav-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

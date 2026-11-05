@@ -3,8 +3,57 @@ import { renderCheckboxGrid } from '../components/checkbox.js';
 import { renderSources, loadSourceData, buildPairMap, coreName } from './sources.js';
 
 /* ============================================================
+   POWER KILLER — гранулированные функции (отдельные запуски)
+   ============================================================ */
+const PK_FEATURES = [
+  { 
+    id: 'timeouts', 
+    icon: '🕒', 
+    title: 'Отключение таймаутов AC/DC', 
+    desc: 'Запрещает монитору, диску и системе уходить в сон. Убирает микро-лаги при простое.', 
+    file: 'Электропитание/PowerKiller/PK_Timeouts.bat' 
+  },
+  { 
+    id: 'cpu', 
+    icon: '🧠', 
+    title: 'Отключение CPU Throttle', 
+    desc: 'Запрещает Windows ограничивать частоту процессора. CPU всегда работает на максимуме.', 
+    file: 'Электропитание/PowerKiller/PK_CPU_Throttle.bat' 
+  },
+  { 
+    id: 'throttling', 
+    icon: '⚙️', 
+    title: 'Power Throttling & Dynamic Tick', 
+    desc: 'Отключает фоновое энергосбережение ядра и динамический таймер. Снижает DPC latency.', 
+    file: 'Электропитание/PowerKiller/PK_Power_Throttling_DynamicTick.bat' 
+  },
+  { 
+    id: 'usb', 
+    icon: '🔌', 
+    title: 'Управление питанием USB', 
+    desc: 'Предотвращает "засыпание" USB-портов. Критично для мышек с опросом 1000Hz+.', 
+    file: 'Электропитание/PowerKiller/PK_USB_Power.bat' 
+  },
+  { 
+    id: 'pci', 
+    icon: '🎛️', 
+    title: 'PCI D3Cold (Энергосбережение PCIe)', 
+    desc: 'Запрещает глубокий сон для видеокарты и NVMe. Устраняет микро-фризы.', 
+    file: 'Электропитание/PowerKiller/PK_PCI_D3Cold.bat' 
+  },
+  { 
+    id: 'logs', 
+    icon: '📓', 
+    title: 'Диагностические журналы питания', 
+    desc: 'Отключает SleepStudy и Kernel-Processor-Power. Снижает нагрузку на диск и CPU.', 
+    file: 'Электропитание/PowerKiller/PK_Disable_Logs.bat' 
+  }
+];
+
+const PK_REVERT_FILE = 'Электропитание/PowerKiller/PK_Revert_All.bat';
+
+/* ============================================================
    ТАБЛИЦА ПЛАНОВ ПИТАНИЯ
-   Данные лежат в src/renderer/tabs/power-table.json
    ============================================================ */
 let POWER_TABLE = [];
 let POWER_TABLE_SOURCE = '';
@@ -26,24 +75,13 @@ async function loadPowerTable() {
 }
 
 /* ============================================================
-   ИСТОЧНИКИ ЭЛЕКТРОПИТАНИЯ
-
-   __standard__        — таблица планов + tabs_2 из tabs.json
-   XOS-Tweaks         — 15 батников (плоская папка)
-   xOS (расширенная)  — 6 подпапок (xOS Power Plan / Возврат /
-                        Enum / Твики для ПК / USB PCI Express)
-                        это ДРУГАЯ папка, не XOS-Tweaks!
-   SystemX            — плоская
-   Igromanoff         — плоская
-   VainOS-Tweaks      — плоская + отмена
-   SynergyOS-Tweaks   — плоская + отмена
-   Другое             — батники питания вне tabs_2
+   ИСТОЧНИКИ ЭЛЕКТРОПИТАНИЯ (ВЕРНУЛ ВСЕ НА МЕСТО)
    ============================================================ */
 const POWER_SOURCES = [
   {
     id: '__standard__',
     label: '📦 Стандартные',
-    desc: 'Таблица планов + встроенные твики электропитания',
+    desc: 'Power Killer, таблица планов + встроенные твики',
     json: null,
     baseDir: null,
     _isStandard: true
@@ -115,7 +153,6 @@ export async function renderPower() {
   tabsNav.innerHTML = ''; content.innerHTML = '';
   clearCheckboxes();
 
-  /* Загружаем таблицу из JSON (один раз) */
   if (!POWER_TABLE.length) {
     await loadPowerTable();
   }
@@ -133,7 +170,7 @@ export async function renderPower() {
   srcBody.className = 'opt-src-body';
   srcSection.appendChild(srcBody);
 
-  /* Контейнер «Стандартные» — сюда рендерится таблица + tabs_2 */
+  /* Контейнер «Стандартные» — сюда рендерится Power Killer + таблица + tabs_2 */
   const stdContent = document.createElement('div');
   stdContent.id = 'power-std-content';
   content.appendChild(stdContent);
@@ -177,6 +214,7 @@ export async function renderPower() {
       srcContent.innerHTML = '';
       stdContent.style.display = '';
       clearCheckboxes();
+      buildPowerStandard(stdContent); // Перестраиваем стандартную вкладку
       return;
     }
 
@@ -202,7 +240,7 @@ export async function renderPower() {
   }
 
   /* ============================================================
-     Рендер контента одного источника.
+     Рендер контента одного источника (XOS, Immortal и т.д.)
      ============================================================ */
   function renderSourceContent(host, src, data) {
     if (!data) {
@@ -212,7 +250,6 @@ export async function renderPower() {
 
     if (data.kind === 'flat') {
       const pairMap = buildPairMap(data.rootFiles, data.cancelFiles);
-
       const items = data.rootFiles.map(f => {
         const baseName = String(f).replace(/\\/g, '/').split('/').pop();
         const ext = baseName.includes('.') ? baseName.split('.').pop() : '';
@@ -280,7 +317,6 @@ export async function renderPower() {
 
     for (let i = 0; i < categories.length; i++) {
       const cat = categories[i];
-
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'sub-tab-btn' + (i === 0 ? ' active' : '');
@@ -304,7 +340,6 @@ export async function renderPower() {
       const cancelEntry = data.cancels[cat];
       const cancelFiles = cancelEntry ? cancelEntry.files : [];
       const cancelDirName = cancelEntry ? cancelEntry.key : 'отмена';
-
       const pairMap = buildPairMap(files, cancelFiles);
 
       const items = files.map(f => {
@@ -317,9 +352,7 @@ export async function renderPower() {
           path: `${src.baseDir}/${cat}/${f}`,
           ext,
           category: cat,
-          cancelPath: cancelFile
-            ? `${src.baseDir}/${cat}/${cancelDirName}/${cancelFile}`
-            : null,
+          cancelPath: cancelFile ? `${src.baseDir}/${cat}/${cancelDirName}/${cancelFile}` : null,
           cancelName: cancelFile ? cancelFile.replace(/\.[^.]+$/, '') : null
         };
       });
@@ -339,21 +372,97 @@ export async function renderPower() {
   }
 
   /* ============================================================
-     Строим «Стандартные» (таблица + tabs_2) в stdContent
+     Строим «Стандартные»: Power Killer + таблица + tabs_2
      ============================================================ */
-  buildPowerStandard(stdContent);
-
   function buildPowerStandard(host) {
     host.innerHTML = '';
 
-    /* ============ 1. Таблица ============ */
+    /* ============ 0. POWER KILLER (Отдельные карточки, как в fixes.js) ============ */
+    const pkSection = document.createElement('div');
+    pkSection.className = 'apps-detected-section';
+    pkSection.style.background = 'color-mix(in srgb, var(--card) 60%, transparent)';
+    pkSection.style.borderColor = 'color-mix(in srgb, var(--border) 30%, transparent)';
+    pkSection.style.marginBottom = '24px';
+    host.appendChild(pkSection);
+
+    const pkTitle = document.createElement('div');
+    pkTitle.className = 'section-title';
+    pkTitle.textContent = '⚡ Power Killer — Экстримальная настройка';
+    pkSection.appendChild(pkTitle);
+
+    const pkDesc = document.createElement('p');
+    pkDesc.className = 'muted';
+    pkDesc.style.cssText = 'font-size:13px; line-height:1.5; margin: 0 0 16px 0;';
+    pkDesc.innerHTML = 'Нажмите "Запустить" на нужной карточке. Каждая функция применяется независимо. <span style="color:var(--danger);">⚠️ Для ноутбуков:</span> при работе от батареи может привести к быстрому разряду.';
+    pkSection.appendChild(pkDesc);
+
+    const pkGrid = document.createElement('div');
+    pkGrid.className = 'apps-grid fixes-grid'; // Используем сетку из fixes.js
+    pkSection.appendChild(pkGrid);
+
+    PK_FEATURES.forEach(f => {
+      const card = document.createElement('div');
+      card.className = 'apps-card';
+      card.innerHTML = `
+        <div class="apps-icon">${f.icon}</div>
+        <div class="apps-name">${f.title}</div>
+        <div class="apps-sub">${f.desc}</div>
+        <button class="apps-run" data-file="${f.file}">▶ Запустить</button>
+      `;
+      
+      const btn = card.querySelector('.apps-run');
+      btn.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        if (btn.disabled) return;
+        btn.disabled = true;
+        Sound.click();
+        try {
+          await window.api.tweaks.run(`tweaks/${f.file}`, { wait: true });
+          Sound.success();
+          toast(`${f.title} применено`, 'success');
+        } catch (err) {
+          Sound.error();
+          toast(`Ошибка: ${err.message}`, 'error');
+        } finally {
+          btn.disabled = false;
+        }
+      });
+      
+      pkGrid.appendChild(card);
+    });
+
+    // Кнопка отката для Power Killer
+    const pkFooter = document.createElement('div');
+    pkFooter.style.cssText = 'margin-top:16px; display:flex; justify-content:flex-end;';
+    pkFooter.innerHTML = `<button class="btn danger" id="btn-pk-revert" style="max-width:300px;">↩ Откатить все настройки Power Killer</button>`;
+    pkSection.appendChild(pkFooter);
+
+    pkFooter.querySelector('#btn-pk-revert').addEventListener('click', async () => {
+      if (!confirm('Это сбросит все настройки электропитания к стандартным значениям Windows. Продолжить?')) return;
+      const btn = pkFooter.querySelector('#btn-pk-revert');
+      btn.disabled = true;
+      Sound.click();
+      try {
+        await window.api.tweaks.run(`tweaks/${PK_REVERT_FILE}`, { wait: true });
+        Sound.success();
+        toast('Настройки питания сброшены к стандартным', 'success');
+      } catch (err) {
+        Sound.error();
+        toast(`Ошибка отката: ${err.message}`, 'error');
+      } finally {
+        btn.disabled = false;
+      }
+    });
+
+
+    /* ============ 1. Таблица планов питания ============ */
     const tableSection = document.createElement('div');
     tableSection.className = 'section';
     host.appendChild(tableSection);
 
     const tableTitle = document.createElement('div');
     tableTitle.className = 'section-title';
-    tableTitle.textContent = 'Результаты тестирования планов электропитания';
+    tableTitle.textContent = '📊 Результаты тестирования планов электропитания';
     tableSection.appendChild(tableTitle);
 
     const tableWrap = document.createElement('div');
@@ -398,7 +507,6 @@ export async function renderPower() {
     }
     tableWrap.appendChild(table);
 
-    /* Footer со ссылкой — берём из POWER_TABLE_SOURCE */
     const footer = document.createElement('div');
     footer.className = 'power-footer';
     if (POWER_TABLE_SOURCE) {
@@ -434,22 +542,17 @@ export async function renderPower() {
       ...known.filter(k => !PLAN_ORDER.includes(k))
     ];
 
+    if (!ordered.length) return;
+
     const plansSection = document.createElement('div');
     plansSection.className = 'section';
+    plansSection.style.marginTop = '24px';
     host.appendChild(plansSection);
 
     const plansTitle = document.createElement('div');
     plansTitle.className = 'section-title';
-    plansTitle.textContent = 'Планы и твики электропитания';
+    plansTitle.textContent = '🔋 Планы и твики электропитания';
     plansSection.appendChild(plansTitle);
-
-    if (!ordered.length) {
-      const emptyMsg = document.createElement('p');
-      emptyMsg.className = 'muted';
-      emptyMsg.textContent = 'tabs.json не содержит секции "tabs_2".';
-      plansSection.appendChild(emptyMsg);
-      return;
-    }
 
     const subNav = document.createElement('div');
     subNav.className = 'sub-tabs-nav';
@@ -510,6 +613,9 @@ export async function renderPower() {
       });
     }
   }
+
+  // Инициализация стандартной вкладки при первом рендере
+  buildPowerStandard(stdContent);
 }
 
 /* ============================================================

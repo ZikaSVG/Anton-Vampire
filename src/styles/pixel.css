@@ -1530,7 +1530,7 @@
   .home-nav { margin-top: 4px; }
   .home-nav-grid {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr));
     gap: 8px;
   }
   @media (max-width: 1200px) { .home-nav-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }

@@ -1,0 +1,14 @@
+{
+  "tabs": {
+    "Root": [
+      "PK_CPU_Throttle.bat",
+      "PK_Disable_Logs.bat",
+      "PK_PCI_D3Cold.bat",
+      "PK_Power_Throttling_DynamicTick.bat",
+      "PK_Revert_All.bat",
+      "PK_Timeouts.bat",
+      "PK_USB_Power.bat"
+    ],
+    "отмена": []
+  }
+}

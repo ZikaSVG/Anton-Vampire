@@ -489,6 +489,8 @@
     "baseDir": "tweaks/Драйверы/Службы",
     "files": [
       "AtlasOS Services.bat",
+      "ExtremeOS Services.bat",
+      "WolfOS Services.bat",
       "ImmortalOS Services.bat",
       "MartyFiles Services.bat",
       "RapidOS Services.bat",

@@ -27,6 +27,16 @@ class TweakRunner {
     return Number.isFinite(v) && v > 0 ? v : 300000;
   }
 
+  /**
+   * Приводит options.args к массиву строк.
+   * Принимает: undefined | null | "" | "arg1" | ["a","b"] | ["a", 1] | 123
+   */
+  _normalizeArgs(args) {
+    if (args == null || args === '') return [];
+    if (Array.isArray(args)) return args.map(String);
+    return [String(args)];
+  }
+
   resolveSafe(relPath) {
     const abs = path.resolve(this.rootDir, relPath);
     const rel = path.relative(this.rootDir, abs);
@@ -81,10 +91,11 @@ class TweakRunner {
   async run(relPath, options = {}) {
     const abs = this.resolveSafe(relPath);
     const exists = fs.existsSync(abs);
+    const extraArgs = this._normalizeArgs(options.args);
 
     this.logger.info(
       `[run] rel="${relPath}" abs="${abs}" exists=${exists} ` +
-      `visible=${!!options.visible} wait=${!!options.wait} mode=${options.mode || this._mode()}`
+      `visible=${!!options.visible} wait=${!!options.wait} mode=${options.mode || this._mode()} args=${JSON.stringify(extraArgs)}`
     );
 
     if (!exists) {
@@ -95,7 +106,7 @@ class TweakRunner {
 
     this.logger.logTweak(path.basename(abs), abs);
 
-    if (options.visible) return this._launchVisible(abs);
+    if (options.visible) return this._launchVisible(abs, extraArgs);
 
     const ext = path.extname(abs).toLowerCase();
     const mode = options.mode || this._mode();
@@ -104,26 +115,26 @@ class TweakRunner {
 
     switch (ext) {
       case '.bat':
-      case '.cmd': return this._runCmd(abs, mode, detached, cwd);
-      case '.ps1': return this._runPs1(abs, mode, detached, cwd);
+      case '.cmd': return this._runCmd(abs, mode, detached, cwd, extraArgs);
+      case '.ps1': return this._runPs1(abs, mode, detached, cwd, extraArgs);
       case '.reg': return this._runReg(abs, mode, cwd);
       case '.pow': return this._runPow(abs, cwd);
-      case '.exe': return this._runExe(abs, mode, detached, cwd);
-      default:     return this._runCmd(abs, mode, detached, cwd);
+      case '.exe': return this._runExe(abs, mode, detached, cwd, extraArgs);
+      default:     return this._runCmd(abs, mode, detached, cwd, extraArgs);
     }
   }
 
-  _buildStreamCommand(abs, mode) {
+  _buildStreamCommand(abs, mode, extraArgs = []) {
     const ext = path.extname(abs).toLowerCase();
     const cwd = path.dirname(abs);
 
     if (ext === '.bat' || ext === '.cmd') {
       const tempFile = this._makePatchedBat(abs);
-      return this._withModeForBat(tempFile, mode, cwd);
+      return this._withModeForBat(tempFile, mode, cwd, extraArgs);
     }
 
     if (ext === '.ps1') {
-      const psArgs = ['-ExecutionPolicy', 'Bypass', '-NoProfile', '-File', abs];
+      const psArgs = ['-ExecutionPolicy', 'Bypass', '-NoProfile', '-File', abs, ...extraArgs];
       return this._withModeForPs1(psArgs, mode, cwd);
     }
 
@@ -139,22 +150,28 @@ class TweakRunner {
     }
 
     if (ext === '.exe') {
-      return { cmd: abs, args: [], tempFile: null, cwd };
+      return { cmd: abs, args: [...extraArgs], tempFile: null, cwd };
     }
 
     const tempFile = this._makePatchedBat(abs);
-    return this._withModeForBat(tempFile, mode, cwd);
+    return this._withModeForBat(tempFile, mode, cwd, extraArgs);
   }
 
-  _withModeForBat(tempFile, mode, cwd) {
-    return { cmd: 'cmd.exe', args: ['/c', tempFile], tempFile, cwd };
+  _withModeForBat(tempFile, mode, cwd, extraArgs = []) {
+    return { cmd: 'cmd.exe', args: ['/c', tempFile, ...extraArgs], tempFile, cwd };
   }
 
   _withModeForPs1(psArgs, mode, cwd) {
     return { cmd: 'powershell.exe', args: psArgs, tempFile: null, cwd };
   }
 
-  runStream(relPath, onChunk = () => {}, onEnd = () => {}) {
+  /**
+   * Запуск с потоковым выводом.
+   * Обратная совместимость:
+   *   runStream(rel, onChunk, onEnd)
+   *   runStream(rel, onChunk, onEnd, { args: [...] })
+   */
+  runStream(relPath, onChunk = () => {}, onEnd = () => {}, options = {}) {
     return new Promise((resolve) => {
       let abs;
       try {
@@ -173,13 +190,14 @@ class TweakRunner {
         return resolve({ code: -1, error: msg });
       }
 
-      const mode = this._mode();
+      const extraArgs = this._normalizeArgs(options.args);
+      const mode = options.mode || this._mode();
       const timeoutMs = this._timeoutMs();
-      this.logger.info(`[runStream] rel="${relPath}" abs="${abs}" mode=${mode} timeout=${timeoutMs}ms`);
+      this.logger.info(`[runStream] rel="${relPath}" abs="${abs}" mode=${mode} timeout=${timeoutMs}ms args=${JSON.stringify(extraArgs)}`);
 
       let cmd, args, tempFile, cwd;
       try {
-        const built = this._buildStreamCommand(abs, mode);
+        const built = this._buildStreamCommand(abs, mode, extraArgs);
         cmd = built.cmd;
         args = built.args;
         tempFile = built.tempFile;
@@ -367,9 +385,15 @@ class TweakRunner {
     src = src.split(/\r?\n/).map((line) => {
       const trimmed = line.replace(/^[ \t]+/, '');
 
-      if (/^pause(\s*[12]?>\s*nul)?\s*$/i.test(trimmed)) {
+      // pause                 → rem
+      // pause >nul            → rem
+      // pause & exit /b 1     → exit /b 1
+      // pause && exit /b 1    → exit /b 1
+      // pause || goto :done   → goto :done
+      if (/^pause(\s*[12]?>\s*nul)?(\s*(?:&&|\|\||&)\s*.*)?\s*$/i.test(trimmed)) {
         removed++;
-        return 'rem [pause removed]';
+        const tail = trimmed.match(/(?:&&|\|\||&)\s*(.+)$/);
+        return tail ? tail[1] : 'rem [pause removed]';
       }
 
       if (/^timeout\s+(\/t\s+\d+|\/nobreak)(\s+\/nobreak|\s+\/t\s+\d+)*(\s*[12]?>\s*nul)?\s*$/i.test(trimmed)) {
@@ -395,6 +419,7 @@ class TweakRunner {
     const origDir  = path.dirname(abs);
     const origFile = abs;
     const origName = path.basename(abs, path.extname(abs));
+    const origBase = path.basename(abs); // с расширением, для %~nx0
 
     const raw = fs.readFileSync(abs);
     let src = this._decodeBat(raw);
@@ -412,8 +437,11 @@ class TweakRunner {
     const escDir  = origDir.replace(/%/g, '%%').replace(/&/g, '^&');
     const escFile = origFile.replace(/%/g, '%%').replace(/&/g, '^&');
     const escName = origName.replace(/%/g, '%%').replace(/&/g, '^&');
+    const escBase = origBase.replace(/%/g, '%%').replace(/&/g, '^&');
 
+    /* Порядок важен: %~nx0 ДО %~n0, иначе «%~nx0» превратится в «%~n0x0» */
     src = src.replace(/%~dp0/gi, escDir + '\\');
+    src = src.replace(/%~nx0/gi, escBase);
     src = src.replace(/%~f0/gi,  escFile);
     src = src.replace(/%~n0/gi,  escName);
 
@@ -506,7 +534,7 @@ class TweakRunner {
       : this._spawn('cmd.exe', args);
   }
 
-  _launchVisible(abs) {
+  _launchVisible(abs, extraArgs = []) {
     const cwd = path.dirname(abs);
     const ext = path.extname(abs).toLowerCase();
 
@@ -514,13 +542,13 @@ class TweakRunner {
 
     if (ext === '.ps1') {
       cmd = 'cmd.exe';
-      args = ['/k', 'powershell', '-ExecutionPolicy', 'Bypass', '-NoProfile', '-File', abs];
+      args = ['/k', 'powershell', '-ExecutionPolicy', 'Bypass', '-NoProfile', '-File', abs, ...extraArgs];
     } else if (ext === '.exe') {
       cmd = abs;
-      args = [];
+      args = extraArgs;
     } else {
       cmd = 'cmd.exe';
-      args = ['/k', abs];
+      args = ['/k', abs, ...extraArgs];
     }
 
     this.logger.info(`[launchVisible] spawn ${cmd} ${JSON.stringify(args)} cwd="${cwd}"`);
@@ -573,53 +601,85 @@ class TweakRunner {
     return { code: 0, out: '', err: '', detached: true };
   }
 
-  _fallbackCmd(abs, detached, cwd) {
-    return detached
-      ? this._launchDetached('cmd.exe', ['/c', abs], cwd)
-      : this._spawn('cmd.exe', ['/c', abs], { cwd });
-  }
+  /**
+   * Запуск .bat/.cmd с прокидыванием extraArgs в %1..%9.
+   *
+   * ВАЖНО: используем ПРОПАТЧЕННЫЙ bat (без pause/timeout/chcp/start-без-/b),
+   * иначе в режиме {wait:true} процесс висит на `pause` бесконечно,
+   * а IPC-вызов никогда не resolve'ится.
+   */
+  async _runCmd(abs, mode, detached, cwd, extraArgs = []) {
+    let runPath = abs;
+    let tempFile = null;
+    try {
+      tempFile = this._makePatchedBat(abs);
+      runPath = tempFile;
+    } catch (e) {
+      this.logger.warn(`[_runCmd] patch failed, using original: ${e.message}`);
+    }
 
-  async _runCmd(abs, mode, detached, cwd) {
-    switch (mode) {
-      case 'no_launcher':
-      case 'cmd':
-        return detached
-          ? this._launchDetached('cmd.exe', ['/c', abs], cwd)
-          : this._spawn('cmd.exe', ['/c', abs], { cwd });
+    const cmdArgs = ['/c', runPath, ...extraArgs];
 
-      case 'powerrun':
-        if (!this._hasUtil('PowerRun.exe')) return this._fallbackCmd(abs, detached, cwd);
-        return detached
-          ? this._launchDetached(this._util('PowerRun.exe'), [abs], cwd)
-          : this._spawn(this._util('PowerRun.exe'), [abs], { cwd });
+    try {
+      switch (mode) {
+        case 'no_launcher':
+        case 'cmd':
+          return detached
+            ? this._launchDetached('cmd.exe', cmdArgs, cwd)
+            : await this._spawn('cmd.exe', cmdArgs, { cwd });
 
-      case 'launcher':
-        if (!this._hasUtil('launcher.exe')) return this._fallbackCmd(abs, detached, cwd);
-        return detached
-          ? this._launchDetached(this._util('launcher.exe'), [abs], cwd)
-          : this._spawn(this._util('launcher.exe'), [abs], { cwd });
-
-      case 'nsudolg':
-        if (!this._hasUtil('NSudoLG.exe')) return this._fallbackCmd(abs, detached, cwd);
-        return detached
-          ? this._launchDetached(this._util('NSudoLG.exe'), ['-U:T', '-P:E', '-ShowWindowMode:Hide', '-Wait', 'cmd.exe', '/c', abs], cwd)
-          : this._spawn(this._util('NSudoLG.exe'), ['-U:T', '-P:E', '-ShowWindowMode:Hide', '-Wait', 'cmd.exe', '/c', abs], { cwd });
-
-      default: {
-        if (detached) {
-          this._launchDetached('cmd.exe', ['/c', abs], cwd);
-          if (this._hasUtil('launcher.exe')) {
-            this._launchDetached(this._util('launcher.exe'), [abs], cwd);
+        case 'powerrun':
+          if (!this._hasUtil('PowerRun.exe')) {
+            return detached
+              ? this._launchDetached('cmd.exe', cmdArgs, cwd)
+              : await this._spawn('cmd.exe', cmdArgs, { cwd });
           }
-          return { code: 0, out: '', err: '', detached: true };
-        }
-        return this._spawn('cmd.exe', ['/c', abs], { cwd });
+          return detached
+            ? this._launchDetached(this._util('PowerRun.exe'), [runPath, ...extraArgs], cwd)
+            : await this._spawn(this._util('PowerRun.exe'), [runPath, ...extraArgs], { cwd });
+
+        case 'launcher':
+          if (!this._hasUtil('launcher.exe')) {
+            return detached
+              ? this._launchDetached('cmd.exe', cmdArgs, cwd)
+              : await this._spawn('cmd.exe', cmdArgs, { cwd });
+          }
+          return detached
+            ? this._launchDetached(this._util('launcher.exe'), [runPath, ...extraArgs], cwd)
+            : await this._spawn(this._util('launcher.exe'), [runPath, ...extraArgs], { cwd });
+
+        case 'nsudolg':
+          if (!this._hasUtil('NSudoLG.exe')) {
+            return detached
+              ? this._launchDetached('cmd.exe', cmdArgs, cwd)
+              : await this._spawn('cmd.exe', cmdArgs, { cwd });
+          }
+          return detached
+            ? this._launchDetached(
+                this._util('NSudoLG.exe'),
+                ['-U:T', '-P:E', '-ShowWindowMode:Hide', '-Wait', 'cmd.exe', '/c', runPath, ...extraArgs],
+                cwd
+              )
+            : await this._spawn(
+                this._util('NSudoLG.exe'),
+                ['-U:T', '-P:E', '-ShowWindowMode:Hide', '-Wait', 'cmd.exe', '/c', runPath, ...extraArgs],
+                { cwd }
+              );
+
+        default:
+          /* Раньше здесь был ДВОЙНОЙ запуск (cmd.exe + launcher.exe) — баг.
+             Для elevation используйте mode:'launcher' или mode:'powerrun'. */
+          return detached
+            ? this._launchDetached('cmd.exe', cmdArgs, cwd)
+            : await this._spawn('cmd.exe', cmdArgs, { cwd });
       }
+    } finally {
+      this._scheduleTempCleanup(tempFile);
     }
   }
 
-  async _runPs1(abs, mode, detached, cwd) {
-    const args = ['-ExecutionPolicy', 'Bypass', '-NoProfile', '-File', abs];
+  async _runPs1(abs, mode, detached, cwd, extraArgs = []) {
+    const args = ['-ExecutionPolicy', 'Bypass', '-NoProfile', '-File', abs, ...extraArgs];
     return detached
       ? this._launchDetached('powershell.exe', args, cwd)
       : this._spawn('powershell.exe', args, { cwd });
@@ -636,10 +696,10 @@ class TweakRunner {
     return this._spawn('powercfg.exe', ['/import', abs], { cwd });
   }
 
-  async _runExe(abs, mode, detached, cwd) {
+  async _runExe(abs, mode, detached, cwd, extraArgs = []) {
     return detached
-      ? this._launchDetached(abs, [], cwd)
-      : this._spawn(abs, [], { cwd });
+      ? this._launchDetached(abs, extraArgs, cwd)
+      : this._spawn(abs, extraArgs, { cwd });
   }
 }
 
