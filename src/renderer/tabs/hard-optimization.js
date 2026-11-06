@@ -1,5 +1,6 @@
-import { toast } from '../app.js';
+import { toast, Sound } from '../app.js';
 import { papirusUrl } from '../utils/icons.js';
+import { loggedRunStream } from '../logger.js';
 
 const APPLY_BAT = 'GameMode/Hard_Optimization.bat';
 
@@ -7,10 +8,10 @@ const OPTIMIZATION_CATEGORIES = [
   {
     icon: '📊',
     name: 'Телеметрия и диагностика',
-    desc: 'Отключение телеметрии, диагностических служб, WER, TIP, Speech/Ink, рекламных идентификаторов, ContentDelivery и CloudContent.',
+    desc: 'Сбор данных, диагностические службы, отчёты об ошибках, рекламные идентификаторы.',
     items: [
       'AllowTelemetry = 0 (HKLM, Policies, AppCompat, DataCollection)',
-      'DiagTrack, dmwappushservice, diagnosticshub.standardcollector.service, diagsvc, DPS, WdiServiceHost, WdiSystemHost, pla, wmiApSrv, Wecsvc, WerSvc, wercplsupport, TroubleshootingSvc, Telemetry, PcaSvc, DusmSvc, DsSvc, DSSvc, kdnic, ndu, PimIndexMaintenanceSvc → Start=4',
+      'DiagTrack, dmwappushservice, diagnosticshub.standardcollector.service, diagsvc, DPS, WdiServiceHost, WdiSystemHost, pla, wmiApSrv, Wecsvc, WerSvc, wercplsupport, TroubleshootingSvc, Telemetry, PcaSvc, DusmSvc, DsSvc, DSSvc, kdnic, ndu, PimIndexMaintenanceSvc → Start=4 / удалены',
       'Windows Error Reporting: Disabled=1, LoggingDisabled=1, DontSendAdditionalData=1, AutoApproveOSDumps=0',
       'WER Consent: DefaultConsent=0, DefaultOverrideBehavior=1',
       'TIP AggregateResults очистка, TestResults удаление',
@@ -18,33 +19,36 @@ const OPTIMIZATION_CATEGORIES = [
       'AppPrivacy: LetAppsAccess* = 2',
       'Speech_OneCore HasAccepted=0, VoiceActivation =0',
       'InputPersonalization RestrictImplicitInkCollection / TextCollection = 1',
-      'ContentDeliveryManager: SubscribedContent* = 0',
+      'ContentDeliveryManager: SubscribedContent* = 0, ContentDeliveryAllowed=0',
       'CloudContent: DisableSoftLanding, DisableWindowsSpotlightFeatures, DisableThirdPartySuggestions = 1',
       'Siuf Rules PeriodInNanoSeconds удалён',
+      'Wbem: AmsiEnable=0, CIMOM LastServiceReady удалён, LastServiceStart/PreviousServiceShutdown/SetupDate перезаписаны',
+      'CompatTelRunner.exe / AggregatorHost.exe / DeviceCensus.exe → Debugger = taskkill',
     ],
   },
   {
     icon: '🔄',
     name: 'Обновления, Store и Edge',
-    desc: 'Отключение Центра обновления, доставки, установки Store, фоновых режимов Edge, SmartScreen Edge.',
+    desc: 'Центр обновления, доставка обновлений, установка Store, фоновые режимы Edge, SmartScreen Edge.',
     items: [
-      'wuauserv, UsoSvc, WaaSMedicSvc, BITS, DoSvc, InstallService, ClipSVC, LicenseManager, PushToInstall, AppXSvc, AppReadiness, AppVClient, Appinfo, AppIDSvc, AppMgmt → Start=4',
+      'wuauserv, UsoSvc, WaaSMedicSvc, BITS, DoSvc, InstallService, ClipSVC, LicenseManager, PushToInstall, AppXSvc, AppReadiness, AppVClient, Appinfo, AppIDSvc, AppMgmt → Start=4 / удалены',
       'edgeupdate, edgeupdatem, MicrosoftEdgeElevationService → Start=4',
       'Edge BackgroundModeEnabled = 0, StartupBoostEnabled = 0',
       'DeliveryOptimization DODownloadMode = 0',
       'WindowsStore AutoDownload = 2',
       'HKCU Edge SmartScreenEnabled = Off',
       'WindowsUpdate ExcludeWUDriversInQualityUpdate = 1',
+      'UpdatePolicy Settings PausedFeatureDate / PausedQualityDate = 2026-10-30',
+      'DriverSearching SearchOrderConfig = 3',
     ],
   },
   {
     icon: '⚡',
     name: 'Питание и производительность',
-    desc: 'Отключение гибернации и Power Throttling, схема CrystalCry Max Performance, отключение файла подкачки, твики памяти и митигаций.',
+    desc: 'Гибернация, фоновый троттлинг, память, митигации, приоритеты, NTFS.',
     items: [
       'HibernateEnabled = 0',
       'PowerThrottlingOff = 1',
-      'ActivePowerScheme = 90a358c8-3bbc-4fb3-8b4e-d7ab065d2614 (CrystalCry Max Performance) + параметры AC/DC',
       'PagingFiles = "" (файл подкачки отключён)',
       'AlwaysUnloadDLL = 1',
       'LargeSystemCache = 0',
@@ -56,12 +60,13 @@ const OPTIMIZATION_CATEGORIES = [
       'NtfsDisableLastAccessUpdate = 2147483649',
       'SCMApiConnectionParam = 1000',
       'Memory Management PagingFiles = ""',
+      'VulnerableDriverBlocklistEnable = 0',
     ],
   },
   {
     icon: '🌐',
     name: 'Сеть и TCP',
-    desc: 'Твики TCP/IP, отключение Wi-Fi Sense, авто-подключения к хотспотам, NonBestEffortLimit.',
+    desc: 'TCP/IP, Wi-Fi Sense, авто-подключение к хотспотам, ограничение фоновой сети.',
     items: [
       'Tcpip / Tcpip6 DefaultTTL = 65',
       'TcpAckFrequency = 1',
@@ -77,7 +82,7 @@ const OPTIMIZATION_CATEGORIES = [
   {
     icon: '🖥️',
     name: 'Проводник, UI и уведомления',
-    desc: 'Ускорение оболочки, отключение анимаций, теней, AeroPeek, прозрачности, уведомлений, поиска Bing и Copilot.',
+    desc: 'Анимации, тени, AeroPeek, прозрачность, уведомления, поиск Bing, Copilot.',
     items: [
       'MenuShowDelay = 0',
       'MinAnimate = 0',
@@ -91,12 +96,17 @@ const OPTIMIZATION_CATEGORIES = [
       'TaskbarMn = 0, TaskbarEndTask = 1',
       'NoInternetOpenWith = 1',
       'PushNotifications NoTileApplicationNotification / NoToastApplicationNotification = 1',
+      'DisableNotificationCenter = 1',
+      'IconsOnly = 1',
+      'Serialize WaitforIdleState = 0',
+      'MobCenter MobilityCenter = 0',
+      'Privacy TailoredExperiencesWithDiagnosticDataEnabled = 0',
     ],
   },
   {
     icon: '🖱️',
     name: 'Мышь и клавиатура',
-    desc: 'Отключение ускорения мыши, нулевые задержки hover и MenuShowDelay, сброс Accessibility Flags.',
+    desc: 'Ускорение мыши, задержки hover, Accessibility Flags.',
     items: [
       'MouseSpeed = 0, MouseThreshold1 = 0, MouseThreshold2 = 0',
       'MouseHoverTime = 0',
@@ -107,12 +117,13 @@ const OPTIMIZATION_CATEGORIES = [
       'HungAppTimeout = 1000',
       'WaitToKillAppTimeout = 5000',
       'MenuShowDelay = 0',
+      'UserPreferencesMask = 9012018010000000',
     ],
   },
   {
     icon: '🖨️',
     name: 'Службы и драйверы',
-    desc: 'Отключение/удаление большого списка служб и драйверов: печать, Bluetooth, Wi-Fi, RDP, Hyper-V, хранилища, USB, Xbox, Search.',
+    desc: 'Печать, Bluetooth, Wi-Fi, RDP, Hyper-V, хранилища, USB, Xbox, Search.',
     items: [
       'Spooler → Start=4 и удалён',
       'Bth*, BluetoothUserService → удалены',
@@ -123,13 +134,14 @@ const OPTIMIZATION_CATEGORIES = [
       'STORAGE, RAID, iSCSI, Hyper-V, VMBus, vmic* → удалены',
       'embeddedmode, WdiServiceHost, WdiSystemHost → удалены',
       'DoSvc, DPS, Spooler, WerSvc, wercplsupport, embeddedmode → Start=4',
+      'cphs, cplspcon → Start=4, DelayedAutoStart=0',
       'Большой список драйверов и служб (1394ohci, 3ware, acpiex, ADP80XX, …) удалён',
     ],
   },
   {
     icon: '📜',
     name: 'Журналы и события',
-    desc: 'Отключение журналирования, EventLog AutoBackupLogFiles, очистка TIP и FveDetect.',
+    desc: 'Журналирование, EventLog AutoBackupLogFiles, TIP, FveDetect.',
     items: [
       'EventLog\\Application AutoBackupLogFiles = 0',
       'Wbem CIMOM LastServiceReady удалён, LastServiceStart / PreviousServiceShutdown / SetupDate перезаписаны',
@@ -140,7 +152,7 @@ const OPTIMIZATION_CATEGORIES = [
   {
     icon: '🧹',
     name: 'Прочее',
-    desc: 'Отключение ReserveManager, StorageSense, Mobility Center, рукописного ввода, GameDVR, FSO, планировщика, кэша доставки.',
+    desc: 'ReserveManager, StorageSense, Mobility Center, рукописный ввод, GameDVR, FSO, кэш доставки.',
     items: [
       'ReserveManager ShippedWithReserves = 0',
       'StorageSense StoragePolicy01 / StoragePolicy04 = 0',
@@ -148,16 +160,22 @@ const OPTIMIZATION_CATEGORIES = [
       'GameBar AllowAutoGameMode / AutoGameModeEnabled = 0',
       'GameDVR AllowGameDVR = 0',
       'DisableFullscreenOptimizations = 1',
-      'GameConfigStore FSEBehavior = 2, HonorUserFSEBehaviorMode = 1',
+      'GameConfigStore FSEBehavior = 2, HonorUserFSEBehaviorMode = 1, DXGIHonorFSEWindowsCompatible = 1',
       'HandwritingErrorReports PreventHandwritingErrorReports = 1',
       'TabletPC PreventHandwritingDataSharing = 1',
       'CloudStore StoreInitState = 5',
       'DeliveryOptimization Usage сброс',
+      'SettingSync SyncPolicy = 5',
+      'Search BackgroundAppGlobalToggle = 0',
+      'CloudContent DisableWindowsSpotlightOnActionCenter / OnSettings / WindowsWelcomeExperience = 1',
+      'Policies Psched NonBestEffortLimit = 0',
+      'Policies System DisableFullscreenOptimizations = 1',
+      'Policies GameDVR AllowGameDVR = 0',
+      'Policies Explorer DisableNotificationCenter = 1',
+      'CI Config VulnerableDriverBlocklistEnable = 0',
     ],
   },
 ];
-
-const TOTAL_ITEMS = OPTIMIZATION_CATEGORIES.reduce((s, c) => s + c.items.length, 0);
 
 export async function renderHardMode() {
   const tabsNav = document.getElementById('tabs-nav');
@@ -165,195 +183,304 @@ export async function renderHardMode() {
   tabsNav.innerHTML = '';
   content.innerHTML = '';
 
-  const wrap = document.createElement('div');
-  wrap.className = 'split';
+  const skullIcon = papirusUrl('status', 'dialog-warning');
 
-  const skullIcon    = papirusUrl('status', 'dialog-warning');
-  const powerIcon    = papirusUrl('devices', 'battery');
-  const shieldIcon   = papirusUrl('apps', 'preferences-system');
-  const servicesIcon = papirusUrl('apps', 'preferences-system');
+  // ─── Стили: огненный текст + свечение + искры + лог ───
+  const styleTag = document.createElement('style');
+  styleTag.textContent = `
+    @keyframes firePulse {
+      0%, 100% {
+        filter: drop-shadow(0 0 8px rgba(255,120,0,0.65))
+                drop-shadow(0 0 22px rgba(255,60,0,0.45))
+                drop-shadow(0 0 44px rgba(255,0,0,0.20));
+        transform: scale(1);
+      }
+      50% {
+        filter: drop-shadow(0 0 16px rgba(255,170,0,0.95))
+                drop-shadow(0 0 40px rgba(255,80,0,0.65))
+                drop-shadow(0 0 80px rgba(255,0,0,0.35));
+        transform: scale(1.02);
+      }
+    }
+    @keyframes fireFlicker {
+      0%   { background-position: 0% 50%; }
+      25%  { background-position: 50% 50%; }
+      50%  { background-position: 100% 50%; }
+      75%  { background-position: 50% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes emberRise {
+      0%   { opacity: 0; transform: translateY(0) scale(1); }
+      15%  { opacity: .95; }
+      100% { opacity: 0; transform: translateY(-90px) scale(.35); }
+    }
+    @keyframes heatHaze {
+      0%, 100% { opacity: .55; transform: scale(1); }
+      50%      { opacity: .85; transform: scale(1.06); }
+    }
+    @keyframes metalSheen {
+      0%, 100% { filter: brightness(1) contrast(1.05); }
+      50%      { filter: brightness(1.12) contrast(1.15); }
+    }
 
-  const ICON_STYLE = 'width:1.2em !important;height:1.2em !important;vertical-align:-0.2em;margin-right:6px;display:inline-block;object-fit:contain;';
+    .fire-title {
+      font-family: 'Old English Text MT', 'Blackadder ITC',
+                   'Segoe Script', 'Impact', 'Arial Black', sans-serif;
+      font-weight: 900;
+      letter-spacing: 4px;
+      line-height: 1.02;
+      text-transform: uppercase;
+      background: linear-gradient(90deg,
+        #7a0e00 0%, #ff2d00 12%, #ff6a00 28%, #ffb300 42%,
+        #fff6b0 50%, #ffb300 58%, #ff6a00 72%, #ff2d00 88%, #7a0e00 100%);
+      background-size: 300% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      animation: firePulse 2.6s ease-in-out infinite,
+                 fireFlicker 3.4s linear infinite,
+                 metalSheen 5s ease-in-out infinite;
+      will-change: filter, transform, background-position;
+    }
+    .fire-glow {
+      position: absolute;
+      inset: -10%;
+      background: radial-gradient(circle at 50% 55%,
+        rgba(255,90,0,0.30) 0%,
+        rgba(255,40,0,0.18) 30%,
+        transparent 65%);
+      filter: blur(28px);
+      animation: heatHaze 3.2s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .ember {
+      position: absolute;
+      bottom: 10%;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffe08a 0%, #ff6a00 55%, transparent 100%);
+      pointer-events: none;
+      z-index: 1;
+      animation: emberRise 2.8s ease-out infinite;
+    }
 
+    /* Лог выполнения — как в optimization.js */
+    .deadly-log {
+      margin-top: 12px;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 11.5px;
+      line-height: 1.45;
+      color: var(--fg-muted);
+      max-height: 260px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      display: none;
+    }
+    .deadly-log.active { display: block; }
+    .deadly-log .log-line { display: block; }
+    .deadly-log .log-ok    { color: var(--success); }
+    .deadly-log .log-err   { color: var(--danger);  }
+    .deadly-log .log-info  { color: var(--fg);      }
+
+    @media (prefers-reduced-motion: reduce) {
+      .fire-title, .fire-glow, .ember { animation: none !important; }
+      .ember { display: none; }
+    }
+  `;
+  content.appendChild(styleTag);
+
+  // Внешняя обёртка-сетка — БЕЗ рамки/фона (убрана «сквозная» рамка)
+  const root = document.createElement('div');
+  root.style.cssText = `
+    display: grid;
+    grid-template-columns: minmax(260px, 320px) 1fr minmax(300px, 380px);
+    gap: 18px;
+    align-items: stretch;
+    min-height: calc(100vh - 140px);
+    background: transparent;
+    border: none;
+  `;
+
+  // ─────────────── ЛЕВАЯ ПАНЕЛЬ (panel — с фоном и рамкой) ───────────────
   const left = document.createElement('div');
   left.className = 'panel';
-
+  left.style.cssText = 'display:flex;flex-direction:column;gap:14px;';
   left.innerHTML = `
-    <div style="background:rgba(217,59,59,0.18); border:2px solid var(--danger); border-radius:8px; padding:16px; margin-bottom:20px; text-align:center;">
-      <h2 style="color:var(--danger); margin:0 0 8px 0; font-size:18px; display:flex; align-items:center; justify-content:center; gap:6px;">
-        <img src="${skullIcon}" alt="" style="width:20px;height:20px;object-fit:contain;" onerror="this.style.display='none'">
-        <span>СМЕРТЕЛЬНАЯ ОПТИМИЗАЦИЯ</span>
-        <img src="${skullIcon}" alt="" style="width:20px;height:20px;object-fit:contain;" onerror="this.style.display='none'">
-      </h2>
-      <p style="color:var(--danger); font-weight:bold; font-size:13px; margin:0 0 8px 0;">
-        НА НОУТБУКАХ И ПЛАНШЕТАХ НЕ ЗАПУСКАТЬ!<br>
-        ТОЛЬКО ДЛЯ СТАЦИОНАРНЫХ ПК.
+    <div style="
+      background: rgba(217,59,59,0.16);
+      border: 2px solid var(--danger);
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+    ">
+      <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:8px;">
+        <img src="${skullIcon}" alt="" style="width:22px;height:22px;object-fit:contain;" onerror="this.style.display='none'">
+        <b style="color:var(--danger);font-size:15px;letter-spacing:.5px;">ОПАСНО</b>
+        <img src="${skullIcon}" alt="" style="width:22px;height:22px;object-fit:contain;" onerror="this.style.display='none'">
+      </div>
+      <p style="color:var(--danger);font-weight:700;font-size:12.5px;margin:0 0 6px;">
+        ТОЛЬКО ДЛЯ СТАЦИОНАРНЫХ ПК.<br>
+        НА НОУТБУКАХ И ПЛАНШЕТАХ НЕ ЗАПУСКАТЬ.
       </p>
-      <p style="color:var(--danger); font-weight:bold; font-size:13px; margin:0; border-top:1px dashed var(--danger); padding-top:8px;">
-        ⚠️ ОТМЕНЫ НЕТ. ИЗМЕНЕНИЯ НЕОБРАТИМЫ.<br>
-        ДЕЛАЙТЕ РЕЗЕРВНУЮ КОПИЮ СИСТЕМЫ ПЕРЕД ЗАПУСКОМ.
+      <p style="color:var(--danger);font-weight:700;font-size:12.5px;margin:0;border-top:1px dashed var(--danger);padding-top:8px;">
+        ОТМЕНЫ НЕТ. ИЗМЕНЕНИЯ НЕОБРАТИМЫ.
       </p>
     </div>
 
-    <h3 class="game-title">
-      <span>Смертельная оптимизация</span>
-    </h3>
-    <p>Максимальное выжимание FPS и отклика системы за счёт отключения безопасности, телеметрии, обновлений, служб, питания и сетевых твиков. <b style="color:var(--danger)">Откат не предусмотрен.</b></p>
+    <button class="btn danger" id="btn-deadly-apply"
+      style="
+        width:100%;padding:14px;font-size:14px;font-weight:700;
+        white-space:normal;word-break:break-word;
+      ">
+      ЗАПУСТИТЬ СМЕРТЕЛЬНУЮ ОПТИМИЗАЦИЮ
+    </button>
 
-    <div style="margin-top: 16px">
-      <button class="btn danger" id="btn-deadly-apply" style="width:100%; padding:14px; font-size:14px; font-weight:bold; white-space:normal; word-break:break-word;">ЗАПУСТИТЬ СМЕРТЕЛЬНУЮ ОПТИМИЗАЦИЮ</button>
+    <div id="deadly-status"
+      style="font-size:12px;white-space:pre-line;font-weight:600;color:var(--fg-muted);min-height:16px;">
     </div>
 
-    <div id="deadly-status" style="margin-top:16px;color:var(--fg-muted);font-size:12px;white-space:pre-line; font-weight:bold;"></div>
+    <!-- Лог выполнения -->
+    <div id="deadly-log" class="deadly-log"></div>
 
-    <div style="margin-top:20px; padding:12px; background:var(--bg-alt); border-radius:8px; font-size:12px; color:var(--fg-muted);">
-      <b>Что будет сделано:</b> ${TOTAL_ITEMS} групп изменений в реестре и службах.
-      Подробный список — справа. Перед запуском закройте все приложения.
+    <div style="background:var(--bg-alt);border-radius:10px;padding:14px;font-size:12px;color:var(--fg-muted);line-height:1.6;">
+      <b style="color:var(--fg);">Перед запуском:</b>
+      <ul style="margin:8px 0 0;padding-left:16px;">
+        <li>Создайте точку восстановления или образ.</li>
+        <li>Закройте браузеры, игры, мессенджеры.</li>
+        <li>После применения перезагрузите ПК.</li>
+      </ul>
     </div>
   `;
-  wrap.appendChild(left);
+  root.appendChild(left);
 
+  // ─────────────── ЦЕНТР: ОГНЕННЫЙ ТЕКСТ ───────────────
+  const center = document.createElement('div');
+  center.style.cssText = `
+    position:relative;
+    display:flex;align-items:center;justify-content:center;
+    text-align:center;padding:20px;overflow:hidden;
+    background:
+      radial-gradient(circle at 50% 60%, rgba(255,80,0,0.10), transparent 65%),
+      radial-gradient(circle at 50% 40%, rgba(217,59,59,0.08), transparent 55%);
+    border-radius:10px;
+  `;
+  center.innerHTML = `
+    <span class="ember" style="left:18%;animation-delay:0s;"></span>
+    <span class="ember" style="left:32%;animation-delay:.7s;"></span>
+    <span class="ember" style="left:47%;animation-delay:1.4s;"></span>
+    <span class="ember" style="left:61%;animation-delay:.4s;"></span>
+    <span class="ember" style="left:74%;animation-delay:1.1s;"></span>
+    <span class="ember" style="left:86%;animation-delay:1.9s;"></span>
+  `;
+  root.appendChild(center);
+
+  // ─────────────── ПРАВАЯ ПАНЕЛЬ (panel — с фоном и рамкой) ───────────────
   const right = document.createElement('div');
   right.className = 'panel';
+  right.style.cssText = 'display:flex;flex-direction:column;gap:10px;overflow-y:auto;max-height:calc(100vh - 140px);';
 
-  const intro = document.createElement('section');
-  intro.className = 'apps-detected-section';
-  intro.style.background = 'color-mix(in srgb, var(--card) 60%, transparent)';
-  intro.style.borderColor = 'color-mix(in srgb, var(--danger) 40%, transparent)';
-  intro.style.marginBottom = '16px';
-  intro.innerHTML = `
-    <div class="section-title"><img src="${shieldIcon}" style="${ICON_STYLE}"> Что делает оптимизация (${TOTAL_ITEMS} пунктов)</div>
-    <p style="font-size:12px; color:var(--fg-muted); margin: -4px 0 12px 0;">
-      Все изменения применяются одним BAT-файлом. Отката нет.
-    </p>
-    <div style="display:flex;gap:8px;margin-bottom:12px">
-      <button class="btn" id="btn-deadly-expand-all">Развернуть все</button>
-      <button class="btn" id="btn-deadly-collapse-all">Свернуть все</button>
-    </div>
-    <div id="deadly-catalog" style="display:flex;flex-direction:column;gap:6px"></div>
-  `;
-  right.appendChild(intro);
+  const rightHeader = document.createElement('div');
+  rightHeader.style.cssText = 'font-size:13px;font-weight:700;color:var(--fg);padding-bottom:6px;border-bottom:1px solid var(--border);';
+  rightHeader.textContent = 'Что будет сделано';
+  right.appendChild(rightHeader);
 
-  const powerSection = document.createElement('section');
-  powerSection.className = 'apps-detected-section';
-  powerSection.style.background = 'color-mix(in srgb, var(--card) 60%, transparent)';
-  powerSection.style.borderColor = 'color-mix(in srgb, var(--border) 30%, transparent)';
-  powerSection.style.marginBottom = '16px';
-  powerSection.innerHTML = `
-    <div class="section-title"><img src="${powerIcon}" style="${ICON_STYLE}"> Питание и производительность</div>
-    <p style="font-size:12px; color:var(--fg-muted); margin: -4px 0 12px 0;">
-      Отключение гибернации и Power Throttling, схема CrystalCry Max Performance, отключение файла подкачки, твики памяти и митигаций, Win32PrioritySeparation.
-    </p>
-    <div class="apps-grid fixes-grid">
-      ${[
-        ['🛌','Гибернация','HibernateEnabled = 0.'],
-        ['🚫','Power Throttling','PowerThrottlingOff = 1 — отключает фоновое троттлинг-ограничение процессов.'],
-        ['✅','Схема питания','ActivePowerScheme = 90a358c8-… (CrystalCry Max Performance) + параметры AC/DC.'],
-        ['🧠','Память','PagingFiles="", AlwaysUnloadDLL=1, LargeSystemCache=0, HeapDeCommit*.'],
-        ['⚙️','Приоритеты','Win32PrioritySeparation = 2.'],
-        ['🛡️','Митигации','DisableMitigations = 1.'],
-        ['💾','NTFS','NtfsDisableLastAccessUpdate = 2147483649.'],
-      ].map(([i,n,d]) => `
-        <div class="apps-card">
-          <div class="apps-icon">${i}</div>
-          <div class="apps-name">${n}</div>
-          <div class="apps-sub fix-desc">${d}</div>
-          <div style="display:flex;gap:4px;justify-content:center;min-height:14px;margin-top:2px;">
-            <span style="font-size:9.5px;font-weight:700;color:var(--danger);background:color-mix(in srgb, var(--danger) 15%, transparent);border:1px solid color-mix(in srgb, var(--danger) 40%, transparent);padding:1px 6px;border-radius:6px;">☠️ необратимо</span>
-          </div>
-          <button class="apps-run" disabled style="opacity:0.6;cursor:default;pointer-events:none;">☠️ Применяется</button>
-        </div>
-      `).join('')}
-    </div>
-  `;
-  right.appendChild(powerSection);
-
-  const servicesSection = document.createElement('section');
-  servicesSection.className = 'apps-detected-section';
-  servicesSection.style.background = 'color-mix(in srgb, var(--card) 60%, transparent)';
-  servicesSection.style.borderColor = 'color-mix(in srgb, var(--border) 30%, transparent)';
-  servicesSection.innerHTML = `
-    <div class="section-title"><img src="${servicesIcon}" style="${ICON_STYLE}"> Отключаемые и удаляемые службы</div>
-    <p style="font-size:12px; color:var(--fg-muted); margin: -4px 0 12px 0;">
-      Службы переводятся в <code>Start=4</code> или удаляются из реестра. Отката нет.
-    </p>
-    <div class="apps-grid fixes-grid">
-      ${[
-        ['📊','Телеметрия','DiagTrack, dmwappushservice, DPS, Wdi*, WerSvc, pla, wmiApSrv и др. → Start=4.'],
-        ['🔄','Обновления и Store','wuauserv, UsoSvc, WaaSMedicSvc, BITS, DoSvc, InstallService, ClipSVC, LicenseManager, PushToInstall, AppXSvc, AppReadiness, AppVClient, Appinfo, AppIDSvc, AppMgmt → Start=4.'],
-        ['🌐','Edge','edgeupdate, edgeupdatem, MicrosoftEdgeElevationService → Start=4.'],
-        ['🖨️','Печать','Spooler → Start=4 и удалён. PrintNotify, PrintWorkflowUserSvc удалены.'],
-        ['📶','Bluetooth и Wi-Fi','Bth*, BluetoothUserService, WlanSvc, WwanSvc, WEPHOSTSVC → удалены.'],
-        ['🖥️','RDP и Hyper-V','TermService, SessionEnv, UmRdpService, VMBus, vmic*, HyperVideo → удалены.'],
-        ['🎮','Xbox','Xbl*, XboxGipSvc, xboxgip, xinputhid → удалены.'],
-        ['💾','Хранилища и RAID','STORAGE, RAID, iSCSI, 3ware, ADP80XX, LSI_*, megasas*, nvraid, nvstor и др. → удалены.'],
-        ['🧩','Прочие','embeddedmode, WdiServiceHost, WdiSystemHost, WSearch, DoSvc, DPS, WerSvc, wercplsupport → удалены/Start=4.'],
-      ].map(([i,n,d]) => `
-        <div class="apps-card">
-          <div class="apps-icon">${i}</div>
-          <div class="apps-name">${n}</div>
-          <div class="apps-sub fix-desc">${d}</div>
-          <div style="display:flex;gap:4px;justify-content:center;min-height:14px;margin-top:2px;">
-            <span style="font-size:9.5px;font-weight:700;color:var(--danger);background:color-mix(in srgb, var(--danger) 15%, transparent);border:1px solid color-mix(in srgb, var(--danger) 40%, transparent);padding:1px 6px;border-radius:6px;">☠️ необратимо</span>
-          </div>
-          <button class="apps-run" disabled style="opacity:0.6;cursor:default;pointer-events:none;">☠️ Применяется</button>
-        </div>
-      `).join('')}
-    </div>
-  `;
-  right.appendChild(servicesSection);
-
-  wrap.appendChild(right);
-  content.appendChild(wrap);
-
-  const catalogEl = right.querySelector('#deadly-catalog');
   OPTIMIZATION_CATEGORIES.forEach((cat) => {
-    const item = document.createElement('details');
-    item.style.cssText = 'background:var(--bg-alt);border-radius:8px;padding:10px 12px;';
-    item.innerHTML = `
-      <summary style="cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;user-select:none;">
-        <span class="chevron" style="font-size:10px;color:var(--fg-muted);transition:transform .15s;display:inline-block;">▶</span>
-        <span style="font-size:16px">${cat.icon}</span>
-        <b style="flex:1">${cat.name}</b>
-        <span style="color:var(--fg-muted);font-size:12px">${cat.items.length}</span>
-      </summary>
-      <div style="color:var(--fg-muted);font-size:12px;margin:6px 0 8px;">${cat.desc}</div>
-      <div style="font-family:Consolas,monospace;font-size:11px;line-height:1.6;">
-        ${cat.items.map(s => `<div style="break-inside:avoid">• ${s}</div>`).join('')}
+    const block = document.createElement('div');
+    block.style.cssText = `
+      background: var(--bg-alt);
+      border-radius: 8px;
+      padding: 10px 12px;
+    `;
+    block.innerHTML = `
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+        <span style="font-size:14px;">${cat.icon}</span>
+        <b style="font-size:12.5px;flex:1;">${cat.name}</b>
+      </div>
+      <div style="color:var(--fg-muted);font-size:11.5px;line-height:1.5;">
+        ${cat.desc}
       </div>
     `;
-    item.addEventListener('toggle', () => {
-      item.querySelector('.chevron').style.transform = item.open ? 'rotate(90deg)' : 'rotate(0deg)';
-    });
-    catalogEl.appendChild(item);
+    right.appendChild(block);
   });
 
-  right.querySelector('#btn-deadly-expand-all').addEventListener('click', () => {
-    right.querySelectorAll('details').forEach(d => d.open = true);
-  });
-  right.querySelector('#btn-deadly-collapse-all').addEventListener('click', () => {
-    right.querySelectorAll('details').forEach(d => d.open = false);
-  });
+  root.appendChild(right);
+  content.appendChild(root);
 
+  // ─────────────── Лог ───────────────
+  const logEl = left.querySelector('#deadly-log');
+
+  function logLine(text, kind = 'info') {
+    logEl.classList.add('active');
+    const line = document.createElement('span');
+    line.className = 'log-line' + (kind === 'ok' ? ' log-ok' : kind === 'err' ? ' log-err' : ' log-info');
+    line.textContent = text;
+    logEl.appendChild(line);
+    logEl.scrollTop = logEl.scrollHeight;
+  }
+
+  function logReset() {
+    logEl.innerHTML = '';
+    logEl.classList.remove('active');
+  }
+
+  // ─────────────── Запуск BAT с логом ───────────────
   const statusEl = left.querySelector('#deadly-status');
+  const applyBtn = left.querySelector('#btn-deadly-apply');
 
   async function runBat(rel, label) {
-    statusEl.textContent = `Запуск: ${label}...\nНе выключайте ПК.`;
+    statusEl.textContent = `Запуск: ${label}… Не выключайте ПК.`;
     statusEl.style.color = 'var(--fg)';
+    applyBtn.disabled = true;
+    applyBtn.style.opacity = '.6';
+    logReset();
+    logLine(`▶ Запуск: ${label}`, 'info');
+    logLine(`  Файл: ${rel}`, 'info');
+
     try {
-      await window.api.tweaks.run('tweaks/' + rel, { wait: true });
-      statusEl.textContent = `✅ ${label} успешно выполнено!\nРекомендуется перезагрузка.`;
-      statusEl.style.color = 'var(--success)';
-      toast(`Успех: ${label}`, 'success');
+      await loggedRunStream('tweaks/' + rel, {
+        onChunk: (chunk) => {
+          if (chunk && chunk.text) logLine(chunk.text, chunk.stream === 'stderr' ? 'err' : 'info');
+        },
+        onEnd: (r) => {
+          const code = r?.code ?? '?';
+          if (r && r.code === 0) {
+            logLine(`✔ Завершено успешно (exit 0)`, 'ok');
+            statusEl.textContent = `✅ Готово. Рекомендуется перезагрузка.`;
+            statusEl.style.color = 'var(--success)';
+            toast(`Успех: ${label}`, 'success');
+            Sound.success();
+          } else {
+            logLine(`✖ Ошибка (exit ${code})`, 'err');
+            statusEl.textContent = `❌ Ошибка: exit ${code}`;
+            statusEl.style.color = 'var(--danger)';
+            toast(`Ошибка: ${label} (exit ${code})`, 'error', 5000);
+            Sound.error();
+          }
+          applyBtn.disabled = false;
+          applyBtn.style.opacity = '1';
+        }
+      });
     } catch (e) {
-      statusEl.textContent = `❌ Ошибка: ${e.message}`;
+      logLine(`✖ Исключение: ${e?.message || e}`, 'err');
+      statusEl.textContent = `❌ Ошибка: ${e?.message || e}`;
       statusEl.style.color = 'var(--danger)';
-      toast('Ошибка: ' + e.message, 'error');
+      toast('Ошибка: ' + (e?.message || e), 'error', 6000);
+      Sound.error();
+      applyBtn.disabled = false;
+      applyBtn.style.opacity = '1';
     }
   }
 
-  left.querySelector('#btn-deadly-apply').addEventListener('click', () => {
-    if (!confirm('СМЕРТЕЛЬНАЯ ОПТИМИЗАЦИЯ\n\nОтмены НЕ БУДЕТ. Продолжить?')) return;
+  applyBtn.addEventListener('click', () => {
+    Sound.click();
     runBat(APPLY_BAT, 'Смертельная оптимизация');
   });
 }
