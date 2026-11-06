@@ -83,6 +83,7 @@ const TWEAK_CATEGORIES = [
 //   "ImmortalOS Services.bat",
 //   "MartyFiles Services.bat",
 //   "RapidOS Services.bat",
+//   "ReviOS Services.bat",
 //   "SapphireOS Services.bat",
 //   "SynergyOS Services.bat",
 //   "SystemX Services.bat",
