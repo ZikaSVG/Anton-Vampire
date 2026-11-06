@@ -120,6 +120,18 @@ export function updateCounter() {
   if (counter) counter.textContent = `Выбрано: ${sel} / ${total}`;
 }
 
+/* Показ/скрытие кнопок «Выделить всё» / «Выполнить»
+   Единственный источник правды — state.config.General.checkbox_selection_enabled
+   undefined → трактуем как «включено» (старые конфиги) */
+export function applyCheckboxSelectionVisibility() {
+  const enabled = state.config.General?.checkbox_selection_enabled !== false;
+  document.body.classList.toggle('cbx-selection-off', !enabled);
+  for (const id of ['btn-select-all', 'btn-execute']) {
+    const el = document.getElementById(id);
+    if (el) el.style.display = enabled ? '' : 'none';
+  }
+}
+
 /* ============================================================
    SPLASH SCREEN
    ============================================================ */
@@ -788,6 +800,7 @@ async function init() {
   }
 
   bindMainUI();
+  applyCheckboxSelectionVisibility();
   splashSetProgress(75, '⚙ Интерфейс подготовлен');
 
   const startSection = state.config.General?.initial_tab || 'main';

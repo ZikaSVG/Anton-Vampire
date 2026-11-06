@@ -2,7 +2,8 @@ import {
   state, toast, Sound, clearBackground,
   reapplyTheme, reapplyFontsAndShape, applyWallpaperAsBackground,
   navigate,
-  setUiStyle
+  setUiStyle,
+  applyCheckboxSelectionVisibility
 } from '../app.js';
 import {
   THEMES_META, THEMES, applyVisualEffect,
@@ -216,7 +217,7 @@ export async function renderSettings() {
       toggleField(
         'Разрешить выделение чекбоксов',
         'General.checkbox_selection_enabled',
-        !!cfg.General?.checkbox_selection_enabled,
+        cfg.General?.checkbox_selection_enabled !== false,   // ← было !!
         'Включено — можно кликать по карточкам твиков, чтобы выделить их ' +
         'и применить пакетом. Выключено — чекбоксы отображаются, но неактивны, ' +
         'случайно включить твик нельзя. ' +
@@ -1121,15 +1122,9 @@ export async function renderSettings() {
       // ─── Выделение чекбоксов: мгновенно скрыть/показать всё ───
       if (key === 'General.checkbox_selection_enabled') {
         try { state.checkboxes?.clear?.(); } catch { /* ignore */ }
-  
-        document.body.classList.toggle('cbx-selection-off', !nv);
-  
-        for (const id of ['btn-select-all', 'btn-execute']) {
-          const el = document.getElementById(id);
-          if (el) el.style.display = nv ? '' : 'none';
-        }
+        applyCheckboxSelectionVisibility();
       }
-  
+
       toast('Сохранено: ' + label, 'success', 1200);
       reapplyTheme();
     });

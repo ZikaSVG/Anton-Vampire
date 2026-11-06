@@ -222,6 +222,11 @@
       0%, 100% { opacity: 0.3; transform: scale(1); }
       50%      { opacity: 1;   transform: scale(1.3); }
     }
+    /* Гарантия скрытия кнопок быстрого действия */
+    #btn-select-all.btn-hidden,
+    #btn-execute.btn-hidden {
+      display: none !important;
+    }
   </style>
   <!-- 1. Шрифты -->
   <link rel="stylesheet" href="src/styles/fonts.css" />
@@ -297,7 +302,7 @@
           <div class="brand">
             <span class="logo">🩸</span>
             <h1 id="app-title">Anton Vampire</h1>
-            <span id="app-version" class="badge">v1.0.4 Beta</span>
+            <span id="app-version" class="badge">v1.0.7 Beta</span>
           </div>
 
           <div class="top-actions">
