@@ -20,14 +20,18 @@ async function loadServicesData() {
 
 async function loadServicesStatus() {
   try {
-    await window.api.tweaks.run('tweaks/Службы/Get_Services_Status.bat', { wait: true });
-    const res = await window.api.tabs.readJson('tweaks/Службы/services_status.json');
+    const runRes = await window.api.tweaks.run('tweaks/Службы/Get_Services_Status.bat', { wait: true });
+    console.log('[services] bat result:', runRes);
+
+    const res = await window.api.tabs.readJson('extreme_data/services_status.json');
+    console.log('[services] readJson result:', res);
+
     if (res && res.ok && res.data) {
       SERVICES_STATUS = res.data;
-      console.log(`[services] загружены статусы ${Object.keys(SERVICES_STATUS).length} служб`);
+      console.log(`[services] loaded ${Object.keys(SERVICES_STATUS).length} statuses`);
       return true;
     }
-    console.warn('[services] services_status.json не прочитан:', res?.error);
+    console.warn('[services] readJson failed:', res?.error, res?.data);
   } catch (e) {
     console.warn('[services] loadServicesStatus failed:', e);
   }
@@ -43,6 +47,29 @@ function getStatusLabel(status) {
     case 'disabled': return { text: 'Откл', color: 'var(--success)', bg: 'color-mix(in srgb, var(--success) 15%, transparent)' };
     case 'notfound': return { text: 'Нет', color: 'var(--fg-muted)', bg: 'var(--bg-alt)' };
     default: return { text: '—', color: 'var(--fg-muted)', bg: 'var(--bg-alt)' };
+  }
+}
+
+function statusToStartValue(status) {
+  switch (status) {
+    case 'boot': return '0';
+    case 'system': return '1';
+    case 'auto': return '2';
+    case 'manual': return '3';
+    case 'disabled': return '4';
+    case 'notfound': return '';
+    default: return '3';
+  }
+}
+
+function startValueToStatus(val) {
+  switch (val) {
+    case '0': return 'boot';
+    case '1': return 'system';
+    case '2': return 'auto';
+    case '3': return 'manual';
+    case '4': return 'disabled';
+    default: return 'unknown';
   }
 }
 
@@ -73,7 +100,7 @@ export async function renderServices() {
   `;
   wrap.appendChild(header);
 
-  // ==================== СЕКЦИЯ 1: ОПИСАНИЕ + БЭКАП ====================
+  // ==================== СЕКЦИЯ 1: ОПИСАНИЕ + ДОКУМЕНТАЦИЯ + БЭКАП ====================
   const introSection = document.createElement('div');
   introSection.className = 'apps-detected-section';
   introSection.style.background = 'color-mix(in srgb, var(--card) 60%, transparent)';
@@ -88,6 +115,84 @@ export async function renderServices() {
       <br>
       <span style="color:var(--accent);">💡 Совет:</span> перед массовым отключением рекомендуется создать резервную копию текущего состояния реестра служб.
     </p>
+
+    <details style="margin-bottom:16px; background:var(--bg-alt); border:1px solid var(--border); border-radius:8px; padding:12px 14px;">
+      <summary style="cursor:pointer; font-weight:600; color:var(--fg); user-select:none;">
+        📖 Что означают типы запуска служб
+      </summary>
+      <div style="margin-top:12px; font-size:13px; line-height:1.7; color:var(--fg-muted);">
+        <p style="margin:0 0 10px 0;">
+          Тип запуска определяет, <b>когда и как</b> Windows загружает службу. Значение хранится в реестре
+          (<code>HKLM\\SYSTEM\\CurrentControlSet\\Services\\&lt;Имя&gt;\\Start</code>)
+          и дублируется командой <code>sc config</code>.
+        </p>
+        <table style="width:100%; border-collapse:collapse; font-size:13px;">
+          <thead>
+            <tr style="border-bottom:1px solid var(--border);">
+              <th style="text-align:left; padding:6px 8px; width:140px;">Тип</th>
+              <th style="text-align:left; padding:6px 8px; width:70px;">Start</th>
+              <th style="text-align:left; padding:6px 8px;">Что означает</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--border);">
+              <td style="padding:6px 8px; color:var(--danger); font-weight:600;">Загрузка</td>
+              <td style="padding:6px 8px; font-family:Consolas,Monaco,monospace;">0</td>
+              <td style="padding:6px 8px;">
+                <b>Boot.</b> Драйвер загружается загрузчиком Windows <b>до старта ядра</b>.
+                Используется только драйверами загрузочных устройств (дисковые контроллеры, файловые системы).
+                Для обычных служб недоступен.
+              </td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border);">
+              <td style="padding:6px 8px; color:var(--danger); font-weight:600;">Система</td>
+              <td style="padding:6px 8px; font-family:Consolas,Monaco,monospace;">1</td>
+              <td style="padding:6px 8px;">
+                <b>System.</b> Драйвер загружается ядром на раннем этапе инициализации,
+                до запуска пользовательских служб. Тоже только для драйверов.
+                Для Win32-служб обычно не применяется.
+              </td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border);">
+              <td style="padding:6px 8px; font-weight:600;">Авто</td>
+              <td style="padding:6px 8px; font-family:Consolas,Monaco,monospace;">2</td>
+              <td style="padding:6px 8px;">
+                <b>Automatic.</b> Служба запускается <b>автоматически при загрузке Windows</b>,
+                без участия пользователя. Стандартный режим для большинства системных служб.
+                Может иметь «отложенный старт» (delayed auto start) — тогда она стартует чуть позже, чтобы ускорить вход.
+              </td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border);">
+              <td style="padding:6px 8px; color:var(--accent); font-weight:600;">Вручную</td>
+              <td style="padding:6px 8px; font-family:Consolas,Monaco,monospace;">3</td>
+              <td style="padding:6px 8px;">
+                <b>Manual.</b> Служба <b>не запускается сама</b> при загрузке, но стартует
+                по требованию: когда её вызывает другая служба, приложение или триггер
+                (например, подключение устройства или вход в систему).
+                Это <b>не отключение</b> — служба полностью работоспособна, просто ждёт вызова.
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:6px 8px; color:var(--success); font-weight:600;">Отключено</td>
+              <td style="padding:6px 8px; font-family:Consolas,Monaco,monospace;">4</td>
+              <td style="padding:6px 8px;">
+                <b>Disabled.</b> Служба <b>не может быть запущена</b> ни автоматически,
+                ни вручную, ни по требованию. При попытке запуска Windows вернёт ошибку.
+                Используется для служб, которые точно не нужны.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="margin:12px 0 0 0; font-size:12px; color:var(--fg-muted);">
+          ⚠️ <b>Важно:</b> «Вручную» — самый безопасный способ отключить ненужную активность.
+          Служба не грузит систему в фоне, но если какое-то приложение её запросит, она запустится
+          и всё будет работать. «Отключено» — жёсткая мера: если служба кому-то понадобится,
+          это приложение или компонент Windows сломается. Для телеметрии, поиска и подобных
+          фоновых служб обычно достаточно «Вручную».
+        </p>
+      </div>
+    </details>
+
     <div style="display:flex; gap:12px; flex-wrap:wrap;">
       <button class="btn" id="btn-create-backup" style="background:var(--accent); color:white; font-weight:600;">
         💾 Создать бэкап служб
@@ -155,7 +260,7 @@ export async function renderServices() {
         <th style="padding:12px 8px; text-align:left;">Служба</th>
         <th style="padding:12px 8px; text-align:left;">Описание</th>
         <th style="padding:12px 8px; text-align:center; width:100px;">Статус</th>
-        <th style="padding:12px 8px; text-align:center; width:180px;">Действия</th>
+        <th style="padding:12px 8px; text-align:center; width:260px;">Тип запуска</th>
         <th style="padding:12px 8px; text-align:left;">Отключена в</th>
       </tr>
     </thead>
@@ -185,7 +290,10 @@ export async function renderServices() {
     filtered.forEach(svc => {
       const status = SERVICES_STATUS[svc.name] || 'unknown';
       const statusInfo = getStatusLabel(status);
-      const buildsBadges = (svc.builds || []).map(b => 
+      const curVal = statusToStartValue(status);
+      const notFound = status === 'notfound';
+
+      const buildsBadges = (svc.builds || []).map(b =>
         `<span style="font-size:10px; font-weight:600; color:var(--accent); background:color-mix(in srgb, var(--accent) 10%, transparent); border:1px solid color-mix(in srgb, var(--accent) 30%, transparent); padding:2px 6px; border-radius:4px; margin-right:4px; margin-bottom:4px; display:inline-block;">${b}</span>`
       ).join('');
 
@@ -207,71 +315,76 @@ export async function renderServices() {
           </span>
         </td>
         <td style="padding:12px 8px; text-align:center; white-space:nowrap;">
-          <button class="btn svc-enable-btn" data-svc="${svc.name}" style="padding:4px 8px; font-size:11px; background:color-mix(in srgb, var(--success) 15%, transparent); border-color:var(--success); color:var(--success); margin-right:4px;">▶ Вкл</button>
-          <button class="btn svc-disable-btn" data-svc="${svc.name}" style="padding:4px 8px; font-size:11px; background:color-mix(in srgb, var(--danger) 15%, transparent); border-color:var(--danger); color:var(--danger);">⏹ Выкл</button>
+          <select class="svc-startup-select" data-svc="${svc.name}" ${notFound ? 'disabled' : ''} style="padding:6px 8px; font-size:12px; background:var(--bg-alt); color:var(--fg); border:1px solid var(--border); border-radius:6px; cursor:pointer; min-width:110px;">
+            <option value="0" ${curVal === '0' ? 'selected' : ''}>Загрузка</option>
+            <option value="1" ${curVal === '1' ? 'selected' : ''}>Система</option>
+            <option value="2" ${curVal === '2' ? 'selected' : ''}>Авто</option>
+            <option value="3" ${curVal === '3' ? 'selected' : ''}>Вручную</option>
+            <option value="4" ${curVal === '4' ? 'selected' : ''}>Отключено</option>
+          </select>
+          <button class="btn svc-apply-btn" data-svc="${svc.name}" ${notFound ? 'disabled' : ''} style="padding:6px 10px; font-size:11px; margin-left:6px; background:color-mix(in srgb, var(--accent) 15%, transparent); border-color:var(--accent); color:var(--accent); font-weight:600;">✔ Применить</button>
         </td>
         <td style="padding:12px 8px;">${buildsBadges}</td>
       `;
       tbody.appendChild(tr);
     });
 
-    // Обработчики для кнопок включения/отключения в строке
-    tbody.querySelectorAll('.svc-enable-btn').forEach(btn => {
+    // Обработчик кнопки «Применить» в строке
+    tbody.querySelectorAll('.svc-apply-btn').forEach(btn => {
       btn.addEventListener('click', async (e) => {
         e.stopPropagation();
         if (btn.disabled) return;
-        btn.disabled = true;
-        Sound.click();
-        const svcName = btn.dataset.svc;
-        try {
-          await window.api.tweaks.run('tweaks/Службы/Enable_Service.bat', { wait: true, args: svcName });
-          Sound.success();
-          toast(`${svcName} включена`, 'success');
-          
-          const badge = tbody.querySelector(`.svc-status-badge[data-svc="${svcName}"]`);
-          if (badge) {
-            const info = getStatusLabel('manual');
-            badge.textContent = info.text;
-            badge.style.background = info.bg;
-            badge.style.color = info.color;
-            badge.style.borderColor = info.color;
-          }
-          SERVICES_STATUS[svcName] = 'manual';
-        } catch (err) {
-          Sound.error();
-          toast(`Ошибка включения ${svcName}`, 'error');
-        } finally {
-          btn.disabled = false;
-        }
-      });
-    });
 
-    tbody.querySelectorAll('.svc-disable-btn').forEach(btn => {
-      btn.addEventListener('click', async (e) => {
-        e.stopPropagation();
-        if (btn.disabled) return;
-        btn.disabled = true;
-        Sound.click();
         const svcName = btn.dataset.svc;
+        const select = tbody.querySelector(`.svc-startup-select[data-svc="${svcName}"]`);
+        if (!select) return;
+
+        const newStart = select.value;
+        const oldStatus = SERVICES_STATUS[svcName] || 'unknown';
+        const oldVal = statusToStartValue(oldStatus);
+
+        if (newStart === oldVal) {
+          toast(`${svcName}: тип запуска не изменился`, 'error');
+          return;
+        }
+
+        btn.disabled = true;
+        select.disabled = true;
+        Sound.click();
+
         try {
-          await window.api.tweaks.run('tweaks/Службы/Disable_Service.bat', { wait: true, args: svcName });
+          await window.api.tweaks.run('tweaks/Службы/Set_Service_Startup.bat', {
+            wait: true,
+            args: `${svcName},${newStart}`
+          });
+
           Sound.success();
-          toast(`${svcName} отключена`, 'success');
-          
+
+          const newStatus = startValueToStatus(newStart);
+          SERVICES_STATUS[svcName] = newStatus;
+
           const badge = tbody.querySelector(`.svc-status-badge[data-svc="${svcName}"]`);
           if (badge) {
-            const info = getStatusLabel('disabled');
+            const info = getStatusLabel(newStatus);
             badge.textContent = info.text;
             badge.style.background = info.bg;
             badge.style.color = info.color;
             badge.style.borderColor = info.color;
           }
-          SERVICES_STATUS[svcName] = 'disabled';
+
+          const actionText = newStart === '4'
+            ? 'отключена и остановлена'
+            : (newStart === '2' || newStart === '3')
+              ? 'включена и запущена'
+              : 'тип запуска изменён';
+          toast(`${svcName}: служба ${actionText}`, 'success');
         } catch (err) {
           Sound.error();
-          toast(`Ошибка отключения ${svcName}`, 'error');
+          toast(`Ошибка изменения ${svcName}`, 'error');
+          select.value = oldVal || '3';
         } finally {
           btn.disabled = false;
+          select.disabled = false;
         }
       });
     });
@@ -282,7 +395,7 @@ export async function renderServices() {
   renderTableRows();
 
   // ==================== ОБРАБОТЧИКИ СОБЫТИЙ ====================
-  
+
   searchInput.addEventListener('input', (e) => {
     renderTableRows(e.target.value);
   });
@@ -377,7 +490,7 @@ export async function renderServices() {
       statusEl.style.borderLeftColor = 'var(--success)';
       toast(`Отключено ${checked.length} служб`, 'success');
       Sound.success();
-      
+
       await loadServicesStatus();
       renderTableRows(searchInput.value);
     } catch (e) {
@@ -407,7 +520,7 @@ export async function renderServices() {
       statusEl.style.borderLeftColor = 'var(--success)';
       toast(`Включено ${checked.length} служб`, 'success');
       Sound.success();
-      
+
       await loadServicesStatus();
       renderTableRows(searchInput.value);
     } catch (e) {

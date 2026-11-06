@@ -4,10 +4,64 @@ chcp 65001 >nul
 title Определение статусов служб
 net session >nul 2>&1 || (
     echo [!] Запустите от имени администратора.
-    pause & exit /b 1
+    exit /b 1
 )
 
-echo { > "%~dp0services_status.json"
+REM === Куда сохраняем статусы ===
+REM Разрешаем ..\..\extreme_data в абсолютный путь через for
+set "STATUS_DIR=%~dp0..\..\extreme_data"
+for %%I in ("%STATUS_DIR%") do set "STATUS_DIR=%%~fI"
+set "STATUS_FILE=%STATUS_DIR%\services_status.json"
+
+if not exist "%STATUS_DIR%" (
+    mkdir "%STATUS_DIR%" 2>nul
+    if not exist "%STATUS_DIR%" (
+        echo [ERROR] Не удалось создать папку: %STATUS_DIR%
+        exit /b 1
+    )
+)
+
+echo { > "%STATUS_FILE%"
+if not exist "%STATUS_FILE%" (
+    echo [ERROR] Не удалось записать: %STATUS_FILE%
+    exit /b 1
+)
+
+REM Проверка службы dam
+for /f "tokens=3" %%a in ('reg query "HKLM\SYSTEM\CurrentControlSet\Services\dam" /v Start 2^>nul ^| findstr /i "Start"') do (
+    set "START_VAL=%%a"
+)
+if defined START_VAL (
+    if "!START_VAL!"=="0x0" set "STATUS_dam=boot"
+    if "!START_VAL!"=="0x1" set "STATUS_dam=system"
+    if "!START_VAL!"=="0x2" set "STATUS_dam=auto"
+    if "!START_VAL!"=="0x3" set "STATUS_dam=manual"
+    if "!START_VAL!"=="0x4" set "STATUS_dam=disabled"
+    if not defined STATUS_dam set "STATUS_dam=unknown"
+) else (
+    set "STATUS_dam=notfound"
+)
+echo   "dam": "!STATUS_dam!", >> "%STATUS_FILE%"
+set "START_VAL="
+set "STATUS_dam="
+
+REM Проверка службы tcpipreg
+for /f "tokens=3" %%a in ('reg query "HKLM\SYSTEM\CurrentControlSet\Services\tcpipreg" /v Start 2^>nul ^| findstr /i "Start"') do (
+    set "START_VAL=%%a"
+)
+if defined START_VAL (
+    if "!START_VAL!"=="0x0" set "STATUS_tcpipreg=boot"
+    if "!START_VAL!"=="0x1" set "STATUS_tcpipreg=system"
+    if "!START_VAL!"=="0x2" set "STATUS_tcpipreg=auto"
+    if "!START_VAL!"=="0x3" set "STATUS_tcpipreg=manual"
+    if "!START_VAL!"=="0x4" set "STATUS_tcpipreg=disabled"
+    if not defined STATUS_tcpipreg set "STATUS_tcpipreg=unknown"
+) else (
+    set "STATUS_tcpipreg=notfound"
+)
+echo   "tcpipreg": "!STATUS_tcpipreg!", >> "%STATUS_FILE%"
+set "START_VAL="
+set "STATUS_tcpipreg="
 
 REM Проверка службы DiagTrack
 for /f "tokens=3" %%a in ('reg query "HKLM\SYSTEM\CurrentControlSet\Services\DiagTrack" /v Start 2^>nul ^| findstr /i "Start"') do (
@@ -23,7 +77,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_DiagTrack=notfound"
 )
-echo   "DiagTrack": "!STATUS_DiagTrack!", >> "%~dp0services_status.json"
+echo   "DiagTrack": "!STATUS_DiagTrack!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_DiagTrack="
 
@@ -41,7 +95,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_dmwappushservice=notfound"
 )
-echo   "dmwappushservice": "!STATUS_dmwappushservice!", >> "%~dp0services_status.json"
+echo   "dmwappushservice": "!STATUS_dmwappushservice!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_dmwappushservice="
 
@@ -59,7 +113,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_diagnosticshub.standardcollector.service=notfound"
 )
-echo   "diagnosticshub.standardcollector.service": "!STATUS_diagnosticshub.standardcollector.service!", >> "%~dp0services_status.json"
+echo   "diagnosticshub.standardcollector.service": "!STATUS_diagnosticshub.standardcollector.service!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_diagnosticshub.standardcollector.service="
 
@@ -77,7 +131,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_NvTelemetryContainer=notfound"
 )
-echo   "NvTelemetryContainer": "!STATUS_NvTelemetryContainer!", >> "%~dp0services_status.json"
+echo   "NvTelemetryContainer": "!STATUS_NvTelemetryContainer!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_NvTelemetryContainer="
 
@@ -95,7 +149,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_Telemetry=notfound"
 )
-echo   "Telemetry": "!STATUS_Telemetry!", >> "%~dp0services_status.json"
+echo   "Telemetry": "!STATUS_Telemetry!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_Telemetry="
 
@@ -113,7 +167,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_WdiServiceHost=notfound"
 )
-echo   "WdiServiceHost": "!STATUS_WdiServiceHost!", >> "%~dp0services_status.json"
+echo   "WdiServiceHost": "!STATUS_WdiServiceHost!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_WdiServiceHost="
 
@@ -131,7 +185,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_WdiSystemHost=notfound"
 )
-echo   "WdiSystemHost": "!STATUS_WdiSystemHost!", >> "%~dp0services_status.json"
+echo   "WdiSystemHost": "!STATUS_WdiSystemHost!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_WdiSystemHost="
 
@@ -149,7 +203,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_WerSvc=notfound"
 )
-echo   "WerSvc": "!STATUS_WerSvc!", >> "%~dp0services_status.json"
+echo   "WerSvc": "!STATUS_WerSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_WerSvc="
 
@@ -167,7 +221,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_wercplsupport=notfound"
 )
-echo   "wercplsupport": "!STATUS_wercplsupport!", >> "%~dp0services_status.json"
+echo   "wercplsupport": "!STATUS_wercplsupport!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_wercplsupport="
 
@@ -185,7 +239,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_Wecsvc=notfound"
 )
-echo   "Wecsvc": "!STATUS_Wecsvc!", >> "%~dp0services_status.json"
+echo   "Wecsvc": "!STATUS_Wecsvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_Wecsvc="
 
@@ -203,7 +257,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_TroubleshootingSvc=notfound"
 )
-echo   "TroubleshootingSvc": "!STATUS_TroubleshootingSvc!", >> "%~dp0services_status.json"
+echo   "TroubleshootingSvc": "!STATUS_TroubleshootingSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_TroubleshootingSvc="
 
@@ -221,7 +275,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_PcaSvc=notfound"
 )
-echo   "PcaSvc": "!STATUS_PcaSvc!", >> "%~dp0services_status.json"
+echo   "PcaSvc": "!STATUS_PcaSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_PcaSvc="
 
@@ -239,7 +293,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_pla=notfound"
 )
-echo   "pla": "!STATUS_pla!", >> "%~dp0services_status.json"
+echo   "pla": "!STATUS_pla!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_pla="
 
@@ -257,7 +311,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_DPS=notfound"
 )
-echo   "DPS": "!STATUS_DPS!", >> "%~dp0services_status.json"
+echo   "DPS": "!STATUS_DPS!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_DPS="
 
@@ -275,7 +329,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_WSearch=notfound"
 )
-echo   "WSearch": "!STATUS_WSearch!", >> "%~dp0services_status.json"
+echo   "WSearch": "!STATUS_WSearch!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_WSearch="
 
@@ -293,7 +347,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_SysMain=notfound"
 )
-echo   "SysMain": "!STATUS_SysMain!", >> "%~dp0services_status.json"
+echo   "SysMain": "!STATUS_SysMain!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_SysMain="
 
@@ -311,7 +365,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_WpnService=notfound"
 )
-echo   "WpnService": "!STATUS_WpnService!", >> "%~dp0services_status.json"
+echo   "WpnService": "!STATUS_WpnService!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_WpnService="
 
@@ -329,7 +383,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_WpnUserService=notfound"
 )
-echo   "WpnUserService": "!STATUS_WpnUserService!", >> "%~dp0services_status.json"
+echo   "WpnUserService": "!STATUS_WpnUserService!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_WpnUserService="
 
@@ -347,7 +401,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_XblAuthManager=notfound"
 )
-echo   "XblAuthManager": "!STATUS_XblAuthManager!", >> "%~dp0services_status.json"
+echo   "XblAuthManager": "!STATUS_XblAuthManager!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_XblAuthManager="
 
@@ -365,7 +419,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_XblGameSave=notfound"
 )
-echo   "XblGameSave": "!STATUS_XblGameSave!", >> "%~dp0services_status.json"
+echo   "XblGameSave": "!STATUS_XblGameSave!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_XblGameSave="
 
@@ -383,7 +437,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_XboxNetApiSvc=notfound"
 )
-echo   "XboxNetApiSvc": "!STATUS_XboxNetApiSvc!", >> "%~dp0services_status.json"
+echo   "XboxNetApiSvc": "!STATUS_XboxNetApiSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_XboxNetApiSvc="
 
@@ -401,7 +455,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_XboxGipSvc=notfound"
 )
-echo   "XboxGipSvc": "!STATUS_XboxGipSvc!", >> "%~dp0services_status.json"
+echo   "XboxGipSvc": "!STATUS_XboxGipSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_XboxGipSvc="
 
@@ -419,7 +473,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_Spooler=notfound"
 )
-echo   "Spooler": "!STATUS_Spooler!", >> "%~dp0services_status.json"
+echo   "Spooler": "!STATUS_Spooler!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_Spooler="
 
@@ -437,7 +491,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_PrintNotify=notfound"
 )
-echo   "PrintNotify": "!STATUS_PrintNotify!", >> "%~dp0services_status.json"
+echo   "PrintNotify": "!STATUS_PrintNotify!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_PrintNotify="
 
@@ -455,7 +509,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_PrintWorkflowUserSvc=notfound"
 )
-echo   "PrintWorkflowUserSvc": "!STATUS_PrintWorkflowUserSvc!", >> "%~dp0services_status.json"
+echo   "PrintWorkflowUserSvc": "!STATUS_PrintWorkflowUserSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_PrintWorkflowUserSvc="
 
@@ -473,7 +527,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_stisvc=notfound"
 )
-echo   "stisvc": "!STATUS_stisvc!", >> "%~dp0services_status.json"
+echo   "stisvc": "!STATUS_stisvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_stisvc="
 
@@ -491,7 +545,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_WiaRpc=notfound"
 )
-echo   "WiaRpc": "!STATUS_WiaRpc!", >> "%~dp0services_status.json"
+echo   "WiaRpc": "!STATUS_WiaRpc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_WiaRpc="
 
@@ -509,7 +563,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_MapsBroker=notfound"
 )
-echo   "MapsBroker": "!STATUS_MapsBroker!", >> "%~dp0services_status.json"
+echo   "MapsBroker": "!STATUS_MapsBroker!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_MapsBroker="
 
@@ -527,7 +581,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_lfsvc=notfound"
 )
-echo   "lfsvc": "!STATUS_lfsvc!", >> "%~dp0services_status.json"
+echo   "lfsvc": "!STATUS_lfsvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_lfsvc="
 
@@ -545,7 +599,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_SensorService=notfound"
 )
-echo   "SensorService": "!STATUS_SensorService!", >> "%~dp0services_status.json"
+echo   "SensorService": "!STATUS_SensorService!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_SensorService="
 
@@ -563,7 +617,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_SensrSvc=notfound"
 )
-echo   "SensrSvc": "!STATUS_SensrSvc!", >> "%~dp0services_status.json"
+echo   "SensrSvc": "!STATUS_SensrSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_SensrSvc="
 
@@ -581,7 +635,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_SensorDataService=notfound"
 )
-echo   "SensorDataService": "!STATUS_SensorDataService!", >> "%~dp0services_status.json"
+echo   "SensorDataService": "!STATUS_SensorDataService!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_SensorDataService="
 
@@ -599,7 +653,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_RemoteRegistry=notfound"
 )
-echo   "RemoteRegistry": "!STATUS_RemoteRegistry!", >> "%~dp0services_status.json"
+echo   "RemoteRegistry": "!STATUS_RemoteRegistry!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_RemoteRegistry="
 
@@ -617,7 +671,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_RemoteAccess=notfound"
 )
-echo   "RemoteAccess": "!STATUS_RemoteAccess!", >> "%~dp0services_status.json"
+echo   "RemoteAccess": "!STATUS_RemoteAccess!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_RemoteAccess="
 
@@ -635,7 +689,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_NetTcpPortSharing=notfound"
 )
-echo   "NetTcpPortSharing": "!STATUS_NetTcpPortSharing!", >> "%~dp0services_status.json"
+echo   "NetTcpPortSharing": "!STATUS_NetTcpPortSharing!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_NetTcpPortSharing="
 
@@ -653,7 +707,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_SSDPSRV=notfound"
 )
-echo   "SSDPSRV": "!STATUS_SSDPSRV!", >> "%~dp0services_status.json"
+echo   "SSDPSRV": "!STATUS_SSDPSRV!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_SSDPSRV="
 
@@ -671,7 +725,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_upnphost=notfound"
 )
-echo   "upnphost": "!STATUS_upnphost!", >> "%~dp0services_status.json"
+echo   "upnphost": "!STATUS_upnphost!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_upnphost="
 
@@ -689,7 +743,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_lltdsvc=notfound"
 )
-echo   "lltdsvc": "!STATUS_lltdsvc!", >> "%~dp0services_status.json"
+echo   "lltdsvc": "!STATUS_lltdsvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_lltdsvc="
 
@@ -707,7 +761,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_lmhosts=notfound"
 )
-echo   "lmhosts": "!STATUS_lmhosts!", >> "%~dp0services_status.json"
+echo   "lmhosts": "!STATUS_lmhosts!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_lmhosts="
 
@@ -725,7 +779,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_WebClient=notfound"
 )
-echo   "WebClient": "!STATUS_WebClient!", >> "%~dp0services_status.json"
+echo   "WebClient": "!STATUS_WebClient!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_WebClient="
 
@@ -743,7 +797,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_WinRM=notfound"
 )
-echo   "WinRM": "!STATUS_WinRM!", >> "%~dp0services_status.json"
+echo   "WinRM": "!STATUS_WinRM!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_WinRM="
 
@@ -761,7 +815,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_NetBT=notfound"
 )
-echo   "NetBT": "!STATUS_NetBT!", >> "%~dp0services_status.json"
+echo   "NetBT": "!STATUS_NetBT!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_NetBT="
 
@@ -779,7 +833,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_icssvc=notfound"
 )
-echo   "icssvc": "!STATUS_icssvc!", >> "%~dp0services_status.json"
+echo   "icssvc": "!STATUS_icssvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_icssvc="
 
@@ -797,7 +851,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_iphlpsvc=notfound"
 )
-echo   "iphlpsvc": "!STATUS_iphlpsvc!", >> "%~dp0services_status.json"
+echo   "iphlpsvc": "!STATUS_iphlpsvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_iphlpsvc="
 
@@ -815,7 +869,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_IpxlatCfgSvc=notfound"
 )
-echo   "IpxlatCfgSvc": "!STATUS_IpxlatCfgSvc!", >> "%~dp0services_status.json"
+echo   "IpxlatCfgSvc": "!STATUS_IpxlatCfgSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_IpxlatCfgSvc="
 
@@ -833,7 +887,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_NcaSvc=notfound"
 )
-echo   "NcaSvc": "!STATUS_NcaSvc!", >> "%~dp0services_status.json"
+echo   "NcaSvc": "!STATUS_NcaSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_NcaSvc="
 
@@ -851,7 +905,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_NcbService=notfound"
 )
-echo   "NcbService": "!STATUS_NcbService!", >> "%~dp0services_status.json"
+echo   "NcbService": "!STATUS_NcbService!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_NcbService="
 
@@ -869,7 +923,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_NcdAutoSetup=notfound"
 )
-echo   "NcdAutoSetup": "!STATUS_NcdAutoSetup!", >> "%~dp0services_status.json"
+echo   "NcdAutoSetup": "!STATUS_NcdAutoSetup!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_NcdAutoSetup="
 
@@ -887,7 +941,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_Netlogon=notfound"
 )
-echo   "Netlogon": "!STATUS_Netlogon!", >> "%~dp0services_status.json"
+echo   "Netlogon": "!STATUS_Netlogon!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_Netlogon="
 
@@ -905,7 +959,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_p2pimsvc=notfound"
 )
-echo   "p2pimsvc": "!STATUS_p2pimsvc!", >> "%~dp0services_status.json"
+echo   "p2pimsvc": "!STATUS_p2pimsvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_p2pimsvc="
 
@@ -923,7 +977,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_p2psvc=notfound"
 )
-echo   "p2psvc": "!STATUS_p2psvc!", >> "%~dp0services_status.json"
+echo   "p2psvc": "!STATUS_p2psvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_p2psvc="
 
@@ -941,7 +995,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_PNRPAutoReg=notfound"
 )
-echo   "PNRPAutoReg": "!STATUS_PNRPAutoReg!", >> "%~dp0services_status.json"
+echo   "PNRPAutoReg": "!STATUS_PNRPAutoReg!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_PNRPAutoReg="
 
@@ -959,7 +1013,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_PNRPsvc=notfound"
 )
-echo   "PNRPsvc": "!STATUS_PNRPsvc!", >> "%~dp0services_status.json"
+echo   "PNRPsvc": "!STATUS_PNRPsvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_PNRPsvc="
 
@@ -977,7 +1031,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_PolicyAgent=notfound"
 )
-echo   "PolicyAgent": "!STATUS_PolicyAgent!", >> "%~dp0services_status.json"
+echo   "PolicyAgent": "!STATUS_PolicyAgent!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_PolicyAgent="
 
@@ -995,7 +1049,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_SstpSvc=notfound"
 )
-echo   "SstpSvc": "!STATUS_SstpSvc!", >> "%~dp0services_status.json"
+echo   "SstpSvc": "!STATUS_SstpSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_SstpSvc="
 
@@ -1013,7 +1067,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_RasAuto=notfound"
 )
-echo   "RasAuto": "!STATUS_RasAuto!", >> "%~dp0services_status.json"
+echo   "RasAuto": "!STATUS_RasAuto!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_RasAuto="
 
@@ -1031,7 +1085,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_RasMan=notfound"
 )
-echo   "RasMan": "!STATUS_RasMan!", >> "%~dp0services_status.json"
+echo   "RasMan": "!STATUS_RasMan!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_RasMan="
 
@@ -1049,7 +1103,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_SNMPTRAP=notfound"
 )
-echo   "SNMPTRAP": "!STATUS_SNMPTRAP!", >> "%~dp0services_status.json"
+echo   "SNMPTRAP": "!STATUS_SNMPTRAP!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_SNMPTRAP="
 
@@ -1067,7 +1121,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_WFDSConMgrSvc=notfound"
 )
-echo   "WFDSConMgrSvc": "!STATUS_WFDSConMgrSvc!", >> "%~dp0services_status.json"
+echo   "WFDSConMgrSvc": "!STATUS_WFDSConMgrSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_WFDSConMgrSvc="
 
@@ -1085,7 +1139,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_WMPNetworkSvc=notfound"
 )
-echo   "WMPNetworkSvc": "!STATUS_WMPNetworkSvc!", >> "%~dp0services_status.json"
+echo   "WMPNetworkSvc": "!STATUS_WMPNetworkSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_WMPNetworkSvc="
 
@@ -1103,7 +1157,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_bthserv=notfound"
 )
-echo   "bthserv": "!STATUS_bthserv!", >> "%~dp0services_status.json"
+echo   "bthserv": "!STATUS_bthserv!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_bthserv="
 
@@ -1121,7 +1175,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_BTAGService=notfound"
 )
-echo   "BTAGService": "!STATUS_BTAGService!", >> "%~dp0services_status.json"
+echo   "BTAGService": "!STATUS_BTAGService!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_BTAGService="
 
@@ -1139,7 +1193,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_BthAvctpSvc=notfound"
 )
-echo   "BthAvctpSvc": "!STATUS_BthAvctpSvc!", >> "%~dp0services_status.json"
+echo   "BthAvctpSvc": "!STATUS_BthAvctpSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_BthAvctpSvc="
 
@@ -1157,7 +1211,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_BluetoothUserService=notfound"
 )
-echo   "BluetoothUserService": "!STATUS_BluetoothUserService!", >> "%~dp0services_status.json"
+echo   "BluetoothUserService": "!STATUS_BluetoothUserService!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_BluetoothUserService="
 
@@ -1175,7 +1229,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_ShellHWDetection=notfound"
 )
-echo   "ShellHWDetection": "!STATUS_ShellHWDetection!", >> "%~dp0services_status.json"
+echo   "ShellHWDetection": "!STATUS_ShellHWDetection!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_ShellHWDetection="
 
@@ -1193,7 +1247,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_WPDBusEnum=notfound"
 )
-echo   "WPDBusEnum": "!STATUS_WPDBusEnum!", >> "%~dp0services_status.json"
+echo   "WPDBusEnum": "!STATUS_WPDBusEnum!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_WPDBusEnum="
 
@@ -1211,7 +1265,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_ScDeviceEnum=notfound"
 )
-echo   "ScDeviceEnum": "!STATUS_ScDeviceEnum!", >> "%~dp0services_status.json"
+echo   "ScDeviceEnum": "!STATUS_ScDeviceEnum!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_ScDeviceEnum="
 
@@ -1229,7 +1283,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_SCardSvr=notfound"
 )
-echo   "SCardSvr": "!STATUS_SCardSvr!", >> "%~dp0services_status.json"
+echo   "SCardSvr": "!STATUS_SCardSvr!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_SCardSvr="
 
@@ -1247,7 +1301,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_SCPolicySvc=notfound"
 )
-echo   "SCPolicySvc": "!STATUS_SCPolicySvc!", >> "%~dp0services_status.json"
+echo   "SCPolicySvc": "!STATUS_SCPolicySvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_SCPolicySvc="
 
@@ -1265,7 +1319,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_DevicePickerUserSvc=notfound"
 )
-echo   "DevicePickerUserSvc": "!STATUS_DevicePickerUserSvc!", >> "%~dp0services_status.json"
+echo   "DevicePickerUserSvc": "!STATUS_DevicePickerUserSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_DevicePickerUserSvc="
 
@@ -1283,7 +1337,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_DevicesFlowUserSvc=notfound"
 )
-echo   "DevicesFlowUserSvc": "!STATUS_DevicesFlowUserSvc!", >> "%~dp0services_status.json"
+echo   "DevicesFlowUserSvc": "!STATUS_DevicesFlowUserSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_DevicesFlowUserSvc="
 
@@ -1301,7 +1355,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_DevQueryBroker=notfound"
 )
-echo   "DevQueryBroker": "!STATUS_DevQueryBroker!", >> "%~dp0services_status.json"
+echo   "DevQueryBroker": "!STATUS_DevQueryBroker!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_DevQueryBroker="
 
@@ -1319,7 +1373,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_DisplayEnhancementService=notfound"
 )
-echo   "DisplayEnhancementService": "!STATUS_DisplayEnhancementService!", >> "%~dp0services_status.json"
+echo   "DisplayEnhancementService": "!STATUS_DisplayEnhancementService!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_DisplayEnhancementService="
 
@@ -1337,7 +1391,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_fhsvc=notfound"
 )
-echo   "fhsvc": "!STATUS_fhsvc!", >> "%~dp0services_status.json"
+echo   "fhsvc": "!STATUS_fhsvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_fhsvc="
 
@@ -1355,7 +1409,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_SDRSVC=notfound"
 )
-echo   "SDRSVC": "!STATUS_SDRSVC!", >> "%~dp0services_status.json"
+echo   "SDRSVC": "!STATUS_SDRSVC!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_SDRSVC="
 
@@ -1373,7 +1427,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_swprv=notfound"
 )
-echo   "swprv": "!STATUS_swprv!", >> "%~dp0services_status.json"
+echo   "swprv": "!STATUS_swprv!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_swprv="
 
@@ -1391,7 +1445,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_VSS=notfound"
 )
-echo   "VSS": "!STATUS_VSS!", >> "%~dp0services_status.json"
+echo   "VSS": "!STATUS_VSS!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_VSS="
 
@@ -1409,7 +1463,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_wbengine=notfound"
 )
-echo   "wbengine": "!STATUS_wbengine!", >> "%~dp0services_status.json"
+echo   "wbengine": "!STATUS_wbengine!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_wbengine="
 
@@ -1427,7 +1481,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_TieringEngineService=notfound"
 )
-echo   "TieringEngineService": "!STATUS_TieringEngineService!", >> "%~dp0services_status.json"
+echo   "TieringEngineService": "!STATUS_TieringEngineService!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_TieringEngineService="
 
@@ -1445,7 +1499,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_UsoSvc=notfound"
 )
-echo   "UsoSvc": "!STATUS_UsoSvc!", >> "%~dp0services_status.json"
+echo   "UsoSvc": "!STATUS_UsoSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_UsoSvc="
 
@@ -1463,7 +1517,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_WaaSMedicSvc=notfound"
 )
-echo   "WaaSMedicSvc": "!STATUS_WaaSMedicSvc!", >> "%~dp0services_status.json"
+echo   "WaaSMedicSvc": "!STATUS_WaaSMedicSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_WaaSMedicSvc="
 
@@ -1481,7 +1535,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_wuauserv=notfound"
 )
-echo   "wuauserv": "!STATUS_wuauserv!", >> "%~dp0services_status.json"
+echo   "wuauserv": "!STATUS_wuauserv!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_wuauserv="
 
@@ -1499,7 +1553,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_DoSvc=notfound"
 )
-echo   "DoSvc": "!STATUS_DoSvc!", >> "%~dp0services_status.json"
+echo   "DoSvc": "!STATUS_DoSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_DoSvc="
 
@@ -1517,7 +1571,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_PushToInstall=notfound"
 )
-echo   "PushToInstall": "!STATUS_PushToInstall!", >> "%~dp0services_status.json"
+echo   "PushToInstall": "!STATUS_PushToInstall!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_PushToInstall="
 
@@ -1535,7 +1589,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_vmicguestinterface=notfound"
 )
-echo   "vmicguestinterface": "!STATUS_vmicguestinterface!", >> "%~dp0services_status.json"
+echo   "vmicguestinterface": "!STATUS_vmicguestinterface!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_vmicguestinterface="
 
@@ -1553,7 +1607,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_vmicheartbeat=notfound"
 )
-echo   "vmicheartbeat": "!STATUS_vmicheartbeat!", >> "%~dp0services_status.json"
+echo   "vmicheartbeat": "!STATUS_vmicheartbeat!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_vmicheartbeat="
 
@@ -1571,7 +1625,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_vmickvpexchange=notfound"
 )
-echo   "vmickvpexchange": "!STATUS_vmickvpexchange!", >> "%~dp0services_status.json"
+echo   "vmickvpexchange": "!STATUS_vmickvpexchange!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_vmickvpexchange="
 
@@ -1589,7 +1643,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_vmicrdv=notfound"
 )
-echo   "vmicrdv": "!STATUS_vmicrdv!", >> "%~dp0services_status.json"
+echo   "vmicrdv": "!STATUS_vmicrdv!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_vmicrdv="
 
@@ -1607,7 +1661,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_vmicshutdown=notfound"
 )
-echo   "vmicshutdown": "!STATUS_vmicshutdown!", >> "%~dp0services_status.json"
+echo   "vmicshutdown": "!STATUS_vmicshutdown!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_vmicshutdown="
 
@@ -1625,7 +1679,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_vmictimesync=notfound"
 )
-echo   "vmictimesync": "!STATUS_vmictimesync!", >> "%~dp0services_status.json"
+echo   "vmictimesync": "!STATUS_vmictimesync!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_vmictimesync="
 
@@ -1643,7 +1697,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_vmicvmsession=notfound"
 )
-echo   "vmicvmsession": "!STATUS_vmicvmsession!", >> "%~dp0services_status.json"
+echo   "vmicvmsession": "!STATUS_vmicvmsession!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_vmicvmsession="
 
@@ -1661,7 +1715,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_vmicvss=notfound"
 )
-echo   "vmicvss": "!STATUS_vmicvss!", >> "%~dp0services_status.json"
+echo   "vmicvss": "!STATUS_vmicvss!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_vmicvss="
 
@@ -1679,7 +1733,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_HvHost=notfound"
 )
-echo   "HvHost": "!STATUS_HvHost!", >> "%~dp0services_status.json"
+echo   "HvHost": "!STATUS_HvHost!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_HvHost="
 
@@ -1697,7 +1751,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_RetailDemo=notfound"
 )
-echo   "RetailDemo": "!STATUS_RetailDemo!", >> "%~dp0services_status.json"
+echo   "RetailDemo": "!STATUS_RetailDemo!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_RetailDemo="
 
@@ -1715,7 +1769,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_PhoneSvc=notfound"
 )
-echo   "PhoneSvc": "!STATUS_PhoneSvc!", >> "%~dp0services_status.json"
+echo   "PhoneSvc": "!STATUS_PhoneSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_PhoneSvc="
 
@@ -1733,7 +1787,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_MessagingService=notfound"
 )
-echo   "MessagingService": "!STATUS_MessagingService!", >> "%~dp0services_status.json"
+echo   "MessagingService": "!STATUS_MessagingService!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_MessagingService="
 
@@ -1751,7 +1805,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_SmsRouter=notfound"
 )
-echo   "SmsRouter": "!STATUS_SmsRouter!", >> "%~dp0services_status.json"
+echo   "SmsRouter": "!STATUS_SmsRouter!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_SmsRouter="
 
@@ -1769,7 +1823,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_Fax=notfound"
 )
-echo   "Fax": "!STATUS_Fax!", >> "%~dp0services_status.json"
+echo   "Fax": "!STATUS_Fax!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_Fax="
 
@@ -1787,7 +1841,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_TabletInputService=notfound"
 )
-echo   "TabletInputService": "!STATUS_TabletInputService!", >> "%~dp0services_status.json"
+echo   "TabletInputService": "!STATUS_TabletInputService!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_TabletInputService="
 
@@ -1805,7 +1859,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_WbioSrvc=notfound"
 )
-echo   "WbioSrvc": "!STATUS_WbioSrvc!", >> "%~dp0services_status.json"
+echo   "WbioSrvc": "!STATUS_WbioSrvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_WbioSrvc="
 
@@ -1823,7 +1877,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_SEMgrSvc=notfound"
 )
-echo   "SEMgrSvc": "!STATUS_SEMgrSvc!", >> "%~dp0services_status.json"
+echo   "SEMgrSvc": "!STATUS_SEMgrSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_SEMgrSvc="
 
@@ -1841,7 +1895,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_WalletService=notfound"
 )
-echo   "WalletService": "!STATUS_WalletService!", >> "%~dp0services_status.json"
+echo   "WalletService": "!STATUS_WalletService!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_WalletService="
 
@@ -1859,7 +1913,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_wisvc=notfound"
 )
-echo   "wisvc": "!STATUS_wisvc!", >> "%~dp0services_status.json"
+echo   "wisvc": "!STATUS_wisvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_wisvc="
 
@@ -1877,7 +1931,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_NaturalAuthentication=notfound"
 )
-echo   "NaturalAuthentication": "!STATUS_NaturalAuthentication!", >> "%~dp0services_status.json"
+echo   "NaturalAuthentication": "!STATUS_NaturalAuthentication!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_NaturalAuthentication="
 
@@ -1895,7 +1949,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_OneSyncSvc=notfound"
 )
-echo   "OneSyncSvc": "!STATUS_OneSyncSvc!", >> "%~dp0services_status.json"
+echo   "OneSyncSvc": "!STATUS_OneSyncSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_OneSyncSvc="
 
@@ -1913,7 +1967,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_CDPUserSvc=notfound"
 )
-echo   "CDPUserSvc": "!STATUS_CDPUserSvc!", >> "%~dp0services_status.json"
+echo   "CDPUserSvc": "!STATUS_CDPUserSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_CDPUserSvc="
 
@@ -1931,7 +1985,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_CDPSvc=notfound"
 )
-echo   "CDPSvc": "!STATUS_CDPSvc!", >> "%~dp0services_status.json"
+echo   "CDPSvc": "!STATUS_CDPSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_CDPSvc="
 
@@ -1949,7 +2003,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_BcastDVRUserService=notfound"
 )
-echo   "BcastDVRUserService": "!STATUS_BcastDVRUserService!", >> "%~dp0services_status.json"
+echo   "BcastDVRUserService": "!STATUS_BcastDVRUserService!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_BcastDVRUserService="
 
@@ -1967,7 +2021,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_CaptureService=notfound"
 )
-echo   "CaptureService": "!STATUS_CaptureService!", >> "%~dp0services_status.json"
+echo   "CaptureService": "!STATUS_CaptureService!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_CaptureService="
 
@@ -1985,7 +2039,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_cbdhsvc=notfound"
 )
-echo   "cbdhsvc": "!STATUS_cbdhsvc!", >> "%~dp0services_status.json"
+echo   "cbdhsvc": "!STATUS_cbdhsvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_cbdhsvc="
 
@@ -2003,7 +2057,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_ConsentUxUserSvc=notfound"
 )
-echo   "ConsentUxUserSvc": "!STATUS_ConsentUxUserSvc!", >> "%~dp0services_status.json"
+echo   "ConsentUxUserSvc": "!STATUS_ConsentUxUserSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_ConsentUxUserSvc="
 
@@ -2021,7 +2075,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_SharedRealitySvc=notfound"
 )
-echo   "SharedRealitySvc": "!STATUS_SharedRealitySvc!", >> "%~dp0services_status.json"
+echo   "SharedRealitySvc": "!STATUS_SharedRealitySvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_SharedRealitySvc="
 
@@ -2039,7 +2093,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_MixedRealityOpenXRSvc=notfound"
 )
-echo   "MixedRealityOpenXRSvc": "!STATUS_MixedRealityOpenXRSvc!", >> "%~dp0services_status.json"
+echo   "MixedRealityOpenXRSvc": "!STATUS_MixedRealityOpenXRSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_MixedRealityOpenXRSvc="
 
@@ -2057,7 +2111,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_spectrum=notfound"
 )
-echo   "spectrum": "!STATUS_spectrum!", >> "%~dp0services_status.json"
+echo   "spectrum": "!STATUS_spectrum!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_spectrum="
 
@@ -2075,7 +2129,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_perceptionsimulation=notfound"
 )
-echo   "perceptionsimulation": "!STATUS_perceptionsimulation!", >> "%~dp0services_status.json"
+echo   "perceptionsimulation": "!STATUS_perceptionsimulation!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_perceptionsimulation="
 
@@ -2093,7 +2147,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_UevAgentService=notfound"
 )
-echo   "UevAgentService": "!STATUS_UevAgentService!", >> "%~dp0services_status.json"
+echo   "UevAgentService": "!STATUS_UevAgentService!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_UevAgentService="
 
@@ -2111,7 +2165,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_UmRdpService=notfound"
 )
-echo   "UmRdpService": "!STATUS_UmRdpService!", >> "%~dp0services_status.json"
+echo   "UmRdpService": "!STATUS_UmRdpService!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_UmRdpService="
 
@@ -2129,7 +2183,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_TermService=notfound"
 )
-echo   "TermService": "!STATUS_TermService!", >> "%~dp0services_status.json"
+echo   "TermService": "!STATUS_TermService!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_TermService="
 
@@ -2147,7 +2201,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_SessionEnv=notfound"
 )
-echo   "SessionEnv": "!STATUS_SessionEnv!", >> "%~dp0services_status.json"
+echo   "SessionEnv": "!STATUS_SessionEnv!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_SessionEnv="
 
@@ -2165,7 +2219,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_shpamsvc=notfound"
 )
-echo   "shpamsvc": "!STATUS_shpamsvc!", >> "%~dp0services_status.json"
+echo   "shpamsvc": "!STATUS_shpamsvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_shpamsvc="
 
@@ -2183,7 +2237,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_smphost=notfound"
 )
-echo   "smphost": "!STATUS_smphost!", >> "%~dp0services_status.json"
+echo   "smphost": "!STATUS_smphost!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_smphost="
 
@@ -2201,7 +2255,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_svsvc=notfound"
 )
-echo   "svsvc": "!STATUS_svsvc!", >> "%~dp0services_status.json"
+echo   "svsvc": "!STATUS_svsvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_svsvc="
 
@@ -2219,7 +2273,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_TapiSrv=notfound"
 )
-echo   "TapiSrv": "!STATUS_TapiSrv!", >> "%~dp0services_status.json"
+echo   "TapiSrv": "!STATUS_TapiSrv!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_TapiSrv="
 
@@ -2237,7 +2291,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_TimeBrokerSvc=notfound"
 )
-echo   "TimeBrokerSvc": "!STATUS_TimeBrokerSvc!", >> "%~dp0services_status.json"
+echo   "TimeBrokerSvc": "!STATUS_TimeBrokerSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_TimeBrokerSvc="
 
@@ -2255,7 +2309,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_TokenBroker=notfound"
 )
-echo   "TokenBroker": "!STATUS_TokenBroker!", >> "%~dp0services_status.json"
+echo   "TokenBroker": "!STATUS_TokenBroker!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_TokenBroker="
 
@@ -2273,7 +2327,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_TrkWks=notfound"
 )
-echo   "TrkWks": "!STATUS_TrkWks!", >> "%~dp0services_status.json"
+echo   "TrkWks": "!STATUS_TrkWks!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_TrkWks="
 
@@ -2291,7 +2345,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_tzautoupdate=notfound"
 )
-echo   "tzautoupdate": "!STATUS_tzautoupdate!", >> "%~dp0services_status.json"
+echo   "tzautoupdate": "!STATUS_tzautoupdate!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_tzautoupdate="
 
@@ -2309,7 +2363,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_UserDataSvc=notfound"
 )
-echo   "UserDataSvc": "!STATUS_UserDataSvc!", >> "%~dp0services_status.json"
+echo   "UserDataSvc": "!STATUS_UserDataSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_UserDataSvc="
 
@@ -2327,7 +2381,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_UnistoreSvc=notfound"
 )
-echo   "UnistoreSvc": "!STATUS_UnistoreSvc!", >> "%~dp0services_status.json"
+echo   "UnistoreSvc": "!STATUS_UnistoreSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_UnistoreSvc="
 
@@ -2345,7 +2399,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_VacSvc=notfound"
 )
-echo   "VacSvc": "!STATUS_VacSvc!", >> "%~dp0services_status.json"
+echo   "VacSvc": "!STATUS_VacSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_VacSvc="
 
@@ -2363,7 +2417,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_VaultSvc=notfound"
 )
-echo   "VaultSvc": "!STATUS_VaultSvc!", >> "%~dp0services_status.json"
+echo   "VaultSvc": "!STATUS_VaultSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_VaultSvc="
 
@@ -2381,7 +2435,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_vds=notfound"
 )
-echo   "vds": "!STATUS_vds!", >> "%~dp0services_status.json"
+echo   "vds": "!STATUS_vds!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_vds="
 
@@ -2399,7 +2453,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_W32Time=notfound"
 )
-echo   "W32Time": "!STATUS_W32Time!", >> "%~dp0services_status.json"
+echo   "W32Time": "!STATUS_W32Time!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_W32Time="
 
@@ -2417,7 +2471,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_WarpJITSvc=notfound"
 )
-echo   "WarpJITSvc": "!STATUS_WarpJITSvc!", >> "%~dp0services_status.json"
+echo   "WarpJITSvc": "!STATUS_WarpJITSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_WarpJITSvc="
 
@@ -2435,7 +2489,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_WEPHOSTSVC=notfound"
 )
-echo   "WEPHOSTSVC": "!STATUS_WEPHOSTSVC!", >> "%~dp0services_status.json"
+echo   "WEPHOSTSVC": "!STATUS_WEPHOSTSVC!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_WEPHOSTSVC="
 
@@ -2453,7 +2507,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_WpcMonSvc=notfound"
 )
-echo   "WpcMonSvc": "!STATUS_WpcMonSvc!", >> "%~dp0services_status.json"
+echo   "WpcMonSvc": "!STATUS_WpcMonSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_WpcMonSvc="
 
@@ -2471,7 +2525,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_edgeupdate=notfound"
 )
-echo   "edgeupdate": "!STATUS_edgeupdate!", >> "%~dp0services_status.json"
+echo   "edgeupdate": "!STATUS_edgeupdate!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_edgeupdate="
 
@@ -2489,7 +2543,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_edgeupdatem=notfound"
 )
-echo   "edgeupdatem": "!STATUS_edgeupdatem!", >> "%~dp0services_status.json"
+echo   "edgeupdatem": "!STATUS_edgeupdatem!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_edgeupdatem="
 
@@ -2507,7 +2561,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_MicrosoftEdgeElevationService=notfound"
 )
-echo   "MicrosoftEdgeElevationService": "!STATUS_MicrosoftEdgeElevationService!", >> "%~dp0services_status.json"
+echo   "MicrosoftEdgeElevationService": "!STATUS_MicrosoftEdgeElevationService!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_MicrosoftEdgeElevationService="
 
@@ -2525,7 +2579,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_GpuEnergyDrv=notfound"
 )
-echo   "GpuEnergyDrv": "!STATUS_GpuEnergyDrv!", >> "%~dp0services_status.json"
+echo   "GpuEnergyDrv": "!STATUS_GpuEnergyDrv!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_GpuEnergyDrv="
 
@@ -2543,7 +2597,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_GraphicsPerfSvc=notfound"
 )
-echo   "GraphicsPerfSvc": "!STATUS_GraphicsPerfSvc!", >> "%~dp0services_status.json"
+echo   "GraphicsPerfSvc": "!STATUS_GraphicsPerfSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_GraphicsPerfSvc="
 
@@ -2561,7 +2615,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_AppMgmt=notfound"
 )
-echo   "AppMgmt": "!STATUS_AppMgmt!", >> "%~dp0services_status.json"
+echo   "AppMgmt": "!STATUS_AppMgmt!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_AppMgmt="
 
@@ -2579,7 +2633,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_AppReadiness=notfound"
 )
-echo   "AppReadiness": "!STATUS_AppReadiness!", >> "%~dp0services_status.json"
+echo   "AppReadiness": "!STATUS_AppReadiness!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_AppReadiness="
 
@@ -2597,7 +2651,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_AssignedAccessManagerSvc=notfound"
 )
-echo   "AssignedAccessManagerSvc": "!STATUS_AssignedAccessManagerSvc!", >> "%~dp0services_status.json"
+echo   "AssignedAccessManagerSvc": "!STATUS_AssignedAccessManagerSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_AssignedAccessManagerSvc="
 
@@ -2615,7 +2669,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_AxInstSV=notfound"
 )
-echo   "AxInstSV": "!STATUS_AxInstSV!", >> "%~dp0services_status.json"
+echo   "AxInstSV": "!STATUS_AxInstSV!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_AxInstSV="
 
@@ -2633,7 +2687,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_COMSysApp=notfound"
 )
-echo   "COMSysApp": "!STATUS_COMSysApp!", >> "%~dp0services_status.json"
+echo   "COMSysApp": "!STATUS_COMSysApp!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_COMSysApp="
 
@@ -2651,7 +2705,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_CscService=notfound"
 )
-echo   "CscService": "!STATUS_CscService!", >> "%~dp0services_status.json"
+echo   "CscService": "!STATUS_CscService!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_CscService="
 
@@ -2669,7 +2723,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_defragsvc=notfound"
 )
-echo   "defragsvc": "!STATUS_defragsvc!", >> "%~dp0services_status.json"
+echo   "defragsvc": "!STATUS_defragsvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_defragsvc="
 
@@ -2687,7 +2741,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_DmEnrollmentSvc=notfound"
 )
-echo   "DmEnrollmentSvc": "!STATUS_DmEnrollmentSvc!", >> "%~dp0services_status.json"
+echo   "DmEnrollmentSvc": "!STATUS_DmEnrollmentSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_DmEnrollmentSvc="
 
@@ -2705,7 +2759,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_DsmSvc=notfound"
 )
-echo   "DsmSvc": "!STATUS_DsmSvc!", >> "%~dp0services_status.json"
+echo   "DsmSvc": "!STATUS_DsmSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_DsmSvc="
 
@@ -2723,7 +2777,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_DsSvc=notfound"
 )
-echo   "DsSvc": "!STATUS_DsSvc!", >> "%~dp0services_status.json"
+echo   "DsSvc": "!STATUS_DsSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_DsSvc="
 
@@ -2741,7 +2795,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_DusmSvc=notfound"
 )
-echo   "DusmSvc": "!STATUS_DusmSvc!", >> "%~dp0services_status.json"
+echo   "DusmSvc": "!STATUS_DusmSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_DusmSvc="
 
@@ -2759,7 +2813,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_Eaphost=notfound"
 )
-echo   "Eaphost": "!STATUS_Eaphost!", >> "%~dp0services_status.json"
+echo   "Eaphost": "!STATUS_Eaphost!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_Eaphost="
 
@@ -2777,7 +2831,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_embeddedmode=notfound"
 )
-echo   "embeddedmode": "!STATUS_embeddedmode!", >> "%~dp0services_status.json"
+echo   "embeddedmode": "!STATUS_embeddedmode!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_embeddedmode="
 
@@ -2795,7 +2849,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_EntAppSvc=notfound"
 )
-echo   "EntAppSvc": "!STATUS_EntAppSvc!", >> "%~dp0services_status.json"
+echo   "EntAppSvc": "!STATUS_EntAppSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_EntAppSvc="
 
@@ -2813,7 +2867,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_fdPHost=notfound"
 )
-echo   "fdPHost": "!STATUS_fdPHost!", >> "%~dp0services_status.json"
+echo   "fdPHost": "!STATUS_fdPHost!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_fdPHost="
 
@@ -2831,7 +2885,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_FDResPub=notfound"
 )
-echo   "FDResPub": "!STATUS_FDResPub!", >> "%~dp0services_status.json"
+echo   "FDResPub": "!STATUS_FDResPub!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_FDResPub="
 
@@ -2849,7 +2903,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_FontCache=notfound"
 )
-echo   "FontCache": "!STATUS_FontCache!", >> "%~dp0services_status.json"
+echo   "FontCache": "!STATUS_FontCache!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_FontCache="
 
@@ -2867,7 +2921,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_FontCache3.0.0.0=notfound"
 )
-echo   "FontCache3.0.0.0": "!STATUS_FontCache3.0.0.0!", >> "%~dp0services_status.json"
+echo   "FontCache3.0.0.0": "!STATUS_FontCache3.0.0.0!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_FontCache3.0.0.0="
 
@@ -2885,7 +2939,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_FrameServer=notfound"
 )
-echo   "FrameServer": "!STATUS_FrameServer!", >> "%~dp0services_status.json"
+echo   "FrameServer": "!STATUS_FrameServer!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_FrameServer="
 
@@ -2903,7 +2957,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_FrameServerMonitor=notfound"
 )
-echo   "FrameServerMonitor": "!STATUS_FrameServerMonitor!", >> "%~dp0services_status.json"
+echo   "FrameServerMonitor": "!STATUS_FrameServerMonitor!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_FrameServerMonitor="
 
@@ -2921,7 +2975,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_IKEEXT=notfound"
 )
-echo   "IKEEXT": "!STATUS_IKEEXT!", >> "%~dp0services_status.json"
+echo   "IKEEXT": "!STATUS_IKEEXT!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_IKEEXT="
 
@@ -2939,7 +2993,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_InstallService=notfound"
 )
-echo   "InstallService": "!STATUS_InstallService!", >> "%~dp0services_status.json"
+echo   "InstallService": "!STATUS_InstallService!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_InstallService="
 
@@ -2957,7 +3011,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_LicenseManager=notfound"
 )
-echo   "LicenseManager": "!STATUS_LicenseManager!", >> "%~dp0services_status.json"
+echo   "LicenseManager": "!STATUS_LicenseManager!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_LicenseManager="
 
@@ -2975,7 +3029,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_LxpSvc=notfound"
 )
-echo   "LxpSvc": "!STATUS_LxpSvc!", >> "%~dp0services_status.json"
+echo   "LxpSvc": "!STATUS_LxpSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_LxpSvc="
 
@@ -2993,7 +3047,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_McpManagementService=notfound"
 )
-echo   "McpManagementService": "!STATUS_McpManagementService!", >> "%~dp0services_status.json"
+echo   "McpManagementService": "!STATUS_McpManagementService!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_McpManagementService="
 
@@ -3011,7 +3065,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_PerfHost=notfound"
 )
-echo   "PerfHost": "!STATUS_PerfHost!", >> "%~dp0services_status.json"
+echo   "PerfHost": "!STATUS_PerfHost!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_PerfHost="
 
@@ -3029,7 +3083,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_PimIndexMaintenanceSvc=notfound"
 )
-echo   "PimIndexMaintenanceSvc": "!STATUS_PimIndexMaintenanceSvc!", >> "%~dp0services_status.json"
+echo   "PimIndexMaintenanceSvc": "!STATUS_PimIndexMaintenanceSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_PimIndexMaintenanceSvc="
 
@@ -3047,7 +3101,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_ssh-agent=notfound"
 )
-echo   "ssh-agent": "!STATUS_ssh-agent!", >> "%~dp0services_status.json"
+echo   "ssh-agent": "!STATUS_ssh-agent!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_ssh-agent="
 
@@ -3065,7 +3119,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_UdkUserSvc=notfound"
 )
-echo   "UdkUserSvc": "!STATUS_UdkUserSvc!", >> "%~dp0services_status.json"
+echo   "UdkUserSvc": "!STATUS_UdkUserSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_UdkUserSvc="
 
@@ -3083,7 +3137,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_uhssvc=notfound"
 )
-echo   "uhssvc": "!STATUS_uhssvc!", >> "%~dp0services_status.json"
+echo   "uhssvc": "!STATUS_uhssvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_uhssvc="
 
@@ -3101,7 +3155,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_VerifierExt=notfound"
 )
-echo   "VerifierExt": "!STATUS_VerifierExt!", >> "%~dp0services_status.json"
+echo   "VerifierExt": "!STATUS_VerifierExt!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_VerifierExt="
 
@@ -3119,7 +3173,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_WManSvc=notfound"
 )
-echo   "WManSvc": "!STATUS_WManSvc!", >> "%~dp0services_status.json"
+echo   "WManSvc": "!STATUS_WManSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_WManSvc="
 
@@ -3137,7 +3191,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_wmiApSrv=notfound"
 )
-echo   "wmiApSrv": "!STATUS_wmiApSrv!", >> "%~dp0services_status.json"
+echo   "wmiApSrv": "!STATUS_wmiApSrv!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_wmiApSrv="
 
@@ -3155,7 +3209,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_wlpasvc=notfound"
 )
-echo   "wlpasvc": "!STATUS_wlpasvc!", >> "%~dp0services_status.json"
+echo   "wlpasvc": "!STATUS_wlpasvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_wlpasvc="
 
@@ -3173,7 +3227,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_AppVClient=notfound"
 )
-echo   "AppVClient": "!STATUS_AppVClient!", >> "%~dp0services_status.json"
+echo   "AppVClient": "!STATUS_AppVClient!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_AppVClient="
 
@@ -3191,7 +3245,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_AppIDSvc=notfound"
 )
-echo   "AppIDSvc": "!STATUS_AppIDSvc!", >> "%~dp0services_status.json"
+echo   "AppIDSvc": "!STATUS_AppIDSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_AppIDSvc="
 
@@ -3209,7 +3263,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_ClipSVC=notfound"
 )
-echo   "ClipSVC": "!STATUS_ClipSVC!", >> "%~dp0services_status.json"
+echo   "ClipSVC": "!STATUS_ClipSVC!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_ClipSVC="
 
@@ -3227,7 +3281,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_CloudBackupRestoreSvc=notfound"
 )
-echo   "CloudBackupRestoreSvc": "!STATUS_CloudBackupRestoreSvc!", >> "%~dp0services_status.json"
+echo   "CloudBackupRestoreSvc": "!STATUS_CloudBackupRestoreSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_CloudBackupRestoreSvc="
 
@@ -3245,7 +3299,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_cloudidsvc=notfound"
 )
-echo   "cloudidsvc": "!STATUS_cloudidsvc!", >> "%~dp0services_status.json"
+echo   "cloudidsvc": "!STATUS_cloudidsvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_cloudidsvc="
 
@@ -3263,7 +3317,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_cnghwassist=notfound"
 )
-echo   "cnghwassist": "!STATUS_cnghwassist!", >> "%~dp0services_status.json"
+echo   "cnghwassist": "!STATUS_cnghwassist!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_cnghwassist="
 
@@ -3281,7 +3335,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_dcpsvc=notfound"
 )
-echo   "dcpsvc": "!STATUS_dcpsvc!", >> "%~dp0services_status.json"
+echo   "dcpsvc": "!STATUS_dcpsvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_dcpsvc="
 
@@ -3299,7 +3353,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_EFS=notfound"
 )
-echo   "EFS": "!STATUS_EFS!", >> "%~dp0services_status.json"
+echo   "EFS": "!STATUS_EFS!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_EFS="
 
@@ -3317,7 +3371,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_KeyIso=notfound"
 )
-echo   "KeyIso": "!STATUS_KeyIso!", >> "%~dp0services_status.json"
+echo   "KeyIso": "!STATUS_KeyIso!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_KeyIso="
 
@@ -3335,7 +3389,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_KtmRm=notfound"
 )
-echo   "KtmRm": "!STATUS_KtmRm!", >> "%~dp0services_status.json"
+echo   "KtmRm": "!STATUS_KtmRm!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_KtmRm="
 
@@ -3353,7 +3407,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_MSDTC=notfound"
 )
-echo   "MSDTC": "!STATUS_MSDTC!", >> "%~dp0services_status.json"
+echo   "MSDTC": "!STATUS_MSDTC!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_MSDTC="
 
@@ -3371,7 +3425,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_NgcCtnrSvc=notfound"
 )
-echo   "NgcCtnrSvc": "!STATUS_NgcCtnrSvc!", >> "%~dp0services_status.json"
+echo   "NgcCtnrSvc": "!STATUS_NgcCtnrSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_NgcCtnrSvc="
 
@@ -3389,7 +3443,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_NgcSvc=notfound"
 )
-echo   "NgcSvc": "!STATUS_NgcSvc!", >> "%~dp0services_status.json"
+echo   "NgcSvc": "!STATUS_NgcSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_NgcSvc="
 
@@ -3407,7 +3461,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_PeerDistSvc=notfound"
 )
-echo   "PeerDistSvc": "!STATUS_PeerDistSvc!", >> "%~dp0services_status.json"
+echo   "PeerDistSvc": "!STATUS_PeerDistSvc!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_PeerDistSvc="
 
@@ -3425,7 +3479,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_UCPD=notfound"
 )
-echo   "UCPD": "!STATUS_UCPD!", >> "%~dp0services_status.json"
+echo   "UCPD": "!STATUS_UCPD!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_UCPD="
 
@@ -3443,7 +3497,7 @@ if defined START_VAL (
 ) else (
     set "STATUS_SharedAccess=notfound"
 )
-echo   "SharedAccess": "!STATUS_SharedAccess!", >> "%~dp0services_status.json"
+echo   "SharedAccess": "!STATUS_SharedAccess!", >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_SharedAccess="
 
@@ -3461,9 +3515,9 @@ if defined START_VAL (
 ) else (
     set "STATUS_WinHttpAutoProxySvc=notfound"
 )
-echo   "WinHttpAutoProxySvc": "!STATUS_WinHttpAutoProxySvc!" >> "%~dp0services_status.json"
+echo   "WinHttpAutoProxySvc": "!STATUS_WinHttpAutoProxySvc!" >> "%STATUS_FILE%"
 set "START_VAL="
 set "STATUS_WinHttpAutoProxySvc="
 
-echo } >> "%~dp0services_status.json"
+echo } >> "%STATUS_FILE%"
 echo [OK] Статусы записаны в services_status.json
