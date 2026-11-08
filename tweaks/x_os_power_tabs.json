@@ -1,0 +1,36 @@
+{
+  "tabs": {
+    "Root": [
+      "Импортировать XOS Power Plan.bat",
+      "Отключить CPU Throttle (десктоп).bat",
+      "Отключить Disable Idle sub_processor.bat",
+      "Отключить HDD Sleep Sub_Processor.bat",
+      "Отключить HDD sleep.bat",
+      "Отключить Hibernation.bat",
+      "Отключить InsightsEnabled per-user.bat",
+      "Отключить Mobility Center.bat",
+      "Отключить MSPower DeviceEnable.bat",
+      "Отключить PCI D3Cold.bat",
+      "Отключить Sleep Study логи.bat",
+      "Отключить USB power management.bat",
+      "Отключить USB selective suspend.bat",
+      "Отключить таймауты AC.bat",
+      "Отключить таймауты DC.bat"
+    ],
+    "отмена": [
+      "Вернуть таймауты AC.bat",
+      "Вернуть таймауты DC.bat",
+      "Включить CPU Throttle.bat",
+      "Включить Enable Idle sub_processor.bat",
+      "Включить HDD Sleep.bat",
+      "Включить Hibernation.bat",
+      "Включить InsightsEnabled.bat",
+      "Включить Mobility Center.bat",
+      "Включить MSPower DeviceEnable.bat",
+      "Включить PCI D3Cold.bat",
+      "Включить Sleep Study логи.bat",
+      "Включить USB power management.bat",
+      "Удалить XOS Power Plan.bat"
+    ]
+  }
+}

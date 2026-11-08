@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anton Vampire</title>
+
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' 'unsafe-inline' data: file:;
+                 script-src 'self' 'unsafe-inline' file:;
+                 style-src 'self' 'unsafe-inline' file:;
+                 font-src 'self' data: file:;
+                 img-src 'self' data: file: blob:;
+                 connect-src 'self' file:;
+                 media-src 'self' file:;" />
+
+  <!-- ============================================================
+       ANTI-FLASH: тёмный фон + splash виден сразу, #app скрыт
+       Все стили прелоадера — inline, чтобы он отрисовался ДО
+       того, как подгрузится внешний CSS-стиль.
+       ============================================================ -->
+  <style>
+    /* База — тёмный фон на всё, чтобы никогда не было белого */
+    html, body {
+      background: #141218 !important;
+      color: #e6e0e9;
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: system-ui, sans-serif;
+      user-select: none;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* #app скрыт до готовности (ставится класс .app-ready) */
+    #app {
+      visibility: hidden;
+      opacity: 0;
+    }
+    body.app-ready #app {
+      visibility: visible;
+      opacity: 1;
+      transition: opacity 200ms ease;
+    }
+
+    /* ============================================================
+       SPLASH SCREEN — виден сразу, тёмный, с заглушкой 🩸
+       ============================================================ */
+    #splash-screen {
+      background: #141218;
+      position: fixed;
+      inset: 0;
+      z-index: 999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      transition: opacity 350ms ease, visibility 350ms ease;
+    }
+    #splash-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    /* Фон прелоадера: img скрыт, пока не загрузится.
+       Пока грузится — виден просто тёмный фон. */
+    #splash-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      opacity: 0;
+      transition: opacity 400ms ease;
+      display: block;
+      pointer-events: none;
+    }
+    #splash-bg.visible { opacity: 1; }
+
+    /* Оверлей — всегда поверх фона, чтобы текст читался */
+    .splash-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background:
+        radial-gradient(circle at 50% 40%,
+          rgba(208, 188, 255, 0.18),
+          transparent 60%),
+        linear-gradient(180deg,
+          rgba(20, 18, 24, 0.72),
+          rgba(20, 18, 24, 0.94));
+      pointer-events: none;
+    }
+
+    .splash-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      text-align: center;
+      padding: 24px;
+    }
+
+    /* Контейнер лого: круг с рамкой. Внутри — заглушка и img. */
+    .splash-logo-wrap {
+      width: 116px;
+      height: 116px;
+      border-radius: 50%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(33, 31, 38, 0.85);
+      box-shadow:
+        0 0 0 3px rgba(208, 188, 255, 0.4),
+        0 0 42px rgba(208, 188, 255, 0.55);
+      animation: splash-pulse 2.2s ease-in-out infinite;
+      position: relative;
+    }
+    @keyframes splash-pulse {
+      0%, 100% { transform: scale(1); }
+      50%      { transform: scale(1.04); }
+    }
+
+    /* Заглушка (эмодзи 🩸) — видна, пока лого не загрузилось */
+    .splash-logo-fallback {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 56px;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    /* Реальный логотип — скрыт, пока не загрузится */
+    #splash-logo {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 8px;
+      opacity: 0;
+      transition: opacity 300ms ease;
+      position: relative;
+      z-index: 1;
+      display: block;
+    }
+    #splash-logo.visible { opacity: 1; }
+
+    /* Текст-заголовок и подзаголовок */
+    .splash-title {
+      font-family: system-ui, sans-serif;
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      color: #d0bcff;
+      text-shadow: 0 0 30px rgba(208, 188, 255, 0.6);
+      margin-top: 6px;
+    }
+    .splash-subtitle {
+      font-family: system-ui, sans-serif;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #8a8595;
+    }
+
+    /* Прогресс-бар */
+    .splash-progress {
+      width: 300px;
+      max-width: 80vw;
+      margin-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .splash-progress-bar {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    #splash-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #d0bcff, #b69df8);
+      border-radius: 999px;
+      transition: width 300ms ease;
+    }
+    #splash-progress-text {
+      font-family: 'Consolas', monospace;
+      font-size: 11px;
+      color: #8a8595;
+      letter-spacing: 0.5px;
+      min-height: 16px;
+    }
+
+    /* Точки внизу */
+    .splash-dots {
+      display: flex;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .splash-dots span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #d0bcff;
+      opacity: 0.4;
+      animation: splash-dot 1.4s ease-in-out infinite;
+    }
+    .splash-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .splash-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes splash-dot {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50%      { opacity: 1;   transform: scale(1.3); }
+    }
+    /* Гарантия скрытия кнопок быстрого действия */
+    #btn-select-all.btn-hidden,
+    #btn-execute.btn-hidden {
+      display: none !important;
+    }
+  </style>
+  <!-- 1. Шрифты -->
+  <link rel="stylesheet" href="src/styles/fonts.css" />
+  
+  <!-- 2. CSS-стиль (default/pixel/kitty/material3) подключается
+       динамически из app.js → applyStyle() (он перезапишет только цвета, тени и рамки) -->
+</head>
+<body data-theme="material3">
+
+<!-- ============================================================
+     ПРЕЛОАДЕР
+     - виден СРАЗУ (тёмный, заглушка 🩸)
+     - как только загрузится лого — заглушка плавно скрывается
+     - как только загрузится фон — он плавно проявляется
+     ============================================================ -->
+<div id="splash-screen">
+  <img id="splash-bg" alt="" />
+  <div class="splash-overlay"></div>
+
+  <div class="splash-content">
+    <div class="splash-logo-wrap">
+      <span class="splash-logo-fallback">🩸</span>
+      <img id="splash-logo" alt="Anton Vampire" />
+    </div>
+
+    <div class="splash-title">ANTON VAMPIRE</div>
+    <div class="splash-subtitle">Windows Optimizer</div>
+
+    <div class="splash-progress">
+      <div class="splash-progress-bar">
+        <div id="splash-progress-fill"></div>
+      </div>
+      <div id="splash-progress-text">Загрузка…</div>
+    </div>
+
+    <div class="splash-dots">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     ОСНОВНОЕ ПРИЛОЖЕНИЕ
+     ============================================================ -->
+<div id="app">
+  <img id="bg-image" class="bg-image" alt="" />
+
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-inner">
+        <div class="logo-panel">
+          <div class="logo-title">ANTON</div>
+          <div class="logo-sub">VAMPIRE</div>
+        </div>
+
+        <nav class="nav" id="sidebar-nav"></nav>
+
+        <div class="bottom-panel">
+          <button id="btn-theme"    class="icon-btn" title="Сменить тему">🎨</button>
+          <button id="btn-sound"    class="icon-btn" title="Звук">🔊</button>
+          <button id="btn-bg"       class="icon-btn" title="Фон">🖼️</button>
+          <button id="btn-telegram" class="icon-btn" title="Telegram">💬</button>
+          <button id="btn-donate"   class="icon-btn" title="Поддержать">☕</button>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main-wrap">
+      <div class="main-overlay"></div>
+
+      <main class="main">
+        <header class="topbar">
+          <div class="brand">
+            <span class="logo">🩸</span>
+            <h1 id="app-title">Anton Vampire</h1>
+            <span id="app-version" class="badge">v1.0.9 Beta</span>
+          </div>
+
+          <div class="top-actions">
+            <input id="global-search" type="search" placeholder="🔍 Поиск..." />
+            <button class="btn danger" id="btn-select-all">Выделить всё</button>
+            <button class="btn danger" id="btn-execute">▶ Выполнить</button>
+            <!-- <button class="btn danger" id="btn-refresh-all" title="Обновить все данные (сбросить кэш)">♻</button> -->
+            <button class="btn danger" id="btn-fullscreen" title="F11">⛶</button>
+            <button class="btn danger" id="btn-minimize"   title="Свернуть">—</button>
+            <button class="btn danger" id="btn-close" title="Закрыть">✕</button>
+          </div>
+        </header>
+
+        <div class="content">
+          <nav id="tabs-nav"></nav>
+          <section id="tab-content"></section>
+        </div>
+
+        <footer id="statusbar">
+          <span id="status-text">Готово</span>
+          <span id="selection-counter" class="muted"></span>
+        </footer>
+      </main>
+    </div>
+  </div>
+
+  <div id="log-panel" class="log-panel collapsed">
+    <div class="log-head">
+      <span class="log-title">📟 Лог выполнения</span>
+      <div class="log-actions">
+        <button class="log-btn" id="log-toggle" title="Свернуть/развернуть">▾</button>
+        <button class="log-btn" id="log-clear" title="Очистить">✕</button>
+      </div>
+    </div>
+    <pre class="log-body" id="log-body"></pre>
+  </div>
+
+  <div id="toast-container"></div>
+</div>
+
+<script type="module" src="src/renderer/app.js"></script>
+</body>
+</html>

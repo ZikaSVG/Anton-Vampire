@@ -1,0 +1,32 @@
+{
+  "tabs": {
+    "Root": [
+      "Отключить DEP NX.bat",
+      "Отключить Windows Defender (политика).bat",
+      "Отключить защиту IOAV.bat",
+      "Отключить защиту в реальном времени.bat",
+      "Отключить защиту при доступе.bat",
+      "Отключить поведенческий анализ Defender.bat",
+      "Отключить службу SecurityHealthService.bat",
+      "Отключить службу Sense.bat",
+      "Отключить службу WdNisSvc.bat",
+      "Отключить службу WinDefend.bat",
+      "Отключить службу wscsvc.bat",
+      "Отключить уведомления Defender.bat"
+    ],
+    "отмена": [
+      "Включить DEP NX.bat",
+      "Включить Windows Defender (политика).bat",
+      "Включить защиту IOAV.bat",
+      "Включить защиту в реальном времени.bat",
+      "Включить защиту при доступе.bat",
+      "Включить поведенческий анализ Defender.bat",
+      "Включить службу SecurityHealthService.bat",
+      "Включить службу Sense.bat",
+      "Включить службу WdNisSvc.bat",
+      "Включить службу WinDefend.bat",
+      "Включить службу wscsvc.bat",
+      "Включить уведомления Defender.bat"
+    ]
+  }
+}

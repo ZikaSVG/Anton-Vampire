@@ -1,0 +1,44 @@
+{
+  "tabs": {
+    "Root": [
+      "Заблокировать телеметрию через hosts.bat",
+      "Настроить разрешения приложений.bat",
+      "Отключить Activity Feed.bat",
+      "Отключить CBS Background App.bat",
+      "Отключить CDP и NearShare.bat",
+      "Отключить Clipboard Sync.bat",
+      "Отключить Content Delivery Manager.bat",
+      "Отключить Find My Device.bat",
+      "Отключить Input Personalization.bat",
+      "Отключить Online Speech.bat",
+      "Отключить Setting Sync.bat",
+      "Отключить SIUF.bat",
+      "Отключить Windows Copilot.bat",
+      "Отключить веб-поиск в Пуске.bat",
+      "Отключить геолокацию и сенсоры.bat",
+      "Отключить рекламный ID.bat",
+      "Отключить телеметрию.bat",
+      "Отключить уведомления.bat"
+    ],
+    "отмена": [
+      "Вернуть разрешения приложений.bat",
+      "Включить Activity Feed.bat",
+      "Включить CBS Background App.bat",
+      "Включить CDP и NearShare.bat",
+      "Включить Clipboard Sync.bat",
+      "Включить Content Delivery Manager.bat",
+      "Включить Find My Device.bat",
+      "Включить Input Personalization.bat",
+      "Включить Online Speech.bat",
+      "Включить Setting Sync.bat",
+      "Включить SIUF.bat",
+      "Включить Windows Copilot.bat",
+      "Включить веб-поиск в Пуске.bat",
+      "Включить геолокацию и сенсоры.bat",
+      "Включить рекламный ID.bat",
+      "Включить телеметрию.bat",
+      "Включить уведомления.bat",
+      "Восстановить hosts.bat"
+    ]
+  }
+}

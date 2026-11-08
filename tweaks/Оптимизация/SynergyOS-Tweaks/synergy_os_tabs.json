@@ -1,0 +1,174 @@
+{
+  "tabs": {
+    "Безопасность": {
+      "Root": [
+        "Отключить Defender.bat",
+        "Отключить Mitigations.bat",
+        "Отключить MMCSS.bat",
+        "Отключить SmartScreen.bat"
+      ],
+      "отмена": [
+        "Включить Defender.bat",
+        "Включить Mitigations.bat",
+        "Включить MMCSS.bat",
+        "Включить SmartScreen.bat"
+      ]
+    },
+    "Кастомизация": {
+      "Root": [
+        "Включить классическое меню Win11.bat",
+        "Включить тёмную тему.bat",
+        "Настроить MyComputer NameSpace.bat",
+        "Настроить PS1-ассоциацию.bat",
+        "Настроить мышь.bat",
+        "Настроить панель задач.bat",
+        "Отключить Game Bar и Game DVR.bat",
+        "Очистить taskband.bat",
+        "Показать скрытые файлы и папки.bat",
+        "Убрать SecurityHealth из автозапуска.bat"
+      ],
+      "отмена": [
+        "Вернуть MyComputer NameSpace.bat",
+        "Вернуть PS1-ассоциацию.bat",
+        "Вернуть SecurityHealth в автозапуск.bat",
+        "Вернуть мышь.bat",
+        "Вернуть новое меню Win11.bat",
+        "Вернуть панель задач.bat",
+        "Вернуть скрытые файлы.bat",
+        "Включить Game Bar и Game DVR.bat",
+        "Включить светлую тему.bat"
+      ]
+    },
+    "Контекстное меню": {
+      "Root": [
+        "Добавить .bat в ShellNew.bat",
+        "Добавить .reg в ShellNew.bat"
+      ],
+      "отмена": [
+        "Убрать .bat из ShellNew.bat",
+        "Убрать .reg из ShellNew.bat"
+      ]
+    },
+    "Очистка": {
+      "Root": [
+        "Очистить систему.bat",
+        "Удалить Microsoft Update Health Tools.bat"
+      ]
+    },
+    "Приватность": {
+      "Root": [
+        "Отключить AppCompat.bat",
+        "Отключить Content Delivery Manager.bat",
+        "Отключить Lock Screen Camera.bat",
+        "Отключить PhishingFilter.bat",
+        "Отключить SecurityAndMaintenance уведомления.bat",
+        "Отключить Setting Sync.bat",
+        "Отключить TIPC.bat",
+        "Отключить Windows Insider.bat",
+        "Отключить биометрию.bat",
+        "Отключить геолокацию.bat",
+        "Отключить рекламный ID.bat",
+        "Отключить телеметрию.bat",
+        "Убрать OneDrive из проводника.bat"
+      ],
+      "отмена": [
+        "Вернуть OneDrive в проводник.bat",
+        "Включить AppCompat.bat",
+        "Включить Content Delivery Manager.bat",
+        "Включить Lock Screen Camera.bat",
+        "Включить PhishingFilter.bat",
+        "Включить SecurityAndMaintenance уведомления.bat",
+        "Включить Setting Sync.bat",
+        "Включить TIPC.bat",
+        "Включить Windows Insider.bat",
+        "Включить биометрию.bat",
+        "Включить геолокацию.bat",
+        "Включить рекламный ID.bat",
+        "Включить телеметрию.bat"
+      ]
+    },
+    "Производительность": {
+      "Root": [
+        "Включить write cache.bat",
+        "Настроить BCD.bat",
+        "Настроить MMCSS SystemResponsiveness.bat",
+        "Настроить NTFS.bat",
+        "Настроить SvcHostSplit.bat",
+        "Настроить Win32PrioritySeparation.bat",
+        "Настроить службы.bat",
+        "Настроить таймауты процессов.bat",
+        "Отключить DMA Remapping.bat",
+        "Отключить GameBarPresenceWriter.bat",
+        "Отключить GPU задержки.bat",
+        "Отключить Memory Compression.bat",
+        "Отключить mobsync.bat",
+        "Отключить PnP-устройства WAN.bat",
+        "Пересобрать NGEN.bat"
+      ],
+      "отмена": [
+        "Вернуть BCD.bat",
+        "Вернуть MMCSS SystemResponsiveness.bat",
+        "Вернуть NTFS.bat",
+        "Вернуть SvcHostSplit.bat",
+        "Вернуть Win32PrioritySeparation.bat",
+        "Вернуть службы.bat",
+        "Вернуть таймауты процессов.bat",
+        "Включить DMA Remapping.bat",
+        "Включить GameBarPresenceWriter.bat",
+        "Включить GPU задержки.bat",
+        "Включить Memory Compression.bat",
+        "Включить mobsync.bat",
+        "Включить PnP-устройства WAN.bat",
+        "Отключить write cache.bat"
+      ]
+    },
+    "Прочее": {
+      "Root": [
+        "Настроить OEM SOS.bat",
+        "Настроить сеть.bat",
+        "Отключить проверку драйверов.bat",
+        "Отключить телеметрию PowerShell.bat",
+        "Приостановить Windows Update.bat"
+      ],
+      "отмена": [
+        "Вернуть OEM SOS.bat",
+        "Вернуть сеть.bat",
+        "Вернуть телеметрию PowerShell.bat",
+        "Включить проверку драйверов.bat",
+        "Возобновить Windows Update.bat"
+      ]
+    },
+    "Удаление программ": {
+      "Root": [
+        "Отключить EdgeAutoLaunch.bat",
+        "Отключить OneDrive в автозапуске.bat",
+        "Удалить AppX мусор.bat",
+        "Удалить Microsoft Edge.bat",
+        "Удалить OneDrive.bat"
+      ],
+      "отмена": [
+        "Вернуть EdgeAutoLaunch.bat",
+        "Вернуть OneDrive в автозапуск.bat"
+      ]
+    },
+    "Электропитание": {
+      "Root": [
+        "Отключить гибернацию.bat",
+        "Отключить устройства питания.bat",
+        "Отключить энергооценку.bat",
+        "Применить SOS Power Plan.bat"
+      ],
+      "отмена": [
+        "Вернуть стандартные схемы.bat",
+        "Включить гибернацию.bat",
+        "Включить устройства питания.bat",
+        "Включить энергооценку.bat"
+      ]
+    },
+    "Root": {
+      "Root": [
+        "sos.pow"
+      ]
+    }
+  }
+}

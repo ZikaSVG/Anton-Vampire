@@ -1,0 +1,1 @@
+start %windir%\System32\SystemPropertiesProtection.exe

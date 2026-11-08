@@ -1,0 +1,44 @@
+{
+  "tabs": {
+    "Root": [
+      "Включить BitLocker PreventDeviceEncryption.bat",
+      "Включить Memory Integrity HVCI.bat",
+      "Заблокировать Shell Extensions.bat",
+      "Настроить доступ к Windows Update.bat",
+      "Отключить Defender AntiSpyware.bat",
+      "Отключить Defender EPP меню.bat",
+      "Отключить Defender ETW.bat",
+      "Отключить Defender Real-Time Protection.bat",
+      "Отключить Defender Spynet.bat",
+      "Отключить Kernel DMA Protection.bat",
+      "Отключить Memory Integrity HVCI.bat",
+      "Отключить Mitigations.bat",
+      "Отключить SmartScreen.bat",
+      "Отключить UAC.bat",
+      "Отключить VBS и HVCI.bat",
+      "Отключить Vulnerable Driver Blocklist.bat",
+      "Отключить Windows Search.bat",
+      "Отключить задачи Defender.bat",
+      "Удалить службы Defender.bat",
+      "Удалить файлы Defender.bat"
+    ],
+    "отмена": [
+      "Вернуть Defender EPP меню.bat",
+      "Вернуть доступ к Windows Update.bat",
+      "Включить Defender AntiSpyware.bat",
+      "Включить Defender ETW.bat",
+      "Включить Defender Real-Time Protection.bat",
+      "Включить Defender Spynet.bat",
+      "Включить Kernel DMA Protection.bat",
+      "Включить Mitigations.bat",
+      "Включить SmartScreen.bat",
+      "Включить UAC.bat",
+      "Включить VBS и HVCI.bat",
+      "Включить Vulnerable Driver Blocklist.bat",
+      "Включить Windows Search.bat",
+      "Включить задачи Defender.bat",
+      "Отключить BitLocker PreventDeviceEncryption.bat",
+      "Разблокировать Shell Extensions.bat"
+    ]
+  }
+}

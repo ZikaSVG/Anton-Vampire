@@ -1,0 +1,297 @@
+{
+  "tabs": {
+    "Безопасность": {
+      "Root": [
+        "Включить BitLocker PreventDeviceEncryption.bat",
+        "Включить Memory Integrity HVCI.bat",
+        "Включить UAC.bat",
+        "Заблокировать Shell Extensions.bat",
+        "Настроить доступ к Windows Update.bat",
+        "Отключить Defender AntiSpyware.bat",
+        "Отключить Defender EPP меню.bat",
+        "Отключить Defender ETW.bat",
+        "Отключить Defender Real-Time Protection.bat",
+        "Отключить Defender Spynet.bat",
+        "Отключить Kernel DMA Protection.bat",
+        "Отключить Memory Integrity HVCI.bat",
+        "Отключить Mitigations.bat",
+        "Отключить SmartScreen.bat",
+        "Отключить UAC.bat",
+        "Отключить VBS и HVCI.bat",
+        "Отключить Vulnerable Driver Blocklist.bat",
+        "Отключить Windows Search.bat",
+        "Отключить задачи Defender.bat",
+        "Удалить службы Defender.bat",
+        "Удалить файлы Defender.bat"
+      ],
+      "отмена": [
+        "отмена\\Вернуть Defender EPP меню.bat",
+        "отмена\\Вернуть доступ к Windows Update.bat",
+        "отмена\\Включить Defender AntiSpyware.bat",
+        "отмена\\Включить Defender ETW.bat",
+        "отмена\\Включить Defender Real-Time Protection.bat",
+        "отмена\\Включить Defender Spynet.bat",
+        "отмена\\Включить Kernel DMA Protection.bat",
+        "отмена\\Включить Mitigations.bat",
+        "отмена\\Включить SmartScreen.bat",
+        "отмена\\Включить VBS и HVCI.bat",
+        "отмена\\Включить Vulnerable Driver Blocklist.bat",
+        "отмена\\Включить Windows Search.bat",
+        "отмена\\Включить задачи Defender.bat",
+        "отмена\\Отключить BitLocker PreventDeviceEncryption.bat",
+        "отмена\\Разблокировать Shell Extensions.bat"
+      ]
+    },
+    "Кастомизация": {
+      "Root": [
+        "Включить fWrapAround в Notepad.bat",
+        "Включить тёмную тему.bat",
+        "Восстановить W10 Notepad.bat",
+        "Настроить File Explorer CLSID.bat",
+        "Настроить OptimalLayout и BootOptimize.bat",
+        "Настроить RDP.bat",
+        "Настроить Shell Bags.bat",
+        "Настроить панель задач.bat",
+        "Отключить Crash Dump.bat",
+        "Отключить File History и Maintenance.bat",
+        "Отключить Lock Screen Camera.bat",
+        "Отключить Storage Sense.bat",
+        "Отключить автозапуск.bat",
+        "Отключить анимации.bat",
+        "Отключить виджеты и ленту новостей.bat",
+        "Отключить системные звуки.bat",
+        "Отключить спецвозможности.bat",
+        "Очистить thumbcache.bat",
+        "Скрыть Галерею и Home.bat",
+        "Скрыть папки на Этот компьютер.bat",
+        "Скрыть страницы в Параметрах.bat",
+        "Удалить Windows.UI.TaskManager.bat",
+        "Ускорить меню и проводник.bat"
+      ],
+      "отмена": [
+        "отмена\\Вернуть File Explorer CLSID.bat",
+        "отмена\\Вернуть fWrapAround в Notepad.bat",
+        "отмена\\Вернуть OptimalLayout и BootOptimize.bat",
+        "отмена\\Вернуть RDP по умолчанию.bat",
+        "отмена\\Вернуть Shell Bags.bat",
+        "отмена\\Вернуть Store Notepad.bat",
+        "отмена\\Вернуть меню и проводник.bat",
+        "отмена\\Вернуть панель задач.bat",
+        "отмена\\Включить Crash Dump.bat",
+        "отмена\\Включить File History и Maintenance.bat",
+        "отмена\\Включить Lock Screen Camera.bat",
+        "отмена\\Включить Storage Sense.bat",
+        "отмена\\Включить автозапуск.bat",
+        "отмена\\Включить анимации.bat",
+        "отмена\\Включить виджеты и ленту.bat",
+        "отмена\\Включить светлую тему.bat",
+        "отмена\\Включить системные звуки.bat",
+        "отмена\\Включить спецвозможности.bat",
+        "отмена\\Показать Галерею и Home.bat",
+        "отмена\\Показать папки на Этот компьютер.bat",
+        "отмена\\Показать страницы в Параметрах.bat"
+      ]
+    },
+    "Контекстное меню": {
+      "Root": [
+        "Включить классическое меню Win11.bat",
+        "Добавить Power Plan в меню.bat",
+        "Добавить Take Ownership.bat",
+        "Добавить контекстные ассоциации.bat",
+        "Очистить контекстное меню.bat",
+        "Применить RunAsTI.bat",
+        "Убрать SendTo из меню.bat"
+      ],
+      "отмена": [
+        "отмена\\Вернуть контекстное меню.bat",
+        "отмена\\Вернуть новое меню Win11.bat",
+        "отмена\\Убрать Power Plan из меню.bat",
+        "отмена\\Убрать RunAsTI.bat",
+        "отмена\\Убрать Take Ownership.bat",
+        "отмена\\Убрать контекстные ассоциации.bat"
+      ]
+    },
+    "Очистка": {
+      "Root": [
+        "Очистить систему.bat",
+        "Создать бэкап служб (vainServices.reg).bat",
+        "Создать бэкап служб (winServices.reg).bat",
+        "Удалить Compatibility Telemetry.bat",
+        "Удалить DiagTrack ETL-логи.bat",
+        "Удалить Microsoft Compatibility Appraiser.bat",
+        "Удалить Microsoft Update Health Tools.bat",
+        "Удалить PendingFileRenameOperations.bat",
+        "Удалить кэш Prefetch.bat"
+      ]
+    },
+    "Приватность": {
+      "Root": [
+        "Заблокировать телеметрию через hosts.bat",
+        "Настроить разрешения приложений.bat",
+        "Отключить Activity Feed.bat",
+        "Отключить CBS Background App.bat",
+        "Отключить CDP и NearShare.bat",
+        "Отключить Clipboard Sync.bat",
+        "Отключить Content Delivery Manager.bat",
+        "Отключить Find My Device.bat",
+        "Отключить Input Personalization.bat",
+        "Отключить Online Speech.bat",
+        "Отключить Setting Sync.bat",
+        "Отключить SIUF.bat",
+        "Отключить Windows Copilot.bat",
+        "Отключить веб-поиск в Пуске.bat",
+        "Отключить геолокацию и сенсоры.bat",
+        "Отключить рекламный ID.bat",
+        "Отключить телеметрию.bat",
+        "Отключить уведомления.bat"
+      ],
+      "отмена": [
+        "отмена\\Вернуть разрешения приложений.bat",
+        "отмена\\Включить Activity Feed.bat",
+        "отмена\\Включить CBS Background App.bat",
+        "отмена\\Включить CDP и NearShare.bat",
+        "отмена\\Включить Clipboard Sync.bat",
+        "отмена\\Включить Content Delivery Manager.bat",
+        "отмена\\Включить Find My Device.bat",
+        "отмена\\Включить Input Personalization.bat",
+        "отмена\\Включить Online Speech.bat",
+        "отмена\\Включить Setting Sync.bat",
+        "отмена\\Включить SIUF.bat",
+        "отмена\\Включить Windows Copilot.bat",
+        "отмена\\Включить веб-поиск в Пуске.bat",
+        "отмена\\Включить геолокацию и сенсоры.bat",
+        "отмена\\Включить рекламный ID.bat",
+        "отмена\\Включить телеметрию.bat",
+        "отмена\\Включить уведомления.bat",
+        "отмена\\Восстановить hosts.bat"
+      ]
+    },
+    "Производительность": {
+      "Root": [
+        "Включить write cache для дисков.bat",
+        "Настроить Audio CPL.bat",
+        "Настроить Configuration Manager.bat",
+        "Настроить GPU.bat",
+        "Настроить I-O System.bat",
+        "Настроить Memory Management.bat",
+        "Настроить NTFS.bat",
+        "Настроить Power Session Manager.bat",
+        "Настроить SvcHostSplit.bat",
+        "Настроить WindowsMitigation.bat",
+        "Настроить приоритеты.bat",
+        "Настроить сетевой throttle.bat",
+        "Настроить ядро.bat",
+        "Отключить DMA Remapping.bat",
+        "Отключить HIPM-DIPM-HDD Parking.bat",
+        "Отключить PnP-устройства ACPI.bat",
+        "Отключить Sleep Study.bat",
+        "Отключить StorPort Idle Power Management.bat",
+        "Отключить службы Xbox-Storage-MixedReality-Sensor-WinRM.bat",
+        "Отключить ускорение мыши.bat",
+        "Пересобрать NGEN.bat",
+        "Пересобрать Performance Counters.bat"
+      ],
+      "отмена": [
+        "отмена\\Вернуть Audio CPL.bat",
+        "отмена\\Вернуть Configuration Manager.bat",
+        "отмена\\Вернуть GPU.bat",
+        "отмена\\Вернуть HIPM-DIPM-HDD Parking.bat",
+        "отмена\\Вернуть I-O System.bat",
+        "отмена\\Вернуть Memory Management.bat",
+        "отмена\\Вернуть NTFS.bat",
+        "отмена\\Вернуть Power Session Manager.bat",
+        "отмена\\Вернуть StorPort Idle Power Management.bat",
+        "отмена\\Вернуть SvcHostSplit.bat",
+        "отмена\\Вернуть WindowsMitigation.bat",
+        "отмена\\Вернуть приоритеты.bat",
+        "отмена\\Вернуть сетевой throttle.bat",
+        "отмена\\Вернуть ядро.bat",
+        "отмена\\Включить DMA Remapping.bat",
+        "отмена\\Включить PnP-устройства ACPI.bat",
+        "отмена\\Включить Sleep Study.bat",
+        "отмена\\Включить службы Xbox-Storage-MixedReality-Sensor-WinRM.bat",
+        "отмена\\Включить ускорение мыши.bat",
+        "отмена\\Отключить write cache для дисков.bat",
+        "отмена\\Пересобрать NGEN.bat",
+        "отмена\\Пересобрать Performance Counters.bat"
+      ]
+    },
+    "Прочее": {
+      "Root": [
+        "Настроить 7-Zip.bat",
+        "Настроить BCD.bat",
+        "Настроить Communications.bat",
+        "Настроить Config Time.bat",
+        "Настроить firewall.bat",
+        "Настроить OEM информацию.bat",
+        "Настроить PowerShell.bat",
+        "Настроить ассоциации 7-Zip и Photo Viewer.bat",
+        "Настроить печать.bat",
+        "Настроить сеть.bat",
+        "Настроить службы.bat",
+        "Отключить FTH.bat",
+        "Отключить Game Bar и Game DVR.bat",
+        "Отключить mobsync.bat",
+        "Отключить Phone Link.bat",
+        "Отключить диагностические треки.bat"
+      ],
+      "отмена": [
+        "отмена\\Вернуть 7-Zip.bat",
+        "отмена\\Вернуть BCD.bat",
+        "отмена\\Вернуть Communications.bat",
+        "отмена\\Вернуть Config Time.bat",
+        "отмена\\Вернуть firewall.bat",
+        "отмена\\Вернуть OEM информацию.bat",
+        "отмена\\Вернуть PowerShell.bat",
+        "отмена\\Включить FTH.bat",
+        "отмена\\Включить Game Bar и Game DVR.bat",
+        "отмена\\Включить mobsync.bat",
+        "отмена\\Отменить ассоциации 7-Zip и Photo Viewer.bat"
+      ]
+    },
+    "Удаление программ": {
+      "Root": [
+        "Включить DirectPlay.bat",
+        "Удалить AppX мусор.bat",
+        "Удалить defaultuser0.bat",
+        "Удалить Internet Explorer.bat",
+        "Удалить Microsoft Edge.bat",
+        "Удалить OneDrive.bat",
+        "Удалить StepsRecorder.bat",
+        "Удалить Windows Media Player.bat",
+        "Удалить Xbox, Teams, DevHome, CrossDevice.bat",
+        "Удалить задачи OneDrive.bat"
+      ]
+    },
+    "Электропитание": {
+      "Root": [
+        "Настроить таймауты.bat",
+        "Настроить энергосбережение.bat",
+        "Отключить CPU Throttle (десктоп).bat",
+        "Отключить HDD Sleep (Sub_Processor).bat",
+        "Отключить Power Throttling.bat",
+        "Отключить Storage D3 в Modern Standby.bat",
+        "Отключить гибернацию.bat",
+        "Отключить энергосбережение устройств.bat",
+        "Применить VainOS Power Plan.bat"
+      ],
+      "отмена": [
+        "отмена\\Вернуть стандартные схемы.bat",
+        "отмена\\Вернуть таймауты.bat",
+        "отмена\\Вернуть энергосбережение.bat",
+        "отмена\\Включить CPU Throttle.bat",
+        "отмена\\Включить HDD Sleep.bat",
+        "отмена\\Включить Power Throttling.bat",
+        "отмена\\Включить Storage D3.bat",
+        "отмена\\Включить гибернацию.bat",
+        "отмена\\Включить энергосбережение устройств.bat"
+      ]
+    },
+    "Root": {
+      "Root": [
+        "RunAsTI.reg",
+        "SFTA.ps1"
+      ]
+    }
+  }
+}

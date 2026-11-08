@@ -1,0 +1,58 @@
+Windows Registry Editor Version 5.00
+
+; RunAsTI on .bat
+[HKEY_CLASSES_ROOT\batfile\shell\setdesktopwallpaper]
+"MUIVerb"="Run as TrustedInstaller"
+"HasLUAShield"=""
+"Icon"="powershell.exe,0"
+[HKEY_CLASSES_ROOT\batfile\shell\setdesktopwallpaper\command]
+@="C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -win 1 -nop -c iex((10..40|%{(gp 'Registry::HKCR\\RunAsTI' $_ -ea 0).$_})-join[char]10); # --% \"%L\""
+
+; RunAsTI on .cmd
+[HKEY_CLASSES_ROOT\cmdfile\shell\setdesktopwallpaper]
+"MUIVerb"="Run as TrustedInstaller"
+"HasLUAShield"=""
+"Icon"="powershell.exe,0"
+[HKEY_CLASSES_ROOT\cmdfile\shell\setdesktopwallpaper\command]
+@="C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -win 1 -nop -c iex((10..40|%{(gp 'Registry::HKCR\\RunAsTI' $_ -ea 0).$_})-join[char]10); # --% \"%L\""
+
+; RunAsTI on .exe
+[HKEY_CLASSES_ROOT\exefile\shell\setdesktopwallpaper]
+"MUIVerb"="Run as TrustedInstaller"
+"HasLUAShield"=""
+"Icon"="powershell.exe,0"
+[HKEY_CLASSES_ROOT\exefile\shell\setdesktopwallpaper\command]
+@="C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -win 1 -nop -c iex((10..40|%{(gp 'Registry::HKCR\\RunAsTI' $_ -ea 0).$_})-join[char]10); # --% \"%L\""
+
+; RunAsTI on .msc
+[HKEY_CLASSES_ROOT\mscfile\shell\setdesktopwallpaper]
+"MUIVerb"="Run as TrustedInstaller"
+"HasLUAShield"=""
+"Icon"="powershell.exe,0"
+[HKEY_CLASSES_ROOT\mscfile\shell\setdesktopwallpaper\command]
+@="C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -win 1 -nop -c iex((10..40|%{(gp 'Registry::HKCR\\RunAsTI' $_ -ea 0).$_})-join[char]10); # --% \"%L\""
+
+; RunAsTI on .ps1
+[HKEY_CLASSES_ROOT\Microsoft.PowerShellScript.1\shell\setdesktopwallpaper]
+"MUIVerb"="Run as TrustedInstaller"
+"HasLUAShield"=""
+"Icon"="powershell.exe,0"
+[HKEY_CLASSES_ROOT\Microsoft.PowerShellScript.1\shell\setdesktopwallpaper\command]
+@="C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -win 1 -nop -c iex((10..40|%{(gp 'Registry::HKCR\\RunAsTI' $_ -ea 0).$_})-join[char]10); # --% powershell -nop -c iex((gc -lit '%L')-join[char]10)"
+
+; RunAsTI on .reg
+[HKEY_CLASSES_ROOT\regfile\shell\setdesktopwallpaper]
+"MUIVerb"="Import as TrustedInstaller"
+"HasLUAShield"=""
+"Icon"="powershell.exe,0"
+[HKEY_CLASSES_ROOT\regfile\shell\setdesktopwallpaper\command]
+@="C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -win 1 -nop -c iex((10..40|%{(gp 'Registry::HKCR\\RunAsTI' $_ -ea 0).$_})-join[char]10); # --% regedit /s \"%L\""
+
+; RunAsTI on Folder
+[HKEY_CLASSES_ROOT\Folder\shell\setdesktopwallpaper]
+"MuiVerb"="Open as TrustedInstaller"
+"HasLUAShield"=""
+"Icon"="powershell.exe,0"
+"AppliesTo"="NOT System.ParsingName:=\"::{645FF040-5081-101B-9F08-00AA002F954E}\""
+[HKEY_CLASSES_ROOT\Folder\shell\setdesktopwallpaper\command]
+@="C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -win 1 -nop -c iex((10..40|%{(gp 'Registry::HKCR\\RunAsTI' $_ -ea 0).$_})-join[char]10); # --% \"%L\""

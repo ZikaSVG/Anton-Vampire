@@ -1,0 +1,290 @@
+{
+  "baseDir": "tweaks/Удаление",
+  "files": [
+    {
+      "name": "Darren White.ps1",
+      "title": "Darren White",
+      "category": "other"
+    },
+    {
+      "name": "Microsoft Base UWP.ps1",
+      "title": "Microsoft Base UWP",
+      "category": "uwp"
+    },
+    {
+      "name": "Отключить Defender, SmartScreen и Antimalware.bat",
+      "title": "Defender, SmartScreen и Antimalware",
+      "category": "defender"
+    },
+    {
+      "name": "Программа удаления OneDrive v1.4.bat",
+      "title": "OneDrive v1.4",
+      "category": "onedrive"
+    },
+    {
+      "name": "Убить Защитник.bat",
+      "title": "Убить Защитник",
+      "category": "defender"
+    },
+    {
+      "name": "Удаление OneDrive от xOS.bat",
+      "title": "OneDrive от xOS",
+      "category": "onedrive"
+    },
+    {
+      "name": "Удаление Update Health Tools.bat",
+      "title": "Update Health Tools",
+      "category": "tools"
+    },
+    {
+      "name": "Удаление UWP приложений от xOS.bat",
+      "title": "UWP приложений от xOS",
+      "category": "uwp"
+    },
+    {
+      "name": "Удаление Windows Defender от xOS.bat",
+      "title": "Windows Defender от xOS",
+      "category": "defender"
+    },
+    {
+      "name": "Удаление ассоциаций Edge.bat",
+      "title": "ассоциаций Edge",
+      "category": "edge"
+    },
+    {
+      "name": "Удалить 3D Builder.bat",
+      "title": "3D Builder",
+      "category": "uwp"
+    },
+    {
+      "name": "Удалить Bing Sports.bat",
+      "title": "Bing Sports",
+      "category": "uwp"
+    },
+    {
+      "name": "Удалить Cortana.bat",
+      "title": "Cortana",
+      "category": "uwp"
+    },
+    {
+      "name": "Удалить Groove Music.bat",
+      "title": "Groove Music",
+      "category": "uwp"
+    },
+    {
+      "name": "Удалить Internet Explorer.bat",
+      "title": "Internet Explorer",
+      "category": "tools"
+    },
+    {
+      "name": "Удалить Microsoft Edge Appx.bat",
+      "title": "Microsoft Edge Appx",
+      "category": "edge"
+    },
+    {
+      "name": "Удалить Microsoft Office от Darren White.bat",
+      "title": "Microsoft Office от Darren White",
+      "category": "office"
+    },
+    {
+      "name": "Удалить Microsoft Office.bat",
+      "title": "Microsoft Office",
+      "category": "office"
+    },
+    {
+      "name": "Удалить Mobile Plans.bat",
+      "title": "Mobile Plans",
+      "category": "uwp"
+    },
+    {
+      "name": "Удалить OneDrive.bat",
+      "title": "OneDrive",
+      "category": "onedrive"
+    },
+    {
+      "name": "Удалить Paint 3D.bat",
+      "title": "Paint 3D",
+      "category": "uwp"
+    },
+    {
+      "name": "Удалить Print 3D.bat",
+      "title": "Print 3D",
+      "category": "uwp"
+    },
+    {
+      "name": "Удалить Windows Defender (DefenderKiller).bat",
+      "title": "Windows Defender (DefenderKiller)",
+      "category": "defender"
+    },
+    {
+      "name": "Удалить Windows Defender (Fuck Windows Defender).bat",
+      "title": "Windows Defender (Fuck Windows Defender)",
+      "category": "defender"
+    },
+    {
+      "name": "Удалить Windows Defender от MartyFiles.bat",
+      "title": "Windows Defender от MartyFiles",
+      "category": "defender"
+    },
+    {
+      "name": "Удалить Windows Defender от Vlado.bat",
+      "title": "Windows Defender от Vlado",
+      "category": "defender"
+    },
+    {
+      "name": "Удалить Xbox App.bat",
+      "title": "Xbox App",
+      "category": "xbox"
+    },
+    {
+      "name": "Удалить Xbox Bar.bat",
+      "title": "Xbox Bar",
+      "category": "xbox"
+    },
+    {
+      "name": "Удалить Xbox Game Speech.bat",
+      "title": "Xbox Game Speech",
+      "category": "xbox"
+    },
+    {
+      "name": "Удалить Будильники и часы.bat",
+      "title": "Будильники и часы",
+      "category": "uwp"
+    },
+    {
+      "name": "Удалить Ваш телефон.bat",
+      "title": "Ваш телефон",
+      "category": "uwp"
+    },
+    {
+      "name": "Удалить вредоносные UWP приложения.cmd",
+      "title": "вредоносные UWP приложения",
+      "category": "uwp"
+    },
+    {
+      "name": "Удалить все приложения Microsoft.bat",
+      "title": "все приложения Microsoft",
+      "category": "uwp"
+    },
+    {
+      "name": "Удалить Деньги.bat",
+      "title": "Деньги",
+      "category": "uwp"
+    },
+    {
+      "name": "Удалить Записки.bat",
+      "title": "Записки",
+      "category": "uwp"
+    },
+    {
+      "name": "Удалить Запись голоса.bat",
+      "title": "Запись голоса",
+      "category": "uwp"
+    },
+    {
+      "name": "Удалить Защитник Windows (MartyFiles).bat",
+      "title": "Защитник Windows (MartyFiles)",
+      "category": "defender"
+    },
+    {
+      "name": "Удалить и другие приложения Metro.bat",
+      "title": "и другие приложения Metro",
+      "category": "uwp"
+    },
+    {
+      "name": "Удалить Калькулятор.bat",
+      "title": "Калькулятор",
+      "category": "uwp"
+    },
+    {
+      "name": "Удалить Камера.bat",
+      "title": "Камера",
+      "category": "uwp"
+    },
+    {
+      "name": "Удалить Карты.bat",
+      "title": "Карты",
+      "category": "uwp"
+    },
+    {
+      "name": "Удалить Кино и ТВ.bat",
+      "title": "Кино и ТВ",
+      "category": "uwp"
+    },
+    {
+      "name": "Удалить Люди.bat",
+      "title": "Люди",
+      "category": "uwp"
+    },
+    {
+      "name": "Удалить Набросок на фрагменте экрана.bat",
+      "title": "Набросок на фрагменте экрана",
+      "category": "uwp"
+    },
+    {
+      "name": "Удалить Начало.bat",
+      "title": "Начало",
+      "category": "uwp"
+    },
+    {
+      "name": "Удалить основные приложения Microsoft.bat",
+      "title": "основные приложения Microsoft",
+      "category": "uwp"
+    },
+    {
+      "name": "Удалить Портал смешанной реальности.bat",
+      "title": "Портал смешанной реальности",
+      "category": "other"
+    },
+    {
+      "name": "Удалить Почта и Календарь.bat",
+      "title": "Почта и Календарь",
+      "category": "uwp"
+    },
+    {
+      "name": "Удалить приложения.bat",
+      "title": "приложения",
+      "category": "uwp"
+    },
+    {
+      "name": "Удалить Расширение для изображений HEIF.bat",
+      "title": "Расширение для изображений HEIF",
+      "category": "uwp"
+    },
+    {
+      "name": "Удалить Расширение для изображений Webp.bat",
+      "title": "Расширение для изображений Webp",
+      "category": "uwp"
+    },
+    {
+      "name": "Удалить Расширение для интернет-мультимедиа.bat",
+      "title": "Расширение для интернет-мультимедиа",
+      "category": "uwp"
+    },
+    {
+      "name": "Удалить Советы.bat",
+      "title": "Советы",
+      "category": "uwp"
+    },
+    {
+      "name": "Удалить средство 3D-просмотра.bat",
+      "title": "средство 3D-просмотра",
+      "category": "uwp"
+    },
+    {
+      "name": "Удалить Техническая помощь.bat",
+      "title": "Техническая помощь",
+      "category": "uwp"
+    },
+    {
+      "name": "Удалить Фотографии (Майкрософт).bat",
+      "title": "Фотографии (Майкрософт)",
+      "category": "uwp"
+    },
+    {
+      "name": "Удалить Центр отзывов.bat",
+      "title": "Центр отзывов",
+      "category": "uwp"
+    }
+  ]
+}

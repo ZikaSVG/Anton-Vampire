@@ -1,0 +1,3 @@
+echo Создаем точку восстановления...
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SystemRestore" /v "SystemRestorePointCreationFrequency" /t REG_DWORD /d "0" /f 
+powershell -ExecutionPolicy Bypass -Command "Checkpoint-Computer -Description 'Before Optimization' -RestorePointType 'MODIFY_SETTINGS'" 

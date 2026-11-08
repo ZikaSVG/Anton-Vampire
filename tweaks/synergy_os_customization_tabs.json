@@ -1,0 +1,31 @@
+{
+  "tabs": {
+    "Root": [
+      "Включить классическое меню Win11.bat",
+      "Включить тёмную тему.bat",
+      "Добавить .bat в ShellNew.bat",
+      "Добавить .reg в ShellNew.bat",
+      "Настроить MyComputer NameSpace.bat",
+      "Настроить PS1-ассоциацию.bat",
+      "Настроить мышь.bat",
+      "Настроить панель задач.bat",
+      "Отключить Game Bar и Game DVR.bat",
+      "Очистить taskband.bat",
+      "Показать скрытые файлы и папки.bat",
+      "Убрать SecurityHealth из автозапуска.bat"
+    ],
+    "отмена": [
+      "Вернуть MyComputer NameSpace.bat",
+      "Вернуть PS1-ассоциацию.bat",
+      "Вернуть SecurityHealth в автозапуск.bat",
+      "Вернуть мышь.bat",
+      "Вернуть новое меню Win11.bat",
+      "Вернуть панель задач.bat",
+      "Вернуть скрытые файлы.bat",
+      "Включить Game Bar и Game DVR.bat",
+      "Включить светлую тему.bat",
+      "Убрать .bat из ShellNew.bat",
+      "Убрать .reg из ShellNew.bat"
+    ]
+  }
+}

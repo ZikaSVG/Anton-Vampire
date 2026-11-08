@@ -1,0 +1,34 @@
+{
+  "tabs": {
+    "Root": [
+      "Отключить AppCompat.bat",
+      "Отключить Content Delivery Manager.bat",
+      "Отключить Lock Screen Camera.bat",
+      "Отключить PhishingFilter.bat",
+      "Отключить SecurityAndMaintenance уведомления.bat",
+      "Отключить Setting Sync.bat",
+      "Отключить TIPC.bat",
+      "Отключить Windows Insider.bat",
+      "Отключить биометрию.bat",
+      "Отключить геолокацию.bat",
+      "Отключить рекламный ID.bat",
+      "Отключить телеметрию.bat",
+      "Убрать OneDrive из проводника.bat"
+    ],
+    "отмена": [
+      "Вернуть OneDrive в проводник.bat",
+      "Включить AppCompat.bat",
+      "Включить Content Delivery Manager.bat",
+      "Включить Lock Screen Camera.bat",
+      "Включить PhishingFilter.bat",
+      "Включить SecurityAndMaintenance уведомления.bat",
+      "Включить Setting Sync.bat",
+      "Включить TIPC.bat",
+      "Включить Windows Insider.bat",
+      "Включить биометрию.bat",
+      "Включить геолокацию.bat",
+      "Включить рекламный ID.bat",
+      "Включить телеметрию.bat"
+    ]
+  }
+}

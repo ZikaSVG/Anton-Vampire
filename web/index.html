@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Anton Vampire — Pixel Optimizer · v1.0.9-beta</title>
+<meta name="description" content="Anton Vampire — полностью переписанный Windows оптимизатор на Electron. 1000+ твиков, 100+ тем, 8 CSS-стилей, смертельная оптимизация, игровой режим 2.0, менеджер служб." />
+<link rel="icon" type="image/png" href="../assets/icon.png" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="bat">🩸</span>
+      <span class="brand">ANTON VAMPIRE</span>
+    </a>
+    <ul class="nav-links">
+        <li><a href="index.html" class="active">Главная</a></li>
+        <li><a href="#screenshots">Скриншот</a></li>
+        <li><a href="transition.html">Переход</a></li>
+        <li><a href="docs.html">Документация</a></li>
+        <li><a href="https://github.com/ZikaSVG/Anton-Vampire" target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+    <div class="nav-actions">
+      <span class="nav-badge">v1.0.9-beta</span>
+      <a href="#download" class="btn btn-filled btn-sm">📥 Скачать</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="dot"></span>
+          v1.0.9-beta · Electron · Windows 10/11
+        </div>
+        <h1>
+          <span class="gradient-text">ANTON</span>
+          <span class="line2">VAMPIRE</span>
+        </h1>
+        <p class="hero-tagline">
+          Полностью переписанный <strong>Windows оптимизатор</strong>.
+          <strong>1000+ твиков</strong>, <strong>100+ тем</strong>,
+          <strong>8 CSS-стилей</strong>, <strong>смертельная оптимизация</strong>,
+          игровой режим 2.0, менеджер служб и безопасное ядро на Electron.
+        </p>
+        <div class="hero-actions">
+          <a href="#download" class="btn btn-filled btn-lg">📥 Скачать v1.0.9-beta</a>
+          <a href="docs.html" class="btn btn-outlined btn-lg">📖 Документация</a>
+          <a href="transition.html" class="btn btn-tonal btn-lg">⚔ Что нового</a>
+        </div>
+        <div class="hero-meta">
+          <span><span class="ok">●</span> Open Source</span>
+          <span><span class="ok">●</span> Portable</span>
+          <span><span class="ok">●</span> Requires Admin</span>
+        </div>
+      </div>
+
+      <div class="terminal">
+        <div class="term-head">
+          <span class="term-dot r"></span>
+          <span class="term-dot y"></span>
+          <span class="term-dot g"></span>
+          <span class="term-title">anton-vampire.exe</span>
+        </div>
+        <div class="term-body"><span class="prompt">❯</span> <span class="cmd">anton-vampire.exe --admin</span>
+
+<span class="info">ℹ</span> <span class="muted">Anton Vampire v1.0.9-beta</span>
+<span class="info">ℹ</span> <span class="muted">Electron 44 · Node.js · Portable</span>
+
+<span class="ok">✓</span> fltmc — <span class="muted">admin privileges verified</span>
+<span class="ok">✓</span> <span class="muted">Portable data → extreme_data/</span>
+<span class="ok">✓</span> Loading theme: <span class="hl">Catppuccin Mocha</span>
+<span class="ok">✓</span> Loading style: <span class="hl">pixel.css</span>
+<span class="ok">✓</span> Preload: <span class="muted">startup, apps, audits...</span>
+<span class="ok">✓</span> 1000+ tweaks indexed
+<span class="ok">✓</span> 100+ themes loaded
+<span class="ok">✓</span> 14 power plans ready
+<span class="ok">✓</span> 200+ services catalogued
+<span class="ok">✓</span> Pixel UI ready
+
+<span class="prompt">🩸</span> <span class="warn">Ready to optimize…</span>
+<span class="prompt">❯</span> <span class="cursor"></span></div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-value">1000+</div>
+        <div class="stat-label">Твиков</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">100+</div>
+        <div class="stat-label">Тем</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">13</div>
+        <div class="stat-label">Вкладок</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">8</div>
+        <div class="stat-label">CSS-стилей</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= СКРИНШОТ ================= -->
+<section class="section" id="screenshots" style="padding-top: 32px; padding-bottom: 48px;">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">Скриншот</span>
+      <h2>Как это выглядит</h2>
+      <p>Реальный интерфейс в теме Catppuccin Mocha и пиксельном стиле.</p>
+    </div>
+
+    <figure class="screenshot-featured" id="featuredScreenshot" data-src="../web/screenshot.jpg" data-title="Anton Vampire v1.0.7">
+      <div class="screenshot-frame">
+        <img src="../web/screenshot.jpg" alt="Anton Vampire v1.0.7" loading="lazy">
+      </div>
+      <figcaption>
+        <span class="sc-badge">🩸 v1.0.9-beta</span>
+        <span class="sc-hint">✦ Клик — увеличить ✦</span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Закрыть">✕</button>
+  <div class="lightbox-title" id="lightboxTitle"></div>
+  <img class="lightbox-img" id="lightboxImg" src="" alt="">
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">Что нового</span>
+      <h2>Обновление 1.0.7</h2>
+      <p>Крупный апдейт: смертельная оптимизация, игровой режим 2.0, менеджер служб и 8 CSS-стилей.</p>
+    </div>
+
+    <div class="highlights">
+      <div class="highlight">
+        <div class="highlight-text">
+          <h3>💀 Смертельная оптимизация</h3>
+          <p>Отдельная вкладка для максимального FPS на <strong>стационарных ПК</strong>. Один BAT, <strong>без отката</strong>.</p>
+          <ul class="highlight-list" style="list-style:none; padding:0; margin-top:16px;">
+            <li style="margin-bottom:8px; color:var(--accent);">>> 9 категорий изменений</li>
+            <li style="margin-bottom:8px; color:var(--accent);">>> ~100 групп в реестре и службах</li>
+            <li style="margin-bottom:8px; color:var(--accent);">>> Телеметрия, обновления, Edge, Xbox, RDP, RAID</li>
+            <li style="margin-bottom:8px; color:var(--accent);">>> Только для десктопов, только с бэкапом</li>
+          </ul>
+        </div>
+        <div class="highlight-visual"><span class="err">☠</span> <span class="warn">DEADLY OPTIMIZATION</span>
+<span class="muted">─── десктопы only ───</span>
+
+<span class="hl">📊</span> Telemetry → AllowTelemetry=0
+<span class="hl">🔄</span> Updates → wuauserv=Start=4
+<span class="hl">⚡</span> Power → Hibernate off, PagingFiles=""
+<span class="hl">🌐</span> Network → TCP tweaks, Wi-Fi Sense off
+<span class="hl">🖥️</span> UI → MenuShowDelay=0, анимации off
+<span class="hl">🖱️</span> Input → MouseSpeed=0, hover=0
+<span class="hl">🖨️</span> Services → Spooler, Bth, RDP, Xbox
+
+<span class="err">⚠ ОТМЕНЫ НЕТ. ИЗМЕНЕНИЯ НЕОБРАТИМЫ.</span></div>
+      </div>
+
+      <div class="highlight reverse">
+        <div class="highlight-visual"><span class="ok">🎮</span> Game Mode <span class="hl">2.0</span>
+<span class="muted">─── 14 power plans ───</span>
+
+<span class="hl">Amit_v1</span> · <span class="hl">Amit_v2</span> · <span class="hl">Amit_v3</span>
+<span class="hl">Atlas</span> · <span class="hl">Bitsum</span> · <span class="hl">Calypto</span>
+<span class="hl">GGOS</span> · <span class="hl">Light pow</span> · <span class="hl">Muren</span>
+<span class="hl">Quaked x2</span> · <span class="hl">Unixcorn</span>
+<span class="hl">XOS imribiy</span> · <span class="hl">Zoyata</span>
+
+<span class="ok">✓</span> 📥 Import plan
+<span class="ok">✓</span> ⚡ Activate plan
+<span class="ok">✓</span> 🛡 Duplicate protection
+
+<span class="warn">Power Killer</span> · 6 функций
+<span class="warn">Services</span> · 200+ with backup</div>
+        <div class="highlight-text">
+          <h3>🎮 Игровой режим 2.0</h3>
+          <p>14 готовых планов электропитания + 6 гранулированных функций Power Killer + массовое отключение 200+ служб.</p>
+          <ul class="highlight-list" style="list-style:none; padding:0; margin-top:16px;">
+            <li style="margin-bottom:8px; color:var(--accent);">>> Импорт / активация планов (Amit, Atlas, Bitsum, Quaked, XOS, Zoyata…)</li>
+            <li style="margin-bottom:8px; color:var(--accent);">>> Power Killer: таймауты, CPU throttle, USB/PCI, DPC</li>
+            <li style="margin-bottom:8px; color:var(--accent);">>> Автобэкап служб в .reg + fallback на Start=3</li>
+            <li style="margin-bottom:8px; color:var(--accent);">>> Защита от дубликатов при импорте</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="highlight">
+        <div class="highlight-text">
+          <h3>⚙️ Менеджер служб</h3>
+          <p>Полноценная таблица служб с поиском, статусами, массовым управлением и безопасным бэкапом.</p>
+          <ul class="highlight-list" style="list-style:none; padding:0; margin-top:16px;">
+            <li style="margin-bottom:8px; color:var(--accent);">>> Поиск по имени и описанию</li>
+            <li style="margin-bottom:8px; color:var(--accent);">>> Статусы: boot / system / auto / manual / disabled</li>
+            <li style="margin-bottom:8px; color:var(--accent);">>> Кнопки ▶ Вкл / ⏹ Выкл в каждой строке</li>
+            <li style="margin-bottom:8px; color:var(--accent);">>> Бэкап Services_Backup.reg и восстановление</li>
+          </ul>
+        </div>
+        <div class="highlight-visual"><span class="ok">⚙</span> <span class="hl">Services Manager</span>
+<span class="muted">──── поиск: "diag" ────</span>
+
+<span class="ok">▶</span> DiagTrack      <span class="warn">auto</span>     ⏹
+<span class="ok">▶</span> dmwappush…     <span class="warn">auto</span>     ⏹
+<span class="ok">▶</span> diagnostics…   <span class="err">boot</span>     ⏹
+<span class="ok">▶</span> WSearch        <span class="hl">manual</span>   ⏹
+<span class="ok">▶</span> WerSvc         <span class="ok">disabled</span> ▶
+
+<span class="muted">─── statuses ───</span>
+<span class="err">boot</span> · <span class="err">system</span> · <span class="warn">auto</span>
+<span class="hl">manual</span> · <span class="ok">disabled</span> · <span class="muted">notfound</span>
+
+<span class="ok">✓</span> 💾 Backup created
+<span class="ok">✓</span> ↩ Restore from .reg</div>
+      </div>
+
+      <div class="highlight reverse">
+        <div class="highlight-visual"><span class="hl">🎨</span> 8 CSS Styles
+<span class="muted">────── select ──────</span>
+
+<span class="hl">▸</span> <span class="ok">default</span>       Material 3
+<span class="hl">▸</span> <span class="ok">pixel</span>         Pixel Style
+<span class="hl">▸</span> <span class="ok">material3</span>     Material You
+<span class="hl">▸</span> <span class="ok">kitty</span>         Pretty Kitty
+<span class="hl">▸</span> <span class="warn">cyberpunk</span>     Cyberpunk 2077
+<span class="hl">▸</span> <span class="ok">minipunk</span>      Mini Punk
+<span class="hl">▸</span> <span class="ok">altpunk</span>       Alt Punk
+<span class="hl">▸</span> <span class="ok">materialmini</span>  Material Mini
+
+<span class="muted">─── themes ───</span>
+<span class="ok">100+</span> in <span class="hl">12 groups</span>
+<span class="muted">Material · Light · Dark · Games</span>
+<span class="muted">Catppuccin · Dark Reader · Curated</span></div>
+        <div class="highlight-text">
+          <h3>🎨 8 CSS-стилей и 100+ тем</h3>
+          <p>Четыре новых стиля оформления и 12 групп тем, включая игровые, Catppuccin ×4, Dark Reader ×22 и Curated 2.0.</p>
+          <ul class="highlight-list" style="list-style:none; padding:0; margin-top:16px;">
+            <li style="margin-bottom:8px; color:var(--accent);">>> Новые: Cyberpunk 2077, Mini Punk, Alt Punk, Material Mini</li>
+            <li style="margin-bottom:8px; color:var(--accent);">>> Игровые: Vampire: The Masquerade, CS 1.6, CS 2, Diablo, Cyberpunk ×5</li>
+            <li style="margin-bottom:8px; color:var(--accent);">>> Catppuccin: Latte, Frappe, Macchiato, Mocha</li>
+            <li style="margin-bottom:8px; color:var(--accent);">>> Dark Reader: 22 темы из расширения</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">Что внутри</span>
+      <h2>13 вкладок для полного контроля</h2>
+      <p>От аудита безопасности и смертельной оптимизации до курсоров и обоев — всё в одном месте.</p>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">🏠</div>
+        <div class="feature-title">Главная</div>
+        <p class="feature-desc">Приветствие, статистика CPU/GPU/RAM/диск, быстрый переход по разделам.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🛡️</div>
+        <div class="feature-title">Безопасность</div>
+        <p class="feature-desc">3 аудита: Защита, Приватность, Удобство. Firewall, NetMon, HTML-отчёты.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🚀</div>
+        <div class="feature-title">Автозагрузка</div>
+        <p class="feature-desc">Папки, реестр, задачи, службы. Категории и защита критичных компонентов.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-title">Оптимизация</div>
+        <p class="feature-desc">Стандартные, XOS, ImmortalOS, MartyFiles, SynergyOS, SystemX, VainOS + вендоры.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🧹</div>
+        <div class="feature-title">Очистка</div>
+        <p class="feature-desc">Шейдеры, логи, кэши, Windows Update, Temp, Prefetch, диск и SSD.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">⚜️</div>
+        <div class="feature-title">Исправления</div>
+        <p class="feature-desc">DISM, SFC, CHKDSK, сеть, устройства, игровые фиксы. Hero-блок с откатом.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🎮</div>
+        <div class="feature-title">Игровой режим 2.0</div>
+        <p class="feature-desc">14 планов электропитания, Power Killer (6 функций), 200+ служб с бэкапом.</p>
+      </div>
+      <div class="feature" style="border-color: var(--danger, #ff003c);">
+        <div class="feature-icon">💀</div>
+        <div class="feature-title">Смертельная оптимизация</div>
+        <p class="feature-desc">Необратимый BAT: 9 категорий, ~100 групп изменений. Только для десктопов.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🔋</div>
+        <div class="feature-title">Электропитание</div>
+        <p class="feature-desc">Power Killer карточки + таблица тестов + 100+ источников схем и планов.</p>
+      </div>
+      <div class="feature" style="border-color: var(--accent-3);">
+        <div class="feature-icon">⚙️</div>
+        <div class="feature-title">Менеджер служб</div>
+        <p class="feature-desc">Таблица с поиском, статусами, массовым вкл/выкл, бэкапом .reg.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🎨</div>
+        <div class="feature-title">Кастомизация</div>
+        <p class="feature-desc">Курсоры с превью + 4 источника твиков: XOS, Marty, Synergy, Vain.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📦</div>
+        <div class="feature-title">Приложения</div>
+        <p class="feature-desc">Appx, удаление Defender / Edge / OneDrive / WebView2 в 4 режимах.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">⚙️</div>
+        <div class="feature-title">Настройки</div>
+        <p class="feature-desc">6 под-вкладок, 100+ тем, 8 стилей, 6 шрифтовых слотов, утилиты.</p>
+      </div>
+      <div class="feature" style="border-color: var(--accent-3);">
+        <div class="feature-icon">🩸</div>
+        <div class="feature-title">Portable Mode</div>
+        <p class="feature-desc">Все данные в <code>extreme_data/</code> рядом с exe. Ничего в AppData.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top: 0;">
+  <div class="container">
+    <div class="section-head" style="margin-bottom: 40px;">
+      <span class="section-eyebrow">Технологии</span>
+      <h2>Современный стек</h2>
+    </div>
+    <div class="stack">
+      <span class="chip"><span class="dot"></span>Electron 44</span>
+      <span class="chip"><span class="dot"></span>Node.js</span>
+      <span class="chip"><span class="dot"></span>Vanilla JS</span>
+      <span class="chip"><span class="dot"></span>HTML/CSS</span>
+      <span class="chip"><span class="dot"></span>PowerShell</span>
+      <span class="chip"><span class="dot"></span>NSIS</span>
+      <span class="chip"><span class="dot"></span>7-Zip</span>
+      <span class="chip"><span class="dot"></span>NSudoLG</span>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">Ключевые фишки</span>
+      <h2>Что делает Anton Vampire особенным</h2>
+    </div>
+
+    <div class="highlights">
+      <div class="highlight">
+        <div class="highlight-text">
+          <h3>🛡️ Аудит безопасности и приватности</h3>
+          <p>Три независимых аудита: <strong>Защита</strong> (21 проверка), <strong>Приватность</strong> (14), <strong>Удобство</strong> (13). Score от 1 до 6.</p>
+          <ul class="highlight-list" style="list-style:none; padding:0; margin-top:16px;">
+            <li style="margin-bottom:8px; color:var(--accent);">>> Парсинг вывода <code>ITEM|severity|id|name|result|expected</code></li>
+            <li style="margin-bottom:8px; color:var(--accent);">>> Firewall: правила «AV Allow / AV Block» для каждого .exe</li>
+            <li style="margin-bottom:8px; color:var(--accent);">>> NetMon: живой снимок TCP + резолв IP через PTR и ip-api</li>
+            <li style="margin-bottom:8px; color:var(--accent);">>> HTML-отчёты с тёмной темой через Save Dialog</li>
+          </ul>
+        </div>
+        <div class="highlight-visual"><span class="hl">ITEM</span>|<span class="warn">Medium</span>|S04|UAC|Отключён|Включён
+<span class="hl">ITEM</span>|<span class="ok">Passed</span>|P01|Телеметрия|0|0
+<span class="hl">ITEM</span>|<span class="err">High</span>|C02|Firewall|Отключён|Включён
+<span class="hl">ITEM</span>|<span class="ok">Passed</span>|A03|Локация|Запрещена|Запрещена
+<span class="muted">… 18 больше</span>
+
+<span class="hl">END</span>|score=3.42|percent=57|grade=Sufficient
+    |passed=12|low=4|medium=4|high=1|total=21</div>
+      </div>
+
+      <div class="highlight reverse">
+        <div class="highlight-visual"><span class="info">📥</span> Downloading cursor <span class="hl">Vampire-Red</span>…
+<span class="ok">✓</span> <span class="muted">vampire-red.7z → cursors_cache/</span>
+
+<span class="info">📦</span> Extracting with Utils/7z.exe…
+<span class="ok">✓</span> → C:\Windows\Cursors\Vampire-Red\
+
+<span class="info">🎯</span> Mapping 16 roles…
+  Arrow       ← normal.cur
+  Wait        ← busy.ani
+  IBeam       ← text.cur
+  Hand        ← link.cur
+  <span class="muted">… 12 more</span>
+
+<span class="ok">✓</span> Registry updated (HKCU)
+<span class="ok">✓</span> SystemParametersInfo(SPI_SETCURSORS)</div>
+        <div class="highlight-text">
+          <h3>🖱️ Курсоры с превью и умной ролью</h3>
+          <p>Скачивание с GitHub, распаковка 7-Zip, установка в <code>C:\Windows\Cursors\</code>.</p>
+          <ul class="highlight-list" style="list-style:none; padding:0; margin-top:16px;">
+            <li style="margin-bottom:8px; color:var(--accent);">>> Превью через <code>nativeImage.createFromPath</code></li>
+            <li style="margin-bottom:8px; color:var(--accent);">>> 16 ролей с хинтами (Arrow, Wait, IBeam, Hand…)</li>
+            <li style="margin-bottom:8px; color:var(--accent);">>> Статусы «Скачан / Установлен / Активен»</li>
+            <li style="margin-bottom:8px; color:var(--accent);">>> Сброс всех курсоров на дефолт Windows</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="download">
+  <div class="container">
+    <div class="download-card">
+      <h2 class="gradient-text" style="font-size: 2.2rem; margin-bottom: 16px;">Скачать Anton Vampire</h2>
+      <p style="margin-bottom: 32px;">v1.0.9-beta · Windows 10/11 · Требуются права администратора</p>
+
+      <div class="cmd-block">
+        <div class="cmd-head">
+          <span>📟 Установка одной командой (cmd)</span>
+          <button class="copy-btn" id="copyCmd">Копировать</button>
+        </div>
+        <div class="cmd-body" id="cmdText">curl -g -k -L -# -o "%temp%\AntonVampire.Setup.exe" "https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.0.9-beta/Anton.Vampire.Setup.1.0.9-beta.exe" && start "" "%temp%\AntonVampire.Setup.exe"</div>
+      </div>
+
+      <div class="download-actions">
+        <a href="https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.0.9-beta/Anton.Vampire.Setup.1.0.9-beta.exe" class="btn btn-filled btn-lg" download>📥 Setup (.exe)</a>
+        <a href="https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.0.9-beta/Anton.Vampire.Portable.rar" class="btn btn-outlined btn-lg" download>📦 Portable (.rar)</a>
+        <a href="https://github.com/ZikaSVG/Anton-Vampire" target="_blank" rel="noopener" class="btn btn-tonal btn-lg">🐙 GitHub</a>
+      </div>
+
+      <div class="download-reqs">
+        <span><span style="color:var(--success)">●</span> Windows 10/11</span>
+        <span><span style="color:var(--success)">●</span> Admin rights</span>
+        <span><span style="color:var(--success)">●</span> ~150 MB</span>
+        <span><span style="color:var(--success)">●</span> Open Source</span>
+        <span><span style="color:var(--success)">●</span> CC BY-NC-SA 4.0</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head" style="margin-bottom: 40px;">
+      <span class="section-eyebrow">Ссылки</span>
+      <h2>Сообщество и поддержка</h2>
+    </div>
+    <div class="links-grid">
+      <a class="link-card" href="https://github.com/ZikaSVG/Anton-Vampire" target="_blank" rel="noopener">
+        <div class="link-icon">🐙</div>
+        <div class="link-body">
+          <div class="link-title">GitHub</div>
+          <div class="link-desc">ZikaSVG/Anton-Vampire</div>
+        </div>
+      </a>
+      <a class="link-card" href="https://t.me/all_tweaker" target="_blank" rel="noopener">
+        <div class="link-icon">✈️</div>
+        <div class="link-body">
+          <div class="link-title">Telegram</div>
+          <div class="link-desc">@all_tweaker</div>
+        </div>
+      </a>
+      <a class="link-card" href="https://www.tinkoff.ru/cf/2VBH9zSztcW" target="_blank" rel="noopener">
+        <div class="link-icon">☕</div>
+        <div class="link-body">
+          <div class="link-title">Поддержать</div>
+          <div class="link-desc">Tinkoff · донат</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="bat">🩸</span>
+        <span>ANTON VAMPIRE</span>
+      </div>
+      <div class="footer-meta">
+        <div>© 2026 ZikaSVG · v1.0.9-beta</div>
+        <div>Electron 44 · Catppuccin Mocha · Pixel UI</div>
+        <div>Licensed under <a href="docs.html#license">CC BY-NC-SA 4.0</a></div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ── Copy command ── */
+const copyBtn = document.getElementById('copyCmd');
+const cmdText = document.getElementById('cmdText');
+copyBtn?.addEventListener('click', async () => {
+  try {
+    await navigator.clipboard.writeText(cmdText.textContent.trim());
+    const old = copyBtn.textContent;
+    copyBtn.textContent = '✓ Скопировано';
+    copyBtn.style.color = 'var(--ctp-green)';
+    setTimeout(() => { copyBtn.textContent = old; copyBtn.style.color = ''; }, 2000);
+  } catch { /* ignore */ }
+});
+
+/* ── Single screenshot lightbox ── */
+(function initLightbox() {
+  const lb      = document.getElementById('lightbox');
+  const lbImg   = document.getElementById('lightboxImg');
+  const lbTitle = document.getElementById('lightboxTitle');
+  const lbClose = document.getElementById('lightboxClose');
+  const fig     = document.getElementById('featuredScreenshot');
+  if (!lb || !fig) return;
+
+  function open(src, title) {
+    lbImg.src = src;
+    lbImg.alt = title || '';
+    lbTitle.textContent = title || '';
+    lb.classList.add('open');
+    lb.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function close() {
+    lb.classList.remove('open');
+    lb.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    setTimeout(() => { lbImg.src = ''; }, 200);
+  }
+
+  fig.addEventListener('click', () => {
+    open(fig.dataset.src || fig.querySelector('img')?.src, fig.dataset.title || '');
+  });
+
+  lbClose.addEventListener('click', close);
+  lb.addEventListener('click', (e) => {
+    if (e.target === lb) close();
+  });
+  lbImg.addEventListener('click', (e) => e.stopPropagation());
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lb.classList.contains('open')) close();
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+start "https://www.amd.com/en/support/download/drivers.html"
