@@ -6,50 +6,54 @@ import { renderSources, loadSourceData, buildPairMap, coreName } from './sources
    POWER KILLER — гранулированные функции (отдельные запуски)
    ============================================================ */
 const PK_FEATURES = [
-  { 
-    id: 'timeouts', 
-    icon: '🕒', 
-    title: 'Отключение таймаутов AC/DC', 
-    desc: 'Запрещает монитору, диску и системе уходить в сон. Убирает микро-лаги при простое.', 
-    file: 'Электропитание/PowerKiller/PK_Timeouts.bat' 
+  {
+    id: 'timeouts',
+    icon: '🕒',
+    title: 'Отключение таймаутов AC/DC',
+    desc: 'Запрещает монитору, диску и системе уходить в сон. Убирает микро-лаги при простое.',
+    file: 'Электропитание/PowerKiller/PK_Timeouts.bat'
   },
-  { 
-    id: 'cpu', 
-    icon: '🧠', 
-    title: 'Отключение CPU Throttle', 
-    desc: 'Запрещает Windows ограничивать частоту процессора. CPU всегда работает на максимуме.', 
-    file: 'Электропитание/PowerKiller/PK_CPU_Throttle.bat' 
+  {
+    id: 'cpu',
+    icon: '🧠',
+    title: 'Отключение CPU Throttle',
+    desc: 'Запрещает Windows ограничивать частоту процессора. CPU всегда работает на максимуме.',
+    file: 'Электропитание/PowerKiller/PK_CPU_Throttle.bat'
   },
-  { 
-    id: 'throttling', 
-    icon: '⚙️', 
-    title: 'Power Throttling & Dynamic Tick', 
-    desc: 'Отключает фоновое энергосбережение ядра и динамический таймер. Снижает DPC latency.', 
-    file: 'Электропитание/PowerKiller/PK_Power_Throttling_DynamicTick.bat' 
+  {
+    id: 'throttling',
+    icon: '⚙️',
+    title: 'Power Throttling & Dynamic Tick',
+    desc: 'Отключает фоновое энергосбережение ядра и динамический таймер. Снижает DPC latency.',
+    file: 'Электропитание/PowerKiller/PK_Power_Throttling_DynamicTick.bat'
   },
-  { 
-    id: 'usb', 
-    icon: '🔌', 
-    title: 'Управление питанием USB', 
-    desc: 'Предотвращает "засыпание" USB-портов. Критично для мышек с опросом 1000Hz+.', 
-    file: 'Электропитание/PowerKiller/PK_USB_Power.bat' 
+  {
+    id: 'usb',
+    icon: '🔌',
+    title: 'Управление питанием USB',
+    desc: 'Предотвращает "засыпание" USB-портов. Критично для мышек с опросом 1000Hz+.',
+    file: 'Электропитание/PowerKiller/PK_USB_Power.bat'
   },
-  { 
-    id: 'pci', 
-    icon: '🎛️', 
-    title: 'PCI D3Cold (Энергосбережение PCIe)', 
-    desc: 'Запрещает глубокий сон для видеокарты и NVMe. Устраняет микро-фризы.', 
-    file: 'Электропитание/PowerKiller/PK_PCI_D3Cold.bat' 
+  {
+    id: 'pci',
+    icon: '🎛️',
+    title: 'PCI D3Cold (Энергосбережение PCIe)',
+    desc: 'Запрещает глубокий сон для видеокарты и NVMe. Устраняет микро-фризы.',
+    file: 'Электропитание/PowerKiller/PK_PCI_D3Cold.bat'
   },
-  { 
-    id: 'logs', 
-    icon: '📓', 
-    title: 'Диагностические журналы питания', 
-    desc: 'Отключает SleepStudy и Kernel-Processor-Power. Снижает нагрузку на диск и CPU.', 
-    file: 'Электропитание/PowerKiller/PK_Disable_Logs.bat' 
+  {
+    id: 'logs',
+    icon: '📓',
+    title: 'Диагностические журналы питания',
+    desc: 'Отключает SleepStudy и Kernel-Processor-Power. Снижает нагрузку на диск и CPU.',
+    file: 'Электропитание/PowerKiller/PK_Disable_Logs.bat'
   }
 ];
 
+/* ============================================================
+   POWER KILLER: MAXIMUM — всё сразу одним батником
+   ============================================================ */
+const PK_MAXIMUM_FILE = 'Электропитание/PowerKiller/PK_Maximum.bat';
 const PK_REVERT_FILE = 'Электропитание/PowerKiller/PK_Revert_All.bat';
 
 /* ============================================================
@@ -100,7 +104,7 @@ const POWER_SOURCES = [
     json: 'tweaks/x_os_legacy_power_tabs.json',
     baseDir: 'tweaks/Электропитание/xOS'
   },
-  { 
+  {
     id: 'immortal',
     label: '💀 ImmortalOS-Tweaks',
     desc: 'Набор твиков ImmortalOS',
@@ -387,7 +391,7 @@ export async function renderPower() {
 
     const pkTitle = document.createElement('div');
     pkTitle.className = 'section-title';
-    pkTitle.textContent = '⚡ Power Killer — Экстримальная настройка';
+    pkTitle.textContent = '💀 Power Killer — Смертельная настройка';
     pkSection.appendChild(pkTitle);
 
     const pkDesc = document.createElement('p');
@@ -409,7 +413,7 @@ export async function renderPower() {
         <div class="apps-sub">${f.desc}</div>
         <button class="apps-run" data-file="${f.file}">▶ Запустить</button>
       `;
-      
+
       const btn = card.querySelector('.apps-run');
       btn.addEventListener('click', async (e) => {
         e.stopPropagation();
@@ -427,18 +431,41 @@ export async function renderPower() {
           btn.disabled = false;
         }
       });
-      
+
       pkGrid.appendChild(card);
     });
 
-    // Кнопка отката для Power Killer
+    // ===== Кнопки действий Power Killer: MAXIMUM + REVERT =====
     const pkFooter = document.createElement('div');
-    pkFooter.style.cssText = 'margin-top:16px; display:flex; justify-content:flex-end;';
-    pkFooter.innerHTML = `<button class="btn danger" id="btn-pk-revert" style="max-width:300px;">↩ Откатить все настройки Power Killer</button>`;
+    pkFooter.style.cssText = 'margin-top:16px; display:flex; gap:12px; flex-wrap:wrap; justify-content:flex-end;';
+    pkFooter.innerHTML = `
+      <button class="btn" id="btn-pk-max" style="flex:1; min-width:220px; background:#7c3aed; color:#fff; font-weight:600;">💀 Применить Смертельный Максимум (всё сразу)</button>
+      <button class="btn danger" id="btn-pk-revert" style="flex:1; min-width:220px;">↩ Откатить все настройки Power Killer</button>
+    `;
     pkSection.appendChild(pkFooter);
 
+    // MAXIMUM — всё сразу одним батником
+    pkFooter.querySelector('#btn-pk-max').addEventListener('click', async () => {
+      if (!confirm('Применить ВСЕ настройки Power Killer сразу?\n\n• Ultimate Performance\n• CPU 100% (AC)\n• Таймауты off\n• Гибернация off\n• Power Throttling off + disabledynamictick\n• USB LPM/D3Cold off\n• PCI D3Cold off + MSI mode + DMA remapping off + MPO off\n• Диагностические логи off + CEIP off\n• Ethernet TCP-твики\n\nПродолжить?')) return;
+
+      const btn = pkFooter.querySelector('#btn-pk-max');
+      btn.disabled = true;
+      Sound.click();
+      try {
+        await window.api.tweaks.run(`tweaks/${PK_MAXIMUM_FILE}`, { wait: true });
+        Sound.success();
+        toast('Power Killer: Смертельный Максимум применён', 'success');
+      } catch (err) {
+        Sound.error();
+        toast(`Ошибка: ${err.message}`, 'error');
+      } finally {
+        btn.disabled = false;
+      }
+    });
+
+    // REVERT — сброс к Balanced
     pkFooter.querySelector('#btn-pk-revert').addEventListener('click', async () => {
-      if (!confirm('Это сбросит все настройки электропитания к стандартным значениям Windows. Продолжить?')) return;
+      if (!confirm('Это сбросит все настройки электропитания к стандартным значениям Windows (Balanced). Продолжить?')) return;
       const btn = pkFooter.querySelector('#btn-pk-revert');
       btn.disabled = true;
       Sound.click();

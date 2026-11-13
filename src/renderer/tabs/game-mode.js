@@ -97,7 +97,8 @@ const SCRIPTS = {
   restore: 'GameMode/Restore_Services.bat',
   disableServices: 'GameMode/Disable_Services.bat',
   revertServicesFallback: 'GameMode/Revert_Services_Fallback.bat',
-  pkRevert: 'GameMode/PK_Revert_All.bat'
+  pkRevert: 'GameMode/PK_Revert_All.bat',
+  pkMax: 'GameMode/PK_Maximum.bat'
 };
 
 /* ------------------------------------------------------------
@@ -109,15 +110,12 @@ export async function renderGameMode() {
   tabsNav.innerHTML = '';
   content.innerHTML = '';
 
-  // Контейнер для всех фреймов — один столбец по центру
   const wrap = document.createElement('div');
   wrap.style.cssText = 'display:flex; flex-direction:column; gap:20px; max-width:1200px; margin:0 auto;';
 
   // ================= ФРЕЙМ 1: ОБЩАЯ ИНФА =================
   const frame1 = document.createElement('div');
   frame1.className = 'panel';
-
-  const gameIcon = papirusUrl('devices', 'gamepad');
 
   frame1.innerHTML = `
     <h3 class="game-title">
@@ -188,7 +186,6 @@ export async function renderGameMode() {
     </div>
   `;
 
-  // Кнопки — РАЗДЕЛЕНЫ: импорт (с проверкой) и активация
   const planFooter = document.createElement('div');
   planFooter.style.cssText = 'display:flex; gap:10px; margin-top:20px; padding-top:16px; border-top:1px solid var(--border);';
   planFooter.innerHTML = `
@@ -196,7 +193,6 @@ export async function renderGameMode() {
     <button class="btn success" id="btn-activate-plan" style="flex:1;">⚡ Активировать план</button>
   `;
   frame2.appendChild(planFooter);
-
   wrap.appendChild(frame2);
 
   // ================= ФРЕЙМ 3: АКТИВАЦИЯ УСТАНОВЛЕННЫХ ПЛАНОВ =================
@@ -254,13 +250,13 @@ export async function renderGameMode() {
   `;
 
   const pkFooter = document.createElement('div');
-  pkFooter.style.cssText = 'display:flex; gap:10px; margin-top:20px; padding-top:16px; border-top:1px solid var(--border);';
+  pkFooter.style.cssText = 'display:flex; gap:10px; margin-top:20px; padding-top:16px; border-top:1px solid var(--border); flex-wrap:wrap;';
   pkFooter.innerHTML = `
-    <button class="btn success" id="btn-pk-apply" style="flex:1;">▶ Применить выбранные</button>
-    <button class="btn danger" id="btn-pk-revert" style="flex:1;">↩ Откатить питание</button>
+    <button class="btn success" id="btn-pk-apply" style="flex:1; min-width:160px;">▶ Применить выбранные</button>
+    <button class="btn" id="btn-pk-max" style="flex:1; min-width:160px; background:#7c3aed; color:white;">🔥 Максимум (всё сразу)</button>
+    <button class="btn danger" id="btn-pk-revert" style="flex:1; min-width:160px;">↩ Откатить питание</button>
   `;
   frame4.appendChild(pkFooter);
-
   wrap.appendChild(frame4);
 
   // ================= ФРЕЙМ 5: СЛУЖБЫ =================
@@ -300,7 +296,6 @@ export async function renderGameMode() {
     <button class="btn danger" id="btn-svc-restore" style="flex:1;">↩ Восстановить из бэкапа</button>
   `;
   frame5.appendChild(svcFooter);
-
   wrap.appendChild(frame5);
 
   // ================= ФРЕЙМ 6: ЗАЩИЩЁННЫЕ КОМПОНЕНТЫ =================
@@ -338,7 +333,6 @@ export async function renderGameMode() {
   `;
 
   wrap.appendChild(frame6);
-
   content.appendChild(wrap);
 
   // ================= ЛОГИКА =================
@@ -395,17 +389,11 @@ export async function renderGameMode() {
     }
   });
 
-  // --- ИМПОРТ ПЛАНА (с проверкой на дубликаты внутри .bat) ---
   frame2.querySelector('#btn-import-plan').addEventListener('click', async () => {
     const selectedPlan = planSelect.value;
-    if (!selectedPlan) {
-      toast('Выберите план электропитания', 'error');
-      return;
-    }
-
+    if (!selectedPlan) { toast('Выберите план электропитания', 'error'); return; }
     const safeName = selectedPlan.replace(/ /g, '_').replace(/\./g, '_');
     const batPath = `Электропитание/Популярные режимы электропитания/Import_${safeName}.bat`;
-
     const success = await runBat(batPath, `Импорт плана: ${selectedPlan}`);
     if (success) {
       updateStatus(`План "${selectedPlan}" обработан. Если он уже был в системе — дубликат не создан.`, 'success');
@@ -413,17 +401,11 @@ export async function renderGameMode() {
     }
   });
 
-  // --- АКТИВАЦИЯ ПЛАНА (только активация, без импорта) ---
   frame2.querySelector('#btn-activate-plan').addEventListener('click', async () => {
     const selectedPlan = planSelect.value;
-    if (!selectedPlan) {
-      toast('Выберите план электропитания', 'error');
-      return;
-    }
-
+    if (!selectedPlan) { toast('Выберите план электропитания', 'error'); return; }
     const safeName = selectedPlan.replace(/ /g, '_').replace(/\./g, '_');
     const batPath = `Электропитание/Популярные режимы электропитания/Activate_${safeName}.bat`;
-
     const success = await runBat(batPath, `Активация плана: ${selectedPlan}`);
     if (success) {
       updateStatus(`План "${selectedPlan}" активирован.`, 'success');
@@ -431,13 +413,11 @@ export async function renderGameMode() {
     }
   });
 
-  // --- Быстрая активация из блока "установленные планы" ---
   frame3.querySelectorAll('button[data-plan]').forEach(btn => {
     btn.addEventListener('click', async () => {
       const planName = btn.dataset.plan;
       const safeName = planName.replace(/ /g, '_').replace(/\./g, '_');
       const batPath = `Электропитание/Популярные режимы электропитания/Activate_${safeName}.bat`;
-
       const success = await runBat(batPath, `Активация плана: ${planName}`);
       if (success) {
         updateStatus(`План "${planName}" активирован.`, 'success');
@@ -446,7 +426,6 @@ export async function renderGameMode() {
     });
   });
 
-  // --- Управление чекбоксами служб ---
   frame5.querySelector('#gm-svc-all').addEventListener('click', () => {
     frame5.querySelectorAll('.svc-cb').forEach(cb => cb.checked = true);
   });
@@ -454,14 +433,10 @@ export async function renderGameMode() {
     frame5.querySelectorAll('.svc-cb').forEach(cb => cb.checked = false);
   });
 
-  // --- ПРИМЕНИТЬ POWER KILLER ---
+  // --- ПРИМЕНИТЬ POWER KILLER (выбранные) ---
   frame4.querySelector('#btn-pk-apply').addEventListener('click', async () => {
     const checkedFiles = Array.from(frame4.querySelectorAll('.pk-cb:checked')).map(cb => cb.value);
-
-    if (checkedFiles.length === 0) {
-      toast('Выберите хотя бы одну функцию Power Killer', 'error');
-      return;
-    }
+    if (checkedFiles.length === 0) { toast('Выберите хотя бы одну функцию Power Killer', 'error'); return; }
 
     for (const file of checkedFiles) {
       const featureName = PK_FEATURES.find(f => f.file === file)?.label || file;
@@ -473,10 +448,20 @@ export async function renderGameMode() {
     toast('Настройки питания применены', 'success');
   });
 
+  // --- POWER KILLER: МАКСИМУМ (один батник) ---
+  frame4.querySelector('#btn-pk-max').addEventListener('click', async () => {
+    if (!confirm('Применить ВСЕ настройки Power Killer сразу (Ultimate Performance + CPU 100% + USB/PCIe D3Cold off + MSI mode + DMA remapping off + MPO off + логи off)?\n\nПродолжить?')) return;
+
+    const success = await runBat(SCRIPTS.pkMax, 'Power Killer: Максимум (всё сразу)');
+    if (success) {
+      updateStatus('Power Killer применён в режиме МАКСИМУМ. Ultimate Performance активен.', 'success');
+      toast('Power Killer: Максимум применён', 'success');
+    }
+  });
+
   // --- ОТКАТИТЬ POWER KILLER ---
   frame4.querySelector('#btn-pk-revert').addEventListener('click', async () => {
-    if (!confirm('Это сбросит все настройки электропитания к стандартным значениям Windows. Продолжить?')) return;
-
+    if (!confirm('Это сбросит все настройки электропитания к стандартным значениям Windows (Balanced). Продолжить?')) return;
     const success = await runBat(SCRIPTS.pkRevert, 'Откат настроек электропитания');
     if (success) {
       updateStatus('Настройки питания сброшены к стандартным.', 'success');
@@ -488,11 +473,7 @@ export async function renderGameMode() {
   frame5.querySelector('#btn-svc-apply').addEventListener('click', async () => {
     const wantBackup = isSwitchOn();
     const checkedServices = Array.from(frame5.querySelectorAll('.svc-cb:checked')).map(cb => cb.value);
-
-    if (checkedServices.length === 0) {
-      toast('Выберите хотя бы одну службу для отключения', 'error');
-      return;
-    }
+    if (checkedServices.length === 0) { toast('Выберите хотя бы одну службу для отключения', 'error'); return; }
 
     if (wantBackup) {
       const backupOk = await runBat(SCRIPTS.backup, 'Создание бэкапа реестра служб');
@@ -509,9 +490,7 @@ export async function renderGameMode() {
   // --- ВОССТАНОВИТЬ СЛУЖБЫ ---
   frame5.querySelector('#btn-svc-restore').addEventListener('click', async () => {
     if (!confirm('Это восстановит исходное состояние всех служб из созданного ранее бэкапа. Продолжить?')) return;
-
     const restoreOk = await runBat(SCRIPTS.restore, 'Восстановление служб из бэкапа (.reg)');
-
     if (restoreOk) {
       updateStatus('Службы успешно восстановлены из бэкапа.', 'success');
       toast('Службы восстановлены', 'success');

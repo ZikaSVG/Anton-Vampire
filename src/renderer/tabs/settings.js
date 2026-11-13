@@ -544,7 +544,6 @@ export async function renderSettings() {
       <div class="settings-section-body" style="font-size:12px;line-height:1.6">
         <div><b>Версия:</b> <span id="about-version">…</span></div>
         <div><b>Движок:</b> Electron + Node.js</div>
-        <div><b>Стиль:</b> Material 3 (Material You)</div>
         <div><b>Режим:</b> Портативный (данные рядом с приложением)</div>
         <div><b>Автор:</b> ZikaSVG</div>
         <div><b>Сайт:</b>

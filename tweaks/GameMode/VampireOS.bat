@@ -2122,6 +2122,216 @@ if exist "%LOCALAPPDATA%\CrashDumps" del /f /q /s "%LOCALAPPDATA%\CrashDumps\*" 
 if exist "%ProgramData%\Microsoft\Windows\WER" del /f /q /s "%ProgramData%\Microsoft\Windows\WER\*" >nul 2>&1
 if exist "%LOCALAPPDATA%\Microsoft\Windows\WER" del /f /q /s "%LOCALAPPDATA%\Microsoft\Windows\WER\*" >nul 2>&1
 
+:: =====================================================================
+::  VAMPIREOS — КОМПЛЕКСНЫЙ СКРИПТ НАСТРОЙКИ WINDOWS
+:: =====================================================================
+::
+::  ОПИСАНИЕ:
+::  Скрипт выполняет три независимые задачи одним запуском.
+::  Все изменения вносятся в реестр и в схемы электропитания.
+::  Требуются права администратора (запрашиваются автоматически).
+::
+::  ЧТО ДЕЛАЕТ:
+::
+::  1) КОНТЕКСТНОЕ МЕНЮ «СОЗДАТЬ»
+::     Добавляет в правый клик -> Создать пункты для файлов:
+::     .bat, .reg, .ps1, .vbs
+::     Используется параметр NullFile в ветке ShellNew —
+::     Windows создаёт пустой файл с нужным расширением.
+::
+::  2) ТРИ СХЕМЫ ЭЛЕКТРОПИТАНИЯ
+::     Создаёт пользовательские схемы на основе стандартных:
+::       • "Balanced Performance VampireOS"  (база: Сбалансированная)
+::       • "Maximum Performance VampireOS"   (база: Высокая производительность)
+::       • "Power Saving VampireOS"          (база: Экономия энергии)
+::
+::     Безопасные оптимизации (применяются ко всем трём схемам):
+::       • HDD: никогда не отключать диск (0 = never)
+::         Предотвращает частые остановки/раскрутки механического HDD.
+::         На SSD эта настройка не влияет.
+::       • USB: отключить selective suspend (0 = disabled)
+::         Внешние диски, мыши и хабы не «засыпают» и не дают задержек.
+::       • Экран: разумные тайм-ауты отключения (разные для каждой схемы):
+::           Balanced   — 15 мин (сеть) / 5 мин (батарея)
+::           Maximum    — 15 мин (сеть) / 10 мин (батарея)
+::           PowerSaving— 5 мин (сеть) / 2 мин (батарея)
+::
+::     По умолчанию активируется "Balanced Performance VampireOS".
+::
+::  3) КОНТЕКСТНОЕ МЕНЮ РАБОЧЕГО СТОЛА
+::     Добавляет подменю «Выбор плана электропитания» с пунктами:
+::       • Balanced Performance VampireOS
+::       • Maximum Performance VampireOS
+::       • Power Saving VampireOS
+::       • Стандартная «Сбалансированная» (резерв на случай удаления кастомных)
+::       • Электропитание... (открывает классическую панель powercfg.cpl)
+::
+::  ОТМЕНА ИЗМЕНЕНИЙ (выполнять в cmd от администратора):
+::
+::     :: Удалить пункты «Создать»
+::     reg delete "HKCR\.bat\ShellNew" /f
+::     reg delete "HKCR\.reg\ShellNew" /f
+::     reg delete "HKCR\.ps1\ShellNew" /f
+::     reg delete "HKCR\.vbs\ShellNew" /f
+::
+::     :: Удалить подменю планов
+::     reg delete "HKCR\DesktopBackground\Shell\PowerPlan" /f
+::
+::     :: Удалить пользовательские схемы
+::     powercfg /delete 90a358c8-3bbc-4fb3-8b4e-d7ab065d2614
+::     powercfg /delete a1b2c3d4-e5f6-4789-a0ab-cdef12345678
+::     powercfg /delete d8e76bb7-6943-4b7c-ab30-441296b72264
+::
+::  ТРЕБОВАНИЯ: Windows 10 / 11, права администратора.
+:: =====================================================================
+
+:: =====================================================================
+::  ЧАСТЬ 1. КОНТЕКСТНОЕ МЕНЮ «СОЗДАТЬ»
+:: =====================================================================
+echo.
+echo ============================================================
+echo  ЧАСТЬ 1: Добавление пунктов в меню «Создать»
+echo ============================================================
+
+:: NullFile = пустой строковый параметр. Windows видит его в ShellNew
+:: и добавляет соответствующий пункт в подменю «Создать».
+reg add "HKCR\.bat\ShellNew" /v "NullFile" /t REG_SZ /d "" /f >nul
+reg add "HKCR\.reg\ShellNew" /v "NullFile" /t REG_SZ /d "" /f >nul
+reg add "HKCR\.ps1\ShellNew" /v "NullFile" /t REG_SZ /d "" /f >nul
+reg add "HKCR\.vbs\ShellNew" /v "NullFile" /t REG_SZ /d "" /f >nul
+
+echo [OK] .bat .reg .ps1 .vbs добавлены в «Создать»
+
+:: =====================================================================
+::  ЧАСТЬ 2. СОЗДАНИЕ СХЕМ ЭЛЕКТРОПИТАНИЯ
+:: =====================================================================
+echo.
+echo ============================================================
+echo  ЧАСТЬ 2: Создание схем электропитания VampireOS
+echo ============================================================
+
+:: --- GUID пользовательских схем (генерируются один раз, далее константы) ---
+set "GUID_BAL=90a358c8-3bbc-4fb3-8b4e-d7ab065d2614"
+set "GUID_MAX=a1b2c3d4-e5f6-4789-a0ab-cdef12345678"
+set "GUID_SAV=d8e76bb7-6943-4b7c-ab30-441296b72264"
+
+:: --- GUID стандартных схем Windows (базы для клонирования) ---
+set "BASE_BAL=381b4222-f694-41f0-9685-ff5bb260df2e"
+set "BASE_MAX=8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c"
+set "BASE_SAV=a1841308-3541-4fab-bc81-f71556f20b4a"
+
+:: --- GUID подсистем и конкретных параметров ---
+set "SUB_DISK=0012ee47-9041-4b5d-9b77-535fba8b1442"
+set "DISKIDLE=6738e2c4-e8a5-4a42-b16a-e040e769756e"
+set "SUB_USB=2a737441-1930-4402-8d77-b2bebba308a3"
+set "USBSUSPEND=48e6b7a6-50f5-4782-a5d4-53bb8f07e226"
+set "SUB_VIDEO=7516b95f-f776-4464-8c53-06167f40cc99"
+set "VIDEOIDLE=3c0bc021-c8a8-4e07-a973-6b14cbcb2b7e"
+
+:: --- Переключаемся на стандартную схему перед удалением старых кастомных ---
+:: (нельзя удалить активную схему — Windows выдаст ошибку)
+echo Switching to standard Balanced scheme before cleanup...
+powercfg /setactive %BASE_BAL% >nul 2>&1
+
+echo Removing old custom schemes...
+powercfg /delete %GUID_BAL% >nul 2>&1
+powercfg /delete %GUID_MAX% >nul 2>&1
+powercfg /delete %GUID_SAV% >nul 2>&1
+
+:: --- Клонируем базовые схемы и задаём им наши GUID ---
+echo Creating schemes...
+powercfg /duplicatescheme %BASE_BAL% %GUID_BAL% >nul || goto :fail
+powercfg /duplicatescheme %BASE_MAX% %GUID_MAX% >nul || goto :fail
+powercfg /duplicatescheme %BASE_SAV% %GUID_SAV% >nul || goto :fail
+
+:: --- Переименовываем и задаём описания ---
+powercfg /changename %GUID_BAL% "Balanced Performance VampireOS" "Balanced performance for everyday tasks and gaming." >nul
+powercfg /changename %GUID_MAX% "Maximum Performance VampireOS" "Maximum performance in games and work applications." >nul
+powercfg /changename %GUID_SAV% "Power Saving VampireOS" "Reduced power consumption and maximum battery life." >nul
+
+echo Applying safe tweaks...
+
+:: --- HDD: никогда не отключать диск (0 = never) ---
+:: setacvalueindex — от сети, setdcvalueindex — от батареи.
+powercfg /setacvalueindex %GUID_BAL% %SUB_DISK% %DISKIDLE% 0
+powercfg /setdcvalueindex %GUID_BAL% %SUB_DISK% %DISKIDLE% 0
+powercfg /setacvalueindex %GUID_MAX% %SUB_DISK% %DISKIDLE% 0
+powercfg /setdcvalueindex %GUID_MAX% %SUB_DISK% %DISKIDLE% 0
+powercfg /setacvalueindex %GUID_SAV% %SUB_DISK% %DISKIDLE% 0
+powercfg /setdcvalueindex %GUID_SAV% %SUB_DISK% %DISKIDLE% 0
+
+:: --- USB: отключить selective suspend (0 = disabled) ---
+powercfg /setacvalueindex %GUID_BAL% %SUB_USB% %USBSUSPEND% 0
+powercfg /setdcvalueindex %GUID_BAL% %SUB_USB% %USBSUSPEND% 0
+powercfg /setacvalueindex %GUID_MAX% %SUB_USB% %USBSUSPEND% 0
+powercfg /setdcvalueindex %GUID_MAX% %SUB_USB% %USBSUSPEND% 0
+powercfg /setacvalueindex %GUID_SAV% %SUB_USB% %USBSUSPEND% 0
+powercfg /setdcvalueindex %GUID_SAV% %SUB_USB% %USBSUSPEND% 0
+
+:: --- Экран: безопасные тайм-ауты (в секундах) ---
+:: Balanced: 15 мин от сети / 5 мин от батареи
+powercfg /setacvalueindex %GUID_BAL% %SUB_VIDEO% %VIDEOIDLE% 900
+powercfg /setdcvalueindex %GUID_BAL% %SUB_VIDEO% %VIDEOIDLE% 300
+
+:: Maximum: 15 мин от сети / 10 мин от батареи
+powercfg /setacvalueindex %GUID_MAX% %SUB_VIDEO% %VIDEOIDLE% 900
+powercfg /setdcvalueindex %GUID_MAX% %SUB_VIDEO% %VIDEOIDLE% 600
+
+:: Power Saving: 5 мин от сети / 2 мин от батареи
+powercfg /setacvalueindex %GUID_SAV% %SUB_VIDEO% %VIDEOIDLE% 300
+powercfg /setdcvalueindex %GUID_SAV% %SUB_VIDEO% %VIDEOIDLE% 120
+
+:: --- Активируем Balanced как схему по умолчанию ---
+powercfg /setactive %GUID_BAL%
+echo [OK] Схемы созданы, активна: Balanced Performance VampireOS
+
+:: =====================================================================
+::  ЧАСТЬ 3. ПОДМЕНЮ «ВЫБОР ПЛАНА ЭЛЕКТРОПИТАНИЯ» НА РАБОЧЕМ СТОЛЕ
+:: =====================================================================
+echo.
+echo ============================================================
+echo  ЧАСТЬ 3: Подменю планов электропитания на рабочем столе
+echo ============================================================
+
+:: --- Корневой пункт подменю ---
+:: MUIVerb      — отображаемое имя
+:: Icon         — иконка из powercpl.dll (стандартная иконка электропитания)
+:: Position     — положение в меню (Middle = между группировками)
+:: SubCommands  — пустая строка означает «использовать дочерние ключи Shell\»
+reg add "HKCR\DesktopBackground\Shell\PowerPlan" /v "MUIVerb"     /t REG_SZ /d "Выбор плана электропитания" /f >nul
+reg add "HKCR\DesktopBackground\Shell\PowerPlan" /v "Icon"        /t REG_SZ /d "powercpl.dll"                /f >nul
+reg add "HKCR\DesktopBackground\Shell\PowerPlan" /v "Position"    /t REG_SZ /d "Middle"                       /f >nul
+reg add "HKCR\DesktopBackground\Shell\PowerPlan" /v "SubCommands" /t REG_SZ /d ""                             /f >nul
+
+:: --- Пункт 1: Balanced Performance VampireOS ---
+:: В команде %GUID_BAL% разворачивается в GUID на этапе выполнения скрипта.
+reg add "HKCR\DesktopBackground\Shell\PowerPlan\Shell\01bal" /v "MUIVerb" /t REG_SZ /d "Balanced Performance VampireOS" /f >nul
+reg add "HKCR\DesktopBackground\Shell\PowerPlan\Shell\01bal" /v "Icon"    /t REG_SZ /d "powercpl.dll"                     /f >nul
+reg add "HKCR\DesktopBackground\Shell\PowerPlan\Shell\01bal\command" /ve /t REG_SZ /d "powercfg.exe /setactive %GUID_BAL%" /f >nul
+
+:: --- Пункт 2: Maximum Performance VampireOS ---
+reg add "HKCR\DesktopBackground\Shell\PowerPlan\Shell\02max" /v "MUIVerb" /t REG_SZ /d "Maximum Performance VampireOS" /f >nul
+reg add "HKCR\DesktopBackground\Shell\PowerPlan\Shell\02max" /v "Icon"    /t REG_SZ /d "powercpl.dll"                    /f >nul
+reg add "HKCR\DesktopBackground\Shell\PowerPlan\Shell\02max\command" /ve /t REG_SZ /d "powercfg.exe /setactive %GUID_MAX%" /f >nul
+
+:: --- Пункт 3: Power Saving VampireOS ---
+reg add "HKCR\DesktopBackground\Shell\PowerPlan\Shell\03sav" /v "MUIVerb" /t REG_SZ /d "Power Saving VampireOS" /f >nul
+reg add "HKCR\DesktopBackground\Shell\PowerPlan\Shell\03sav" /v "Icon"    /t REG_SZ /d "powercpl.dll"             /f >nul
+reg add "HKCR\DesktopBackground\Shell\PowerPlan\Shell\03sav\command" /ve /t REG_SZ /d "powercfg.exe /setactive %GUID_SAV%" /f >nul
+
+:: --- Пункт 4: Стандартная «Сбалансированная» (резерв) ---
+:: На случай, если пользовательские схемы будут удалены обновлением Windows.
+reg add "HKCR\DesktopBackground\Shell\PowerPlan\Shell\04std" /v "MUIVerb" /t REG_SZ /d "Сбалансированная (стандартная)" /f >nul
+reg add "HKCR\DesktopBackground\Shell\PowerPlan\Shell\04std" /v "Icon"    /t REG_SZ /d "powercpl.dll"                    /f >nul
+reg add "HKCR\DesktopBackground\Shell\PowerPlan\Shell\04std\command" /ve /t REG_SZ /d "powercfg.exe /setactive %BASE_BAL%" /f >nul
+
+:: --- Пункт 5: Открыть классическую панель «Электропитание» ---
+reg add "HKCR\DesktopBackground\Shell\PowerPlan\Shell\05cpl" /v "MUIVerb" /t REG_SZ /d "Электропитание..." /f >nul
+reg add "HKCR\DesktopBackground\Shell\PowerPlan\Shell\05cpl" /v "Icon"    /t REG_SZ /d "powercpl.dll"       /f >nul
+reg add "HKCR\DesktopBackground\Shell\PowerPlan\Shell\05cpl\command" /ve /t REG_SZ /d "control.exe powercfg.cpl" /f >nul
+
+echo [OK] Подменю «Выбор плана электропитания» добавлено на рабочий стол
+
 gpupdate /force >nul 2>&1
 
 echo.

@@ -5,28 +5,13 @@
 
   <p align="center">
   <b>Windows-оптимизатор на Electron</b><br/>
-  <sub>1000+ твиков · 80+ тем · Material You · Cyberpunk 2077 · Portable</sub>
 </p>
 
 <p align="center">
-  <a href="https://github.com/ZikaSVG/Anton-Vampire/releases/latest">
-    <img src="https://img.shields.io/github/v/release/ZikaSVG/Anton-Vampire?include_prereleases&style=for-the-badge&label=version&color=ea38b8" alt="Version" />
-  </a>
-  <a href="https://github.com/ZikaSVG/Anton-Vampire/releases">
-    <img src="https://img.shields.io/github/downloads/ZikaSVG/Anton-Vampire/total?style=for-the-badge&label=downloads&color=32fbe2" alt="Downloads" />
-  </a>
-  <a href="LICENSE">
-    <img src="https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-6e40c0?style=for-the-badge" alt="License" />
-  </a>
-  <!-- <img src="https://img.shields.io/badge/platform-Windows%2010%20%7C%2011-0078D4?style=for-the-badge&logo=windows" alt="Platform" />
-  <img src="https://img.shields.io/badge/electron-44-47848F?style=for-the-badge&logo=electron" alt="Electron" /> -->
-</p>
-
-<p align="center">
-  <a href="https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.0.9-beta/Anton.Vampire.Setup.1.0.9-beta.exe">
+  <a href="https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.1.0/Anton.Vampire.Setup.1.1.0.exe">
     <img src="https://img.shields.io/badge/%F0%9F%93%A5_Download-Setup_.exe-EA38B8?style=for-the-badge" alt="Download Setup" />
   </a>
-  <a href="https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.0.9-beta/Anton.Vampire.Portable.rar">
+  <a href="https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.1.0/Anton.Vampire.Portable.rar">
     <img src="https://img.shields.io/badge/%F0%9F%93%A6_Download-Portable_.rar-6E40C0?style=for-the-badge" alt="Download Portable" />
   </a>
 </p>
@@ -41,7 +26,7 @@
 
 <p align="center">
   <a href="web/screenshot.jpg">
-    <img src="web/screenshot.jpg" alt="Anton Vampire v1.0.7 — главный экран" width="90%" style="border-radius: 8px;" />
+    <img src="web/screenshot.jpg" alt="Anton Vampire v1.1.0 — главный экран" width="90%" style="border-radius: 8px;" />
   </a>
 </p>
 
@@ -55,33 +40,79 @@
 
 ---
 
-## ✨ Новое в 1.0.7
+## ✨ Новое в 1.1.0
 
-- 💀 **Смертельная оптимизация** — отдельная вкладка с необратимым BAT-твиком
-  (9 категорий, ~100 групп изменений в реестре и службах). Только для
-  стационарных ПК, только с резервной копией.
+- 🧛 **VampireOS** — отдельная вкладка «Вампир» с глобальной оптимизацией системы (13 категорий изменений в реестре, службах и групповых политиках). Включает:
+  - **Установить VampireOS** — базовый необратимый BAT-твик.
+  - **Убить KCAS и Xeon** — режим максимальной производительности (десктопы).
+  - **Режим Деда** — режим максимального энергосбережения (ноутбуки).
+  - **↺ Откат** — возврат к стандартным настройкам (Balanced).
+- ⚙️ **Менеджер служб** — выделен в отдельную вкладку. Полноценная таблица с поиском, статусами (boot/system/auto/manual/disabled), массовым включением/отключением, безопасным бэкапом `.reg` и отображением тегов сборок, в которых служба уже отключена.
+- 🎮 **Игровой режим 2.0** — 14 готовых планов электропитания (Amit, Atlas, Bitsum, Quaked, XOS, Zoyata и др.) с импортом/активацией, Power Killer, массовое отключение 200+ служб с бэкапом `.reg` и безопасным fallback.
+- 🔋 **Электропитание** — Power Killer теперь представлен в виде карточек с возможностью применения «Смертельного Максимума (всё сразу)», таблица результатов тестирования планов, ~80 источников питания (XOS, ImmortalOS, SystemX, Igromanoff, VainOS, SynergyOS, Другое).
+- 🖼️ **Обои** — новая под-вкладка в настройках: добавление своих файлов, загрузка по ссылке, смена папки, применение и удаление.
+- 🎨 **8 CSS-стилей:** Material 3, Pixel, Material You, Pretty Kitty, Cyberpunk 2077, Mini Punk, Alt Punk, Material Mini.
+- 🌈 **~100+ тем** в 12 группах: Material 3, светлые, тёмные ttkbootstrap, тёмные от разработчика, от Антона, от Русланчика, игровые, Catppuccin ×4, Dark Reader ×22, Curated 2.0 ×17.
+- 🛠 **Настройки** — новый режим запуска твиков `minsudo`, переключатель «Разрешить выделение чекбоксов», режим отображения чекбоксов `expandable` (Sapphire).
 
-- 🎮 **Игровой режим 2** — 14 готовых планов электропитания
-  (Amit, Atlas, Bitsum, Quaked, XOS, Zoyata и др.) с импортом/активацией,
-  Power Killer, массовое отключение 200+ служб
-  с бэкапом `.reg` и безопасным fallback.
+---
 
-- 🔋 **Электропитание** — Power Killer, таблица результатов тестирования планов, ~80 источников питания
-  (XOS, ImmortalOS, SystemX, Igromanoff, VainOS, SynergyOS, Другое).
+# ⚡ Планы электропитания VampireOS
 
-- ⚙️ **Службы** — полноценный менеджер служб с таблицей, поиском, статусами,
-  массовым включением/отключением и безопасным бэкапом.
+В рамках установки VampireOS создаются **три фирменные схемы электропитания**. Они базируются на стандартных планах Windows, но содержат ряд безопасных твиков, направленных на стабильность работы дисковой подсистемы и USB-устройств.
 
-- 🎨 **8 CSS-стилей:** Material 3, Pixel, Material You, Pretty Kitty,
-  Cyberpunk 2077, Mini Punk, Alt Punk, Material Mini.
+> 🛡️ **Важно:** Скрипт идемпотентен. При повторном запуске старые копии схем удаляются, а затем создаются заново. Это гарантирует отсутствие дубликатов в системе.
 
-- 🌈 **~100+ тем** в 12 группах: Material 3, светлые, тёмные ttkbootstrap,
-  тёмные от разработчика, от Антона, от Русланчика, игровые
-  (Vampire: The Masquerade, CS 1.6, CS 2, Diablo, Cyberpunk 2077 ×5),
-  Catppuccin ×4, Dark Reader ×22, Curated 2.0 ×17.
+---
 
-- 🕹 **Cyberpunk 2077 UI** — неоновый интерфейс, жёлто-голубые акценты,
-  глитч-эффекты.
+## 📋 Список создаваемых схем
+
+| Название схемы | Базируется на | GUID |
+| :--- | :--- | :--- |
+| **Balanced Performance VampireOS** | Сбалансированная | `90a358c8-3bbc-4fb3-8b4e-d7ab065d2614` |
+| **Maximum Performance VampireOS** | Высокая производительность | `a1b2c3d4-e5f6-4789-a0ab-cdef12345678` |
+| **Power Saving VampireOS** | Экономия энергии | `d8e76bb7-6943-4b7c-ab30-441296b72264` |
+
+По умолчанию после завершения скрипта активируется схема **Balanced Performance VampireOS**.
+
+---
+
+## 🛠️ Безопасные твики (применяются ко всем трём схемам)
+
+Скрипт вносит изменения в три ключевые подсистемы, чтобы предотвратить микро-фризы и проблемы с периферией, не нанося вреда ноутбукам.
+
+### 💾 Диск (HDD / SSD)
+- **Параметр:** `6738e2c4-e8a5-4a42-b16a-e040e769756e`
+- **Значение:** `0` (Никогда не отключать)
+- **Что это даёт:** Предотвращает частую остановку и раскрутку механических жёстких дисков (HDD). На SSD эта настройка не оказывает влияния, но полностью безопасна.
+
+### 🔌 USB-порты
+- **Параметр:** `48e6b7a6-50f5-4782-a5d4-53bb8f07e226`
+- **Значение:** `0` (Отключить выборочную приостановку / Selective Suspend)
+- **Что это даёт:** Внешние диски, мыши, клавиатуры и хабы перестают «засыпать». Это устраняет задержки при пробуждении USB-устройств во время игры или работы.
+
+### 🖥️ Таймауты экрана (безопасные значения)
+
+Скрипт устанавливает разумные лимиты отключения экрана, чтобы не расходовать батарею впустую, но и не мешать работе.
+
+| Схема | От сети (AC) | От батареи (DC) |
+| :--- | :--- | :--- |
+| **Balanced Performance** | 15 минут | 5 минут |
+| **Maximum Performance** | 15 минут | 10 минут |
+| **Power Saving** | 5 минут | 2 минуты |
+
+---
+
+## 🔄 Логика работы скрипта
+
+1. **Проверка прав:** Скрипт требует запуска от имени администратора (`fltmc`).
+2. **Сброс:** Принудительно переключается на стандартную схему «Сбалансированная» (Windows не позволяет удалить активную схему).
+3. **Очистка:** Удаляет предыдущие версии схем VampireOS по их GUID.
+4. **Создание:** Клонирует стандартные схемы Windows и присваивает им новые имена.
+5. **Твики:** Применяет настройки диска, USB и таймаутов экрана.
+6. **Активация:** Включает **Balanced Performance VampireOS**.
+
+> 💡 **Совет:** Для ноутбуков при работе от батареи лучше вручную переключиться на схему **Power Saving VampireOS** или использовать стандартный план Windows, чтобы maximize время автономной работы.
 
 ---
 
@@ -90,7 +121,7 @@
 ### 🎨 Интерфейс
 - **Material You (Material 3 Expressiv)** — скругления 16–32px, tonal-контейнеры, state layers
 - **Cyberpunk 2077** — неон, глитчи, жёлто-голубая палитра, моноширинные шрифты
-- **80+ тем** в 12 группах с превью
+- **100+ тем** в 12 группах с превью
 - **8 CSS-стилей**: Material 3 · Pixel · Material You · Pretty Kitty · Cyberpunk 2077 · Mini Punk · Alt Punk · Material Mini
 - **6 шрифтовых слотов** (heading / body / mono × latin / cyr) + веса 100–900
 - **Splash-screen** с прогрессом
@@ -110,15 +141,15 @@
 | 5 | 🧹 **Очистка** | 12 секций: шейдеры, логи, кэши, Windows Update, Temp, диск |
 | 6 | ⚜️ **Исправления** | DISM, SFC, CHKDSK, сеть, устройства, игры, hero-блок отката |
 | 7 | 🎮 **Игровой режим** | Планы электропитания (14), Power Killer (6), службы (200+) |
-| 8 | 💀 **Смертельная оптимизация** | Необратимый BAT: 9 категорий, ~100 групп изменений. Только для ПК |
-| 9 | 🔋 **Электропитание** | Power Killer + таблица планов + 80+ источников схем + `.pow` |
+| 8 | 🧛 **Вампир** | VampireOS: 13 категорий изменений, Power Max / Power Save, откат |
+| 9 | 🔋 **Электропитание** | Power Killer + таблица планов + 100+ источников схем + `.pow` |
 | 10 | ⚙️ **Службы** | Таблица служб: поиск, статусы, массовое вкл/выкл, бэкап `.reg` |
 | 11 | 🎨 **Кастомизация** | Курсоры с превью + 4 источника твиков (XOS/Marty/Synergy/Vain) |
 | 12 | 📦 **Приложения** | Appx, Defender/Edge/OneDrive/WebView2 в 4 режимах, removal-батники |
-| 13 | ⚙️ **Настройки** | 6 под-вкладок, 80+ тем, шрифты, утилиты, обои |
+| 13 | ⚙️ **Настройки** | 6 под-вкладок (Внешний вид, Шрифты, Интерфейс, Утилиты, Обои, О программе) |
 
 ### ⚙️ Механики
-- **6 режимов запуска твиков**: `default` · `no_launcher` · `launcher` · `powerrun` · `nsudolg` (TrustedInstaller) · `cmd`
+- **7 режимов запуска твиков**: `default` · `no_launcher` · `launcher` · `powerrun` · `nsudolg` (TrustedInstaller) · `minsudo` · `cmd`
 - **Патчинг `.bat`**: вырезает `pause`/`timeout`/`choice`, превращает `start` → `start /b ""`
 - **Стрим вывода** с авто-декодингом UTF-8 → cp866 fallback
 - **Пары «твик ↔ отмена»** с кнопкой ↩
@@ -126,36 +157,36 @@
 - **Portable mode**: всё в `extreme_data/` рядом с `.exe`
 - **Безопасный бэкап служб**: `.reg`-файл + fallback на `Start=3`
 - **Проверка дубликатов** при импорте планов электропитания
+- **Отключение выделения чекбоксов** — защита от случайного запуска твиков
+- **Живой стрим логов** в тяжёлых операциях (VampireOS, Power Killer)
 
 ---
 
-## 💀 Смертельная оптимизация (1.0.7)
+## 🧛 Вампир (VampireOS) — 1.1.0
 
-Отдельная вкладка для максимального выжимания FPS на **стационарных ПК**.
-Один BAT-файл `GameMode/Hard_Optimization.bat`, **без отката**.
+Глобальная оптимизация Windows. **Изменения вносятся в реестр, службы и системные файлы. Часть изменений (Defender, OneDrive) необратима.**
 
 | Категория | Что делает |
 |---|---|
-| 📊 **Телеметрия** | AllowTelemetry=0, DiagTrack/WER/TIP/Speech/Ink → Start=4 |
-| 🔄 **Обновления, Store, Edge** | wuauserv/UsoSvc/BITS/DoSvc/edgeupdate → Start=4 |
-| ⚡ **Питание** | Hibernate off, PowerThrottling off, CrystalCry Max Performance, PagingFiles="" |
-| 🌐 **Сеть** | TCP/IP твики, Wi-Fi Sense off, NonBestEffortLimit=0 |
-| 🖥️ **UI** | MenuShowDelay=0, анимации off, Copilot off, BingSearch off |
-| 🖱️ **Мышь/клавиатура** | MouseSpeed=0, задержки hover=0, Accessibility Flags=0 |
-| 🖨️ **Службы** | Spooler/Bth/WlanSvc/RDP/Xbox/STORAGE/RAID → удалены |
-| 📜 **Журналы** | EventLog AutoBackup=0, TIP TestResults очищены |
-| 🧹 **Прочее** | ReserveManager off, StorageSense off, GameDVR off, FSO off |
+| 📊 **Телеметрия и диагностика** | Уровень телеметрии = 0, отключение DiagTrack/WER/TIP, блокировка задач через IFEO |
+| 🔄 **Обновления и Store** | Отключение wuauserv/UsoSvc/BITS/DoSvc/edgeupdate, блокировка авто-обновлений Edge |
+| 🧠 **Система и ядро** | Win32PrioritySeparation=38, отключение Memory Compression, MSI mode, DMA remapping, BCD-твики |
+| 🌐 **Сеть и TCP** | DefaultTTL=65, TCPNoDelay=1, отключение Wi-Fi Sense и авто-подключения к хотспотам |
+| 🖥️ **Проводник, UI** | Классическое контекстное меню, MenuShowDelay=0, отключение анимаций, скрытие лишних элементов |
+| 🖱️ **Мышь, ввод** | MouseSpeed=0, отключение автозамены и предиктивного ввода |
+| 🖨️ **Службы, принтер** | Отключение Spooler, Fax, диагностических служб (DPS, WerSvc) |
+| 📜 **Журналы и события** | Отключение AutoBackupLogFiles, очистка всех журналов через `wevtutil` |
+| 🧹 **Прочее** | Отключение ReserveManager, Storage Sense, GameDVR, FSO, Office-логов |
+| 📂 **Меню «Создать»** | Добавление пунктов .bat, .reg, .ps1, .vbs в контекстное меню, подменю питания на рабочем столе |
+| ⚡ **Питание** | Создание 3 схем VampireOS (Balanced, Maximum, Power Saving) с безопасными твиками |
 
-> ⚠️ **Только для десктопов.** На ноутбуках и планшетах — не запускать.
-> Перед запуском — точка восстановления / бэкап системы.
+> ⚠️ **Убить KCAS и Xeon** — только для десктопов. **Режим Деда** — для ноутбуков. Перед запуском создайте точку восстановления.
 
 ---
 
-## 🎮 Игровой режим 2.0 (1.0.7)
+## 🎮 Игровой режим 2.0
 
-### 📦 Готовые планы электропитания
-
-Импорт и активация планов от популярных оптимизаторов:
+### 📦 Готовые планы электропитания (14)
 
 | План | Описание |
 |---|---|
@@ -177,7 +208,7 @@
 🛡️ **Защита от дубликатов:** если план уже импортирован — повторно не создаётся.
 💡 **Совет:** для ноутбуков выбирайте планы с `Idle_Enabled`.
 
-### 🔧 Power Killer — 6 экстримальных функций
+### 🔧 Power Killer — 6 функций
 
 | Функция | Что делает |
 |---|---|
@@ -188,10 +219,7 @@
 | 🎛️ **PCI D3Cold** | Запрет глубокого сна GPU/NVMe |
 | 📓 **Диагностические журналы** | SleepStudy, Kernel-Processor-Power off |
 
-Каждая функция запускается отдельно. Есть кнопка **↩ Откатить все настройки Power Killer**.
-
 ### 🛡️ Оптимизация служб
-
 - **200+ служб** в списке `SAFE_SERVICES` (телеметрия, реклама, фоновые)
 - **Защищённые категории:** питание 🔋, ввод ⌨️, сеть 🌐, темы 🎨, ядра ⚙️ (Start 0-2)
 - **Автобэкап** реестра служб в `.reg` перед отключением (переключатель)
@@ -200,7 +228,7 @@
 
 ---
 
-## ⚙️ Службы (1.0.7)
+## ⚙️ Службы (выделенная вкладка)
 
 Полноценный менеджер служб Windows:
 
@@ -208,9 +236,9 @@
 - **Поиск** по имени и описанию
 - **Массовое управление**: выбрать все / снять все / отключить выбранные / включить выбранные
 - **Статусы** через `Get_Services_Status.bat` → `services_status.json`
-- **Кнопки в строке**: ▶ Вкл / ⏹ Выкл для каждой службы
+- **Кнопки в строке**: ▶ Вкл / ⏹ Выкл для каждой службы, выбор типа запуска из выпадающего списка
 - **Бэкап** `Services_Backup.reg` и **восстановление**
-- **Индикаторы**: цветные бейджи статусов + теги сборок
+- **Индикаторы**: цветные бейджи статусов + теги сборок (ReviOS, AtlasOS, XOS, VainOS и т.д.)
 
 ---
 
@@ -223,7 +251,7 @@
 ### 📥 Setup
 Установщик NSIS, ярлык в меню Пуск, автозапуск от админа.
 
-[**Скачать Setup .exe →**](https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.0.9-beta/Anton.Vampire.Setup.1.0.9-beta.exe)
+[**Скачать Setup .exe →**](https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.1.0/Anton.Vampire.Setup.1.1.0.exe)
 
 </td>
 <td align="center" width="50%">
@@ -231,7 +259,7 @@
 ### 📦 Portable
 Архив `.rar`, без установки, всё в `extreme_data/`.
 
-[**Скачать Portable .rar →**](https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.0.9-beta/Anton.Vampire.Portable.rar)
+[**Скачать Portable .rar →**](https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.1.0/Anton.Vampire.Portable.rar)
 
 </td>
 </tr>
@@ -242,7 +270,7 @@
 Откройте `cmd` (Win+R → cmd) и вставьте:
 
 ```cmd
-curl -g -k -L -# -o "%temp%\AntonVampire.Setup.exe" "https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.0.9-beta/Anton.Vampire.Setup.1.0.9-beta.exe" && start "" "%temp%\AntonVampire.Setup.exe"
+curl -g -k -L -# -o "%temp%\AntonVampire.Setup.exe" "https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.1.0/Anton.Vampire.Setup.1.1.0.exe" && start "" "%temp%\AntonVampire.Setup.exe"
 ```
 
 ### Из исходников
@@ -265,10 +293,10 @@ npm run build    # сборка NSIS installer
 | Runtime | Electron 44 · Node.js |
 | Renderer | Vanilla JS (ES-модули) · HTML · CSS |
 | Стили | 8 CSS-файлов + CSS-переменные |
-| Темы | `renderer/themes.js` (80+ тем) |
+| Темы | `renderer/themes.js` (100+ тем) |
 | Шрифты | локальные `.woff2` из `assets/fonts/` |
 | Сборка | `electron-builder` → NSIS |
-| Утилиты | PowerShell · `7z.exe` · `NSudoLG.exe` · `PowerRun.exe` |
+| Утилиты | PowerShell · `7z.exe` · `NSudoLG.exe` · `PowerRun.exe` · `MinSudo.exe` |
 | Данные | JSON · UTF-8 · `extreme_data/settings.json` |
 
 ---
@@ -293,19 +321,19 @@ Anton-Vampire/
 │   │   ├── app.js             # оркестратор
 │   │   ├── sections.js        # список разделов
 │   │   ├── sidebar.js         # сайдбар
-│   │   ├── themes.js          # 80+ тем + шрифты
+│   │   ├── themes.js          # 100+ тем + шрифты
 │   │   ├── logger.js          # панель лога
 │   │   ├── components/        # checkbox, dropdown
 │   │   ├── styles/            # style-loader.js (8 стилей)
 │   │   ├── tabs/              # 13 вкладок
 │   │   │   ├── home.js
 │   │   │   ├── optimization.js
-│   │   │   ├── power.js       # Power Killer + 80 источников
+│   │   │   ├── power.js
 │   │   │   ├── fixes.js
 │   │   │   ├── cleaner.js
-│   │   │   ├── game-mode.js   # 14 планов + PK + службы
-│   │   │   ├── deadly-optimization.js  # 💀 Смертельная
-│   │   │   ├── services.js    # ⚙️ Менеджер служб
+│   │   │   ├── game-mode.js
+│   │   │   ├── hard-optimization.js  # 🧛 Вампир (VampireOS)
+│   │   │   ├── services.js           # ⚙️ Менеджер служб
 │   │   │   ├── startup.js
 │   │   │   ├── security/
 │   │   │   ├── customization.js
@@ -350,6 +378,7 @@ Anton-Vampire/
 │   ├── 7z.exe / 7z.dll
 │   ├── PowerRun.exe
 │   ├── NSudoLG.exe
+│   ├── MinSudo.exe
 │   └── launcher.exe
 │
 ├── extreme_data/              # портативные данные
@@ -392,6 +421,7 @@ Anton-Vampire/
     "sidebar_opacity": 40,
     "unified_button_color": true,
     "checkbox_display_mode": "rectangle",
+    "checkbox_selection_enabled": true,
     "show_cancel_buttons": true,
     "tweak_execution_mode": "nsudolg",
     "tweak_timeout_ms": 300000,
@@ -402,7 +432,8 @@ Anton-Vampire/
     "security_auto_audit": true,
     "logs_enabled": false,
     "netmon_host_mode": "none",
-    "initial_tab": "main"
+    "initial_tab": "main",
+    "wallpaper_last_dir": ""
   },
   "Window": { "fullscreen": false },
   "Columns": { "default": 3 }
@@ -476,23 +507,17 @@ extreme_data/
 Три причины:
 1. **Нет цифровой подписи** (сертификат $300–500/год)
 2. **Меняет реестр / службы / системные файлы**
-3. **Использует `NSudoLG.exe`, `PowerRun.exe`, `cmd.exe`**
+3. **Использует `NSudoLG.exe`, `PowerRun.exe`, `MinSudo.exe`, `cmd.exe`**
 
 → Добавьте папку в исключения. Код открыт — можно проверить каждую строчку.
 
 ### Твик зависает
 - По умолчанию таймаут **5 минут**. Увеличьте в **Настройки → Интерфейс**
-- Смените режим запуска: `nsudolg` → `powerrun` → `cmd`
+- Смените режим запуска: `nsudolg` → `powerrun` → `minsudo` → `cmd`
 - Добавьте папку в исключения антивируса
 
 ### Кракозябры в логе
 Твик выводит в OEM-кодировке (cp866). Приложение пытается декодировать UTF-8, при ошибке — fallback на cp866. Если кракозябры всё равно — пересохраните `.bat` в UTF-8.
-
-### Смертельная оптимизация не запускается
-- Убедитесь, что вы на **стационарном ПК** (ноутбуки/планшеты — не поддерживаются)
-- Создайте точку восстановления **до** запуска
-- Проверьте наличие `GameMode/Hard_Optimization.bat` в `tweaks/`
-- Отключите антивирус на время запуска (файл меняет службы и реестр)
 
 ### План электропитания не активируется
 - Сначала нажмите **📥 Импортировать план**
@@ -576,14 +601,14 @@ Anton Vampire **агрегирует** ресурсы с собственным�
 - Автор **не несёт ответственности** за сломанную систему, потерянные данные или неработоспособное железо
 - **Всегда создавайте бэкап системы** перед применением твиков
 - **Начинайте с базовых пресетов**
-- **Смертельная оптимизация необратима** — запускайте только на стационарных ПК с бэкапом
+- **VampireOS и Смертельная оптимизация необратимы** — запускайте только на стационарных ПК с бэкапом
 - На некоторых конфигурациях агрессивная оптимизация приводит к нестабильности
 - Программа предоставляется «**как есть**», без гарантий
 
 ---
 
 <p align="center">
-  <b>🩸 Anton Vampire</b> · v1.0.9-beta · 2026<br/>
+  <b>🩸 Anton Vampire</b> · v1.1.0 · 2026<br/>
 </p>
 
 <p align="center">
