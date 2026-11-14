@@ -214,13 +214,16 @@ function escapeHtml(s) {
  */
 function createMasterDetail({ items, renderItem, renderDetail }) {
   const container = document.createElement('div');
-  container.style.cssText = 'display:grid; grid-template-columns: 280px 1fr; background:var(--card); border:1px solid var(--border); border-radius:10px; overflow:hidden; min-height:360px;';
+  container.className = 'pk-md-container';
+  container.style.cssText = 'display:grid; grid-template-columns: 280px 1fr; border:1px solid var(--border); border-radius:10px; overflow:hidden; min-height:360px;';
 
   const list = document.createElement('div');
-  list.style.cssText = 'border-right:1px solid var(--border); padding:6px; background:color-mix(in srgb, var(--card-2) 40%, transparent); display:flex; flex-direction:column; gap:2px; overflow-y:auto; max-height:560px;';
+  list.className = 'pk-md-list';
+  list.style.cssText = 'border-right:1px solid var(--border); padding:6px; display:flex; flex-direction:column; gap:2px; overflow-y:auto; max-height:560px;';
   container.appendChild(list);
 
   const detail = document.createElement('div');
+  detail.className = 'pk-md-detail';
   detail.style.cssText = 'padding:20px; overflow-y:auto; max-height:560px; display:flex; flex-direction:column;';
   container.appendChild(detail);
 

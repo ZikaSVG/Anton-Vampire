@@ -3348,6 +3348,101 @@
     -webkit-backdrop-filter: blur(8px) !important;
 }
 
+
+  /* ============================================================
+   POWER TAB — Прозрачность + Glassmorphism для Электропитания
+   ============================================================ */
+
+/* --- Контейнеры секций вкладки --- */
+.opt-root .section,
+#power-pk-content .section,
+#power-std-content .section,
+#power-src-content .section,
+#power-pk-content .apps-detected-section,
+#power-pk-content .apps-grid {
+    background: rgba(24, 10, 16, 0.1) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    border-radius: 10px;
+}
+
+/* --- Кнопки источников (Power Killer / Стандартные / XOS / ...) --- */
+.opt-src-btn {
+    background: rgba(24, 10, 16, 0.1) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    transition: background 0.15s;
+}
+
+.opt-src-btn:hover {
+    background: rgba(124, 58, 237, 0.12) !important;
+}
+
+.opt-src-btn.active {
+    background: rgba(124, 58, 237, 0.2) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+}
+
+/* --- Субтабы (категории твиков) --- */
+.sub-tabs-nav {
+    background: rgba(24, 10, 16, 0.1) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    border-radius: 8px;
+    padding: 4px;
+}
+
+.sub-tab-btn {
+    background: transparent !important;
+}
+
+.sub-tab-btn.active {
+    background: rgba(124, 58, 237, 0.18) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+}
+
+/* --- Карточки модулей Power Killer --- */
+#power-pk-content .apps-card {
+    background: rgba(24, 10, 16, 0.1) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+}
+
+/* --- Таблица планов (Стандартные) --- */
+.power-table-wrap,
+.power-footer {
+    background: rgba(24, 10, 16, 0.1) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    border-radius: 8px;
+}
+
+.power-table,
+.power-table th,
+.power-table td {
+    background: transparent !important;
+}
+
+.power-table tr:hover td {
+    background: rgba(124, 58, 237, 0.08) !important;
+}
+
+.power-row-sep td {
+    background: rgba(124, 58, 237, 0.12) !important;
+}
+
+/* --- Master-detail контейнеры (модули PK + планы VampireOS) --- */
+.pk-md-container,
+.pk-md-list,
+.pk-md-detail {
+    background: rgba(24, 10, 16, 0.1) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+}
+  
+
 /* 2. Фикс внутренних элементов (чтобы текст не прилипал к срезам) */
 .home-nav-tile, .apps-card, .cursor-card, .panel {
     padding: 16px !important; 
