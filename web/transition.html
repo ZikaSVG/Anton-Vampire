@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Переход: All Tweaker → Anton Vampire v1.1.0</title>
-<meta name="description" content="Полный разбор перехода All Tweaker (Python/tkinter) → Anton Vampire (Electron 44). Что изменилось в архитектуре, стеке, конфиге, UI, темах, шрифтах, запуске твиков, VampireOS, игровом режиме 2.0 и менеджере служб." />
+<title>Переход: All Tweaker → Anton Vampire v1.2.0-beta</title>
+<meta name="description" content="Полный разбор перехода All Tweaker → Anton Vampire v1.2.0-beta. Изменения в архитектуре, стеке, конфиге, UI, темах, запуске твиков, VampireOS, игровом режиме 2.0 и менеджере служб." />
 <link rel="icon" type="image/png" href="../assets/icon.png" />
 <link rel="stylesheet" href="style.css" />
 </head>
@@ -23,7 +23,7 @@
       <li><a href="https://github.com/ZikaSVG/Anton-Vampire" target="_blank" rel="noopener">GitHub</a></li>
     </ul>
     <div class="nav-actions">
-      <span class="nav-badge">v1.1.0</span>
+      <span class="nav-badge">v1.2.0-beta</span>
       <a href="index.html#download" class="btn btn-filled btn-sm">📥 Скачать</a>
     </div>
   </div>
@@ -40,7 +40,7 @@
     <p class="hero-tagline" style="max-width: 800px; margin: 0 auto; text-align: center; border: none;">
       Один файл <code>main.py</code> на Python + tkinter с 17 вкладками — и полностью переписанное Electron-приложение
       на 25+ модулях с 13 вкладками, 100+ темами, 8 CSS-стилями, VampireOS, игровым режимом 2.0
-      и менеджером служб. Ниже — что именно поменялось, что удалено, что добавлено и почему.
+      и менеджером служб. В 1.2.0-beta — полная техническая документация <code>powercfg</code>.
     </p>
   </div>
 </section>
@@ -70,7 +70,7 @@
 
       <div class="vs-card new">
         <div class="vs-title">Anton Vampire</div>
-        <div class="vs-meta">v1.1.0 · Electron 44 · Node.js</div>
+        <div class="vs-meta">v1.2.0-beta · Electron 44 · Node.js</div>
         <ul class="vs-list">
           <li>Никаких внешних зависимостей — всё в бандле</li>
           <li>electron-builder → NSIS installer</li>
@@ -83,9 +83,34 @@
           <li>Бэкап служб, fallback Start=3</li>
           <li>Обновления через GitHub Releases</li>
           <li>13 вкладок, 1000+ твиков</li>
+          <li><strong>Полная документация powercfg</strong></li>
         </ul>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">0 · Changelog 1.2.0-beta</span>
+      <h2>Что нового в этой версии</h2>
+    </div>
+    <table class="diff-table">
+      <thead>
+        <tr><th>Изменение</th><th>Описание</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="new-val">📖 Документация powercfg</td><td>Полный разбор каждого шага кастомных планов VampireOS: архитектура, GUID'ы, AC/DC, 8 планов, риски.</td></tr>
+        <tr><td class="new-val">🧩 Кнопка «📖 Как это работает»</td><td>В master-detail планов VampireOS — модальное окно с разбором выбранной схемы.</td></tr>
+        <tr><td class="new-val">📋 Справочные таблицы GUID</td><td>SUB_PROCESSOR / SUB_VIDEO / SUB_DISK / SUB_USB — с псевдонимами и диапазонами.</td></tr>
+        <tr><td class="new-val">🔍 AC/DC-логика</td><td>Явное пояснение, что <code>/setacvalueindex</code> — от сети, <code>/setdcvalueindex</code> — от батареи.</td></tr>
+        <tr><td class="new-val">🧩 Безопасные / агрессивные твики</td><td>Balanced/Maximum/Power Saving — безопасны, Energetic Death/Power Killer — экстремальны.</td></tr>
+        <tr><td class="new-val">🛡️ Blood Energy разделители</td><td>Пояснение, что <code>CommandFlags = 32</code> создаёт разделитель.</td></tr>
+        <tr><td class="new-val">🩹 Исправлена опечатка</td><td>В <code>PK_Activate_InputLag.bat</code> — параметр <code>bc5038f7</code>.</td></tr>
+        <tr><td class="new-val">🎨 Новые дефолты</td><td><code>materialmini</code> CSS-стиль и тема <code>vampire_the_masquerade</code>.</td></tr>
+      </tbody>
+    </table>
   </div>
 </section>
 
@@ -97,13 +122,13 @@
     </div>
     <table class="diff-table">
       <thead>
-        <tr><th>Аспект</th><th>Было (All Tweaker)</th><th>Стало (Anton Vampire)</th></tr>
+        <tr><th>Аспект</th><th>Было (All Tweaker)</th><th>Стало (Anton Vampire v1.2.0-beta)</th></tr>
       </thead>
       <tbody>
         <tr><td>Язык</td><td class="old-val">Python 3.7+</td><td class="new-val">JavaScript ES-модули + Node.js</td></tr>
         <tr><td>GUI</td><td class="old-val">tkinter + ttkbootstrap</td><td class="new-val">Electron 44 + HTML + CSS + vanilla JS</td></tr>
         <tr><td>Рендер</td><td class="old-val">Нативные Tk-виджеты</td><td class="new-val">Chromium (Blink + V8)</td></tr>
-        <tr><td>Стилизация</td><td class="old-val">ttkbootstrap + <code>font_and_theme_controls_frame</code></td><td class="new-val">4 CSS-файла (v1.0.6) → <span class="added">8 CSS-стилей</span> (v1.1.0) + CSS-переменные</td></tr>
+        <tr><td>Стилизация</td><td class="old-val">ttkbootstrap</td><td class="new-val"><span class="added">8 CSS-стилей</span> + CSS-переменные</td></tr>
         <tr><td>Сборка</td><td class="old-val">PyInstaller</td><td class="new-val">electron-builder → NSIS</td></tr>
         <tr><td>Зависимости</td><td class="old-val">ttkbootstrap, configparser, subprocess</td><td class="new-val">electron, electron-builder, @fontsource/*</td></tr>
         <tr><td>Требования</td><td class="old-val">Python 3.7+ в PATH</td><td class="new-val">Ничего (всё в бандле)</td></tr>
@@ -119,7 +144,6 @@
     <div class="section-head">
       <span class="section-eyebrow">2 · Архитектура</span>
       <h2>Из монолита — в модули</h2>
-      <p>Один <code>main.py</code> со <code>ToolTip</code>, <code>execute</code>, <code>create_batch_file</code> и циклом по <code>tabs.py</code> → 5 модулей main-процесса + 20 модулей рендерера.</p>
     </div>
 
     <div class="arch">
@@ -128,34 +152,34 @@
         <div class="arch-tree"><span class="dir">main.py</span>          <span class="file">← ToolTip, execute, create_batch_file</span>
 <span class="dir">tabs.py</span>          <span class="file">← статические словари (17 вкладок)</span>
 <span class="dir">settings.ini</span>     <span class="file">← configparser (cp1251)</span>
-<span class="dir">Configs/</span>         <span class="file">← *.bat, созданные «Создать конфиг»</span>
-<span class="dir">tweaks/</span>          <span class="file">← папки по вкладкам</span>
+<span class="dir">Configs/</span>         <span class="file">← *.bat «Создать конфиг»</span>
+<span class="dir">tweaks/</span>
 <span class="dir">Utils/</span>
-  <span class="dir">PowerRun.exe</span>   <span class="file">← для .reg</span>
-  <span class="dir">launcher.exe</span>   <span class="file">← для .ps1 (WinElevator)</span>
+  <span class="dir">PowerRun.exe</span>
+  <span class="dir">launcher.exe</span>
 </div>
       </div>
 
       <div class="arch-box">
-        <h3>Anton Vampire v1.1.0</h3>
+        <h3>Anton Vampire v1.2.0-beta</h3>
         <div class="arch-tree"><span class="core">main.js</span>          <span class="file">← точка входа</span>
 <span class="core">preload.js</span>       <span class="file">← contextBridge</span>
 <span class="dir">src/main/</span>
-  <span class="dir">config.js</span>       <span class="file">ConfigManager (debounce)</span>
-  <span class="dir">logger.js</span>       <span class="file">файловый логгер</span>
-  <span class="dir">tweak-runner.js</span> <span class="file">7 режимов + патчинг .bat</span>
-  <span class="dir">startup.js</span>      <span class="file">автозагрузка</span>
-  <span class="dir">tabs-data.js</span>    <span class="file">загрузка JSON</span>
+  <span class="dir">config.js</span>
+  <span class="dir">logger.js</span>
+  <span class="dir">tweak-runner.js</span>
+  <span class="dir">startup.js</span>
+  <span class="dir">tabs-data.js</span>
 <span class="dir">src/renderer/</span>
-  <span class="dir">app.js</span>          <span class="file">оркестратор</span>
-  <span class="dir">sidebar.js</span>      <span class="file">сайдбар</span>
-  <span class="dir">themes.js</span>       <span class="file">100+ тем + шрифты</span>
+  <span class="dir">app.js</span>
+  <span class="dir">sidebar.js</span>
+  <span class="dir">themes.js</span>
   <span class="dir">styles/</span>         <span class="file">style-loader (8 стилей)</span>
   <span class="dir">tabs/</span>           <span class="file">← 13 вкладок</span>
-    <span class="dir">hard-optimization.js</span>  <span class="file">🧛 Вампир (VampireOS)</span>
-    <span class="dir">services.js</span>              <span class="file">⚙️ Менеджер служб</span>
+    <span class="dir">hard-optimization.js</span>  <span class="file">🧛 VampireOS</span>
+    <span class="dir">services.js</span>              <span class="file">⚙️ Службы</span>
     <span class="dir">game-mode.js</span>             <span class="file">🎮 2.0</span>
-    <span class="dir">power.js</span>                 <span class="file">🔋 Power Killer + 80 источников</span>
+    <span class="dir">power.js</span>                 <span class="file">🔋 Power Killer + powercfg</span>
 <span class="dir">src/styles/</span>
   <span class="dir">default.css</span>, <span class="dir">pixel.css</span>, <span class="dir">material3.css</span>, <span class="dir">kitty.css</span>
   <span class="dir">cyberpunk.css</span>, <span class="dir">minipunk.css</span>, <span class="dir">altpunk.css</span>, <span class="dir">materialmini.css</span>
@@ -170,34 +194,29 @@
     <div class="section-head">
       <span class="section-eyebrow">3 · Вкладки</span>
       <h2>17 вкладок → 13, но с новыми модулями</h2>
-      <p>Часть вкладок All Tweaker объединена, часть переосмыслена. Зато появились три принципиально новых раздела.</p>
     </div>
-
     <table class="diff-table">
       <thead>
         <tr><th>All Tweaker (17)</th><th>Anton Vampire (13)</th><th>Статус</th></tr>
       </thead>
       <tbody>
-        <tr><td>Привет, username</td><td>🏠 Главная</td><td class="new-val">переосмыслена (polling CPU/GPU/RAM)</td></tr>
+        <tr><td>Привет, username</td><td>🏠 Главная</td><td class="new-val">переосмыслена</td></tr>
         <tr><td>База</td><td>⚡ Оптимизация</td><td class="new-val">слияние</td></tr>
-        <tr><td>Приватность</td><td>🛡️ Безопасность + ⚡ Оптимизация</td><td class="new-val">разделение на аудит и твики</td></tr>
-        <tr><td>Оптимизация MartyFiles</td><td>⚡ Оптимизация</td><td class="new-val">слияние</td></tr>
-        <tr><td>Основная оптимизация</td><td>⚡ Оптимизация</td><td class="new-val">слияние</td></tr>
-        <tr><td>Углубленная оптимизация</td><td>⚡ Оптимизация</td><td class="new-val">слияние</td></tr>
-        <tr><td>Хардкор оптимизация</td><td>🧛 Вампир (VampireOS)</td><td class="new-val">новый формат</td></tr>
+        <tr><td>Приватность</td><td>🛡️ Безопасность + ⚡ Оптимизация</td><td class="new-val">разделение</td></tr>
+        <tr><td>MartyFiles / Основная / Углубленная</td><td>⚡ Оптимизация</td><td class="new-val">слияние</td></tr>
+        <tr><td>Хардкор оптимизация</td><td>🧛 Вампир</td><td class="new-val">новый формат</td></tr>
         <tr><td>Оптимизация YouTube</td><td>⚡ Оптимизация</td><td class="new-val">в источники</td></tr>
-        <tr><td>Остальное</td><td>⚡ Оптимизация</td><td class="new-val">слияние</td></tr>
-        <tr><td>Исправление проблем</td><td>⚜️ Исправления</td><td class="new-val">DISM/SFC/CHKDSK + hero-откат</td></tr>
+        <tr><td>Исправление проблем</td><td>⚜️ Исправления</td><td class="new-val">DISM/SFC/CHKDSK</td></tr>
         <tr><td>Кастомизация</td><td>🎨 Кастомизация</td><td class="new-val">курсоры с превью</td></tr>
         <tr><td>Обновления</td><td>⚙️ Настройки</td><td class="new-val">встроено</td></tr>
         <tr><td>Очистка</td><td>🧹 Очистка</td><td class="new-val">12 секций</td></tr>
         <tr><td>Программы</td><td>📦 Приложения</td><td class="new-val">+ Appx</td></tr>
-        <tr><td>Удалить приложения Microsoft</td><td>📦 Приложения</td><td class="new-val">4 режима</td></tr>
-        <tr><td>Электропитание</td><td>🔋 Электропитание</td><td class="new-val">Power Killer + 80 источников</td></tr>
-        <tr><td>Поддержка</td><td>— (ссылки в меню)</td><td class="removed">убрана вкладка</td></tr>
+        <tr><td>Удалить приложения</td><td>📦 Приложения</td><td class="new-val">4 режима</td></tr>
+        <tr><td>Электропитание</td><td>🔋 Электропитание</td><td class="new-val">Power Killer + powercfg</td></tr>
+        <tr><td>Поддержка</td><td>— (ссылки в меню)</td><td class="removed">убрана</td></tr>
         <tr><td>—</td><td>🚀 Автозагрузка</td><td class="new-val">новая</td></tr>
-        <tr><td>—</td><td>🎮 Игровой режим 2.0</td><td class="new-val">новая (14 планов + 200+ служб)</td></tr>
-        <tr><td>—</td><td>⚙️ Менеджер служб</td><td class="new-val">новая (таблица, поиск, бэкап)</td></tr>
+        <tr><td>—</td><td>🎮 Игровой режим 2.0</td><td class="new-val">новая</td></tr>
+        <tr><td>—</td><td>⚙️ Менеджер служб</td><td class="new-val">новая</td></tr>
       </tbody>
     </table>
   </div>
@@ -211,18 +230,18 @@
     </div>
     <table class="diff-table">
       <thead>
-        <tr><th>Аспект</th><th>All Tweaker</th><th>Anton Vampire v1.1.0</th></tr>
+        <tr><th>Аспект</th><th>All Tweaker</th><th>Anton Vampire v1.2.0-beta</th></tr>
       </thead>
       <tbody>
         <tr><td>Формат</td><td class="old-val">settings.ini</td><td class="new-val">extreme_data/settings.json</td></tr>
         <tr><td>Кодировка</td><td class="old-val">cp1251</td><td class="new-val">UTF-8</td></tr>
-        <tr><td>Парсер</td><td class="old-val">configparser</td><td class="new-val">собственный ConfigManager</td></tr>
-        <tr><td>Сохранение</td><td class="old-val">синхронное при каждом изменении</td><td class="new-val">debounced 250 мс + flush() на выходе</td></tr>
+        <tr><td>Парсер</td><td class="old-val">configparser</td><td class="new-val">ConfigManager</td></tr>
+        <tr><td>Сохранение</td><td class="old-val">синхронное</td><td class="new-val">debounced 250 мс + flush()</td></tr>
         <tr><td>Валидация</td><td class="old-val">нет</td><td class="new-val"><code>mergeDeep</code> + <code>coerceToDefaults</code></td></tr>
-        <tr><td>Миграции</td><td class="old-val">добавление отсутствующих ключей</td><td class="new-val">deep-merge с DEFAULTS</td></tr>
-        <tr><td>Твики</td><td class="old-val">Python-словари в <code>tabs.py</code></td><td class="new-val">внешние JSON + генераторы <code>build_*.py</code></td></tr>
-        <tr><td>Конфиг-файлы</td><td class="old-val">«Создать конфиг» → <code>Configs/Config All Tweaker YYYY-MM-DD.bat</code></td><td class="removed">фича удалена</td></tr>
-        <tr><td>Бэкапы</td><td class="old-val">только реестр вручную</td><td class="new-val">config_backups/&lt;app&gt;/&lt;ts&gt;__&lt;label&gt; + Services_Backup.reg</td></tr>
+        <tr><td>Миграции</td><td class="old-val">добавление ключей</td><td class="new-val">deep-merge с DEFAULTS</td></tr>
+        <tr><td>Твики</td><td class="old-val">Python-словари</td><td class="new-val">внешние JSON + <code>build_*.py</code></td></tr>
+        <tr><td>Конфиг-файлы</td><td class="old-val">Configs/*.bat</td><td class="removed">удалено</td></tr>
+        <tr><td>Бэкапы</td><td class="old-val">вручную</td><td class="new-val">config_backups/ + Services_Backup.reg</td></tr>
       </tbody>
     </table>
   </div>
@@ -239,15 +258,15 @@
         <tr><th>Аспект</th><th>Было</th><th>Стало</th></tr>
       </thead>
       <tbody>
-        <tr><td>Темы</td><td class="old-val">ttkbootstrap-темы + <code>theme_names()</code></td><td class="new-val">100+ в 12 группах (<code>THEMES_META.groups</code>)</td></tr>
-        <tr><td>CSS-стили</td><td class="removed">нет (только ttkbootstrap)</td><td class="new-val">4 (v1.0.6) → <span class="added">8</span> (v1.1.0): + Cyberpunk 2077, Mini Punk, Alt Punk, Material Mini</td></tr>
-        <tr><td>Группы тем</td><td class="removed">нет</td><td class="new-val">Material 3, светлые, тёмные-от-светлых, ttkbootstrap, от разработчика, от Антона, от Русланчика, новые, Curated 2.0 ×2, игровые, Catppuccin, Dark Reader</td></tr>
+        <tr><td>Темы</td><td class="old-val">ttkbootstrap + <code>theme_names()</code></td><td class="new-val">100+ в 12 группах</td></tr>
+        <tr><td>CSS-стили</td><td class="removed">нет</td><td class="new-val"><span class="added">8</span></td></tr>
         <tr><td>Тема по умолчанию</td><td class="old-val">из settings.ini</td><td class="new-val">vampire_the_masquerade</td></tr>
-        <tr><td>Применение</td><td class="old-val">theme_var + перезапуск</td><td class="new-val">applyTheme() без перезапуска</td></tr>
-        <tr><td>Модель шрифтов</td><td class="old-val">font_family + font_size (один)</td><td class="new-val">3 роли × 2 алфавита (heading/body/mono × latin/cyr)</td></tr>
-        <tr><td>Веса</td><td class="removed">не регулируются</td><td class="new-val">слайдеры 100–900 для heading и body</td></tr>
-        <tr><td>Файлы</td><td class="old-val">системные шрифты</td><td class="new-val">локальные .woff2 в assets/fonts/</td></tr>
-        <tr><td>Эффект стекла</td><td class="removed">нет</td><td class="new-val">none / glass / aero (Mica/Acrylic)</td></tr>
+        <tr><td>Стиль по умолчанию</td><td class="removed">—</td><td class="new-val">materialmini</td></tr>
+        <tr><td>Применение</td><td class="old-val">перезапуск</td><td class="new-val">applyTheme() без перезапуска</td></tr>
+        <tr><td>Модель шрифтов</td><td class="old-val">font_family + font_size</td><td class="new-val">3 роли × 2 алфавита</td></tr>
+        <tr><td>Веса</td><td class="removed">не регулируются</td><td class="new-val">слайдеры 100–900</td></tr>
+        <tr><td>Файлы</td><td class="old-val">системные</td><td class="new-val">локальные .woff2</td></tr>
+        <tr><td>Эффект стекла</td><td class="removed">нет</td><td class="new-val">none / glass / aero</td></tr>
       </tbody>
     </table>
   </div>
@@ -258,24 +277,22 @@
     <div class="section-head">
       <span class="section-eyebrow">6 · Запуск твиков</span>
       <h2>Патчинг .bat, nsudolg, timeout</h2>
-      <p>Самое большое улучшение в раннере: убраны окна консоли, вырезаются <code>pause</code>/<code>timeout</code>/<code>choice</code>.</p>
     </div>
     <table class="diff-table">
       <thead>
-        <tr><th>Аспект</th><th>All Tweaker</th><th>Anton Vampire v1.1.0</th></tr>
+        <tr><th>Аспект</th><th>All Tweaker</th><th>Anton Vampire v1.2.0-beta</th></tr>
       </thead>
       <tbody>
-        <tr><td>Режимы</td><td class="old-val">.bat → subprocess.call<br>.ps1 → launcher.exe<br>.reg → PowerRun.exe<br>остальное → subprocess.call</td><td class="new-val">default, no_launcher, launcher, powerrun, <span class="added">nsudolg</span>, <span class="added">minsudo</span>, cmd</td></tr>
-        <tr><td>execute_function</td><td class="old-val">«Создать конфиг» / «Выполнить» — переключатель</td><td class="removed">удалён</td></tr>
-        <tr><td>Создание конфигов</td><td class="old-val">create_batch_file → Configs/*.bat</td><td class="removed">удалено (заменено config_backups)</td></tr>
-        <tr><td>nsudolg</td><td class="removed">нет</td><td class="added">NSudoLG.exe + TrustedInstaller</td></tr>
-        <tr><td>minsudo</td><td class="removed">нет</td><td class="added">MinSudo.exe + TrustedInstaller</td></tr>
-        <tr><td>Патчинг .bat</td><td class="removed">нет</td><td class="added">_makePatchedBat: pause/timeout/choice/echo off/chcp, start → start /b</td></tr>
-        <tr><td>Таймаут</td><td class="removed">нет</td><td class="added">General.tweak_timeout_ms (300 000 мс)</td></tr>
-        <tr><td>Кодировка</td><td class="old-val">предполагалась UTF-8</td><td class="new-val">UTF-8 → fallback cp866 (decoderCp866)</td></tr>
-        <tr><td>Path resolution</td><td class="old-val">f'tweaks\\"{tab_name}\\{name}"'</td><td class="new-val">tweakRunner.resolveSafe() + проверка выхода за rootDir</td></tr>
-        <tr><td>Стрим вывода</td><td class="removed">нет (только stdout subprocess)</td><td class="added">живой стрим в панель лога</td></tr>
-        <tr><td>Пары «твик ↔ отмена»</td><td class="old-val">вручную через naming</td><td class="new-val">buildPairMap + кнопка ↩</td></tr>
+        <tr><td>Режимы</td><td class="old-val">.bat → subprocess.call; .ps1 → launcher; .reg → PowerRun</td><td class="new-val">default, no_launcher, launcher, powerrun, <span class="added">nsudolg</span>, <span class="added">minsudo</span>, cmd</td></tr>
+        <tr><td>execute_function</td><td class="old-val">Создать/Выполнить</td><td class="removed">удалён</td></tr>
+        <tr><td>Создание конфигов</td><td class="old-val">create_batch_file</td><td class="removed">удалено</td></tr>
+        <tr><td>nsudolg / minsudo</td><td class="removed">нет</td><td class="added">TrustedInstaller</td></tr>
+        <tr><td>Патчинг .bat</td><td class="removed">нет</td><td class="added">pause/timeout/choice, start → start /b</td></tr>
+        <tr><td>Таймаут</td><td class="removed">нет</td><td class="added">300 000 мс</td></tr>
+        <tr><td>Кодировка</td><td class="old-val">UTF-8</td><td class="new-val">UTF-8 → fallback cp866</td></tr>
+        <tr><td>Path resolution</td><td class="old-val">f-string</td><td class="new-val">tweakRunner.resolveSafe()</td></tr>
+        <tr><td>Стрим вывода</td><td class="removed">нет</td><td class="added">живой стрим</td></tr>
+        <tr><td>Пары «твик ↔ отмена»</td><td class="old-val">вручную</td><td class="new-val">buildPairMap + ↩</td></tr>
       </tbody>
     </table>
   </div>
@@ -292,39 +309,40 @@
       <div class="list-box removed">
         <h3>Удалено из All Tweaker</h3>
         <ul>
-          <li>Фича «Создать конфиг» + папка <code>Configs/</code></li>
-          <li>Переключатель execute_function (Создать конфиг / Выполнить)</li>
-          <li>Выпадающий список конфигов + кнопка «Выполнить конфиг»</li>
-          <li>Класс <code>ToolTip</code> (теперь CSS-tooltip)</li>
-          <li>Один шрифт на всё → 6 слотов</li>
-          <li>ttkbootstrap-темы → 100+ тем + 8 CSS-стилей</li>
-          <li>Статические словари <code>tabs.py</code> → JSON</li>
+          <li>Фича «Создать конфиг» + <code>Configs/</code></li>
+          <li>Переключатель execute_function</li>
+          <li>Выпадающий список конфигов</li>
+          <li>Класс <code>ToolTip</code></li>
+          <li>Один шрифт → 6 слотов</li>
+          <li>ttkbootstrap → 100+ тем + 8 CSS</li>
+          <li>Статические словари → JSON</li>
           <li>Автообновление через shre.su</li>
-          <li>Вкладка «Поддержка» (ссылки теперь в меню)</li>
-          <li>Приветственная вкладка «Привет, {username}»</li>
-          <li>Ползунок размера шрифта от 8 до 12</li>
-          <li>Заголовок <code>All Tweaker Beta</code> + <code>mode con</code></li>
+          <li>Вкладка «Поддержка»</li>
+          <li>Приветственная вкладка</li>
+          <li>Ползунок 8–12</li>
+          <li>Заголовок <code>All Tweaker Beta</code></li>
         </ul>
       </div>
 
       <div class="list-box added">
         <h3>Добавлено в Anton Vampire</h3>
         <ul>
-          <li>🧛 <strong>Вампир (VampireOS)</strong>: 13 категорий, Power Max / Power Save, откат</li>
-          <li>🎮 <strong>Игровой режим 2.0</strong>: 14 планов + Power Killer (6) + 200+ служб</li>
-          <li>⚙️ <strong>Менеджер служб</strong>: таблица, поиск, статусы, бэкап</li>
-          <li>🔋 <strong>Электропитание 2.0</strong>: Power Killer карточки + 100+ источников</li>
-          <li>🚀 <strong>Автозагрузка</strong>: папки, реестр, задачи, службы</li>
-          <li>🛡️ <strong>Безопасность</strong>: 3 аудита, Firewall, NetMon, HTML-отчёты</li>
-          <li>🎨 <strong>8 CSS-стилей</strong> (Cyberpunk 2077, Mini/Alt Punk, Material Mini)</li>
+          <li>🧛 <strong>VampireOS</strong>: 13 категорий, Power Max / Power Save</li>
+          <li>🎮 <strong>Игровой режим 2.0</strong>: 14 планов + 6 функций + 200+ служб</li>
+          <li>⚙️ <strong>Менеджер служб</strong>: таблица, поиск, бэкап</li>
+          <li>🔋 <strong>Электропитание 2.0</strong>: Power Killer + 100+ источников + powercfg</li>
+          <li>🚀 <strong>Автозагрузка</strong></li>
+          <li>🛡️ <strong>Безопасность</strong>: 3 аудита, Firewall, NetMon</li>
+          <li>🎨 <strong>8 CSS-стилей</strong></li>
           <li>🌈 <strong>100+ тем в 12 группах</strong></li>
-          <li>🖱️ <strong>Курсоры</strong>: GitHub + 7z + реестр + SystemParametersInfo</li>
-          <li>🖼️ <strong>Обои</strong>: bundled + user + скачивание по URL</li>
-          <li>📦 <strong>Portable mode</strong>: extreme_data/ + electron_userdata/</li>
+          <li>🖱️ <strong>Курсоры</strong>: GitHub + 7z + SPI_SETCURSORS</li>
+          <li>🖼️ <strong>Обои</strong>: bundled + user + URL</li>
+          <li>📦 <strong>Portable mode</strong></li>
           <li>🩹 <strong>Бэкап служб</strong> + fallback Start=3</li>
-          <li>🛡️ <strong>Защита от дубликатов</strong> при импорте планов</li>
-          <li>⚡ <strong>Splash-screen</strong> с прогрессом</li>
-          <li>🔊 <strong>Звуки</strong> на Web Audio API</li>
+          <li>🛡️ <strong>Защита от дубликатов</strong></li>
+          <li>⚡ <strong>Splash-screen</strong></li>
+          <li>🔊 <strong>Звуки</strong> Web Audio API</li>
+          <li>📖 <strong>Документация powercfg</strong></li>
         </ul>
       </div>
     </div>
@@ -339,29 +357,29 @@
     </div>
     <table class="diff-table">
       <thead>
-        <tr><th>Старое (All Tweaker)</th><th>Новое (Anton Vampire v1.1.0)</th></tr>
+        <tr><th>Старое (All Tweaker)</th><th>Новое (Anton Vampire v1.2.0-beta)</th></tr>
       </thead>
       <tbody>
         <tr><td>main.py (цикл + ToolTip)</td><td>main.js + src/main/* + src/renderer/app.js</td></tr>
         <tr><td>tabs.py (словари)</td><td>tweaks/*.json (через build_*.py)</td></tr>
-        <tr><td>execute() / execute_old()</td><td>src/main/tweak-runner.js (7 режимов + патчинг)</td></tr>
+        <tr><td>execute() / execute_old()</td><td>src/main/tweak-runner.js</td></tr>
         <tr><td>create_batch_file()</td><td class="removed">Удалён</td></tr>
         <tr><td>update_config_file_list()</td><td class="removed">Удалён</td></tr>
         <tr><td>execute_config()</td><td class="removed">Удалён</td></tr>
         <tr><td>update_font_style() / update_font()</td><td>src/renderer/themes.js (applyFonts)</td></tr>
         <tr><td>update_theme()</td><td>src/renderer/themes.js (applyTheme)</td></tr>
-        <tr><td>select_all_for_tabs()</td><td>src/renderer/components/checkbox.js (renderCheckboxGrid)</td></tr>
+        <tr><td>select_all_for_tabs()</td><td>src/renderer/components/checkbox.js</td></tr>
         <tr><td>update_execute_function()</td><td class="removed">Удалён</td></tr>
-        <tr><td>update_fullscreen() / update_window_size()</td><td>src/main/config.js (ConfigManager)</td></tr>
+        <tr><td>update_fullscreen() / update_window_size()</td><td>src/main/config.js</td></tr>
         <tr><td>ToolTip</td><td>CSS-tooltip через <code>::after</code></td></tr>
         <tr><td>Configs/*.bat</td><td>extreme_data/config_backups/</td></tr>
         <tr><td>settings.ini</td><td>extreme_data/settings.json</td></tr>
         <tr><td>—</td><td>src/renderer/tabs/hard-optimization.js <span class="added">NEW</span></td></tr>
         <tr><td>—</td><td>src/renderer/tabs/services.js <span class="added">NEW</span></td></tr>
         <tr><td>—</td><td>src/renderer/tabs/game-mode.js <span class="added">2.0</span></td></tr>
-        <tr><td>—</td><td>src/renderer/tabs/power.js <span class="added">Power Killer</span></td></tr>
+        <tr><td>—</td><td>src/renderer/tabs/power.js <span class="added">Power Killer + powercfg</span></td></tr>
         <tr><td>—</td><td>src/renderer/styles/style-loader.js (8 стилей)</td></tr>
-        <tr><td>—</td><td>src/renderer/tabs/sources.js (универсальный рендер)</td></tr>
+        <tr><td>—</td><td>src/renderer/tabs/sources.js</td></tr>
       </tbody>
     </table>
   </div>
@@ -372,40 +390,15 @@
     <div class="section-head">
       <span class="section-eyebrow">9 · Итог</span>
       <h2>Что осталось тем же</h2>
-      <p>Концептуально Anton Vampire — та же программа: та же идея, та же база твиков, та же ОС, тот же пользователь.</p>
     </div>
 
     <div class="features" style="grid-template-columns: repeat(3, 1fr);">
-      <div class="feature">
-        <div class="feature-icon">🩸</div>
-        <div class="feature-title">Та же идея</div>
-        <p class="feature-desc">Запускать <code>.bat</code>/<code>.cmd</code>/<code>.ps1</code>/<code>.exe</code>/<code>.reg</code>/<code>.pow</code> твики с чекбоксами.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">🗂</div>
-        <div class="feature-title">Та же база твиков</div>
-        <p class="feature-desc">Папка <code>tweaks/</code>, папка <code>Utils/</code>, папка <code>assets/</code>, <code>descriptions.txt</code>.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">🎨</div>
-        <div class="feature-title">4 режима чекбоксов</div>
-        <p class="feature-desc">regular (Hone), rectangle (All Tweaker), wide (BoosterX), expandable (Sapphire).</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">⚙</div>
-        <div class="feature-title">Требует админа</div>
-        <p class="feature-desc">Оба приложения требуют права администратора для глубоких изменений.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">🇷🇺</div>
-        <div class="feature-title">Русский язык</div>
-        <p class="feature-desc">Весь интерфейс, описания и документация — на русском.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">🪟</div>
-        <div class="feature-title">Windows 10/11</div>
-        <p class="feature-desc">Только Windows. Linux/macOS не поддерживаются.</p>
-      </div>
+      <div class="feature"><div class="feature-icon">🩸</div><div class="feature-title">Та же идея</div><p class="feature-desc">Запускать твики с чекбоксами.</p></div>
+      <div class="feature"><div class="feature-icon">🗂</div><div class="feature-title">Та же база</div><p class="feature-desc">Папки <code>tweaks/</code>, <code>Utils/</code>, <code>assets/</code>.</p></div>
+      <div class="feature"><div class="feature-icon">🎨</div><div class="feature-title">4 режима чекбоксов</div><p class="feature-desc">regular, rectangle, wide, expandable.</p></div>
+      <div class="feature"><div class="feature-icon">⚙</div><div class="feature-title">Требует админа</div><p class="feature-desc">Оба требуют права администратора.</p></div>
+      <div class="feature"><div class="feature-icon">🇷🇺</div><div class="feature-title">Русский язык</div><p class="feature-desc">Весь интерфейс и документация.</p></div>
+      <div class="feature"><div class="feature-icon">🪟</div><div class="feature-title">Windows 10/11</div><p class="feature-desc">Только Windows.</p></div>
     </div>
   </div>
 </section>
@@ -414,7 +407,7 @@
   <div class="container">
     <div class="download-card">
       <h2 class="gradient-text" style="font-size: 2rem; margin-bottom: 12px;">Готов попробовать?</h2>
-      <p style="margin-bottom: 32px;">Anton Vampire v1.1.0 уже доступен. Portable, без зависимостей.</p>
+      <p style="margin-bottom: 32px;">Anton Vampire v1.2.0-beta уже доступен. Portable, без зависимостей.</p>
       <div class="download-actions">
         <a href="index.html#download" class="btn btn-filled">📥 Скачать</a>
         <a href="docs.html" class="btn btn-outlined">📖 Документация</a>
@@ -432,7 +425,7 @@
         <span>ANTON VAMPIRE</span>
       </div>
       <div class="footer-meta">
-        <div>© 2026 ZikaSVG · v1.1.0</div>
+        <div>© 2026 ZikaSVG · v1.2.0-beta</div>
         <div>All Tweaker → Anton Vampire</div>
         <div>Licensed under <a href="docs.html#license">CC BY-NC-SA 4.0</a></div>
       </div>

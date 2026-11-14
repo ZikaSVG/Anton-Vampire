@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="assets/icon.png" alt="Anton Vampire" width="96" /><br/>
+  <img src="assets/icon.png" alt="Anton Vampire" width="130" /><br/>
   Anton Vampire
 </h1>
 
@@ -8,10 +8,10 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.1.0/Anton.Vampire.Setup.1.1.0.exe">
+  <a href="https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.0-beta/Anton.Vampire.Setup.1.2.0-beta.exe">
     <img src="https://img.shields.io/badge/%F0%9F%93%A5_Download-Setup_.exe-EA38B8?style=for-the-badge" alt="Download Setup" />
   </a>
-  <a href="https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.1.0/Anton.Vampire.Portable.rar">
+  <a href="https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.0-beta/Anton.Vampire.Portable.rar">
     <img src="https://img.shields.io/badge/%F0%9F%93%A6_Download-Portable_.rar-6E40C0?style=for-the-badge" alt="Download Portable" />
   </a>
 </p>
@@ -26,7 +26,7 @@
 
 <p align="center">
   <a href="web/screenshot.jpg">
-    <img src="web/screenshot.jpg" alt="Anton Vampire v1.1.0 — главный экран" width="90%" style="border-radius: 8px;" />
+    <img src="web/screenshot.jpg" alt="Anton Vampire v1.2.0-beta — главный экран" width="90%" style="border-radius: 8px;" />
   </a>
 </p>
 
@@ -40,79 +40,206 @@
 
 ---
 
-## ✨ Новое в 1.1.0
+## ✨ Новое в 1.2.0-beta
 
-- 🧛 **VampireOS** — отдельная вкладка «Вампир» с глобальной оптимизацией системы (13 категорий изменений в реестре, службах и групповых политиках). Включает:
-  - **Установить VampireOS** — базовый необратимый BAT-твик.
-  - **Убить KCAS и Xeon** — режим максимальной производительности (десктопы).
-  - **Режим Деда** — режим максимального энергосбережения (ноутбуки).
-  - **↺ Откат** — возврат к стандартным настройкам (Balanced).
-- ⚙️ **Менеджер служб** — выделен в отдельную вкладку. Полноценная таблица с поиском, статусами (boot/system/auto/manual/disabled), массовым включением/отключением, безопасным бэкапом `.reg` и отображением тегов сборок, в которых служба уже отключена.
-- 🎮 **Игровой режим 2.0** — 14 готовых планов электропитания (Amit, Atlas, Bitsum, Quaked, XOS, Zoyata и др.) с импортом/активацией, Power Killer, массовое отключение 200+ служб с бэкапом `.reg` и безопасным fallback.
-- 🔋 **Электропитание** — Power Killer теперь представлен в виде карточек с возможностью применения «Смертельного Максимума (всё сразу)», таблица результатов тестирования планов, ~80 источников питания (XOS, ImmortalOS, SystemX, Igromanoff, VainOS, SynergyOS, Другое).
-- 🖼️ **Обои** — новая под-вкладка в настройках: добавление своих файлов, загрузка по ссылке, смена папки, применение и удаление.
-- 🎨 **8 CSS-стилей:** Material 3, Pixel, Material You, Pretty Kitty, Cyberpunk 2077, Mini Punk, Alt Punk, Material Mini.
-- 🌈 **~100+ тем** в 12 группах: Material 3, светлые, тёмные ttkbootstrap, тёмные от разработчика, от Антона, от Русланчика, игровые, Catppuccin ×4, Dark Reader ×22, Curated 2.0 ×17.
-- 🛠 **Настройки** — новый режим запуска твиков `minsudo`, переключатель «Разрешить выделение чекбоксов», режим отображения чекбоксов `expandable` (Sapphire).
+- 📖 **Полная техническая документация по кастомным планам VampireOS.** Каждый шаг `powercfg` разобран: логика скрипта, назначение каждого GUID, эффект каждой команды, риски и рекомендации.
+- 🧩 **Кнопка «📖 Как это работает»** в master-detail планов VampireOS — открывает модальное окно с разбором `powercfg` для выбранного плана.
+- 📋 **Справочные таблицы GUID.** `SUB_PROCESSOR`, `SUB_VIDEO`, `SUB_DISK`, `SUB_USB` — теперь с псевдонимами, диапазонами и назначением.
+- 🔍 **Пояснение AC/DC-логики.** Явно показано, что `/setacvalueindex` применяется от сети, `/setdcvalueindex` — от батареи, и как это влияет на десктопы и ноутбуки.
+- 🧩 **Разделение «безопасных» и «агрессивных» твиков.** `Balanced/Maximum/Power Saving` помечены как безопасные, `Energetic Death/Power Killer` — как экстремальные.
+- 🛡️ **Blood Energy: пояснение разделителей.** `CommandFlags = 32` создаёт разделитель в контекстном меню, а не отдельный пункт.
+- 🩹 **Исправлена опечатка** в `PK_Activate_InputLag.bat` — параметр `bc5038f7` приведён в соответствие с таблицей плана.
+- 🎨 **Новые дефолты:** CSS-стиль `materialmini` и тема `vampire_the_masquerade`.
 
----
+### 🧪 Статус бета
 
-# ⚡ Планы электропитания VampireOS
-
-В рамках установки VampireOS создаются **три фирменные схемы электропитания**. Они базируются на стандартных планах Windows, но содержат ряд безопасных твиков, направленных на стабильность работы дисковой подсистемы и USB-устройств.
-
-> 🛡️ **Важно:** Скрипт идемпотентен. При повторном запуске старые копии схем удаляются, а затем создаются заново. Это гарантирует отсутствие дубликатов в системе.
+Версия помечена как **beta**: документация дополняется для редких параметров (`HETEROCLASS`, `LATENCYHINTPOLICY`), часть формулировок UI может меняться. Функционально все BAT-файлы и планы стабильны.
 
 ---
 
-## 📋 Список создаваемых схем
+## 🧛 Планы электропитания VampireOS
 
-| Название схемы | Базируется на | GUID |
-| :--- | :--- | :--- |
-| **Balanced Performance VampireOS** | Сбалансированная | `90a358c8-3bbc-4fb3-8b4e-d7ab065d2614` |
-| **Maximum Performance VampireOS** | Высокая производительность | `a1b2c3d4-e5f6-4789-a0ab-cdef12345678` |
-| **Power Saving VampireOS** | Экономия энергии | `d8e76bb7-6943-4b7c-ab30-441296b72264` |
+В рамках установки VampireOS создаются **три фирменные схемы** (`Balanced Performance`, `Maximum Performance`, `Power Saving`) с безопасными твиками, плюс пять игровых (`NFS Racing`, `Shooter Low-Latency`, `Minimal Input Lag`, `Energetic Death`, `Power Killer`).
 
-По умолчанию после завершения скрипта активируется схема **Balanced Performance VampireOS**.
+> 🛡️ **Скрипт идемпотентен.** При повторном запуске старые копии схем удаляются и создаются заново — дубликатов не будет.
 
----
+### 📋 Список схем
 
-## 🛠️ Безопасные твики (применяются ко всем трём схемам)
+| Название | База | GUID | Назначение |
+| :--- | :--- | :--- | :--- |
+| **Balanced Performance** | Сбалансированная | `90a358c8-3bbc-4fb3-8b4e-d7ab065d2614` | Повседневная работа |
+| **Maximum Performance** | Высокая производительность | `a1b2c3d4-e5f6-4789-a0ab-cdef12345678` | Игры, тяжёлое ПО |
+| **Power Saving** | Экономия энергии | `d8e76bb7-6943-4b7c-ab30-441296b72264` | Максимум автономности |
+| **NFS Racing** | Высокая производительность | `b2c3d4e5-f6a7-4890-b1c2-def345678901` | Гонки, стабильный фреймтайм |
+| **Shooter Low-Latency** | Высокая производительность | `c3d4e5f6-a7b8-4901-c2d3-ef4567890123` | Шутеры |
+| **Minimal Input Lag** | Высокая производительность | `d4e5f6a7-b8c9-4012-d3e4-f56789012345` | Киберспорт |
+| **Energetic Death** | Высокая производительность | `7f8e9d0c-1b2a-4c3d-9e8f-a0b1c2d3e4f5` | Экстрим / бенчмарки |
+| **Power Killer** | Высокая производительность | `8f0a1b2c-3d4e-5f60-a1b2-c3d4e5f60718` | Абсолютный максимум |
 
-Скрипт вносит изменения в три ключевые подсистемы, чтобы предотвратить микро-фризы и проблемы с периферией, не нанося вреда ноутбукам.
-
-### 💾 Диск (HDD / SSD)
-- **Параметр:** `6738e2c4-e8a5-4a42-b16a-e040e769756e`
-- **Значение:** `0` (Никогда не отключать)
-- **Что это даёт:** Предотвращает частую остановку и раскрутку механических жёстких дисков (HDD). На SSD эта настройка не оказывает влияния, но полностью безопасна.
-
-### 🔌 USB-порты
-- **Параметр:** `48e6b7a6-50f5-4782-a5d4-53bb8f07e226`
-- **Значение:** `0` (Отключить выборочную приостановку / Selective Suspend)
-- **Что это даёт:** Внешние диски, мыши, клавиатуры и хабы перестают «засыпать». Это устраняет задержки при пробуждении USB-устройств во время игры или работы.
-
-### 🖥️ Таймауты экрана (безопасные значения)
-
-Скрипт устанавливает разумные лимиты отключения экрана, чтобы не расходовать батарею впустую, но и не мешать работе.
-
-| Схема | От сети (AC) | От батареи (DC) |
-| :--- | :--- | :--- |
-| **Balanced Performance** | 15 минут | 5 минут |
-| **Maximum Performance** | 15 минут | 10 минут |
-| **Power Saving** | 5 минут | 2 минуты |
+После завершения `Add_Blood_Energy.bat` активной становится **Balanced Performance**.
 
 ---
 
-## 🔄 Логика работы скрипта
+## ⚡ Техническая документация `powercfg`
 
-1. **Проверка прав:** Скрипт требует запуска от имени администратора (`fltmc`).
-2. **Сброс:** Принудительно переключается на стандартную схему «Сбалансированная» (Windows не позволяет удалить активную схему).
-3. **Очистка:** Удаляет предыдущие версии схем VampireOS по их GUID.
-4. **Создание:** Клонирует стандартные схемы Windows и присваивает им новые имена.
-5. **Твики:** Применяет настройки диска, USB и таймаутов экрана.
-6. **Активация:** Включает **Balanced Performance VampireOS**.
+### 1. Архитектура скрипта
 
-> 💡 **Совет:** Для ноутбуков при работе от батареи лучше вручную переключиться на схему **Power Saving VampireOS** или использовать стандартный план Windows, чтобы maximize время автономной работы.
+Скрипт написан на Batch и использует `powercfg.exe`. Каждый блок, создающий план, следует шаблону:
+
+1. **Проверка существования:** `powercfg /list | findstr /i "%GUID%" >nul` — предотвращает дубликаты.
+2. **Создание:** `powercfg /duplicatescheme <базовый_GUID> %GUID%` — клонирует стандартный план.
+3. **Переименование:** `powercfg /changename %GUID% "Имя" "Описание"`.
+4. **Настройка:** `powercfg /setacvalueindex` (AC) и `/setdcvalueindex` (DC).
+
+Подавление `>nul` убирает техвывод, `2>&1` — страховка от неподдерживаемых параметров (виртуалки, старое железо).
+
+### 2. Ключевые GUID
+
+#### Группы настроек (Subgroup GUIDs)
+
+| GUID | Псевдоним | Назначение |
+|---|---|---|
+| `54533251-82be-4824-96c1-47b60b740d00` | `SUB_PROCESSOR` | Питание процессора |
+| `7516b95f-f776-4464-8c53-06167f40cc99` | `SUB_VIDEO` | Питание дисплея |
+| `0012ee47-9041-4b5d-9b77-535fba8b1442` | `SUB_DISK` | Питание дисков |
+| `2a737441-1930-4402-8d77-b2bebba308a3` | `SUB_USB` | Питание USB |
+
+#### Конкретные параметры (Setting GUIDs)
+
+| GUID | Псевдоним | Описание | Диапазон / значения |
+|---|---|---|---|
+| `893dee8e-2bef-41e0-89c6-b55d0929964c` | `PROCTHROTTLEMIN` | Минимальное состояние CPU (%) | 0–100 |
+| `bc5038f7-23e0-4960-96da-33abaf5935ec` | `PROCTHROTTLEMAX` | Максимальное состояние CPU (%) | 0–100 |
+| `3c0bc021-c8a8-4e07-a973-6b14cbcb2b7e` | `VIDEOIDLE` | Отключение дисплея (сек) | `900`=15м, `0`=никогда |
+| `5d76a2ca-e8c0-402f-a133-2158492d58ad` | `IDLEDISABLE` | Запрет простоя (C-states) | `0`=разрешён, `1`=запрещён |
+| `465e1f50-b610-473a-ab58-00d1077dc418` | `PERFBOOSTMODE` | Режим Turbo Boost | `0`=off, `1`=on, `2`=aggressive |
+| `40fbefc7-2e9d-4d25-a185-0cfd8574bac6` | `PERFBOOSTPOL` | Политика Turbo Boost | `0`=низкая, `1`=высокая |
+| `36687f9e-e3a5-4dbf-b1dc-15eb381c6863` | `PERFEPP` | Energy Performance Preference | `0`=performance, `100`=efficiency |
+| `be337238-0d82-4146-a960-4f3749d470c7` | `PERFDISTRIBUTETYPE` | Распределение по ядрам | `0`=auto, `1`=perf, `2`=aggressive |
+| `94d3a615-a899-4ac5-ae2b-e4d8f634367f` | `SYSCOOLPOL` | Политика охлаждения | `0`=passive, `1`=active |
+| `0cc5b647-c1df-4637-891a-dec35c318583` | `CPMINCORES` | Мин. непаркованных ядер (%) | 0–100 |
+| `ea062031-0e34-4ff1-9b6d-eb1059334028` | `CPMAXCORES` | Макс. паркованных ядер (%) | 0–100 |
+| `6738e2c4-e8a5-4a42-b16a-e040e769756e` | `DISKIDLE` | Отключение диска (сек) | `0`=никогда |
+| `48e6b7a6-50f5-4782-a5d4-53bb8f07e226` | `USBSUSPEND` | Выборочная приостановка USB | `0`=off, `1`=on |
+
+### 3. Детальный разбор планов
+
+#### 3.1 Balanced Performance
+
+**База:** `381b4222-...` (Сбалансированный).
+
+| Параметр | AC | DC | Эффект |
+|---|---|---|---|
+| `VIDEOIDLE` | 900 (15 мин) | 300 (5 мин) | Экран гаснет реже от сети, быстрее от батареи. |
+
+**Итог:** стабильный план без агрессивных CPU-твиков.
+
+#### 3.2 Maximum Performance
+
+**База:** `8c5e7fda-...` (Высокая производительность).
+
+| Параметр | AC | DC | Эффект |
+|---|---|---|---|
+| `VIDEOIDLE` | 900 | 600 | 15/10 минут — компромисс для игр без розетки. |
+
+**Итог:** усиленная стандартная схема, безопасна.
+
+#### 3.3 Power Saving
+
+**База:** `a1841308-...` (Экономия энергии).
+
+| Параметр | AC | DC | Эффект |
+|---|---|---|---|
+| `VIDEOIDLE` | 300 | 120 | Агрессивное отключение экрана. |
+
+**Итог:** максимальная автономность.
+
+#### 3.4 NFS Racing
+
+**База:** Высокая производительность.
+
+| Параметр | AC | DC | Эффект |
+|---|---|---|---|
+| `PROCTHROTTLEMIN` | 100 | 100 | CPU не опускается ниже 100% |
+| `PROCTHROTTLEMAX` | 100 | 100 | Потолок снят |
+| `CPMINCORES` | 100 | 100 | Все ядра активны |
+| `VIDEOIDLE` | 900 | 600 | Экран не гаснет 15/10 мин |
+
+**Итог:** «зажимает» CPU в состояние максимальной готовности. Ровный фреймтайм, но выше нагрев.
+
+#### 3.5 Shooter Low-Latency
+
+Наследует **NFS Racing** и добавляет:
+
+| Параметр | AC | DC | Эффект |
+|---|---|---|---|
+| `PERFBOOSTMODE` | 2 | 2 | Агрессивный Turbo Boost |
+| `PERFBOOSTPOL` | 1 | 1 | Высокая политика буста |
+
+**Итог:** отзывчивее в пиковых нагрузках. Теоретически ниже задержка между действием и реакцией.
+
+#### 3.6 Minimal Input Lag
+
+Наследует **Shooter** и добавляет:
+
+| Параметр | AC | DC | Эффект |
+|---|---|---|---|
+| `IDLEDISABLE` | 1 | 1 | Запрет C-states — ядра всегда C0 |
+
+**Итог:** самый агрессивный профиль по отклику. Только для десктопов с хорошим охлаждением. На ноутбуках — быстрый разряд и нагрев.
+
+#### 3.7 Energetic Death
+
+Объединяет почти все агрессивные настройки:
+
+| Параметр | AC/DC | Значение |
+|---|---|---|
+| `PROCTHROTTLEMIN/MAX` | оба | 100/100 |
+| `CPMINCORES` | оба | 100 |
+| `IDLEDISABLE` | оба | 1 |
+| `PERFBOOSTMODE` | оба | 2 |
+| `PERFBOOSTPOL` | оба | 0 |
+| `PERFEPP` | оба | 0 |
+| `PERFDISTRIBUTETYPE` | оба | 2 |
+| `SYSCOOLPOL` | оба | 1 (Active) |
+| `VIDEOIDLE` | оба | 0 |
+| `DISKIDLE` | оба | 0 |
+| `USBSUSPEND` | оба | 0 |
+
+**Итог:** максимум возможного. Энергопотребление и тепло — максимальны.
+
+#### 3.8 Power Killer
+
+Наследует **Energetic Death** и добавляет:
+
+| Параметр | AC/DC | Значение |
+|---|---|---|
+| `CPMAXCORES` | оба | 100 |
+
+**Итог:** гарантирует, что ни одно ядро не припарковано. Разница с Energetic Death минимальна, заметна только на многоядерных CPU.
+
+### 4. Важные замечания
+
+1. **Скрытые параметры.** Многие GUID (`PERFEPP`, `IDLEDISABLE`, `PERFBOOSTMODE`) скрыты в GUI. `powercfg` меняет их напрямую.
+2. **Аппаратная зависимость.** Эффект `PERFEPP`, `PERFBOOSTMODE`, `PERFDISTRIBUTETYPE` зависит от архитектуры CPU (Intel Speed Shift, AMD CPPC) и прошивки.
+3. **Риски перегрева.** Планы `Minimal Input Lag`, `Energetic Death`, `Power Killer` отключают энергосбережение. На ноутбуках — троттлинг по температуре.
+4. **Автоматического применения нет.** Скрипт создаёт планы, но не активирует их.
+5. **Идемпотентность.** Повторный запуск не создаёт дубликатов, но и не обновляет уже существующие планы.
+
+### 5. Сводная таблица
+
+| План | База | Особенность | Рекомендация |
+|---|---|---|---|
+| Balanced Performance | Сбалансированный | Увеличенный тайм-аут дисплея | Офис, браузинг |
+| Maximum Performance | Высокая производительность | Усиленный стандарт | Игры, тяжёлое ПО |
+| Power Saving | Экономия энергии | Агрессивное отключение экрана | Автономность |
+| NFS Racing | Высокая производительность | 100% мин/макс CPU, все ядра | Гонки |
+| Shooter Low-Latency | Высокая производительность | Агрессивный Turbo Boost | Шутеры |
+| Minimal Input Lag | Высокая производительность | Запрет C-states | Киберспорт (десктоп) |
+| Energetic Death | Высокая производительность | EPP=0, активное охлаждение | Бенчмарки |
+| Power Killer | Высокая производительность | Запрет парковки ядер | Максимум многопотока |
+
+> 💡 **Совет.** На ноутбуке при работе от батареи переключитесь на `Power Saving` — `Energetic Death` и `Power Killer` приведут к быстрому разряду.
 
 ---
 
@@ -127,86 +254,84 @@
 - **Splash-screen** с прогрессом
 - **Панель лога** с автопрокруткой и стримом
 - **Toast-уведомления**
-- **Звуки** на Web Audio API (клик, hover, успех, ошибка)
+- **Звуки** на Web Audio API
 - **Эффект стекла**: `none` / `glass` / `aero` (Mica/Acrylic)
 
 ### 🛡️ 13 вкладок
 
 | # | Вкладка | Что делает |
 |---|---|---|
-| 1 | 🏠 **Главная** | Приветствие, живой polling CPU/GPU/RAM/диск, быстрый переход |
+| 1 | 🏠 **Главная** | Приветствие, polling CPU/GPU/RAM/диск |
 | 2 | 🛡️ **Безопасность** | 3 аудита (21+14+13), Firewall, NetMon, HTML-отчёты |
-| 3 | 🚀 **Автозагрузка** | Папки, реестр, задачи, службы + категоризация + защита критичных |
-| 4 | ⚡ **Оптимизация** | 7 источников + вендор-панель (NVIDIA/AMD/Intel/DX/OpenGL) |
-| 5 | 🧹 **Очистка** | 12 секций: шейдеры, логи, кэши, Windows Update, Temp, диск |
-| 6 | ⚜️ **Исправления** | DISM, SFC, CHKDSK, сеть, устройства, игры, hero-блок отката |
-| 7 | 🎮 **Игровой режим** | Планы электропитания (14), Power Killer (6), службы (200+) |
-| 8 | 🧛 **Вампир** | VampireOS: 13 категорий изменений, Power Max / Power Save, откат |
-| 9 | 🔋 **Электропитание** | Power Killer + таблица планов + 100+ источников схем + `.pow` |
-| 10 | ⚙️ **Службы** | Таблица служб: поиск, статусы, массовое вкл/выкл, бэкап `.reg` |
-| 11 | 🎨 **Кастомизация** | Курсоры с превью + 4 источника твиков (XOS/Marty/Synergy/Vain) |
-| 12 | 📦 **Приложения** | Appx, Defender/Edge/OneDrive/WebView2 в 4 режимах, removal-батники |
-| 13 | ⚙️ **Настройки** | 6 под-вкладок (Внешний вид, Шрифты, Интерфейс, Утилиты, Обои, О программе) |
+| 3 | 🚀 **Автозагрузка** | Папки, реестр, задачи, службы + категоризация |
+| 4 | ⚡ **Оптимизация** | 7 источников + вендор-панель |
+| 5 | 🧹 **Очистка** | 12 секций: шейдеры, логи, кэши, Temp |
+| 6 | ⚜️ **Исправления** | DISM, SFC, CHKDSK, сеть, устройства, игры |
+| 7 | 🎮 **Игровой режим** | Планы (14), Power Killer (6), службы (200+) |
+| 8 | 🧛 **Вампир** | VampireOS: 13 категорий, Power Max / Power Save |
+| 9 | 🔋 **Электропитание** | Power Killer + таблица планов + 100+ источников + разбор powercfg |
+| 10 | ⚙️ **Службы** | Таблица: поиск, статусы, бэкап `.reg` |
+| 11 | 🎨 **Кастомизация** | Курсоры с превью + 4 источника |
+| 12 | 📦 **Приложения** | Appx, Defender/Edge/OneDrive/WebView2 |
+| 13 | ⚙️ **Настройки** | 6 под-вкладок |
 
 ### ⚙️ Механики
-- **7 режимов запуска твиков**: `default` · `no_launcher` · `launcher` · `powerrun` · `nsudolg` (TrustedInstaller) · `minsudo` · `cmd`
+- **7 режимов запуска твиков**: `default` · `no_launcher` · `launcher` · `powerrun` · `nsudolg` · `minsudo` · `cmd`
 - **Патчинг `.bat`**: вырезает `pause`/`timeout`/`choice`, превращает `start` → `start /b ""`
-- **Стрим вывода** с авто-декодингом UTF-8 → cp866 fallback
+- **Стрим вывода** UTF-8 → cp866 fallback
 - **Пары «твик ↔ отмена»** с кнопкой ↩
-- **Preload** тяжёлых данных (startup, apps, audits) + lazy-вкладки
-- **Portable mode**: всё в `extreme_data/` рядом с `.exe`
-- **Безопасный бэкап служб**: `.reg`-файл + fallback на `Start=3`
-- **Проверка дубликатов** при импорте планов электропитания
-- **Отключение выделения чекбоксов** — защита от случайного запуска твиков
-- **Живой стрим логов** в тяжёлых операциях (VampireOS, Power Killer)
+- **Portable mode**: всё в `extreme_data/`
+- **Безопасный бэкап служб**: `.reg` + fallback `Start=3`
+- **Проверка дубликатов** при импорте планов
+- **Отключение выделения чекбоксов** — защита от случайного запуска
 
 ---
 
-## 🧛 Вампир (VampireOS) — 1.1.0
+## 🧛 Вампир (VampireOS)
 
 Глобальная оптимизация Windows. **Изменения вносятся в реестр, службы и системные файлы. Часть изменений (Defender, OneDrive) необратима.**
 
 | Категория | Что делает |
 |---|---|
-| 📊 **Телеметрия и диагностика** | Уровень телеметрии = 0, отключение DiagTrack/WER/TIP, блокировка задач через IFEO |
-| 🔄 **Обновления и Store** | Отключение wuauserv/UsoSvc/BITS/DoSvc/edgeupdate, блокировка авто-обновлений Edge |
-| 🧠 **Система и ядро** | Win32PrioritySeparation=38, отключение Memory Compression, MSI mode, DMA remapping, BCD-твики |
-| 🌐 **Сеть и TCP** | DefaultTTL=65, TCPNoDelay=1, отключение Wi-Fi Sense и авто-подключения к хотспотам |
-| 🖥️ **Проводник, UI** | Классическое контекстное меню, MenuShowDelay=0, отключение анимаций, скрытие лишних элементов |
-| 🖱️ **Мышь, ввод** | MouseSpeed=0, отключение автозамены и предиктивного ввода |
-| 🖨️ **Службы, принтер** | Отключение Spooler, Fax, диагностических служб (DPS, WerSvc) |
-| 📜 **Журналы и события** | Отключение AutoBackupLogFiles, очистка всех журналов через `wevtutil` |
-| 🧹 **Прочее** | Отключение ReserveManager, Storage Sense, GameDVR, FSO, Office-логов |
-| 📂 **Меню «Создать»** | Добавление пунктов .bat, .reg, .ps1, .vbs в контекстное меню, подменю питания на рабочем столе |
-| ⚡ **Питание** | Создание 3 схем VampireOS (Balanced, Maximum, Power Saving) с безопасными твиками |
+| 📊 **Телеметрия** | Уровень = 0, отключение DiagTrack/WER/TIP, блокировка через IFEO |
+| 🔄 **Обновления** | Отключение wuauserv/UsoSvc/BITS/DoSvc, блокировка Edge |
+| 🧠 **Система и ядро** | Win32PrioritySeparation=38, Memory Compression off, MSI mode, BCD |
+| 🌐 **Сеть** | DefaultTTL=65, TCPNoDelay=1, Wi-Fi Sense off |
+| 🖥️ **Проводник** | Классическое контекстное меню, MenuShowDelay=0 |
+| 🖱️ **Мышь** | MouseSpeed=0, автозамена off |
+| 🖨️ **Службы** | Spooler, Fax, DPS, WerSvc off |
+| 📜 **Журналы** | AutoBackupLogFiles off, очистка через `wevtutil` |
+| 🧹 **Прочее** | ReserveManager, Storage Sense, GameDVR, FSO off |
+| 📂 **Меню «Создать»** | .bat, .reg, .ps1, .vbs, подменю питания |
+| ⚡ **Питание** | 8 схем VampireOS с разбором `powercfg` |
 
-> ⚠️ **Убить KCAS и Xeon** — только для десктопов. **Режим Деда** — для ноутбуков. Перед запуском создайте точку восстановления.
+> ⚠️ **Убить KCAS и Xeon** — только десктопы. **Режим Деда** — ноутбуки.
 
 ---
 
 ## 🎮 Игровой режим 2.0
 
-### 📦 Готовые планы электропитания (14)
+### 📦 Готовые планы (14)
 
 | План | Описание |
 |---|---|
-| `Amit_v1_lowlatency` | Низкая задержка ввода, баланс |
-| `Amit_v2_extreme performance` | Максимум без компромиссов |
-| `Amit_v3_low latency` | Минимальная задержка в играх |
-| `Atlas Power Plan` | Агрессивная оптимизация от AtlasOS |
-| `Bitsum Highest Performance` | Максимальная частота CPU |
-| `Calypto` | Баланс для игр и работы |
-| `GGOSv0_8_5_Idle_Enabled` | GGOS с idle-режимом |
-| `Light pow v` | Лёгкий план |
+| `Amit_v1_lowlatency` | Низкая задержка ввода |
+| `Amit_v2_extreme performance` | Максимум |
+| `Amit_v3_low latency` | Минимальная задержка |
+| `Atlas Power Plan` | От AtlasOS |
+| `Bitsum Highest Performance` | Максимальная частота |
+| `Calypto` | Баланс |
+| `GGOSv0_8_5_Idle_Enabled` | GGOS с idle |
+| `Light pow v` | Лёгкий |
 | `Muren_Idle_Enabled` | Muren с idle |
 | `Quaked Ultimate Performance Idle Off` | Максимум, idle off |
 | `Quaked Ultimate Performance` | Абсолютный максимум |
 | `Unixcorn_Idle_Enabled` | Unixcorn с idle |
-| `XOS imribiy` | От XOS — для игр |
+| `XOS imribiy` | От XOS |
 | `Zoyata_Low Latency` | Для шутеров |
 
-🛡️ **Защита от дубликатов:** если план уже импортирован — повторно не создаётся.
-💡 **Совет:** для ноутбуков выбирайте планы с `Idle_Enabled`.
+🛡️ **Защита от дубликатов** при импорте.
+💡 **Совет:** для ноутбуков — планы с `Idle_Enabled`.
 
 ### 🔧 Power Killer — 6 функций
 
@@ -220,25 +345,22 @@
 | 📓 **Диагностические журналы** | SleepStudy, Kernel-Processor-Power off |
 
 ### 🛡️ Оптимизация служб
-- **200+ служб** в списке `SAFE_SERVICES` (телеметрия, реклама, фоновые)
-- **Защищённые категории:** питание 🔋, ввод ⌨️, сеть 🌐, темы 🎨, ядра ⚙️ (Start 0-2)
-- **Автобэкап** реестра служб в `.reg` перед отключением (переключатель)
-- **Восстановление** из бэкапа + fallback на `Start=3` при отсутствии файла
-- **Выбор чекбоксами** — можно оставить нужные службы включёнными
+- **200+ служб** в `SAFE_SERVICES`
+- **Защищённые категории:** питание, ввод, сеть, темы, ядра
+- **Автобэкап** реестра в `.reg`
+- **Fallback** `Start=3` при отсутствии бэкапа
 
 ---
 
 ## ⚙️ Службы (выделенная вкладка)
 
-Полноценный менеджер служб Windows:
-
-- **Таблица** с колонками: имя, описание, статус (boot/system/auto/manual/disabled), действия, «отключена в» (сборки)
+- **Таблица**: имя, описание, статус, действия, теги сборок
 - **Поиск** по имени и описанию
-- **Массовое управление**: выбрать все / снять все / отключить выбранные / включить выбранные
-- **Статусы** через `Get_Services_Status.bat` → `services_status.json`
-- **Кнопки в строке**: ▶ Вкл / ⏹ Выкл для каждой службы, выбор типа запуска из выпадающего списка
-- **Бэкап** `Services_Backup.reg` и **восстановление**
-- **Индикаторы**: цветные бейджи статусов + теги сборок (ReviOS, AtlasOS, XOS, VainOS и т.д.)
+- **Массовое управление**
+- **Статусы** через `Get_Services_Status.bat`
+- **Кнопки** ▶ Вкл / ⏹ Выкл в каждой строке
+- **Бэкап** `Services_Backup.reg` + восстановление
+- **Теги сборок** (ReviOS, AtlasOS, XOS, VainOS)
 
 ---
 
@@ -249,17 +371,17 @@
 <td align="center" width="50%">
 
 ### 📥 Setup
-Установщик NSIS, ярлык в меню Пуск, автозапуск от админа.
+Установщик NSIS.
 
-[**Скачать Setup .exe →**](https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.1.0/Anton.Vampire.Setup.1.1.0.exe)
+[**Скачать Setup .exe →**](https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.0-beta/Anton.Vampire.Setup.1.2.0-beta.exe)
 
 </td>
 <td align="center" width="50%">
 
 ### 📦 Portable
-Архив `.rar`, без установки, всё в `extreme_data/`.
+Архив `.rar`, всё в `extreme_data/`.
 
-[**Скачать Portable .rar →**](https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.1.0/Anton.Vampire.Portable.rar)
+[**Скачать Portable .rar →**](https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.0-beta/Anton.Vampire.Portable.rar)
 
 </td>
 </tr>
@@ -267,10 +389,8 @@
 
 ### Установка одной командой
 
-Откройте `cmd` (Win+R → cmd) и вставьте:
-
 ```cmd
-curl -g -k -L -# -o "%temp%\AntonVampire.Setup.exe" "https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.1.0/Anton.Vampire.Setup.1.1.0.exe" && start "" "%temp%\AntonVampire.Setup.exe"
+curl -g -k -L -# -o "%temp%\AntonVampire.Setup.exe" "https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.0-beta/Anton.Vampire.Setup.1.2.0-beta.exe" && start "" "%temp%\AntonVampire.Setup.exe"
 ```
 
 ### Из исходников
@@ -279,9 +399,8 @@ curl -g -k -L -# -o "%temp%\AntonVampire.Setup.exe" "https://github.com/ZikaSVG/
 git clone https://github.com/ZikaSVG/Anton-Vampire.git
 cd Anton-Vampire
 npm install
-npm start        # dev-режим
-npm run dev      # dev + DevTools
-npm run build    # сборка NSIS installer
+npm start
+npm run build
 ```
 
 ---
@@ -291,10 +410,10 @@ npm run build    # сборка NSIS installer
 | Слой | Технологии |
 |---|---|
 | Runtime | Electron 44 · Node.js |
-| Renderer | Vanilla JS (ES-модули) · HTML · CSS |
+| Renderer | Vanilla JS · HTML · CSS |
 | Стили | 8 CSS-файлов + CSS-переменные |
 | Темы | `renderer/themes.js` (100+ тем) |
-| Шрифты | локальные `.woff2` из `assets/fonts/` |
+| Шрифты | локальные `.woff2` |
 | Сборка | `electron-builder` → NSIS |
 | Утилиты | PowerShell · `7z.exe` · `NSudoLG.exe` · `PowerRun.exe` · `MinSudo.exe` |
 | Данные | JSON · UTF-8 · `extreme_data/settings.json` |
@@ -305,92 +424,39 @@ npm run build    # сборка NSIS installer
 
 ```
 Anton-Vampire/
-├── main.js                    # точка входа
-├── preload.js                 # contextBridge → window.api
+├── main.js
+├── preload.js
 ├── package.json
-│
 ├── src/
-│   ├── main/                  # main-процесс
-│   │   ├── config.js          # ConfigManager
-│   │   ├── logger.js          # файловый логгер
-│   │   ├── tweak-runner.js    # + патчинг .bat
-│   │   ├── startup.js         # автозагрузка
-│   │   └── tabs-data.js       # загрузка JSON
-│   │
-│   ├── renderer/              # UI-процесс
-│   │   ├── app.js             # оркестратор
-│   │   ├── sections.js        # список разделов
-│   │   ├── sidebar.js         # сайдбар
-│   │   ├── themes.js          # 100+ тем + шрифты
-│   │   ├── logger.js          # панель лога
-│   │   ├── components/        # checkbox, dropdown
-│   │   ├── styles/            # style-loader.js (8 стилей)
-│   │   ├── tabs/              # 13 вкладок
-│   │   │   ├── home.js
-│   │   │   ├── optimization.js
-│   │   │   ├── power.js
-│   │   │   ├── fixes.js
-│   │   │   ├── cleaner.js
-│   │   │   ├── game-mode.js
-│   │   │   ├── hard-optimization.js  # 🧛 Вампир (VampireOS)
-│   │   │   ├── services.js           # ⚙️ Менеджер служб
-│   │   │   ├── startup.js
-│   │   │   ├── security/
-│   │   │   ├── customization.js
-│   │   │   ├── app-uninstaller.js
-│   │   │   ├── settings.js
-│   │   │   └── sources.js
-│   │   └── utils/             # icons.js и др.
-│   │
+│   ├── main/
+│   │   ├── config.js
+│   │   ├── logger.js
+│   │   ├── tweak-runner.js
+│   │   ├── startup.js
+│   │   └── tabs-data.js
+│   ├── renderer/
+│   │   ├── app.js
+│   │   ├── sections.js
+│   │   ├── sidebar.js
+│   │   ├── themes.js
+│   │   ├── logger.js
+│   │   ├── components/
+│   │   ├── styles/
+│   │   ├── tabs/
+│   │   └── utils/
 │   └── styles/
-│       ├── default.css        # Material 3
-│       ├── pixel.css          # 8-bit ретро
-│       ├── material3.css      # Material You
-│       ├── kitty.css          # Pretty Kitty
-│       ├── cyberpunk.css      # Cyberpunk 2077
-│       ├── minipunk.css       # Mini Punk
-│       ├── altpunk.css        # Alt Punk
-│       └── materialmini.css   # Material Mini
-│
-├── tweaks/                    # база твиков (в релизном архиве)
-│   ├── tabs.json
-│   ├── drivers_tabs.json
-│   ├── apps_optimization_tabs.json
-│   ├── removal_tabs.json
-│   ├── *_customization_tabs.json
-│   ├── *_power_tabs.json
-│   ├── *_privacy_tabs.json
-│   ├── *_comfort_tabs.json
-│   ├── *_security_tabs.json
-│   ├── descriptions.txt
-│   └── _backups/
-│
+│       ├── default.css
+│       ├── pixel.css
+│       ├── material3.css
+│       ├── kitty.css
+│       ├── cyberpunk.css
+│       ├── minipunk.css
+│       ├── altpunk.css
+│       └── materialmini.css
+├── tweaks/
 ├── assets/
-│   ├── icon.png / icon.ico
-│   ├── logo.png
-│   ├── background.png
-│   ├── fonts/
-│   ├── papirus/               # иконки (GPL-3.0)
-│   ├── cursor_icons/
-│   └── wallpapers/
-│
-├── Utils/                     # сторонние утилиты
-│   ├── 7z.exe / 7z.dll
-│   ├── PowerRun.exe
-│   ├── NSudoLG.exe
-│   ├── MinSudo.exe
-│   └── launcher.exe
-│
-├── extreme_data/              # портативные данные
-│   ├── settings.json
-│   ├── logs/
-│   ├── backgrounds/
-│   ├── wallpapers/
-│   ├── cursors_cache/
-│   ├── cursor_icons/
-│   ├── config_backups/
-│   └── electron_userdata/
-│
+├── Utils/
+├── extreme_data/
 ├── LICENSE
 └── README.md
 ```
@@ -405,7 +471,7 @@ Anton-Vampire/
 {
   "General": {
     "theme": "vampire_the_masquerade",
-    "ui_style": "material3",
+    "ui_style": "materialmini",
     "visual_effect": "glass",
     "font_heading_latin": "Silkscreen",
     "font_heading_cyr": "JetBrains Mono",
@@ -446,38 +512,30 @@ Anton-Vampire/
 
 ## 💼 Portable mode
 
-Все данные — в `extreme_data/` рядом с `AntonVampire.exe`:
-
 ```
 AntonVampire.exe
 extreme_data/
 ├── settings.json
-├── logs/{user}_log_{ts}.log
+├── logs/
 ├── backgrounds/
 ├── wallpapers/
 ├── cursor_icons/
 ├── cursors_cache/
 ├── cursors_temp/
-├── config_backups/{app}/{ts}__{label}/
+├── config_backups/
 └── electron_userdata/
-    ├── session/
-    ├── cache/
-    ├── chromium_logs/
-    └── crashDumps/
 ```
 
-В `%APPDATA%` и `%LOCALAPPDATA%` **ничего не пишется**. Можно запускать с флешки.
+В `%APPDATA%` и `%LOCALAPPDATA%` **ничего не пишется**.
 
 ---
 
 ## 🎨 Добавить свои твики
 
-1. Положите `.bat` / `.ps1` / `.exe` / `.reg` / `.pow` в нужную папку `tweaks/<button>/<tab>/`
-2. Добавьте описание в `tweaks/descriptions.txt` (формат `filename.bat=Описание`)
-3. Откройте **Настройки → Утилиты → build_all_tabs.py → ▶ Запустить**
-4. Готово — твик появится во вкладке
-
-Требуется **Python 3.8+** в `PATH` (только для сборщиков JSON).
+1. Положите файл в `tweaks/<button>/<tab>/`
+2. Добавьте описание в `tweaks/descriptions.txt`
+3. **Настройки → Утилиты → build_all_tabs.py → ▶ Запустить**
+4. Готово
 
 ---
 
@@ -485,55 +543,50 @@ extreme_data/
 
 | Скрипт | Назначение |
 |---|---|
-| `build_all_tabs.py` | Оркестратор — запускает все скрипты ниже |
-| `build_tabs.py` | `tabs.json` — сборки ОС-секций |
-| `build_full_tabs.py` | `tabs.json` — расширенный |
-| `build_hardening_json.py` | HardeningKitty (Безопасность / Удобство) |
+| `build_all_tabs.py` | Оркестратор |
+| `build_tabs.py` | `tabs.json` |
+| `build_full_tabs.py` | расширенный |
+| `build_hardening_json.py` | HardeningKitty |
 | `build_apps_json.py` | `apps_optimization_tabs.json` |
-| `build_drivers_json.py` | `drivers_tabs.json` (NVIDIA/AMD/Intel/DX/OpenGL) |
+| `build_drivers_json.py` | `drivers_tabs.json` |
 | `build_removal_json.py` | `removal_tabs.json` |
-| `audit_tweaks.py` | Проверка целостности JSON ↔ диск |
+| `audit_tweaks.py` | Проверка целостности |
 
 ---
 
 ## 🩺 Troubleshooting
 
 ### Приложение не запускается
-- Запустите от имени администратора
-- Если UAC отменён — приложение закроется. Нажмите «Перезапустить» в диалоге
-- Включите `logs_enabled` в `settings.json` и посмотрите `extreme_data/logs/`
+- Запустите от администратора
+- Включите `logs_enabled` → `extreme_data/logs/`
 
 ### Антивирус ругается
-Три причины:
-1. **Нет цифровой подписи** (сертификат $300–500/год)
-2. **Меняет реестр / службы / системные файлы**
-3. **Использует `NSudoLG.exe`, `PowerRun.exe`, `MinSudo.exe`, `cmd.exe`**
+- Нет цифровой подписи
+- Меняет реестр / службы
+- Использует `NSudoLG.exe`, `PowerRun.exe`, `MinSudo.exe`
 
-→ Добавьте папку в исключения. Код открыт — можно проверить каждую строчку.
+→ Добавьте папку в исключения.
 
 ### Твик зависает
-- По умолчанию таймаут **5 минут**. Увеличьте в **Настройки → Интерфейс**
-- Смените режим запуска: `nsudolg` → `powerrun` → `minsudo` → `cmd`
-- Добавьте папку в исключения антивируса
+- Таймаут 5 минут. Увеличьте в **Настройки → Интерфейс**
+- Смените режим: `nsudolg` → `powerrun` → `minsudo` → `cmd`
 
 ### Кракозябры в логе
-Твик выводит в OEM-кодировке (cp866). Приложение пытается декодировать UTF-8, при ошибке — fallback на cp866. Если кракозябры всё равно — пересохраните `.bat` в UTF-8.
+Пересохраните `.bat` в UTF-8.
 
-### План электропитания не активируется
-- Сначала нажмите **📥 Импортировать план**
-- Затем — **⚡ Активировать план**
-- Если план уже есть в системе — дубликат не создаётся, активация пройдёт сразу
+### План не активируется
+- 📥 Импортировать → ⚡ Активировать
+- Если план уже есть — дубликат не создаётся
 
-### Службы не восстанавливаются из бэкапа
-- Проверьте наличие `Services_Backup.reg` в папке `tweaks/Службы/`
-- Если файла нет — приложение применит безопасный сброс `Start=3`
-- Создайте бэкап заново через **💾 Создать бэкап служб**
+### Службы не восстанавливаются
+- Проверьте `Services_Backup.reg`
+- Fallback `Start=3`
+- Создайте бэкап заново
 
 ### Курсоры не применяются
-- Убедитесь, что в архиве есть `.cur` / `.ani`
-- Проверьте папку `C:\Windows\Cursors\<name>\`
-- Попробуйте «▶️ Применить» ещё раз
-- Сбросьте всё через «🗑️ Удалить все»
+- Проверьте `.cur` / `.ani` в архиве
+- Папка `C:\Windows\Cursors\<name>\`
+- «🗑️ Удалить все» для сброса
 
 ---
 
@@ -541,46 +594,42 @@ extreme_data/
 
 | Клавиша | Действие |
 |---|---|
-| <kbd>F1</kbd> | Открыть сайт проекта |
+| <kbd>F1</kbd> | Сайт проекта |
 | <kbd>F5</kbd> | Перезагрузить renderer |
 | <kbd>F11</kbd> | Fullscreen |
-| <kbd>Ctrl</kbd> + <kbd>F</kbd> | Фокус в поиск |
-| <kbd>Esc</kbd> | Закрыть dropdown / меню |
+| <kbd>Ctrl</kbd>+<kbd>F</kbd> | Фокус в поиск |
+| <kbd>Esc</kbd> | Закрыть dropdown |
 
 ---
 
 ## 🔒 Безопасность
 
-- Приложение работает **только от администратора** — это требование
-- **Никакой телеметрии** — нет `telebot` и авто-отправки логов
-- **Всё локально** — нет внешних API, кроме явных действий пользователя
-- **Portable** — ничего в `%APPDATA%`
-- **Прозрачный код** — `main.js`, `preload.js`, `renderer/` открыты
-- **Бэкапы** — службы, реестр, конфиги сохраняются в `extreme_data/`
+- Только администратор
+- **Никакой телеметрии**
+- Всё локально
+- Portable
+- Прозрачный код
+- Бэкапы в `extreme_data/`
 
 ---
 
 ## 📜 Лицензия
 
-**Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)**
+**CC BY-NC-SA 4.0**
 
 | | |
 |---|---|
-| ✅ **Можно** | Форкать, изменять, распространять, использовать в личных проектах |
-| ❌ **Нельзя** | Продавать, закрывать код производных версий, коммерческое использование |
-| 📌 **Обязательно** | Указывать авторство, сохранять уведомления о лицензии |
-
-Юридически значимый текст — в файле [`LICENSE`](LICENSE).
+| ✅ Можно | Форкать, изменять, распространять |
+| ❌ Нельзя | Продавать, закрывать код |
+| 📌 Обязательно | Указывать авторство |
 
 ### Сторонние ресурсы
 
-Anton Vampire **агрегирует** ресурсы с собственными лицензиями:
-
-| Ресурс | Лицензия | Что это значит |
-|---|---|---|
-| **Papirus icons** | GPL-3.0 / LGPL-3.0 / CC-BY-SA-4.0 | При распространении нужно раскрыть исходники иконок |
-| **XOS / SOS / IMOS tweaks** | Лицензии авторов сборок | Остаются под условиями создателей |
-| **Utils/** | Собственные лицензии | Распространяются «как есть» |
+| Ресурс | Лицензия |
+|---|---|
+| Papirus icons | GPL-3.0 / LGPL-3.0 / CC-BY-SA-4.0 |
+| XOS / SOS / IMOS tweaks | Лицензии авторов |
+| Utils/ | Собственные лицензии |
 
 ---
 
@@ -588,9 +637,9 @@ Anton Vampire **агрегирует** ресурсы с собственным�
 
 - **[Papirus](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme)** — иконки
 - **XOS / SapphireOS / ImmortalOS / SystemX / Igromanoff / VainOS / SynergyOS / MartyFiles / scode18** — твики
-- **[7-Zip](https://www.7-zip.org/)** — распаковка курсоров
-- **[NSudo](https://github.com/M2Team/NSudo)** — TrustedInstaller запуск
-- **[PowerRun](https://www.sordum.org/9416/powerrun-v1-7-run-with-the-highest-privileges/)** — elevate
+- **[7-Zip](https://www.7-zip.org/)**
+- **[NSudo](https://github.com/M2Team/NSudo)**
+- **[PowerRun](https://www.sordum.org/9416/powerrun-v1-7-run-with-the-highest-privileges/)**
 
 ---
 
@@ -598,17 +647,16 @@ Anton Vampire **агрегирует** ресурсы с собственным�
 
 **Anton Vampire изменяет системные настройки Windows.** Используйте на свой страх и риск.
 
-- Автор **не несёт ответственности** за сломанную систему, потерянные данные или неработоспособное железо
-- **Всегда создавайте бэкап системы** перед применением твиков
-- **Начинайте с базовых пресетов**
-- **VampireOS и Смертельная оптимизация необратимы** — запускайте только на стационарных ПК с бэкапом
-- На некоторых конфигурациях агрессивная оптимизация приводит к нестабильности
-- Программа предоставляется «**как есть**», без гарантий
+- Автор не несёт ответственности
+- Всегда создавайте бэкап
+- Начинайте с базовых пресетов
+- **VampireOS необратим** — только с бэкапом
+- Программа «как есть»
 
 ---
 
 <p align="center">
-  <b>🩸 Anton Vampire</b> · v1.1.0 · 2026<br/>
+  <b>🩸 Anton Vampire</b> · v1.2.0-beta · 2026<br/>
 </p>
 
 <p align="center">
