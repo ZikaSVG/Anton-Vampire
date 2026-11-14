@@ -35,7 +35,6 @@ const SECTION_PAPIRUS = {
   optimization:  { cat: 'apps', name: 'preferences-system' },
   cleaner:       { cat: 'apps', name: 'edit-clear-alt' },
   game:          { cat: 'apps', name: 'applications-games' },
-  // hard:          { cat: 'apps', name: 'computer-fail' },
   services:      { cat: 'apps', name: 'utilities-terminal' },
   power:         { cat: 'apps', name: 'preferences-system-power' },
   customization: { cat: 'apps', name: 'preferences-desktop-theme' },
