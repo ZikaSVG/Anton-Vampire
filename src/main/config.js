@@ -4,8 +4,8 @@ const path = require('path');
 const DEFAULTS = {
   General: {
     /* --- Основное --- */
-    theme: 'catppuccin_mocha',
-    ui_style: 'minipunk',   // 'default' | 'pixel' | 'material3' | 'kitty'
+    theme: 'vampire_the_masquerade',
+    ui_style: 'materialmini',
     font_family: 'Segoe UI',
     font_size: 13,
     checkbox_font_size: 13,
