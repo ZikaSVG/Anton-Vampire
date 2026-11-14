@@ -2,7 +2,7 @@
 setlocal
 net session >nul 2>&1 || (echo [!] Run as Administrator. & pause & exit /b 1)
 
-echo Creating/verifying all VampireOS power plans...
+echo Creating all VampireOS power plans...
 
 echo Checking: Balanced Performance
 set "GUID=90a358c8-3bbc-4fb3-8b4e-d7ab065d2614"
