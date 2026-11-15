@@ -7,14 +7,35 @@
   <b>Windows-оптимизатор на Electron</b><br/>
 </p>
 
-<p align="center">
+<!-- <p align="center">
   <a href="https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.0-beta/Anton.Vampire.Setup.1.2.0-beta.exe">
     <img src="https://img.shields.io/badge/%F0%9F%93%A5_Download-Setup_.exe-EA38B8?style=for-the-badge" alt="Download Setup" />
   </a>
   <a href="https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.0-beta/Anton.Vampire.Portable.rar">
     <img src="https://img.shields.io/badge/%F0%9F%93%A6_Download-Portable_.rar-6E40C0?style=for-the-badge" alt="Download Portable" />
   </a>
-</p>
+</p> -->
+
+<table>
+<tr>
+<td align="center" width="50%">
+
+### 📥 Setup
+Установщик NSIS, ярлык в меню Пуск, автозапуск от админа.
+
+[**Скачать Setup .exe →**](https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.0-beta/Anton.Vampire.Setup.1.2.0-beta.exe)
+
+</td>
+<td align="center" width="50%">
+
+### 📦 Portable
+Архив `.rar`, без установки, всё в `extreme_data/`.
+
+[**Скачать Portable .rar →**](https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.0-beta/Anton.Vampire.Portable.rar)
+
+</td>
+</tr>
+</table>
 
 ---
 
@@ -371,7 +392,7 @@
 <td align="center" width="50%">
 
 ### 📥 Setup
-Установщик NSIS.
+Установщик NSIS, ярлык в меню Пуск, автозапуск от админа.
 
 [**Скачать Setup .exe →**](https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.0-beta/Anton.Vampire.Setup.1.2.0-beta.exe)
 
@@ -379,7 +400,7 @@
 <td align="center" width="50%">
 
 ### 📦 Portable
-Архив `.rar`, всё в `extreme_data/`.
+Архив `.rar`, без установки, всё в `extreme_data/`.
 
 [**Скачать Portable .rar →**](https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.0-beta/Anton.Vampire.Portable.rar)
 
