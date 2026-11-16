@@ -2012,6 +2012,7 @@ reg add "HKCR\.bat\ShellNew" /v "NullFile" /t REG_SZ /d "" /f >nul
 reg add "HKCR\.reg\ShellNew" /v "NullFile" /t REG_SZ /d "" /f >nul
 reg add "HKCR\.ps1\ShellNew" /v "NullFile" /t REG_SZ /d "" /f >nul
 reg add "HKCR\.vbs\ShellNew" /v "NullFile" /t REG_SZ /d "" /f >nul
+reg add "HKCR\.py\ShellNew" /v "NullFile" /t REG_SZ /d "" /f >nul
 
 echo [OK] .bat .reg .ps1 .vbs добавлены в «Создать»
 
@@ -2301,6 +2302,287 @@ reg add "HKCR\DesktopBackground\Shell\BloodEnergy\shell\60menu" /v CommandFlags 
 reg add "HKCR\DesktopBackground\Shell\BloodEnergy\shell\60menu\command" /ve /t REG_SZ /d "control.exe powercfg.cpl" /f
 
 echo [OK] Подменю «Выбор плана электропитания» добавлено на рабочий стол
+
+:: ============================================================
+:: 1. Отключение центра уведомлений и WpnService
+:: ============================================================
+:: Что делает:
+::   Полностью отключает центр уведомлений Windows: всплывающие
+::   тосты, звуки уведомлений, облачные уведомления от UWP.
+::   Останавливает и отключает службы WpnService (Windows Push
+::   Notifications System Service) и WpnUserService.
+::
+:: Зачем:
+::   Убирает рекламные баннеры "Обновитесь", уведомления от Store,
+::   Xbox, OneDrive, Teams и прочих приложений. Снижает нагрузку
+::   на CPU/RAM от фоновых служб push-уведомлений.
+::
+:: Побочка:
+::   Перестают приходить ЛЮБЫЕ уведомления — включая важные
+::   (мессенджеры, почта, системные события). Живые плитки
+::   перестают обновляться. Часть функций Store может не работать.
+:: ============================================================
+echo [1/11] Отключение центра уведомлений и WpnService...
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\userNotificationListener" /v "Value" /t REG_SZ /d "Deny" /f >nul 2>&1
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Notifications\Settings" /v "NOC_GLOBAL_SETTING_ALLOW_NOTIFICATION_SOUND" /t REG_DWORD /d 0 /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\PushNotifications" /v "ToastEnabled" /t REG_DWORD /d 0 /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\CurrentVersion\PushNotifications" /v "NoCloudApplicationNotification" /t REG_DWORD /d 1 /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Explorer" /v "DisableNotificationCenter" /t REG_DWORD /d 1 /f >nul 2>&1
+sc config WpnService start= disabled >nul 2>&1
+sc stop WpnService >nul 2>&1
+sc config WpnUserService start= disabled >nul 2>&1
+
+:: ============================================================
+:: 2. Скрытие уведомлений Windows Update
+:: ============================================================
+:: Что делает:
+::   Скрывает иконку Windows Update в трее, отключает баннеры
+::   "Доступны обновления", убирает кнопку перезагрузки в меню
+::   "Завершение работы" по умолчанию, скрывает ссылку Microsoft
+::   Store в разделе обновлений.
+::
+:: Зачем:
+::   Чтобы система не дёргала пользователя напоминаниями про
+::   обновления и не подсовывала перезагрузку в самый неподходящий
+::   момент. Полезно на боевых/игровых ПК, где обновления ставятся
+::   вручную и по расписанию.
+::
+:: Побочка:
+::   Уведомления о критичных обновлениях тоже перестанут
+::   появляться. При ручной установке обновлений проблем нет.
+::   Сам Windows Update при этом НЕ отключается — только
+::   его визуальные напоминания.
+:: ============================================================
+echo [2/11] Скрытие уведомлений Windows Update...
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" /v "NoAUAsDefaultShutdownOption" /t REG_DWORD /d 1 /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "HideMCTLink" /t REG_DWORD /d 1 /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "RestartNotificationsAllowed2" /t REG_DWORD /d 0 /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "TrayIconVisibility" /t REG_DWORD /d 0 /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "IsWUHidden" /t REG_DWORD /d 1 /f >nul 2>&1
+
+:: ============================================================
+:: 3. Отключение Smart App Control
+:: ============================================================
+:: Что делает:
+::   Отключает Smart App Control (SAC) — механизм Windows 11,
+::   который проверяет запускаемые приложения по облачным базам
+::   Microsoft и блокирует "непроверенные" программы.
+::
+:: Зачем:
+::   SAC блокирует запуск самописных утилит, твикеров, кряков,
+::   портативных программ, драйверов без цифровой подписи MS.
+::   Для сборщиков и пользователей tweak-паков это критично.
+::
+:: Побочка:
+::   Снижается защита от реальных угроз — SAC является дополнительным
+::   уровнем безопасности поверх Defender. После отключения
+::   вернуть его обратно можно только переустановкой Windows
+::   (SAC необратим после отключения).
+:: ============================================================
+echo [3/11] Отключение Smart App Control...
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\CI\Policy" /v "VerifiedAndReputablePolicyState" /t REG_DWORD /d 0 /f >nul 2>&1
+
+:: ============================================================
+:: 4. Отключение Windows Search Indexing (служба WSearch)
+:: ============================================================
+:: Что делает:
+::   Останавливает службу WSearch и переводит её в состояние
+::   "Отключена" — индексация файлов полностью прекращается.
+::
+:: Зачем:
+::   Индексатор постоянно жрёт CPU, диск и оперативку в фоне,
+::   особенно на HDD и слабых SSD. После отключения поиск по
+::   файлам работает медленнее, но система становится отзывчивее,
+::   особенно в играх и при работе с большими файлами.
+::
+:: Побочка:
+::   Поиск в меню Пуск и в Проводнике по содержимому файлов
+::   перестаёт работать (только по именам). Cortana и поиск в
+::   Outlook/OneNote тоже деградируют. На мощных SSD эффект
+::   от отключения минимальный, а потеря удобства — заметная.
+:: ============================================================
+echo [4/11] Отключение Windows Search Indexing...
+sc stop WSearch >nul 2>&1
+sc config WSearch start= disabled >nul 2>&1
+
+:: ============================================================
+:: 5. Отключение Xbox Game Bar
+:: ============================================================
+:: Что делает:
+::   Отключает Game Bar, Game DVR (запись игрового процесса),
+::   оверлей Xbox, панель запуска по Win+G, фоновую запись
+::   "последних 30 секунд" и Presence Writer.
+::
+:: Зачем:
+::   Game Bar — это отдельный процесс с оверлеем, который
+::   перехватывает горячие клавиши, ест 1–5% FPS и конфликтует
+::   с MSI Afterburner, RivaTuner, OBS и другими оверлеями.
+::   Для игровых сборок его отключают почти всегда.
+::
+:: Побочка:
+::   Не будет работать Win+G, встроенная запись экрана Xbox,
+::   Xbox-чаты и достижения в играх из Store. Если вы не
+::   пользуетесь этими функциями — потеря нулевая.
+:: ============================================================
+echo [5/11] Отключение Xbox Game Bar...
+reg add "HKCU\System\GameConfigStore" /v "GameDVR_Enabled" /t REG_DWORD /d 0 /f >nul 2>&1
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR" /v "AppCaptureEnabled" /t REG_DWORD /d 0 /f >nul 2>&1
+reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v "GamePanelStartupTipIndex" /t REG_DWORD /d 3 /f >nul 2>&1
+reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v "ShowStartupPanel" /t REG_DWORD /d 0 /f >nul 2>&1
+reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v "UseNexusForGameBarEnabled" /t REG_DWORD /d 0 /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Gaming.GameBar.PresenceServer.Internal.PresenceWriter" /v "ActivationType" /t REG_DWORD /d 0 /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\GameDVR" /v "AllowGameDVR" /t REG_DWORD /d 0 /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\ApplicationManagement\AllowGameDVR" /v "value" /t REG_DWORD /d 0 /f >nul 2>&1
+
+:: ============================================================
+:: 6. Отключение автообновления Microsoft Store
+:: ============================================================
+:: Что делает:
+::   Запрещает Store автоматически скачивать и устанавливать
+::   обновления приложений. Блокирует автоматический апгрейд
+::   Windows через Store (DisableOSUpgrade).
+::
+:: Зачем:
+::   Store любит обновлять приложения в самый неподходящий момент,
+::   занимая диск и сеть. Иногда обновление ломает работающую
+::   программу или тянет за собой новые UWP-зависимости.
+::   После отключения всё ставится вручную из Store.
+::
+:: Побочка:
+::   Приложения не обновляются сами — за этим нужно следить
+::   вручную. Уязвимости в старых версиях приложений остаются
+::   закрытыми, если не обновлять.
+:: ============================================================
+echo [6/11] Отключение автообновления Store...
+reg add "HKLM\SOFTWARE\Policies\Microsoft\WindowsStore" /v "AutoDownload" /t REG_DWORD /d 4 /f >nul 2>&1
+reg add "HKCU\SOFTWARE\Policies\Microsoft\WindowsStore" /v "DisableOSUpgrade" /t REG_DWORD /d 1 /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Policies\Microsoft\WindowsStore" /v "DisableOSUpgrade" /t REG_DWORD /d 1 /f >nul 2>&1
+
+:: ============================================================
+:: 7. Отключение авто-перезагрузки после обновлений
+:: ============================================================
+:: Что делает:
+::   Запрещает Windows Update автоматически перезагружать
+::   компьютер после установки обновлений, когда вы залогинены.
+::   Отключает пробуждение ПК из сна для установки обновлений.
+::
+:: Зачем:
+::   Классическая боль: система ребутится посреди игры, рендера
+::   или работы, теряются несохранённые данные. Твик даёт
+::   возможность самому выбрать момент перезагрузки.
+::
+:: Побочка:
+::   Обновления могут "висеть" в ожидании перезагрузки неделями.
+::   Иногда Windows будет настойчиво напоминать. Критичные патчи
+::   безопасности могут не примениться вовремя.
+:: ============================================================
+echo [7/11] Отключение авто-перезагрузки после обновлений...
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" /v "AUPowerManagement" /t REG_DWORD /d 0 /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" /v "NoAutoRebootWithLoggedOnUsers" /t REG_DWORD /d 1 /f >nul 2>&1
+
+:: ============================================================
+:: 8. Отключение автоустановки DevHome и Outlook (новый)
+:: ============================================================
+:: Что делает:
+::   Блокирует автоматическую установку приложений Dev Home
+::   (инструмент разработчика) и нового Outlook (замена
+::   Почты Windows) через планировщик Windows Update.
+::
+:: Зачем:
+::   Windows 11 22H2+ тихо доставляет эти приложения без спроса,
+::   особенно после чистых установок или апгрейдов. Это лишние
+::   сотни мегабайт на диске и лишние процессы в автозагрузке.
+::
+:: Побочка:
+::   Dev Home и новый Outlook не появятся сами — но их всегда
+::   можно поставить вручную из Store. На функциональность
+::   системы это не влияет.
+:: ============================================================
+echo [8/11] Отключение автоустановки DevHome и Outlook...
+reg delete "HKLM\SOFTWARE\Microsoft\WindowsUpdate\Orchestrator\UScheduler_Oobe\DevHomeUpdate" /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Orchestrator\UScheduler\DevHomeUpdate" /v "workCompleted" /t REG_DWORD /d 1 /f >nul 2>&1
+reg delete "HKLM\SOFTWARE\Microsoft\WindowsUpdate\Orchestrator\UScheduler_Oobe\OutlookUpdate" /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Orchestrator\UScheduler\OutlookUpdate" /v "workCompleted" /t REG_DWORD /d 1 /f >nul 2>&1
+
+:: ============================================================
+:: 9. Отключение пейджинга ядра и объединения страниц
+:: ============================================================
+:: Что делает:
+::   DisablePagingExecutive=1 — запрещает выгрузку ядра Windows
+::   и драйверов в файл подкачки, всё держится в RAM.
+::   DisablePageCombining=1 — отключает объединение одинаковых
+::   страниц памяти (дедупликацию).
+::
+:: Зачем:
+::   Ядро и драйверы всегда в оперативке — отклик системы
+::   чуть лучше, особенно на HDD и медленных SSD. Отключение
+::   page combining снижает нагрузку на CPU при выделении памяти.
+::   Полезно на системах с 16+ ГБ RAM.
+::
+:: Побочка:
+::   На системах с малым объёмом RAM (8 ГБ и меньше) свободной
+::   памяти станет меньше — возможны фризы при переполнении.
+::   Отключение page combining увеличивает потребление RAM.
+:: ============================================================
+echo [9/11] Отключение пейджинга ядра и объединения страниц...
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "DisablePagingExecutive" /t REG_DWORD /d 1 /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "DisablePageCombining" /t REG_DWORD /d 1 /f >nul 2>&1
+
+:: ============================================================
+:: 10. Отключение телеметрии MSRT
+:: ============================================================
+:: Что делает:
+::   Запрещает Microsoft Malicious Software Removal Tool (MSRT)
+::   отправлять в Microsoft информацию о найденных угрозах.
+::   Отключает heartbeat-телеметрию MpGears.
+::
+:: Зачем:
+::   MSRT — это отдельная утилита, которая помимо основной работы
+::   собирает статистику и отправляет её в MS. Твик не мешает
+::   самому сканированию, только отключает "звонок домой".
+::
+:: Побочка:
+::   Microsoft не получает данные о заражениях с вашего ПК.
+::   На функциональность Defender и систему не влияет.
+:: ============================================================
+echo [10/11] Отключение телеметрии MSRT...
+reg add "HKLM\SOFTWARE\Policies\Microsoft\MRT" /v "DontReportInfectionInformation" /t REG_DWORD /d 1 /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Microsoft\RemovalTools\MpGears" /v "HeartbeatTrackingIndex" /t REG_DWORD /d 0 /f >nul 2>&1
+
+:: ============================================================
+:: 11. Отключение фоновых UWP-приложений
+:: ============================================================
+:: Что делает:
+::   GlobalUserDisabled=1 — глобально запрещает UWP-приложениям
+::   работать в фоне. BackgroundAppGlobalToggle=0 — то же самое
+::   через настройки поиска.
+::
+:: Зачем:
+::   В Windows 10/11 UWP-приложения (Store, Почта, Калькулятор,
+::   Xbox, OneDrive и т.д.) могут просыпаться в фоне, жрать
+::   батарею и RAM, даже если вы их не открывали. Твик закрывает
+::   фоновую активность разом для всех приложений.
+::
+:: Побочка:
+::   Уведомления от UWP-приложений не приходят (если их не
+::   отключили раньше), синхронизация почты/календаря в фоне
+::   не работает, живые плитки не обновляются.
+::
+:: ВАЖНО (объединение исходников):
+::   В папке было ДВА файла с почти одинаковым назначением:
+::     - "Отключить UWP Background Tasks.bat" ставил
+::       GlobalUserDisabled=0 — это фактически ВКЛЮЧАЕТ фон
+::       (значение 0 = не отключено), что противоречит имени.
+::     - "Отключить фоновые UWP-приложения.bat" ставил
+::       GlobalUserDisabled=1 — это корректно отключает фон.
+::   Здесь объединено в одну секцию со значением 1 — то есть
+::   реально отключает фон. Если вам зачем-то нужно было
+::   значение 0 — поменяйте вручную.
+:: ============================================================
+echo [11/11] Отключение фоновых UWP-приложений...
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\BackgroundAccessApplications" /v "GlobalUserDisabled" /t REG_DWORD /d 1 /f >nul 2>&1
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" /v "BackgroundAppGlobalToggle" /t REG_DWORD /d 0 /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" /v "BackgroundAppGlobalToggle" /t REG_DWORD /d 0 /f >nul 2>&1
 
 rem ============================================================
 rem 18. ФИНАЛЬНЫЕ ДОПОЛНЕНИЯ
