@@ -4,7 +4,7 @@ const path = require('path');
 const DEFAULTS = {
   General: {
     /* --- Основное --- */
-    theme: 'vampire_the_masquerade',
+    theme: 'vampire_os',
     ui_style: 'materialmini',
     font_family: 'Segoe UI',
     font_size: 13,

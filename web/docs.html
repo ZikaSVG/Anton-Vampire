@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Документация — Anton Vampire v1.2.0-beta</title>
-<meta name="description" content="Полная документация Anton Vampire v1.2.0-beta: установка, интерфейс, 13 вкладок, VampireOS, технический разбор powercfg для кастомных планов, игровой режим 2.0, менеджер служб, 100+ тем, 8 стилей." />
+<title>Документация — Anton Vampire v1.2.1</title>
+<meta name="description" content="Полная документация Anton Vampire v1.2.1: установка, интерфейс, 13 вкладок, VampireOS, технический разбор powercfg для кастомных планов, игровой режим 2.0, менеджер служб, 100+ тем, 8 стилей." />
 <link rel="icon" type="image/png" href="../assets/icon.png" />
 <link rel="stylesheet" href="style.css" />
 </head>
@@ -33,7 +33,7 @@
     <div class="toc-title">Содержание</div>
     <ul class="toc">
       <li><a href="#intro">Введение</a></li>
-      <li><a href="#whatsnew">Что нового в 1.2.0-beta</a></li>
+      <li><a href="#whatsnew">Что нового в 1.2.1</a></li>
       <li><a href="#requirements">Требования</a></li>
       <li><a href="#install">Установка</a></li>
       <li><a href="#interface">Интерфейс</a></li>
@@ -89,7 +89,7 @@
 
   <main class="content">
     <header class="doc-header">
-      <div class="doc-eyebrow">🩸 Документация · v1.2.0-beta</div>
+      <div class="doc-eyebrow">🩸 Документация · v1.2.1</div>
       <h1 class="doc-title">Anton Vampire</h1>
       <p class="doc-sub">
         Полный справочник: установка, интерфейс, все 13 вкладок, VampireOS,
@@ -137,21 +137,26 @@
 
     <section class="section" id="whatsnew">
       <div class="section-tag">Changelog</div>
-      <h2>Что нового в 1.2.0-beta</h2>
+      
+      <h2>Что нового в 1.2.1 и 1.2.0-beta</h2>
       <ul>
-        <li>📖 <strong>Полная техническая документация powercfg.</strong> Каждый шаг кастомных планов VampireOS разобран: архитектура скрипта, GUID'ы подсистем и параметров, AC/DC-логика, детальный разбор каждого из 8 планов, риски и рекомендации.</li>
-        <li>🧩 <strong>Кнопка «📖 Как это работает»</strong> в master-detail планов VampireOS — открывает модальное окно с пошаговым разбором выбранной схемы.</li>
-        <li>📋 <strong>Справочные таблицы GUID.</strong> <code>SUB_PROCESSOR</code>, <code>SUB_VIDEO</code>, <code>SUB_DISK</code>, <code>SUB_USB</code> — с псевдонимами, диапазонами и назначением.</li>
-        <li>🔍 <strong>Пояснение AC/DC-логики.</strong> <code>/setacvalueindex</code> — от сети, <code>/setdcvalueindex</code> — от батареи.</li>
-        <li>🧩 <strong>Разделение «безопасных» и «агрессивных» твиков.</strong> <code>Balanced/Maximum/Power Saving</code> — безопасны, <code>Energetic Death/Power Killer</code> — экстремальны.</li>
-        <li>🛡️ <strong>Blood Energy: пояснение разделителей.</strong> <code>CommandFlags = 32</code> создаёт разделитель, а не пункт.</li>
-        <li>🩹 <strong>Исправлена опечатка</strong> в <code>PK_Activate_InputLag.bat</code>.</li>
-        <li>🎨 <strong>Новые дефолты:</strong> CSS-стиль <code>materialmini</code> и тема <code>vampire_the_masquerade</code>.</li>
+        <li>🖼️ <strong>Новые обои (1.2.1).</strong> Обновлены обои для Anton Vampire и VampireOS.</li>
+        <li>🧛 <strong>11 новых твиков VampireOS (1.2.1).</strong> Отключение уведомлений, Xbox Game Bar, автообновлений Store, пейджинга ядра и телеметрии MSRT.</li>
+        <li>🎨 <strong>Новая тема <code>vampire_os</code> (1.2.1).</strong> Черный фон с ярко-красным акцентом.</li>
+        <li>🎨 <strong>Новый логотип и стили (1.2.0-beta).</strong> Изменен логотип программы, обновлены элементы стилей.</li>
+        <li>🩸 <strong>Смена темы по умолчанию (1.2.0-beta).</strong> Заменена <code>catppuccin_mocha</code> на <code>vampire_the_masquerade</code>.</li>
+        <li>📖 <strong>Полная техническая документация powercfg (1.2.0-beta).</strong> Каждый шаг кастомных планов VampireOS разобран: архитектура скрипта, GUID'ы подсистем и параметров, AC/DC-логика, детальный разбор каждого из 8 планов, риски и рекомендации.</li>
+        <li>🧩 <strong>Кнопка «📖 Как это работает» (1.2.0-beta)</strong> в master-detail планов VampireOS — открывает модальное окно с пошаговым разбором выбранной схемы.</li>
+        <li>📋 <strong>Справочные таблицы GUID (1.2.0-beta).</strong> <code>SUB_PROCESSOR</code>, <code>SUB_VIDEO</code>, <code>SUB_DISK</code>, <code>SUB_USB</code> — с псевдонимами, диапазонами и назначением.</li>
+        <li>🔍 <strong>Пояснение AC/DC-логики (1.2.0-beta).</strong> <code>/setacvalueindex</code> — от сети, <code>/setdcvalueindex</code> — от батареи.</li>
+        <li>🧩 <strong>Разделение «безопасных» и «агрессивных» твиков (1.2.0-beta).</strong> <code>Balanced/Maximum/Power Saving</code> — безопасны, <code>Energetic Death/Power Killer</code> — экстремальны.</li>
+        <li>🛡️ <strong>Blood Energy: пояснение разделителей (1.2.0-beta).</strong> <code>CommandFlags = 32</code> создаёт разделитель, а не пункт.</li>
+        <li>🩹 <strong>Исправлена опечатка (1.2.0-beta)</strong> в <code>PK_Activate_InputLag.bat</code>.</li>
       </ul>
       <div class="callout info">
         <div class="callout-icon">🧪</div>
         <div class="callout-body">
-          Версия помечена как <strong>beta</strong>: документация дополняется для редких параметров (<code>HETEROCLASS</code>, <code>LATENCYHINTPOLICY</code>), часть формулировок UI может меняться. Функционально все BAT-файлы и планы стабильны.
+          Версия помечена как <strong>1.2.1</strong>: обновлены обои, добавлены 11 твиков VampireOS и новая тема <code>vampire_os</code>, а также внесены правки в логотип и стили.
         </div>
       </div>
     </section>
@@ -180,17 +185,17 @@
       <h2>Установка</h2>
       <h3>Способ 1: одной командой</h3>
       <p>Откройте <kbd>Win</kbd> + <kbd>R</kbd> → <code>cmd</code> и вставьте:</p>
-      <pre><code>curl -g -k -L -# -o "%temp%\AntonVampire.Setup.exe" "https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.0-beta/Anton.Vampire.Setup.1.2.0-beta.exe" && start "" "%temp%\AntonVampire.Setup.exe"</code></pre>
+      <pre><code>curl -g -k -L -# -o "%temp%\AntonVampire.Setup.exe" "https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.1/Anton.Vampire.Setup.1.2.1.exe" && start "" "%temp%\AntonVampire.Setup.exe"</code></pre>
 
       <h3>Способ 2: Setup вручную</h3>
       <ol>
-        <li>Скачайте <a href="https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.0-beta/Anton.Vampire.Setup.1.2.0-beta.exe" download>Anton.Vampire.Setup.1.2.0-beta.exe</a></li>
+        <li>Скачайте <a href="https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.1/Anton.Vampire.Setup.1.2.1.exe" download>Anton.Vampire.Setup.1.2.1.exe</a></li>
         <li>Запустите — UAC запросит подтверждение</li>
         <li>Следуйте инструкциям NSIS</li>
       </ol>
 
       <h3>Способ 3: Portable</h3>
-      <p>Скачайте <a href="https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.0-beta/Anton.Vampire.Portable.rar" download>Anton.Vampire.Portable.rar</a>, распакуйте и запустите <code>AntonVampire.exe</code>.</p>
+      <p>Скачайте <a href="https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.1/Anton.Vampire.Portable.rar" download>Anton.Vampire.Portable.rar</a>, распакуйте и запустите <code>AntonVampire.exe</code>.</p>
 
       <h3>Способ 4: из исходников</h3>
       <pre><code>git clone https://github.com/ZikaSVG/Anton-Vampire.git
@@ -337,21 +342,24 @@ npm start</code></pre>
         </div>
       </div>
 
+      <p>В версии <strong>1.2.1</strong> добавлены новые твики, обновлены обои и добавлена тема <code>vampire_os</code>.</p>
+
+      <h3>📦 Новые твики (11 отдельных BAT-файлов)</h3>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Категория</th><th>Что делает</th></tr></thead>
+          <thead><tr><th>Иконка</th><th>Название</th><th>Что делает</th></tr></thead>
           <tbody>
-            <tr><td>📊 Телеметрия</td><td>Уровень = 0, DiagTrack/WER/TIP off, IFEO</td></tr>
-            <tr><td>🔄 Обновления</td><td>wuauserv/UsoSvc/BITS/DoSvc/edgeupdate off</td></tr>
-            <tr><td>🧠 Система и ядро</td><td>Win32PrioritySeparation=38, MSI mode, BCD</td></tr>
-            <tr><td>🌐 Сеть</td><td>DefaultTTL=65, TCPNoDelay=1, Wi-Fi Sense off</td></tr>
-            <tr><td>🖥️ UI</td><td>Классическое меню, MenuShowDelay=0</td></tr>
-            <tr><td>🖱️ Мышь</td><td>MouseSpeed=0, автозамена off</td></tr>
-            <tr><td>🖨️ Службы</td><td>Spooler, Fax, DPS, WerSvc off</td></tr>
-            <tr><td>📜 Журналы</td><td>AutoBackupLogFiles off, wevtutil очистка</td></tr>
-            <tr><td>🧹 Прочее</td><td>ReserveManager, Storage Sense, GameDVR off</td></tr>
-            <tr><td>📂 Меню «Создать»</td><td>.bat, .reg, .ps1, .vbs, подменю питания</td></tr>
-            <tr><td>⚡ Питание</td><td>8 схем VampireOS с разбором powercfg</td></tr>
+            <tr><td>🔔</td><td>Уведомления</td><td>Отключает центр уведомлений, WpnService, звуки, тосты, живые плитки.</td></tr>
+            <tr><td>🔄</td><td>Windows Update</td><td>Скрывает уведомления об обновлениях (баннеры, иконку в трее, кнопку перезагрузки). Сам WU не отключается.</td></tr>
+            <tr><td>🛡️</td><td>Smart App Control</td><td>Отключает SAC (VerifiedAndReputablePolicyState=0). Блокирует самописные утилиты. ⚠️ Необратимо без переустановки Windows.</td></tr>
+            <tr><td>🔍</td><td>Search Indexing</td><td>Останавливает службу WSearch. Индексатор перестаёт жрать CPU/диск. Побочка: поиск только по именам файлов.</td></tr>
+            <tr><td>🎮</td><td>Xbox Game Bar</td><td>Отключает Game DVR, оверлей Xbox, Win+G, фоновую запись. Убирает конфликты с MSI Afterburner, OBS и +1–5% FPS.</td></tr>
+            <tr><td>📦</td><td>Store AutoUpdate</td><td>Отключает автообновление Store (AutoDownload=4, DisableOSUpgrade=1). Приложения обновляются только вручную.</td></tr>
+            <tr><td>🔁</td><td>Auto-Reboot</td><td>Запрещает авто-перезагрузку после обновлений (NoAutoRebootWithLoggedOnUsers=1). Windows не ребутится посреди игры.</td></tr>
+            <tr><td>📥</td><td>DevHome & Outlook</td><td>Блокирует автоустановку DevHome и Outlook (UScheduler\DevHomeUpdate workCompleted=1).</td></tr>
+            <tr><td>🧠</td><td>Kernel Paging</td><td>Отключает пейджинг ядра (DisablePagingExecutive=1) и объединение страниц. Лучше отклик на 16+ ГБ RAM. ⚠️ На 8 ГБ может стать хуже.</td></tr>
+            <tr><td>📊</td><td>MSRT Telemetry</td><td>Отключает телеметрию MSRT (DontReportInfectionInformation=1). На сам Defender не влияет.</td></tr>
+            <tr><td>📵</td><td>Background UWP</td><td>Глобально отключает фоновые UWP-приложения (GlobalUserDisabled=1). Store, Почта, Калькулятор, OneDrive не просыпаются в фоне.</td></tr>
           </tbody>
         </table>
       </div>
@@ -410,6 +418,7 @@ npm start</code></pre>
         <li>4 источника твиков</li>
         <li>Кэш в <code>extreme_data/cursors_cache/</code></li>
         <li>7z.exe для распаковки</li>
+        <li>Новые обои в 1.2.1</li>
       </ul>
     </section>
 
@@ -432,7 +441,7 @@ npm start</code></pre>
         <li><strong>Шрифты</strong> — 6 слотов, веса</li>
         <li><strong>Интерфейс</strong> — чекбоксы, звук, 7 режимов запуска</li>
         <li><strong>Утилиты</strong> — сборщики JSON</li>
-        <li><strong>Обои</strong> — файлы, URL, папка</li>
+        <li><strong>Обои</strong> — файлы, URL, папка (обновлены в 1.2.1)</li>
         <li><strong>О программе</strong> — версия, лицензия, сброс</li>
       </ul>
     </section>
@@ -654,11 +663,33 @@ npm start</code></pre>
       <div class="section-tag">Механика</div>
       <h2>Темы и шрифты</h2>
       <p>В <code>renderer/themes.js</code> — объект <code>THEMES</code> (~100+ ключей) и <code>THEMES_META.groups</code> (12 групп). Применение — <code>applyTheme(name, unified, sidebarOpacity)</code>.</p>
+      
+      <p>Начиная с версии <strong>1.2.0-beta</strong> темой по умолчанию является <code>vampire_the_masquerade</code>, которая заменила <code>catppuccin_mocha</code>.</p>
+
+      <p>В версии <strong>1.2.1</strong> добавлена новая тема <code>vampire_os</code> (черный фон с ярко-красным акцентом).</p>
+
+      <h3>Было по умолчанию (до 1.2.0-beta):</h3>
+      <pre><code>catppuccin_mocha: {
+  bg: '#1e1e2e', bgAlt: '#181825', card: '#181825', cardHover: '#313244',
+  border: '#45475a', fg: '#cdd6f4', fgMuted: '#a6adc8',
+  accent: '#cba6f7', accent2: '#b4befe', accentText: '#11111b',
+  success: '#a6e3a1', warning: '#f9e2af', danger: '#f38ba8', info: '#89dceb'
+}</code></pre>
+
+      <h3>Стало по умолчанию (с 1.2.0-beta):</h3>
       <pre><code>vampire_the_masquerade: {
-  bg: '#0a0507', bgAlt: '#14080d', card: '#1a0c13', cardHover: '#26121c',
-  border: '#8b1a3d', fg: '#f5e6e8', fgMuted: '#8a6f75',
-  accent: '#dc2626', accent2: '#7c3aed', accentText: '#ffffff',
-  success: '#10b981', warning: '#f59e0b', danger: '#dc2626', info: '#06b6d4'
+  bg: '#0a0508', bgAlt: '#120a0f', card: '#1a0f16', cardHover: '#24141d',
+  border: '#8b0000', fg: '#e8d5d5', fgMuted: '#9a7a7a',
+  accent: '#b30000', accent2: '#7a0000', accentText: '#ffffff',
+  success: '#4a7a4a', warning: '#b8860b', danger: '#cc0000', info: '#5c5c8a'
+}</code></pre>
+
+      <h3>Новая тема в 1.2.1:</h3>
+      <pre><code>vampire_os: {
+  bg: '#080000', bgAlt: '#120303', card: '#180505', cardHover: '#220808',
+  border: '#4a0000', fg: '#e6e6e6', fgMuted: '#9e8a8a',
+  accent: '#ff0022', accent2: '#8b0000', accentText: '#ffffff',
+  success: '#2e7d32', warning: '#b8860b', danger: '#cc0000', info: '#5c6bc0'
 }</code></pre>
 
       <h3>Группы тем (12)</h3>
@@ -693,6 +724,7 @@ body_font_weight:    400</code></pre>
       <div class="section-tag">Механика</div>
       <h2>CSS-стили (8)</h2>
       <p>В <code>renderer/styles/style-loader.js</code> — объект <code>STYLES</code> и <code>applyStyle(id)</code>. Старый <code>&lt;link&gt;</code> полностью удаляется.</p>
+      <p>В версии <strong>1.2.0-beta</strong> был обновлен логотип программы и внесены изменения в стили.</p>
       <div class="table-wrap">
         <table>
           <thead><tr><th>ID</th><th>Название</th><th>Файл</th></tr></thead>
@@ -948,7 +980,7 @@ extreme_data/
         <span>ANTON VAMPIRE</span>
       </div>
       <div class="footer-meta">
-        <div>© 2026 ZikaSVG · v1.2.0-beta</div>
+        <div>© 2026 ZikaSVG · v1.2.1</div>
         <div>Документация · Cyberpunk 2077</div>
       </div>
     </div>

@@ -7,15 +7,6 @@
   <b>Windows-оптимизатор на Electron</b><br/>
 </p>
 
-<!-- <p align="center">
-  <a href="https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.0-beta/Anton.Vampire.Setup.1.2.0-beta.exe">
-    <img src="https://img.shields.io/badge/%F0%9F%93%A5_Download-Setup_.exe-EA38B8?style=for-the-badge" alt="Download Setup" />
-  </a>
-  <a href="https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.0-beta/Anton.Vampire.Portable.rar">
-    <img src="https://img.shields.io/badge/%F0%9F%93%A6_Download-Portable_.rar-6E40C0?style=for-the-badge" alt="Download Portable" />
-  </a>
-</p> -->
-
 <table>
 <tr>
 <td align="center" width="50%">
@@ -23,7 +14,7 @@
 ### 📥 Setup
 Установщик NSIS, ярлык в меню Пуск, автозапуск от админа.
 
-[**Скачать Setup .exe →**](https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.0-beta/Anton.Vampire.Setup.1.2.0-beta.exe)
+[**Скачать Setup .exe →**](https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.1/Anton.Vampire.Setup.1.2.1.exe)
 
 </td>
 <td align="center" width="50%">
@@ -31,7 +22,7 @@
 ### 📦 Portable
 Архив `.rar`, без установки, всё в `extreme_data/`.
 
-[**Скачать Portable .rar →**](https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.0-beta/Anton.Vampire.Portable.rar)
+[**Скачать Portable .rar →**](https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.1/Anton.Vampire.Portable.rar)
 
 </td>
 </tr>
@@ -47,7 +38,7 @@
 
 <p align="center">
   <a href="web/screenshot.jpg">
-    <img src="web/screenshot.jpg" alt="Anton Vampire v1.2.0-beta — главный экран" width="90%" style="border-radius: 8px;" />
+    <img src="web/screenshot.jpg" alt="Anton Vampire v1.2.1 — главный экран" width="90%" style="border-radius: 8px;" />
   </a>
 </p>
 
@@ -61,8 +52,35 @@
 
 ---
 
-## ✨ Новое в 1.2.0-beta
+## ✨ Новое в 1.2.1
 
+### 🎨 Визуальные изменения
+В версии **1.2.1** обновлены обои и добавлена новая тема, а также **11 новых твиков** в VampireOS.
+*(Напомним, что глобальный редизайн с новым логотипом и сменой темы по умолчанию на `vampire_the_masquerade` произошёл ещё в **1.2.0-beta**).*
+
+*   **Обои (1.2.1):**
+    *   *Было:* Темные, приглушенные тона.
+    *   *Стало:* Высококонтрастные арты. На главном экране — аниме-вампирша с черными крыльями на фоне багровой луны и готического замка. В разделе VampireOS — динамичный арт с цепями, летучими мышами и крупной надписью «VAMPIRE OS».
+*   **Новая тема `vampire_os` (1.2.1):** Черный фон с ярко-красным акцентом (`#ff0022`).
+*   **Логотип (1.2.0-beta):** Круглый готический бейдж с аниме-вампиршей, пиксель-артом (череп, дискета) и неоново-розовой палитрой.
+*   **Тема по умолчанию (1.2.0-beta):** Заменена `catppuccin_mocha` на `vampire_the_masquerade`.
+*   **CSS-стиль по умолчанию (1.2.0-beta):** `materialmini`.
+
+### 🔔 11 новых твиков в VampireOS
+Добавлена новая категория «Уведомления, обновления, фон», объединяющая 11 отдельных BAT-твиков:
+- 🕒 **Центр уведомлений и WpnService** → полностью отключён: тосты, звуки, облачные уведомления; службы остановлены и disabled. *(Побочка: не приходят ЛЮБЫЕ уведомления, живые плитки не обновляются)*
+- 🔄 **Уведомления Windows Update** → скрыты: иконка в трее, баннеры, кнопка перезагрузки по умолчанию. *(Сам WU при этом НЕ отключается)*
+- 🛡️ **Smart App Control** → отключён (`VerifiedAndReputablePolicyState=0`). Позволяет запускать самописные утилиты без подписи MS. *(⚠️ Необратимо без переустановки Windows)*
+- 🔍 **Windows Search Indexing** → служба `WSearch` остановлена. Индексатор не жрёт CPU/диск в фоне. *(Побочка: поиск только по именам файлов)*
+- 🎮 **Xbox Game Bar** → отключён: Game DVR, оверлей, Win+G, фоновая запись. Убирает конфликты с OBS/Afterburner, дает +1–5% FPS.
+- 📦 **Автообновление Store** → отключено: приложения обновляются только вручную.
+- 🔁 **Авто-перезагрузка после обновлений** → запрещена: Windows не ребутится посреди игры/рендера.
+- 📥 **Автоустановка DevHome и Outlook** → заблокирована: Win 11 22H2+ больше не доставляет их без спроса.
+- 🧠 **Пейджинг ядра и объединение страниц** → отключены: ядро и драйверы всегда в RAM. Лучше отклик на 16+ ГБ RAM. *(⚠️ На 8 ГБ может стать хуже)*
+- 📊 **Телеметрия MSRT** → отключена: MSRT не отправляет данные о найденных угрозах в Microsoft.
+- 📵 **Фоновые UWP-приложения** → глобально отключены: Store, Почта, Xbox и др. не просыпаются в фоне. *(Побочка: уведомления UWP и синхронизация не работают)*
+
+### 📖 Остальные изменения (из 1.2.0-beta)
 - 📖 **Полная техническая документация по кастомным планам VampireOS.** Каждый шаг `powercfg` разобран: логика скрипта, назначение каждого GUID, эффект каждой команды, риски и рекомендации.
 - 🧩 **Кнопка «📖 Как это работает»** в master-detail планов VampireOS — открывает модальное окно с разбором `powercfg` для выбранного плана.
 - 📋 **Справочные таблицы GUID.** `SUB_PROCESSOR`, `SUB_VIDEO`, `SUB_DISK`, `SUB_USB` — теперь с псевдонимами, диапазонами и назначением.
@@ -70,11 +88,6 @@
 - 🧩 **Разделение «безопасных» и «агрессивных» твиков.** `Balanced/Maximum/Power Saving` помечены как безопасные, `Energetic Death/Power Killer` — как экстремальные.
 - 🛡️ **Blood Energy: пояснение разделителей.** `CommandFlags = 32` создаёт разделитель в контекстном меню, а не отдельный пункт.
 - 🩹 **Исправлена опечатка** в `PK_Activate_InputLag.bat` — параметр `bc5038f7` приведён в соответствие с таблицей плана.
-- 🎨 **Новые дефолты:** CSS-стиль `materialmini` и тема `vampire_the_masquerade`.
-
-### 🧪 Статус бета
-
-Версия помечена как **beta**: документация дополняется для редких параметров (`HETEROCLASS`, `LATENCYHINTPOLICY`), часть формулировок UI может меняться. Функционально все BAT-файлы и планы стабильны.
 
 ---
 
@@ -143,7 +156,7 @@
 | `6738e2c4-e8a5-4a42-b16a-e040e769756e` | `DISKIDLE` | Отключение диска (сек) | `0`=никогда |
 | `48e6b7a6-50f5-4782-a5d4-53bb8f07e226` | `USBSUSPEND` | Выборочная приостановка USB | `0`=off, `1`=on |
 
-### 3. Детальный разбор планов
+### 3. Детальный разбор планов (на основе `Add_Blood_Energy.bat`)
 
 #### 3.1 Balanced Performance
 
@@ -289,10 +302,10 @@
 | 5 | 🧹 **Очистка** | 12 секций: шейдеры, логи, кэши, Temp |
 | 6 | ⚜️ **Исправления** | DISM, SFC, CHKDSK, сеть, устройства, игры |
 | 7 | 🎮 **Игровой режим** | Планы (14), Power Killer (6), службы (200+) |
-| 8 | 🧛 **Вампир** | VampireOS: 13 категорий, Power Max / Power Save |
+| 8 | 🧛 **Вампир** | VampireOS: 14 категорий (вкл. новые), Power Max / Power Save |
 | 9 | 🔋 **Электропитание** | Power Killer + таблица планов + 100+ источников + разбор powercfg |
 | 10 | ⚙️ **Службы** | Таблица: поиск, статусы, бэкап `.reg` |
-| 11 | 🎨 **Кастомизация** | Курсоры с превью + 4 источника |
+| 11 | 🎨 **Кастомизация** | Курсоры с превью + 4 источника + новые обои |
 | 12 | 📦 **Приложения** | Appx, Defender/Edge/OneDrive/WebView2 |
 | 13 | ⚙️ **Настройки** | 6 под-вкладок |
 
@@ -324,6 +337,7 @@
 | 📜 **Журналы** | AutoBackupLogFiles off, очистка через `wevtutil` |
 | 🧹 **Прочее** | ReserveManager, Storage Sense, GameDVR, FSO off |
 | 📂 **Меню «Создать»** | .bat, .reg, .ps1, .vbs, подменю питания |
+| 🔔 **Уведомления и фон** | **11 новых твиков (1.2.1)**: отключение WpnService, SAC, Xbox Game Bar, фоновых UWP, телеметрии MSRT и др. |
 | ⚡ **Питание** | 8 схем VampireOS с разбором `powercfg` |
 
 > ⚠️ **Убить KCAS и Xeon** — только десктопы. **Режим Деда** — ноутбуки.
@@ -394,7 +408,7 @@
 ### 📥 Setup
 Установщик NSIS, ярлык в меню Пуск, автозапуск от админа.
 
-[**Скачать Setup .exe →**](https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.0-beta/Anton.Vampire.Setup.1.2.0-beta.exe)
+[**Скачать Setup .exe →**](https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.1/Anton.Vampire.Setup.1.2.1.exe)
 
 </td>
 <td align="center" width="50%">
@@ -402,7 +416,7 @@
 ### 📦 Portable
 Архив `.rar`, без установки, всё в `extreme_data/`.
 
-[**Скачать Portable .rar →**](https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.0-beta/Anton.Vampire.Portable.rar)
+[**Скачать Portable .rar →**](https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.1/Anton.Vampire.Portable.rar)
 
 </td>
 </tr>
@@ -411,7 +425,7 @@
 ### Установка одной командой
 
 ```cmd
-curl -g -k -L -# -o "%temp%\AntonVampire.Setup.exe" "https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.0-beta/Anton.Vampire.Setup.1.2.0-beta.exe" && start "" "%temp%\AntonVampire.Setup.exe"
+curl -g -k -L -# -o "%temp%\AntonVampire.Setup.exe" "https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.1/Anton.Vampire.Setup.1.2.1.exe" && start "" "%temp%\AntonVampire.Setup.exe"
 ```
 
 ### Из исходников
@@ -677,7 +691,7 @@ extreme_data/
 ---
 
 <p align="center">
-  <b>🩸 Anton Vampire</b> · v1.2.0-beta · 2026<br/>
+  <b>🩸 Anton Vampire</b> · v1.2.1 · 2026<br/>
 </p>
 
 <p align="center">

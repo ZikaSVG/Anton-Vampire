@@ -576,6 +576,13 @@
       "border": "#414868", "fg": "#c0caf5", "fgMuted": "#565f89",
       "accent": "#7aa2f7", "accent2": "#5a82d7", "accentText": "#1a1b26",
       "success": "#9ece6a", "warning": "#e0af68", "danger": "#f7768e", "info": "#7dcfff"
+    },
+
+    "vampire_os": {
+      "bg": "#080000", "bgAlt": "#120303", "card": "#180505", "cardHover": "#220808",
+      "border": "#4a0000", "fg": "#e6e6e6", "fgMuted": "#9e8a8a",
+      "accent": "#ff0022", "accent2": "#8b0000", "accentText": "#ffffff",
+      "success": "#2e7d32", "warning": "#b8860b", "danger": "#cc0000", "info": "#5c6bc0"
     }
   },
 
@@ -592,7 +599,7 @@
       { "id": "dark-dev", "title": "⚡ Тёмные темы от разработчика", "themes": ["cyberpunk", "hacker", "palenight", "boosterx", "boosterxvapor"] },
       { "id": "dark-anton", "title": "🩸 Тёмные темы Антона", "themes": ["extreme", "newhone", "nord"] },
       { "id": "dark-ruslan", "title": "💀 Тёмные темы Русланчика", "themes": ["wincry", "ruslanchik", "wincry_warning", "wincry_full_warning"] },
-      { "id": "dark-new", "title": "✨ Новые тёмные темы", "themes": ["bloodmoon", "abyss", "newnord", "catppuccin", "dracula", "newpalenight", "hellokitty", "kuromi", "onedark", "hacker_new"] },
+      { "id": "dark-new", "title": "✨ Новые тёмные темы", "themes": ["vampire_os", "bloodmoon", "abyss", "newnord", "catppuccin", "dracula", "newpalenight", "hellokitty", "kuromi", "onedark", "hacker_new"] },
       { "id": "curated-2-dark", "title": "🎯 Curated 2.0 — Тёмные", "themes": ["bootstrap", "pydata", "nord_curated", "solarized", "catppuccin_curated", "gruvbox", "dracula_curated", "tokyo_night", "one", "everforest"] },
       { "id": "curated-2-light", "title": "🎯 Curated 2.0 — Светлые", "themes": ["bootstrap_light", "pydata_light", "solarized_light", "gruvbox_light", "tokyo_night_light", "one_light", "everforest_light"] },
       { 
