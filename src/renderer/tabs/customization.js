@@ -3,7 +3,7 @@ import { renderCheckboxGrid } from '../components/checkbox.js';
 import { loadSourceData, buildPairMap, coreName } from './sources.js';
 
 /* ============================================================
-   Вкладка «Кастомизация» — курсоры + твики от сборок
+   Вкладка «Кастомизация» — курсоры + твики от сборок + ViVeTool 25H2/26H2
    ============================================================ */
 
 /* ---------- Роли курсоров ---------- */
@@ -48,7 +48,6 @@ const DEFAULT_CURSORS = {
 
 /* ============================================================
    Источники твиков кастомизации.
-   Реально есть: MartyFiles, SynergyOS-Tweaks, VainOS-Tweaks, XOS-Tweaks.
    ============================================================ */
 const CUSTOMIZATION_SOURCES = [
   {
@@ -102,14 +101,42 @@ const CUSTOMIZATION_SOURCES = [
   }
 ];
 
+/* ============================================================
+   Источники ViVeTool — по одному на каждую версию Windows.
+   Каждая версия: своя папка + свой плоский JSON (Root + отмена),
+   чтобы renderCheckboxGrid автоматически спарил твик и его отмену.
+   ============================================================ */
+const VIVETOOL_SOURCES = [
+  {
+    id: 'vivetool25',
+    label: '🪟 Windows 25H2',
+    desc: 'Сборка 26200.9278+',
+    json: 'tweaks/jsons/vivetool_25h2_tabs.json',
+    baseDir: 'tweaks/Кастомизация/Windows 25H2',
+    minBuild: '26200.9278'
+  },
+  {
+    id: 'vivetool26',
+    label: '🚀 Windows 26H2',
+    desc: 'Сборка 26300.8493+',
+    json: 'tweaks/jsons/vivetool_26h2_tabs.json',
+    baseDir: 'tweaks/Кастомизация/Windows 26H2',
+    minBuild: '26300.8493'
+  }
+];
+
 /* ---------- Состояние вкладки ---------- */
 const state2 = {
-  subTab: 'cursors',     // 'cursors' | 'tweaks'
+  subTab: 'cursors',     // 'cursors' | 'tweaks26' | 'tweaks'
   cursors: [],
   busy: new Set(),
   loading: false,
   srcState: {
     sourceId: null,
+    dataCache: {}
+  },
+  vivetool: {
+    sourceId: VIVETOOL_SOURCES[0].id,   // по умолчанию 25H2
     dataCache: {}
   }
 };
@@ -141,8 +168,9 @@ export async function renderCustomization() {
   content.appendChild(subNav);
 
   const SUBTABS = [
-    { id: 'cursors', label: '🖱️ Курсоры' },
-    { id: 'tweaks',  label: '⚙️ Твики' }
+    { id: 'cursors',  label: '🖱️ Курсоры' },
+    { id: 'tweaks26', label: '🚀 ViVeTool' },
+    { id: 'tweaks',   label: '⚙️ Твики' }
   ];
 
   const host = document.createElement('div');
@@ -169,6 +197,8 @@ export async function renderCustomization() {
     updateCount();
     if (state2.subTab === 'cursors') {
       renderCursorsSection(host);
+    } else if (state2.subTab === 'tweaks26') {
+      renderTweaks26Section(host);
     } else if (state2.subTab === 'tweaks') {
       renderTweaksSection(host);
     }
@@ -181,6 +211,8 @@ export async function renderCustomization() {
       const total = state2.cursors.length;
       const installed = state2.cursors.filter(c => c.installed).length;
       el.textContent = `${installed} / ${total} курсоров`;
+    } else if (state2.subTab === 'tweaks26') {
+      el.textContent = '25H2 / 26H2';
     } else {
       el.textContent = `${CUSTOMIZATION_SOURCES.length} сборок`;
     }
@@ -402,7 +434,7 @@ export async function renderCustomization() {
 
     ch.querySelector('#cur-refresh').addEventListener('click', () => {
       Sound.click();
-      delete state.dataCache.cursors;   // сброс кэша
+      delete state.dataCache.cursors;
       load(true);
     });
 
@@ -440,6 +472,132 @@ export async function renderCustomization() {
 
     /* ---- INITIAL LOAD ---- */
     load();
+  }
+
+  /* ============================================================
+     СЕКЦИЯ «ТВИКИ 25H2 / 26H2» (ViVeTool)
+     — Две подвкладки: 25H2 и 26H2
+     — Внутри — renderCheckboxGrid с кнопкой «↩️ Отменить» на каждом твике
+     — Отдельной вкладки «отмена» НЕТ
+     ============================================================ */
+  function renderTweaks26Section(host) {
+    /* ---------- header ---------- */
+    const ch = document.createElement('div');
+    ch.className = 'apps-header';
+    ch.style.marginTop = '0';
+    ch.innerHTML = `
+      <div class="apps-title">
+        <span class="apps-title-icon">🚀</span>
+        <span>Скрытые функции через ViVeTool</span>
+      </div>
+      <div class="apps-toolbar">
+        <button class="btn" id="t26-reload">🔄 Перезагрузить</button>
+        <button class="btn" id="t26-open-folder">📂 Папка твиков</button>
+      </div>
+    `;
+    host.appendChild(ch);
+
+    /* ---------- info: подробно про ViVeTool ---------- */
+    const info = document.createElement('div');
+    info.className = 'apps-detected-section';
+    info.style.background = 'color-mix(in srgb, var(--accent) 8%, var(--card))';
+    info.style.borderColor = 'color-mix(in srgb, var(--accent) 30%, transparent)';
+    info.innerHTML = `
+      <div class="section-title" style="margin-top:0">🚀 Что такое ViVeTool</div>
+      <p class="muted" style="margin:0 0 8px;font-size:12px;line-height:1.6">
+        <b>ViVeTool</b> — утилита для управления скрытыми функциями Windows
+        (механизм <b>Controlled Feature Rollout</b>). Microsoft доставляет код новых
+        функций в обычных обновлениях, но активирует их постепенно. ViVeTool
+        переопределяет это решение локально по <b>Feature ID</b> — числовому
+        идентификатору каждой функции.
+      </p>
+      <p class="muted" style="margin:0 0 8px;font-size:12px;line-height:1.6">
+        <b>Важно:</b> ViVeTool <u>не скачивает</u> недостающие компоненты.
+        Если функции физически нет в вашей сборке — команда будет
+        проигнорирована. После изменения требуется <b>перезагрузка</b>.
+      </p>
+      <div class="muted" style="font-size:11px;line-height:1.7;font-family:monospace;
+           background:color-mix(in srgb, var(--border) 40%, transparent);
+           padding:8px 10px;border-radius:6px">
+        <div>vivetool <b>/enable</b>  /id:&lt;ID&gt;   — включить функцию</div>
+        <div>vivetool <b>/disable</b> /id:&lt;ID&gt;   — выключить</div>
+        <div>vivetool <b>/query</b>   /id:&lt;ID&gt;   — проверить состояние</div>
+        <div>vivetool <b>/reset</b>   /id:&lt;ID&gt;   — сбросить ОДНУ функцию в системное</div>
+        <div>vivetool <b>/fullreset</b>           — сбросить ВСЕ ваши изменения</div>
+      </div>
+      <p class="muted" style="margin:8px 0 0;font-size:11px">
+        Минимальные сборки: <b>25H2 — 26200.9278+</b> · <b>26H2 — 26300.8493+</b>.
+        Список ID собран сообществом. Если функция не появилась после
+        включения — попробуйте кнопку <b>↩️ Отменить</b> и перезагрузитесь.
+      </p>
+    `;
+    host.appendChild(info);
+
+    /* ---------- подвкладки: 25H2 / 26H2 ---------- */
+    const srcNav = document.createElement('div');
+    srcNav.className = 'sub-tabs-nav';
+    host.appendChild(srcNav);
+
+    const body = document.createElement('div');
+    host.appendChild(body);
+
+    for (const s of VIVETOOL_SOURCES) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'sub-tab-btn' + (s.id === state2.vivetool.sourceId ? ' active' : '');
+      btn.dataset.src = s.id;
+      btn.textContent = s.label;
+      btn.title = `${s.desc} · ${s.minBuild}`;
+      btn.addEventListener('click', () => {
+        Sound.click();
+        state2.vivetool.sourceId = s.id;
+        srcNav.querySelectorAll('.sub-tab-btn').forEach(b =>
+          b.classList.toggle('active', b.dataset.src === s.id)
+        );
+        loadSource(s, false);
+      });
+      srcNav.appendChild(btn);
+    }
+
+    async function loadSource(src, force = false) {
+      if (force) delete state2.vivetool.dataCache[src.id];
+
+      let data = state2.vivetool.dataCache[src.id];
+      if (data === undefined) {
+        body.innerHTML = `<div class="tab-loading-placeholder">
+          <div class="tab-loading-spinner"></div>
+          <div class="tab-loading-text">Загрузка твиков ${escapeHtml(src.label)}…</div>
+        </div>`;
+        try {
+          data = await loadSourceData(src);
+        } catch (e) {
+          body.innerHTML = `<div class="apps-empty">Ошибка: ${escapeHtml(e.message)}</div>`;
+          return;
+        }
+        state2.vivetool.dataCache[src.id] = data;
+      }
+
+      body.innerHTML = '';
+      renderSourceContent(body, src, data);
+    }
+
+    ch.querySelector('#t26-reload').addEventListener('click', () => {
+      Sound.click();
+      const s = VIVETOOL_SOURCES.find(x => x.id === state2.vivetool.sourceId);
+      if (s) loadSource(s, true);
+    });
+
+    ch.querySelector('#t26-open-folder').addEventListener('click', () => {
+      Sound.click();
+      const s = VIVETOOL_SOURCES.find(x => x.id === state2.vivetool.sourceId);
+      if (!s) return;
+      if (window.api?.tweaks?.openFolder) window.api.tweaks.openFolder(s.baseDir);
+      else toast('Открытие папки не поддерживается', 'warning', 2500);
+    });
+
+    /* первичная загрузка */
+    const first = VIVETOOL_SOURCES.find(x => x.id === state2.vivetool.sourceId) || VIVETOOL_SOURCES[0];
+    if (first) loadSource(first);
   }
 
   /* ============================================================
@@ -514,6 +672,12 @@ export async function renderCustomization() {
     renderSourceContent(srcContent, src, data);
   }
 
+  /* ============================================================
+     Общий рендер источника.
+     Используется и «⚙️ Твики», и «🚀 Твики 26H2» — логика одна.
+     Плоский JSON { tabs: { Root: [...], отмена: [...] } }
+     → renderCheckboxGrid сам спарит твик и отмену кнопкой.
+     ============================================================ */
   function renderSourceContent(host, src, data) {
     if (!data) {
       host.innerHTML = `<div class="apps-empty" style="padding:20px">Не удалось получить твики ${escapeHtml(src.label)}</div>`;

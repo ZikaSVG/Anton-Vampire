@@ -587,7 +587,7 @@ async function cursorDownload(name) {
 
 async function extractCursorArchive(archivePath, destDir) {
   const sevenZip = path.join(rootDir, 'Utils', '7za.exe');
-  if (!fs.existsSync(sevenZip)) throw new Error('7z.exe не найден в Utils/');
+  if (!fs.existsSync(sevenZip)) throw new Error('7za.exe не найден в Utils/');
   return new Promise((resolve, reject) => {
     execFile(sevenZip, ['x', archivePath, `-o${destDir}`, '-y'], { windowsHide: true, maxBuffer: 32 * 1024 * 1024 }, (err, stdout, stderr) => {
       if (err) return reject(new Error(stderr || err.message)); resolve();

@@ -450,7 +450,7 @@ npm run build
 | Темы | `renderer/themes.js` (100+ тем) |
 | Шрифты | локальные `.woff2` |
 | Сборка | `electron-builder` → NSIS |
-| Утилиты | PowerShell · `7z.exe` · `NSudoLG.exe` · `PowerRun.exe` · `MinSudo.exe` |
+| Утилиты | PowerShell · `7za.exe` · `NSudoLG.exe` · `PowerRun.exe` · `MinSudo.exe` |
 | Данные | JSON · UTF-8 · `extreme_data/settings.json` |
 
 ---
