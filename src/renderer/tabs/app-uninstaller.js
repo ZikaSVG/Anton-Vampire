@@ -1085,7 +1085,7 @@ export async function renderAppUninstaller() {
     if (!data || force) {
       host.innerHTML = '<div class="muted" style="padding:20px">Загрузка батников…</div>';
       try {
-        const res = await window.api.tabs.readJson('tweaks/removal_tabs.json');
+        const res = await window.api.tabs.readJson('tweaks/jsons/removal_tabs.json');
         if (res && res.ok && res.data) {
           data = res.data;
           state.dataCache.removalData = data;
@@ -1189,7 +1189,7 @@ export async function renderAppUninstaller() {
     if (!data || force) {
       host.innerHTML = '<div class="muted" style="padding:20px">Загрузка твиков…</div>';
       try {
-        const res = await window.api.tabs.readJson('tweaks/apps_optimization_tabs.json');
+        const res = await window.api.tabs.readJson('tweaks/jsons/apps_optimization_tabs.json');
         if (res && res.ok && res.data) {
           data = res.data;
           state.dataCache.appsOptimizationData = data;

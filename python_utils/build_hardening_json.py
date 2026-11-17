@@ -12,11 +12,11 @@ build_hardening_json.py
     tweaks/<build_slug>_<section_slug>_tabs.json
 
 Примеры:
-    tweaks/Безопасность/HardeningKitty/  → tweaks/hardening_kitty_security_tabs.json
-    tweaks/Удобство/HardeningKitty/      → tweaks/hardening_kitty_comfort_tabs.json
-    tweaks/Приватность/AtlasOS/          → tweaks/atlas_os_privacy_tabs.json
-    tweaks/Приватность/XOS-Tweaks/       → tweaks/x_os_privacy_tabs.json
-    tweaks/Приватность/VampireOS/        → tweaks/vampire_os_privacy_tabs.json
+    tweaks/Безопасность/HardeningKitty/  → tweaks/jsons/hardening_kitty_security_tabs.json
+    tweaks/Удобство/HardeningKitty/      → tweaks/jsons/hardening_kitty_comfort_tabs.json
+    tweaks/Приватность/AtlasOS/          → tweaks/jsons/atlas_os_privacy_tabs.json
+    tweaks/Приватность/XOS-Tweaks/       → tweaks/jsons/x_os_privacy_tabs.json
+    tweaks/Приватность/VampireOS/        → tweaks/jsons/vampire_os_privacy_tabs.json
 
 Формат JSON — определяется структурой папки сборки:
   • Файлы лежат ПРЯМО в <Сборка>/ (без подпапок-категорий) → ПЛОСКИЙ:

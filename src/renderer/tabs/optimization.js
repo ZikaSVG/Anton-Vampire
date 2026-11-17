@@ -8,15 +8,15 @@ import { loggedRunStream } from '../logger.js';
    ============================================================ */
 const SOURCES = [
   { id: 'standard', label: '📦 Стандартные', desc: 'Встроенные твики оптимизации', kind: 'standard' },
-  { id: 'xos',      label: '🟢 XOS-Tweaks',      kind: 'extra', json: 'tweaks/x_os_tabs.json',      baseDir: 'tweaks/Оптимизация/XOS-Tweaks' },
-  { id: 'immortal', label: '💀 ImmortalOS-Tweaks', kind: 'extra', json: 'tweaks/immortal_os_tabs.json', baseDir: 'tweaks/Оптимизация/ImmortalOS-Tweaks' },
-  { id: 'marty',    label: '🎯 MartyFiles-Tweaks', kind: 'extra', json: 'tweaks/marty_files_tabs.json', baseDir: 'tweaks/Оптимизация/MartyFiles' },
-  { id: 'synergy',  label: '🔷 SynergyOS-Tweaks',  kind: 'extra', json: 'tweaks/synergy_os_tabs.json',  baseDir: 'tweaks/Оптимизация/SynergyOS-Tweaks' },
-  { id: 'systemx',  label: '🟣 SystemX-Tweaks',    kind: 'extra', json: 'tweaks/system_x_tabs.json',    baseDir: 'tweaks/Оптимизация/SystemX' },
-  { id: 'atlas',    label: '🔴 AtlasOS-Tweaks',    kind: 'extra', json: 'tweaks/atlas_os_tabs.json',    baseDir: 'tweaks/Оптимизация/AtlasOS' },
-  { id: 'rapid',    label: '🔴 RapidOS-Tweaks',    kind: 'extra', json: 'tweaks/rapid_os_tabs.json',    baseDir: 'tweaks/Оптимизация/RapidOS' },
-  { id: 'revi',     label: '🔴 ReviOS-Tweaks',     kind: 'extra', json: 'tweaks/revi_os_tabs.json',     baseDir: 'tweaks/Оптимизация/ReviOS' },
-  { id: 'vain',     label: '👑 VainOS-Tweaks',     kind: 'extra', json: 'tweaks/vain_os_tabs.json',     baseDir: 'tweaks/Оптимизация/VainOS-Tweaks' }
+  { id: 'xos',      label: '🟢 XOS-Tweaks',      kind: 'extra', json: 'tweaks/jsons/x_os_tabs.json',      baseDir: 'tweaks/Оптимизация/XOS-Tweaks' },
+  { id: 'immortal', label: '💀 ImmortalOS-Tweaks', kind: 'extra', json: 'tweaks/jsons/immortal_os_tabs.json', baseDir: 'tweaks/Оптимизация/ImmortalOS-Tweaks' },
+  { id: 'marty',    label: '🎯 MartyFiles-Tweaks', kind: 'extra', json: 'tweaks/jsons/marty_files_tabs.json', baseDir: 'tweaks/Оптимизация/MartyFiles' },
+  { id: 'synergy',  label: '🔷 SynergyOS-Tweaks',  kind: 'extra', json: 'tweaks/jsons/synergy_os_tabs.json',  baseDir: 'tweaks/Оптимизация/SynergyOS-Tweaks' },
+  { id: 'systemx',  label: '🟣 SystemX-Tweaks',    kind: 'extra', json: 'tweaks/jsons/system_x_tabs.json',    baseDir: 'tweaks/Оптимизация/SystemX' },
+  { id: 'atlas',    label: '🔴 AtlasOS-Tweaks',    kind: 'extra', json: 'tweaks/jsons/atlas_os_tabs.json',    baseDir: 'tweaks/Оптимизация/AtlasOS' },
+  { id: 'rapid',    label: '🔴 RapidOS-Tweaks',    kind: 'extra', json: 'tweaks/jsons/rapid_os_tabs.json',    baseDir: 'tweaks/Оптимизация/RapidOS' },
+  { id: 'revi',     label: '🔴 ReviOS-Tweaks',     kind: 'extra', json: 'tweaks/jsons/revi_os_tabs.json',     baseDir: 'tweaks/Оптимизация/ReviOS' },
+  { id: 'vain',     label: '👑 VainOS-Tweaks',     kind: 'extra', json: 'tweaks/jsons/vain_os_tabs.json',     baseDir: 'tweaks/Оптимизация/VainOS-Tweaks' }
 ];
 
 /* ─── Vendor-секции: NVIDIA / AMD / Intel / DirectX / OpenGL ─── */
@@ -261,7 +261,7 @@ function buildPairMap(rootFiles, cancelFiles) {
 async function loadDriversData() {
   if (optimState.driversData) return optimState.driversData;
   try {
-    const res = await window.api.tabs.readJson('tweaks/drivers_tabs.json');
+    const res = await window.api.tabs.readJson('tweaks/jsons/drivers_tabs.json');
     if (res && res.ok && res.data) {
       optimState.driversData = res.data;
       return res.data;
@@ -411,7 +411,7 @@ function renderStandardSource(host, { tabs, driversData }) {
     const msg = document.createElement('p');
     msg.className = 'muted';
     msg.style.padding = '20px';
-    msg.textContent = 'Нет данных. Запустите build_drivers_json.py, чтобы создать tweaks/drivers_tabs.json.';
+    msg.textContent = 'Нет данных. Запустите build_drivers_json.py, чтобы создать tweaks/jsons/drivers_tabs.json.';
     host.appendChild(msg);
     return;
   }

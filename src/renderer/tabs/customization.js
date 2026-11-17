@@ -55,49 +55,49 @@ const CUSTOMIZATION_SOURCES = [
     id: 'xos',
     label: '🟢 XOS-Tweaks',
     desc: 'Твики кастомизации XOS',
-    json: 'tweaks/x_os_customization_tabs.json',
+    json: 'tweaks/jsons/x_os_customization_tabs.json',
     baseDir: 'tweaks/Кастомизация/XOS-Tweaks'
   },
   {
     id: 'marty',
     label: '🎯 MartyFiles-Tweaks',
     desc: 'Твики кастомизации MartyFiles',
-    json: 'tweaks/marty_files_customization_tabs.json',
+    json: 'tweaks/jsons/marty_files_customization_tabs.json',
     baseDir: 'tweaks/Кастомизация/MartyFiles'
   },
   {
     id: 'synergy',
     label: '🔷 SynergyOS-Tweaks',
     desc: 'Твики кастомизации SynergyOS',
-    json: 'tweaks/synergy_os_customization_tabs.json',
+    json: 'tweaks/jsons/synergy_os_customization_tabs.json',
     baseDir: 'tweaks/Кастомизация/SynergyOS-Tweaks'
   },
   {
     id: 'vain',
     label: '👑 VainOS-Tweaks',
     desc: 'Твики кастомизации VainOS',
-    json: 'tweaks/vain_os_customization_tabs.json',
+    json: 'tweaks/jsons/vain_os_customization_tabs.json',
     baseDir: 'tweaks/Кастомизация/VainOS-Tweaks'
   },
   {
     id: 'atlas',
     label: '🔴 AtlasOS-Tweaks',
     desc: 'Твики кастомизации AtlasOS',
-    json: 'tweaks/atlas_os_customization_tabs.json',
+    json: 'tweaks/jsons/atlas_os_customization_tabs.json',
     baseDir: 'tweaks/Кастомизация/AtlasOS-Tweaks'
   },
   {
     id: 'rapid',
     label: '🔴 RapidOS-Tweaks',
     desc: 'Твики кастомизации RapidOS',
-    json: 'tweaks/rapid_os_customization_tabs.json',
+    json: 'tweaks/jsons/rapid_os_customization_tabs.json',
     baseDir: 'tweaks/Кастомизация/RapidOS-Tweaks'
   },
   {
     id: 'revi',
     label: '🔴 ReviOS-Tweaks',
     desc: 'Твики кастомизации ReviOS',
-    json: 'tweaks/revi_os_customization_tabs.json',
+    json: 'tweaks/jsons/revi_os_customization_tabs.json',
     baseDir: 'tweaks/Кастомизация/ReviOS-Tweaks'
   }
 ];

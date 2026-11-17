@@ -41,8 +41,8 @@
 #     }
 
 # Куда пишутся файлы:
-#     tweaks/x_os_power_tabs.json       — новый файл
-#     tweaks/x_os_power_tabs_2026-10-16_08-46_backup.json  — старый (если был)
+#     tweaks/jsons/x_os_power_tabs.json       — новый файл
+#     tweaks/jsons/x_os_power_tabs_2026-10-16_08-46_backup.json  — старый (если был)
 
 # Бэкапы:
 #     Перед перезаписью существующий файл копируется в tweaks/_backups/

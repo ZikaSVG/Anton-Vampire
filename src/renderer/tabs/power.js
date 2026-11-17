@@ -190,14 +190,14 @@ async function loadPowerTable() {
 const POWER_SOURCES = [
   { id: '__powerkiller__', label: '💀 Power Killer', desc: 'Твики + VampireOS + Blood Energy', _isPowerKiller: true },
   { id: '__standard__', label: '📦 Стандартные', desc: 'Таблица планов + встроенные твики', _isStandard: true },
-  { id: 'xos', label: '🟢 XOS-Tweaks', json: 'tweaks/x_os_power_tabs.json', baseDir: 'tweaks/Электропитание/XOS-Tweaks' },
-  { id: 'xos_legacy', label: '🟢 xOS (расш.)', json: 'tweaks/x_os_legacy_power_tabs.json', baseDir: 'tweaks/Электропитание/xOS' },
-  { id: 'immortal', label: '💀 ImmortalOS', json: 'tweaks/immortal_os_power_tabs.json', baseDir: 'tweaks/Электропитание/ImmortalOS-Tweaks' },
-  { id: 'systemx', label: '🟣 SystemX', json: 'tweaks/system_x_power_tabs.json', baseDir: 'tweaks/Электропитание/SystemX' },
-  { id: 'igromanoff', label: '🎩 Igromanoff', json: 'tweaks/igromanoff_power_tabs.json', baseDir: 'tweaks/Электропитание/Igromanoff' },
-  { id: 'vain', label: '👑 VainOS', json: 'tweaks/vain_os_power_tabs.json', baseDir: 'tweaks/Электропитание/VainOS-Tweaks' },
-  { id: 'synergy', label: '🔷 SynergyOS', json: 'tweaks/synergy_os_power_tabs.json', baseDir: 'tweaks/Электропитание/SynergyOS-Tweaks' },
-  { id: 'other', label: '📁 Другое', json: 'tweaks/drugoe_power_tabs.json', baseDir: 'tweaks/Электропитание/Другое' }
+  { id: 'xos', label: '🟢 XOS-Tweaks', json: 'tweaks/jsons/x_os_power_tabs.json', baseDir: 'tweaks/Электропитание/XOS-Tweaks' },
+  { id: 'xos_legacy', label: '🟢 xOS (расш.)', json: 'tweaks/jsons/x_os_legacy_power_tabs.json', baseDir: 'tweaks/Электропитание/xOS' },
+  { id: 'immortal', label: '💀 ImmortalOS', json: 'tweaks/jsons/immortal_os_power_tabs.json', baseDir: 'tweaks/Электропитание/ImmortalOS-Tweaks' },
+  { id: 'systemx', label: '🟣 SystemX', json: 'tweaks/jsons/system_x_power_tabs.json', baseDir: 'tweaks/Электропитание/SystemX' },
+  { id: 'igromanoff', label: '🎩 Igromanoff', json: 'tweaks/jsons/igromanoff_power_tabs.json', baseDir: 'tweaks/Электропитание/Igromanoff' },
+  { id: 'vain', label: '👑 VainOS', json: 'tweaks/jsons/vain_os_power_tabs.json', baseDir: 'tweaks/Электропитание/VainOS-Tweaks' },
+  { id: 'synergy', label: '🔷 SynergyOS', json: 'tweaks/jsons/synergy_os_power_tabs.json', baseDir: 'tweaks/Электропитание/SynergyOS-Tweaks' },
+  { id: 'other', label: '📁 Другое', json: 'tweaks/jsons/drugoe_power_tabs.json', baseDir: 'tweaks/Электропитание/Другое' }
 ];
 
 // ============================================================

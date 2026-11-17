@@ -3,7 +3,7 @@
 """
 build_apps_json.py
 
-Сканирует tweaks/Оптимизация/Apps/ и генерирует tweaks/apps_optimization_tabs.json.
+Сканирует tweaks/Оптимизация/Apps/ и генерирует tweaks/jsons/apps_optimization_tabs.json.
 
 Структура JSON (рекурсивная, как drivers_tabs.json):
 {

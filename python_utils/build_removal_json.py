@@ -3,7 +3,7 @@
 """
 build_removal_json.py
 
-Сканирует tweaks/Удаление/ и генерирует tweaks/removal_tabs.json.
+Сканирует tweaks/Удаление/ и генерирует tweaks/jsons/removal_tabs.json.
 
 Структура JSON:
 {

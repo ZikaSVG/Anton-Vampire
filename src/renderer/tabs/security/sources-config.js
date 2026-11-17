@@ -15,7 +15,7 @@
       id: 'hardening',
       label: '🛡 HardeningKitty',
       desc: 'Базовый набор твиков безопасности Windows',
-      json: 'tweaks/hardening_kitty_security_tabs.json',
+      json: 'tweaks/jsons/hardening_kitty_security_tabs.json',
       baseDir: 'tweaks/Безопасность/HardeningKitty',
       flatCategories: true
     }
@@ -30,7 +30,7 @@
       id: 'xos',
       label: '🟢 XOS-Tweaks',
       desc: 'Приватность XOS',
-      json: 'tweaks/x_os_privacy_tabs.json',
+      json: 'tweaks/jsons/x_os_privacy_tabs.json',
       baseDir: 'tweaks/Приватность/XOS-Tweaks',
       flatCategories: true
     },
@@ -38,7 +38,7 @@
       id: 'extreme',
       label: '🩸 VampireOS',
       desc: 'Приватность VampireOS',
-      json: 'tweaks/extreme_os_privacy_tabs.json',
+      json: 'tweaks/jsons/extreme_os_privacy_tabs.json',
       baseDir: 'tweaks/Приватность/VampireOS',
       flatCategories: true
     },
@@ -46,7 +46,7 @@
       id: 'synergy',
       label: '🔷 SynergyOS-Tweaks',
       desc: 'Приватность SynergyOS',
-      json: 'tweaks/synergy_os_privacy_tabs.json',
+      json: 'tweaks/jsons/synergy_os_privacy_tabs.json',
       baseDir: 'tweaks/Приватность/SynergyOS-Tweaks',
       flatCategories: true
     },
@@ -54,7 +54,7 @@
       id: 'vain',
       label: '👑 VainOS-Tweaks',
       desc: 'Приватность VainOS',
-      json: 'tweaks/vain_os_privacy_tabs.json',
+      json: 'tweaks/jsons/vain_os_privacy_tabs.json',
       baseDir: 'tweaks/Приватность/VainOS-Tweaks',
       flatCategories: true
     },
@@ -62,7 +62,7 @@
       id: 'immortal',
       label: '💀 ImmortalOS-Tweaks',
       desc: 'Приватность ImmortalOS',
-      json: 'tweaks/immortal_os_privacy_tabs.json',
+      json: 'tweaks/jsons/immortal_os_privacy_tabs.json',
       baseDir: 'tweaks/Приватность/ImmortalOS-Tweaks',
       flatCategories: true
     }
@@ -77,7 +77,7 @@
       id: 'hardening',
       label: '🛋 HardeningKitty',
       desc: 'Базовый набор твиков удобства (отключение защит)',
-      json: 'tweaks/hardening_kitty_comfort_tabs.json',
+      json: 'tweaks/jsons/hardening_kitty_comfort_tabs.json',
       baseDir: 'tweaks/Удобство/HardeningKitty',
       flatCategories: true
     },
@@ -85,7 +85,7 @@
       id: 'xos',
       label: '🟢 XOS-Tweaks',
       desc: 'Удобство XOS',
-      json: 'tweaks/x_os_comfort_tabs.json',
+      json: 'tweaks/jsons/x_os_comfort_tabs.json',
       baseDir: 'tweaks/Удобство/XOS-Tweaks',
       flatCategories: true
     },
@@ -93,7 +93,7 @@
       id: 'synergy',
       label: '🔷 SynergyOS-Tweaks',
       desc: 'Удобство SynergyOS',
-      json: 'tweaks/synergy_os_comfort_tabs.json',
+      json: 'tweaks/jsons/synergy_os_comfort_tabs.json',
       baseDir: 'tweaks/Удобство/SynergyOS-Tweaks',
       flatCategories: true
     },
@@ -101,7 +101,7 @@
       id: 'vain',
       label: '👑 VainOS-Tweaks',
       desc: 'Удобство VainOS',
-      json: 'tweaks/vain_os_comfort_tabs.json',
+      json: 'tweaks/jsons/vain_os_comfort_tabs.json',
       baseDir: 'tweaks/Удобство/VainOS-Tweaks',
       flatCategories: true
     },
@@ -109,7 +109,7 @@
       id: 'immortal',
       label: '💀 ImmortalOS-Tweaks',
       desc: 'Удобство ImmortalOS',
-      json: 'tweaks/immortal_os_comfort_tabs.json',
+      json: 'tweaks/jsons/immortal_os_comfort_tabs.json',
       baseDir: 'tweaks/Удобство/ImmortalOS-Tweaks',
       flatCategories: true
     }

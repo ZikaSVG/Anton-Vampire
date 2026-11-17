@@ -38,7 +38,7 @@ export async function renderSettings() {
     { id: 'appearance', label: '🎨 Внешний вид' },
     { id: 'fonts',      label: '🔤 Шрифты' },
     { id: 'interface',  label: '🖥 Интерфейс' },
-    { id: 'tools',      label: '🛠 Утилиты' },
+    // { id: 'tools',      label: '🛠 Утилиты' },
     { id: 'wallpapers', label: '🖼 Обои' },
     { id: 'about',      label: 'ℹ О программе' }
   ];

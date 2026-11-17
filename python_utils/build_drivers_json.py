@@ -3,7 +3,7 @@
 """
 build_drivers_json.py
 
-Сканирует tweaks/Драйверы/ и генерирует tweaks/drivers_tabs.json.
+Сканирует tweaks/Драйверы/ и генерирует tweaks/jsons/drivers_tabs.json.
 
 Структура JSON — каждый узел:
   {
