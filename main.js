@@ -1340,7 +1340,7 @@ $result | ConvertTo-Json -Compress -Depth 4
   ipcMain.handle('background:clear', () => { try { const bgDir = path.join(config.dir, 'backgrounds'); if (fs.existsSync(bgDir)) { for (const f of fs.readdirSync(bgDir)) fs.unlinkSync(path.join(bgDir, f)); } return true; } catch { return false; } });
   ipcMain.handle('background:get', () => { try { const bgDir = path.join(config.dir, 'backgrounds'); if (!fs.existsSync(bgDir)) return null; const files = fs.readdirSync(bgDir); return files.length ? path.join(bgDir, files[0]) : null; } catch { return null; } });
   ipcMain.handle('background:default', () => {
-    const tryPaths = [path.join(rootDir, 'assets', 'background.png'), path.join(app.getAppPath(), 'assets', 'background.png'), path.join(process.resourcesPath || '', 'assets', 'background.png'), path.join(__dirname, 'assets', 'background.png')];
+    const tryPaths = [path.join(rootDir, 'assets', 'nord_background.png'), path.join(app.getAppPath(), 'assets', 'nord_background.png'), path.join(process.resourcesPath || '', 'assets', 'nord_background.png'), path.join(__dirname, 'assets', 'nord_background.png')];
     for (const p of tryPaths) { try { if (p && fs.existsSync(p)) return p; } catch {} } return null;
   });
 
