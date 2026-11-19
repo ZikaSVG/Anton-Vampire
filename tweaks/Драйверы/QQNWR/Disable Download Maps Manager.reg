@@ -1,0 +1,9 @@
+Windows Registry Editor Version 5.00                                           
+
+;This service is started on-demand by application accessing downloaded maps.
+;Disabling this service will prevent apps from accessing maps.
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\MapsBroker]
+"Start"=dword:00000004
+
+!Reg By youtube.com/@OGTechYT!

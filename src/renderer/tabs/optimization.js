@@ -30,7 +30,7 @@ const VENDOR_SECTIONS = [
 
 /* ─── Категории твиков оптимизации (под-вкладки в разделе «Твики оптимизации») ─── */
 const TWEAK_CATEGORIES = [
-  'memory', 'sound', 'keyboard', 'mouse', 'hyperv', 'tweaks', 'network'
+  'qqnwr', 'memory', 'sound', 'keyboard', 'mouse', 'hyperv', 'tweaks', 'network'
 ];
 
 // "svchost": {

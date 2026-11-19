@@ -31,8 +31,8 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).parent
-DRIVERS_DIR = ROOT / "tweaks" / "Драйверы"
-OUTPUT_FILE = ROOT / "tweaks" / "drivers_tabs.json"
+DRIVERS_DIR = ROOT / "../tweaks" / "Драйверы"
+OUTPUT_FILE = ROOT / "../tweaks/jsons" / "drivers_tabs.json"
 
 TWEAK_EXTS = {".bat", ".cmd", ".exe", ".ps1", ".reg", ".pow"}
 
@@ -57,6 +57,7 @@ VENDOR_FOLDERS = [
     ("intel",    "Оптимизация Intel",   "Intel",           "#0071c5", "intel"),
     ("directx",  "DirectX",             "DirectX",         "#4a9eff", "directx"),
     ("opengl",   "DirectX",             "OpenGL",          "#ffbd05", "opengl"),
+    ("qqnwr",    "QQNWR",               "QQNWR",           "#5c2d91", None),
     ("memory",   "Память",              "Память",          "#c16e00", None),
     ("sound",    "Звук",                "Звук",            "#ff6b35", None),
     ("keyboard", "Клавиатура",          "Клавиатура",      "#8e7cc3", None),

@@ -1,0 +1,20 @@
+Windows Registry Editor Version 5.00
+
+;Highly RECOMMENDED TO USE THIS TWEAK ONLY ON DESKTOPS, IF YOU ARE A LAPTOP USER USING THIS TWEAK WILL DRAIN YOUR BATTERY LIFE.
+;IF YOU DON'T MIND A SHORTER BATTERY LIFE, THEN IT'S OKAY TO DISABLE.
+
+;Attributes in power settings refer to characteristics or properties that define power management behavior.
+;PowerThrottling limits the apps from draining your battery or using an excessive amount of power.
+;Hibernate saves all of your open documents and running apps while you turn off the PC and resumes everything where you left off when you wake it up.
+;By disabling these you will be able to gain more FPS. 
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Power\PowerThrottling]
+"PowerThrottlingOff"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Power]
+"HibernateEnabledDefault"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Power\PowerSettings\54533251-82be-4824-96c1-47b60b740d00\943c8cb6-6f93-4227-ad87-e9a3feec08d1]
+"Attributes"=dword:00000002
+
+!Reg By youtube.com/@OGTechYT! 

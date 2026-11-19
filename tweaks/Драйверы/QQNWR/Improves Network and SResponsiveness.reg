@@ -1,0 +1,10 @@
+Windows Registry Editor Version 5.00
+
+;Network throttling is a characteristic of packet processing and network operations, For online gaming this can result in a higher ping.
+;You can rectify that by disabling Network Throttling and System Responsiveness for pure gaming and streaming.
+ 
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile]
+"NetworkThrottlingIndex"=dword:ffffffff
+"SystemResponsiveness"=dword:00000000
+
+!Reg By youtube.com/@OGTechYT!  

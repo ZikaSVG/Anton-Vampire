@@ -30,7 +30,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).parent
-TWEAKS_DIR = ROOT / "tweaks"
+TWEAKS_DIR = ROOT / "tweaks/jsons"
 
 TWEAK_EXTS = {".bat", ".cmd", ".exe", ".ps1", ".reg", ".pow"}
 

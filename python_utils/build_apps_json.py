@@ -33,8 +33,8 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).parent
-APPS_DIR = ROOT / "tweaks" / "Оптимизация" / "Apps"
-OUTPUT_FILE = ROOT / "tweaks" / "apps_optimization_tabs.json"
+APPS_DIR = ROOT / "../tweaks" / "Оптимизация" / "Apps"
+OUTPUT_FILE = ROOT / "../tweaks/jsons" / "apps_optimization_tabs.json"
 
 TWEAK_EXTS = {".bat", ".cmd", ".exe", ".reg", ".pow", ".ps1"}
 
