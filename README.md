@@ -14,7 +14,7 @@
 ### 📥 Setup
 Установщик NSIS, ярлык в меню Пуск, автозапуск от админа.
 
-[**Скачать Setup .exe →**](https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.1/Anton.Vampire.Setup.1.2.1.exe)
+[**Скачать Setup .exe →**](https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.2/Anton.Vampire.Setup.1.2.2.exe)
 
 </td>
 <td align="center" width="50%">
@@ -22,7 +22,7 @@
 ### 📦 Portable
 Архив `.rar`, без установки, всё в `extreme_data/`.
 
-[**Скачать Portable .rar →**](https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.1/Anton.Vampire.Portable.rar)
+[**Скачать Portable .rar →**](https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.2/Anton.Vampire.Portable.rar)
 
 </td>
 </tr>
@@ -38,12 +38,12 @@
 
 <p align="center">
   <a href="web/screenshot.jpg">
-    <img src="web/screenshot.jpg" alt="Anton Vampire v1.2.1 — главный экран" width="90%" style="border-radius: 8px;" />
+    <img src="web/screenshot.jpg" alt="Anton Vampire v1.2.2 — главный экран" width="90%" style="border-radius: 8px;" />
   </a>
 </p>
 
-Внутри — **1000+ твиков**, сгруппированных по 13 вкладкам, **100+ тем**
-(включая игровые, Catppuccin, Dark Reader, Cyberpunk),
+Внутри — **1200+ твиков**, сгруппированных по 13 вкладкам, **100+ тем**
+(включая игровые, Catppuccin, Nord, Cyberpunk),
 аудит безопасности, управление автозагрузкой, службами, курсорами, обои
 и портативный режим.
 
@@ -52,42 +52,28 @@
 
 ---
 
-## ✨ Новое в 1.2.1
+## ✨ Новое в 1.2.2
 
 ### 🎨 Визуальные изменения
-В версии **1.2.1** обновлены обои и добавлена новая тема, а также **11 новых твиков** в VampireOS.
-*(Напомним, что глобальный редизайн с новым логотипом и сменой темы по умолчанию на `vampire_the_masquerade` произошёл ещё в **1.2.0-beta**).*
+*   **Обои (1.2.2):**
+    *   *Главный экран:* Обновлён на высококонтрастный арт в стиле "Winter Gothic" — аниме-вампирша с черными крыльями и цепями на фоне багровой луны и готического замка. Палитра смещена в холодные, серебристо-стальные тона с акцентами глубокого синего и ледяного голубого (в духе темы `winter_sorceress`).
+    *   *Раздел VampireOS:* Динамичный арт с летучими мышами и крупной надписью «VAMPIRE OS», выполненный в той же холодной, монохромной гамме.
+*   **Тема по умолчанию (1.2.2):** Возвращена классическая **`catppuccin_mocha`** (мягкий пастельный фиолетовый на тёмном фоне). Тема `vampire_os` осталась в списке доступных.
+*   **Новые темы (1.2.2):** Добавлена категория зимних/северных тем в стиле Nord и Catppuccin: `winter_sorceress`, `ice_witch`, `neon_dreams`, `gothic_castle`, `astral_moon`, `silent_hollow`.
 
-*   **Обои (1.2.1):**
-    *   *Было:* Темные, приглушенные тона.
-    *   *Стало:* Высококонтрастные арты. На главном экране — аниме-вампирша с черными крыльями на фоне багровой луны и готического замка. В разделе VampireOS — динамичный арт с цепями, летучими мышами и крупной надписью «VAMPIRE OS».
-*   **Новая тема `vampire_os` (1.2.1):** Черный фон с ярко-красным акцентом (`#ff0022`).
-*   **Логотип (1.2.0-beta):** Круглый готический бейдж с аниме-вампиршей, пиксель-артом (череп, дискета) и неоново-розовой палитрой.
-*   **Тема по умолчанию (1.2.0-beta):** Заменена `catppuccin_mocha` на `vampire_the_masquerade`.
-*   **CSS-стиль по умолчанию (1.2.0-beta):** `materialmini`.
+### 🚀 Новые твики и функции
+*   **Твики QQNWR (120+ скриптов):** Добавлена огромная база твиков для тонкой настройки системы, включая отключение телеметрии, оптимизацию памяти, BCD-твики и повышение FPS.
+*   **Твики для мыши (9 скриптов):** Добавлена категория «Мышка» (`mouse`) с оптимизацией опроса (до 8000 Гц), исправлением ускорения и настройкой отклика.
+*   **Вкладка «Кастомизация» — ViVeTool:** Добавлена поддержка управления скрытыми функциями Windows 11 (25H2 и 26H2) через утилиту ViVeTool прямо из интерфейса.
 
-### 🔔 11 новых твиков в VampireOS
-Добавлена новая категория «Уведомления, обновления, фон», объединяющая 11 отдельных BAT-твиков:
-- 🕒 **Центр уведомлений и WpnService** → полностью отключён: тосты, звуки, облачные уведомления; службы остановлены и disabled. *(Побочка: не приходят ЛЮБЫЕ уведомления, живые плитки не обновляются)*
-- 🔄 **Уведомления Windows Update** → скрыты: иконка в трее, баннеры, кнопка перезагрузки по умолчанию. *(Сам WU при этом НЕ отключается)*
-- 🛡️ **Smart App Control** → отключён (`VerifiedAndReputablePolicyState=0`). Позволяет запускать самописные утилиты без подписи MS. *(⚠️ Необратимо без переустановки Windows)*
-- 🔍 **Windows Search Indexing** → служба `WSearch` остановлена. Индексатор не жрёт CPU/диск в фоне. *(Побочка: поиск только по именам файлов)*
-- 🎮 **Xbox Game Bar** → отключён: Game DVR, оверлей, Win+G, фоновая запись. Убирает конфликты с OBS/Afterburner, дает +1–5% FPS.
-- 📦 **Автообновление Store** → отключено: приложения обновляются только вручную.
-- 🔁 **Авто-перезагрузка после обновлений** → запрещена: Windows не ребутится посреди игры/рендера.
-- 📥 **Автоустановка DevHome и Outlook** → заблокирована: Win 11 22H2+ больше не доставляет их без спроса.
-- 🧠 **Пейджинг ядра и объединение страниц** → отключены: ядро и драйверы всегда в RAM. Лучше отклик на 16+ ГБ RAM. *(⚠️ На 8 ГБ может стать хуже)*
-- 📊 **Телеметрия MSRT** → отключена: MSRT не отправляет данные о найденных угрозах в Microsoft.
-- 📵 **Фоновые UWP-приложения** → глобально отключены: Store, Почта, Xbox и др. не просыпаются в фоне. *(Побочка: уведомления UWP и синхронизация не работают)*
+---
 
-### 📖 Остальные изменения (из 1.2.0-beta)
-- 📖 **Полная техническая документация по кастомным планам VampireOS.** Каждый шаг `powercfg` разобран: логика скрипта, назначение каждого GUID, эффект каждой команды, риски и рекомендации.
-- 🧩 **Кнопка «📖 Как это работает»** в master-detail планов VampireOS — открывает модальное окно с разбором `powercfg` для выбранного плана.
-- 📋 **Справочные таблицы GUID.** `SUB_PROCESSOR`, `SUB_VIDEO`, `SUB_DISK`, `SUB_USB` — теперь с псевдонимами, диапазонами и назначением.
-- 🔍 **Пояснение AC/DC-логики.** Явно показано, что `/setacvalueindex` применяется от сети, `/setdcvalueindex` — от батареи, и как это влияет на десктопы и ноутбуки.
-- 🧩 **Разделение «безопасных» и «агрессивных» твиков.** `Balanced/Maximum/Power Saving` помечены как безопасные, `Energetic Death/Power Killer` — как экстремальные.
-- 🛡️ **Blood Energy: пояснение разделителей.** `CommandFlags = 32` создаёт разделитель в контекстном меню, а не отдельный пункт.
-- 🩹 **Исправлена опечатка** в `PK_Activate_InputLag.bat` — параметр `bc5038f7` приведён в соответствие с таблицей плана.
+## ⚡ ViVeTool (25H2 / 26H2)
+В разделе **Кастомизация** появилась новая вкладка **«🚀 ViVeTool»**. Она позволяет включать скрытые функции Windows, которые ещё не активированы Microsoft.
+
+*   **Две версии:** Отдельные списки твиков для Windows 11 **25H2** (сборка 26200.9278+) и **26H2** (сборка 26300.8493+).
+*   **Управление:** Кнопки «Включить» (enable) и «Отменить» (disable) генерируют и запускают BAT-файлы с командами `/id:`.
+*   **Встроенная справка:** В интерфейсе расписано, что такое Controlled Feature Rollout и как работают команды `enable`, `disable`, `query`, `reset` и `fullreset`.
 
 ---
 
@@ -298,14 +284,14 @@
 | 1 | 🏠 **Главная** | Приветствие, polling CPU/GPU/RAM/диск |
 | 2 | 🛡️ **Безопасность** | 3 аудита (21+14+13), Firewall, NetMon, HTML-отчёты |
 | 3 | 🚀 **Автозагрузка** | Папки, реестр, задачи, службы + категоризация |
-| 4 | ⚡ **Оптимизация** | 7 источников + вендор-панель |
+| 4 | ⚡ **Оптимизация** | 8 источников + вендор-панель (вкл. QQNWR) |
 | 5 | 🧹 **Очистка** | 12 секций: шейдеры, логи, кэши, Temp |
 | 6 | ⚜️ **Исправления** | DISM, SFC, CHKDSK, сеть, устройства, игры |
 | 7 | 🎮 **Игровой режим** | Планы (14), Power Killer (6), службы (200+) |
 | 8 | 🧛 **Вампир** | VampireOS: 14 категорий (вкл. новые), Power Max / Power Save |
 | 9 | 🔋 **Электропитание** | Power Killer + таблица планов + 100+ источников + разбор powercfg |
 | 10 | ⚙️ **Службы** | Таблица: поиск, статусы, бэкап `.reg` |
-| 11 | 🎨 **Кастомизация** | Курсоры с превью + 4 источника + новые обои |
+| 11 | 🎨 **Кастомизация** | Курсоры + 7 источников + **ViVeTool 25H2/26H2** + новые обои |
 | 12 | 📦 **Приложения** | Appx, Defender/Edge/OneDrive/WebView2 |
 | 13 | ⚙️ **Настройки** | 6 под-вкладок |
 
@@ -313,7 +299,7 @@
 - **7 режимов запуска твиков**: `default` · `no_launcher` · `launcher` · `powerrun` · `nsudolg` · `minsudo` · `cmd`
 - **Патчинг `.bat`**: вырезает `pause`/`timeout`/`choice`, превращает `start` → `start /b ""`
 - **Стрим вывода** UTF-8 → cp866 fallback
-- **Пары «твик ↔ отмена»** с кнопкой ↩
+- **Пары «твик ↔ отмена»** с кнопкой ↩ (включая ViVeTool)
 - **Portable mode**: всё в `extreme_data/`
 - **Безопасный бэкап служб**: `.reg` + fallback `Start=3`
 - **Проверка дубликатов** при импорте планов
@@ -332,7 +318,7 @@
 | 🧠 **Система и ядро** | Win32PrioritySeparation=38, Memory Compression off, MSI mode, BCD |
 | 🌐 **Сеть** | DefaultTTL=65, TCPNoDelay=1, Wi-Fi Sense off |
 | 🖥️ **Проводник** | Классическое контекстное меню, MenuShowDelay=0 |
-| 🖱️ **Мышь** | MouseSpeed=0, автозамена off |
+| 🖱️ **Мышь** | MouseSpeed=0, автозамена off (обновлено в 1.2.2) |
 | 🖨️ **Службы** | Spooler, Fax, DPS, WerSvc off |
 | 📜 **Журналы** | AutoBackupLogFiles off, очистка через `wevtutil` |
 | 🧹 **Прочее** | ReserveManager, Storage Sense, GameDVR, FSO off |
@@ -408,7 +394,7 @@
 ### 📥 Setup
 Установщик NSIS, ярлык в меню Пуск, автозапуск от админа.
 
-[**Скачать Setup .exe →**](https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.1/Anton.Vampire.Setup.1.2.1.exe)
+[**Скачать Setup .exe →**](https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.2/Anton.Vampire.Setup.1.2.2.exe)
 
 </td>
 <td align="center" width="50%">
@@ -416,7 +402,7 @@
 ### 📦 Portable
 Архив `.rar`, без установки, всё в `extreme_data/`.
 
-[**Скачать Portable .rar →**](https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.1/Anton.Vampire.Portable.rar)
+[**Скачать Portable .rar →**](https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.2/Anton.Vampire.Portable.rar)
 
 </td>
 </tr>
@@ -425,7 +411,7 @@
 ### Установка одной командой
 
 ```cmd
-curl -g -k -L -# -o "%temp%\AntonVampire.Setup.exe" "https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.1/Anton.Vampire.Setup.1.2.1.exe" && start "" "%temp%\AntonVampire.Setup.exe"
+curl -g -k -L -# -o "%temp%\AntonVampire.Setup.exe" "https://github.com/ZikaSVG/Anton-Vampire/releases/download/v1.2.2/Anton.Vampire.Setup.1.2.2.exe" && start "" "%temp%\AntonVampire.Setup.exe"
 ```
 
 ### Из исходников
@@ -450,7 +436,7 @@ npm run build
 | Темы | `renderer/themes.js` (100+ тем) |
 | Шрифты | локальные `.woff2` |
 | Сборка | `electron-builder` → NSIS |
-| Утилиты | PowerShell · `7za.exe` · `NSudoLG.exe` · `PowerRun.exe` · `MinSudo.exe` |
+| Утилиты | PowerShell · `7za.exe` · `NSudoLG.exe` · `PowerRun.exe` · `MinSudo.exe` · `ViVeTool.exe` |
 | Данные | JSON · UTF-8 · `extreme_data/settings.json` |
 
 ---
@@ -491,6 +477,7 @@ Anton-Vampire/
 ├── tweaks/
 ├── assets/
 ├── Utils/
+│   └── ViVeTool/
 ├── extreme_data/
 ├── LICENSE
 └── README.md
@@ -505,7 +492,7 @@ Anton-Vampire/
 ```json
 {
   "General": {
-    "theme": "vampire_the_masquerade",
+    "theme": "catppuccin_mocha",
     "ui_style": "materialmini",
     "visual_effect": "glass",
     "font_heading_latin": "Silkscreen",
@@ -586,6 +573,7 @@ extreme_data/
 | `build_drivers_json.py` | `drivers_tabs.json` |
 | `build_removal_json.py` | `removal_tabs.json` |
 | `audit_tweaks.py` | Проверка целостности |
+| `make_vivetool_tweaks.py` | Генератор батников и JSON для ViVeTool |
 
 ---
 
@@ -598,7 +586,7 @@ extreme_data/
 ### Антивирус ругается
 - Нет цифровой подписи
 - Меняет реестр / службы
-- Использует `NSudoLG.exe`, `PowerRun.exe`, `MinSudo.exe`
+- Использует `NSudoLG.exe`, `PowerRun.exe`, `MinSudo.exe`, `ViVeTool.exe`
 
 → Добавьте папку в исключения.
 
@@ -622,6 +610,9 @@ extreme_data/
 - Проверьте `.cur` / `.ani` в архиве
 - Папка `C:\Windows\Cursors\<name>\`
 - «🗑️ Удалить все» для сброса
+
+### ViVeTool не находит `ViVeTool.exe`
+Батники автоматически ищут утилиту вверх по дереву (до 5 уровней). Убедитесь, что `Utils\ViVeTool\ViVeTool.exe` лежит в корне приложения.
 
 ---
 
@@ -664,6 +655,8 @@ extreme_data/
 |---|---|
 | Papirus icons | GPL-3.0 / LGPL-3.0 / CC-BY-SA-4.0 |
 | XOS / SOS / IMOS tweaks | Лицензии авторов |
+| QQNWR tweaks | Лицензия автора |
+| ViVeTool | MIT |
 | Utils/ | Собственные лицензии |
 
 ---
@@ -671,10 +664,11 @@ extreme_data/
 ## ❤️ Благодарности
 
 - **[Papirus](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme)** — иконки
-- **XOS / SapphireOS / ImmortalOS / SystemX / Igromanoff / VainOS / SynergyOS / MartyFiles / scode18** — твики
+- **XOS / SapphireOS / ImmortalOS / SystemX / Igromanoff / VainOS / SynergyOS / MartyFiles / scode18 / QQNWR** — твики
 - **[7-Zip](https://www.7-zip.org/)**
 - **[NSudo](https://github.com/M2Team/NSudo)**
 - **[PowerRun](https://www.sordum.org/9416/powerrun-v1-7-run-with-the-highest-privileges/)**
+- **[ViVeTool](https://github.com/thebookisclosed/ViVe)** — управление скрытыми функциями Windows
 
 ---
 
@@ -691,7 +685,7 @@ extreme_data/
 ---
 
 <p align="center">
-  <b>🩸 Anton Vampire</b> · v1.2.1 · 2026<br/>
+  <b>🩸 Anton Vampire</b> · v1.2.2 · 2026<br/>
 </p>
 
 <p align="center">
