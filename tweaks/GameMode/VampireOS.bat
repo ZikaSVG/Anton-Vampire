@@ -1381,7 +1381,7 @@ for %%F in (MicrosoftWindowsPowerShellV2 MicrosoftWindowsPowerShellV2Root MSRDC-
 rem ============================================================
 rem 9. APPX REMOVAL
 rem    НЕ УДАЛЯЕМ: Notepad, Paint, Snipping Tool / ScreenSketch /
-rem    ScreenClippingHost, Photos, Edge, Xbox, Copilot
+rem    ScreenClippingHost, Photos, Edge, Xbox, Copilot, Defender
 rem ============================================================
 echo [*] Removing Appx packages...
 powershell -NoProfile -ExecutionPolicy Bypass -Command "$ErrorActionPreference='SilentlyContinue'; $list='Microsoft.Windows.SecureAssessmentBrowser Microsoft.Windows.PeopleExperienceHost Microsoft.WindowsCamera MicrosoftWindows.Client.WebExperience Microsoft.WidgetsPlatformRuntime Microsoft.WindowsAlarms Microsoft.WindowsMaps Microsoft.MicrosoftStickyNotes microsoft.windowscommunicationsapps Microsoft.People Microsoft.BingNews Microsoft.BingSearch Microsoft.BingWeather Microsoft.MicrosoftSolitaireCollection Microsoft.WindowsFeedbackHub Microsoft.GetHelp Microsoft.Getstarted Microsoft.Todos Microsoft.PowerAutomateDesktop Microsoft.549981C3F5F10 MicrosoftCorporationII.QuickAssist MicrosoftCorporationII.MicrosoftFamily Microsoft.ZuneMusic Microsoft.ZuneVideo Microsoft.WindowsSoundRecorder Clipchamp.Clipchamp Microsoft.Whiteboard Microsoft.MicrosoftTeamsforSurfaceHub MicrosoftCorporationII.MailforSurfaceHub Microsoft.MicrosoftPowerBIForWindows Microsoft.SkypeApp Microsoft.MicrosoftOfficeHub Microsoft.Office.Excel Microsoft.Office.PowerPoint Microsoft.Office.Word Microsoft.Office.OneNote Microsoft.OutlookForWindows SpotifyAB.SpotifyMusic OutlookPWA Microsoft.Microsoft3DViewer Microsoft.Advertising MixedReality.Portal Microsoft.StartExperiencesApp Microsoft.Windows.DevHome Microsoft.GamingApp Microsoft.Edge.GameAssist Microsoft.YourPhone MicrosoftWindows.CrossDevice'.Split(' '); foreach($n in $list){ Get-AppxPackage -AllUsers -Name $n | ForEach-Object { $d='HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\'+$_.PackageFamilyName; if(!(Test-Path $d)){New-Item -Path $d -Force|Out-Null}; Remove-AppxPackage -Package $_.PackageFullName -AllUsers -ErrorAction SilentlyContinue }; Get-AppxProvisionedPackage -Online | Where-Object {$_.DisplayName -like ($n+'*')} | Remove-AppxProvisionedPackage -Online -ErrorAction SilentlyContinue }" >nul 2>&1
@@ -1443,96 +1443,6 @@ if not errorlevel 1 (
     reg add "HKU\DefaultHiveOD\SOFTWARE\Classes\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" /v "System.IsPinnedToNameSpaceTree" /t REG_DWORD /d 0 /f >nul 2>&1
     reg unload "HKU\DefaultHiveOD" >nul 2>&1
 )
-
-rem ============================================================
-rem 11. DEFENDER HARD REMOVAL
-rem ============================================================
-echo [*] Defender hard removal...
-for %%P in (NisSrv.exe MsMpEng.exe SecurityHealthHost.exe SecurityHealthService.exe SecurityHealthSystray.exe smartscreen.exe MpCmdRun.exe) do taskkill /f /im %%P >nul 2>&1
-timeout /t 2 /nobreak >nul
-
-powershell -NoProfile -ExecutionPolicy Bypass -Command "Get-AppxPackage '*SecHealthUI*' | Remove-AppxPackage -ErrorAction SilentlyContinue; Get-AppxPackage '*Apprep*' | Remove-AppxPackage -ErrorAction SilentlyContinue; Get-AppxPackage '*WindowsSecurity*' | Remove-AppxPackage -ErrorAction SilentlyContinue" >nul 2>&1
-
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" /v "DisableAntiSpyware" /t REG_DWORD /d 1 /f >nul
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" /v "DisableAntiVirus" /t REG_DWORD /d 1 /f >nul
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" /v "DisableRoutinelyTakingAction" /t REG_DWORD /d 1 /f >nul
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableRealtimeMonitoring" /t REG_DWORD /d 1 /f >nul
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableBehaviorMonitoring" /t REG_DWORD /d 1 /f >nul
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableOnAccessProtection" /t REG_DWORD /d 1 /f >nul
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableScanOnRealtimeEnable" /t REG_DWORD /d 1 /f >nul
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" /v "SpynetReporting" /t REG_DWORD /d 0 /f >nul
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" /v "SubmitSamplesConsent" /t REG_DWORD /d 2 /f >nul
-
-for %%S in (Sense WinDefend MsSecCore wscsvc WdFilter WdBoot WdNisDrv WdNisSvc MsSecWfp MsSecFlt wtd webthreatdefusersvc webthreatdefsvc SecurityHealthService) do reg delete "HKLM\SYSTEM\CurrentControlSet\Services\%%S" /f >nul 2>&1
-
-if exist "%NS%" (
-    "%NS%" -U:T -P:E -ShowWindowMode:Hide -Wait cmd.exe /c "del /f /q ""%windir%\System32\SecurityHealthService.exe""" >nul 2>&1
-    "%NS%" -U:T -P:E -ShowWindowMode:Hide -Wait cmd.exe /c "del /f /q ""%windir%\System32\SecurityHealthSystray.exe""" >nul 2>&1
-    "%NS%" -U:T -P:E -ShowWindowMode:Hide -Wait cmd.exe /c "del /f /q ""%windir%\System32\MsMpEng.exe""" >nul 2>&1
-    "%NS%" -U:T -P:E -ShowWindowMode:Hide -Wait cmd.exe /c "del /f /q ""%windir%\System32\drivers\WdNisDrv.sys""" >nul 2>&1
-    "%NS%" -U:T -P:E -ShowWindowMode:Hide -Wait cmd.exe /c "del /f /q ""%windir%\System32\drivers\WdFilter.sys""" >nul 2>&1
-    "%NS%" -U:T -P:E -ShowWindowMode:Hide -Wait cmd.exe /c "del /f /q ""%windir%\System32\drivers\WdBoot.sys""" >nul 2>&1
-) else (
-    del /f /q "%windir%\System32\SecurityHealthService.exe" >nul 2>&1
-    del /f /q "%windir%\System32\SecurityHealthSystray.exe" >nul 2>&1
-    del /f /q "%windir%\System32\MsMpEng.exe" >nul 2>&1
-    del /f /q "%windir%\System32\drivers\WdNisDrv.sys" >nul 2>&1
-    del /f /q "%windir%\System32\drivers\WdFilter.sys" >nul 2>&1
-    del /f /q "%windir%\System32\drivers\WdBoot.sys" >nul 2>&1
-)
-for %%F in (SecurityHealthAgent.dll SecurityHealthHost.exe SecurityHealthSSO.dll SecurityHealthCore.dll SecurityHealthProxyStub.dll SecurityHealthUdk.dll smartscreen.exe smartscreenps.dll MpClient.dll MpCommu.dll MpOAV.dll MpSvc.dll) do (
-    if exist "%NS%" (
-        "%NS%" -U:T -P:E -ShowWindowMode:Hide -Wait cmd.exe /c "del /f /q ""%windir%\System32\%%F""" >nul 2>&1
-    ) else (
-        del /f /q "%windir%\System32\%%F" >nul 2>&1
-    )
-)
-
-for %%P in (
-    "%ProgramW6432%\Windows Defender"
-    "%ProgramW6432%\Windows Defender Advanced Thread Protection"
-    "%ProgramFiles(x86)%\Windows Defender"
-    "%ProgramData%\Microsoft\Windows Defender"
-    "%ProgramData%\Microsoft\Windows Defender Advanced Threat Protection"
-    "%ProgramData%\Microsoft\Windows Security Health"
-) do (
-    if exist %%P (
-        takeown /f %%P /r /d y >nul 2>&1
-        icacls %%P /grant administrators:F /t >nul 2>&1
-        rd %%P /Q /S >nul 2>&1
-    )
-)
-
-reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\UpdateHealthTools" /f >nul 2>&1
-reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\rempl" /f >nul 2>&1
-reg delete "HKLM\SOFTWARE\Microsoft\CloudManagedUpdate" /f >nul 2>&1
-rd "%ProgramW6432%\Microsoft Update Health Tools" /Q /S >nul 2>&1
-rd "%ProgramW6432%\PCHealthCheck" /Q /S >nul 2>&1
-
-schtasks /change /tn "\Microsoft\Windows\ExploitGuard\ExploitGuard MDM policy Refresh" /disable >nul 2>&1
-schtasks /delete /tn "\Microsoft\Windows\Windows Defender\Windows Defender Cache Maintenance" /f >nul 2>&1
-schtasks /delete /tn "\Microsoft\Windows\Windows Defender\Windows Defender Cleanup" /f >nul 2>&1
-schtasks /delete /tn "\Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" /f >nul 2>&1
-schtasks /delete /tn "\Microsoft\Windows\Windows Defender\Windows Defender Verification" /f >nul 2>&1
-
-for %%K in (
-    "HKLM\SOFTWARE\Classes\*\ShellEx\ContextMenuHandlers\EPP"
-    "HKLM\SOFTWARE\Classes\Drive\ShellEx\ContextMenuHandlers\EPP"
-    "HKLM\SOFTWARE\Classes\Directory\ShellEx\ContextMenuHandlers\EPP"
-    "HKLM\SOFTWARE\Classes\AllFilesystemObjects\ShellEx\ContextMenuHandlers\EPP"
-) do reg delete %%K /f >nul 2>&1
-
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\WMI\Autologger\DefenderApiLogger" /v "Start" /t REG_DWORD /d 0 /f >nul
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\WMI\Autologger\DefenderAuditLogger" /v "Start" /t REG_DWORD /d 0 /f >nul
-
-reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v "SmartScreenEnabled" /t REG_SZ /d "Off" /f >nul
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity" /v "Enabled" /t REG_DWORD /d 0 /f >nul
-
-reg delete "HKCU\Software\Microsoft\Windows Defender" /f >nul 2>&1
-reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\Windows.SystemToast.SecurityAndMaintenance" /f >nul 2>&1
-
-DISM.exe /Online /Disable-Feature /FeatureName:"Windows-Defender-Default-Definitions" /NoRestart >nul 2>&1
-DISM.exe /Online /Disable-Feature /FeatureName:"Windows-Defender" /NoRestart >nul 2>&1
 
 rem ============================================================
 rem A. ПРОФИЛЬНЫЕ ТВИКИ (HKCU / HKU\.DEFAULT / HKLM)
